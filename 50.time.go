@@ -24,6 +24,9 @@ func main() {
 	p(then.Location())
 
 	p(now.Weekday())
+	p(then.Before(now))
+	p(then.After(now))
+	p(then.Equal(now))
 
 	diff := now.Sub(then)
 	p(diff)
