@@ -22,8 +22,10 @@ func main() {
 	t2, _ := time.Parse("3 04 PM", "8 41 PM")
 	p(t2)
 
-	fmt.Printf("%d-%02d-%02dT%02d:%02d:%02d-00:00\n", t.Year(), t.Month(),
-		t.Day(), t.Hour(), t.Minute(), t.Second())
+	fmt.Printf("%d-%02d-%02dT%02d:%02d:%02d-00:00\n",
+		t.Year(), t.Month(),
+		t.Day(), t.Hour(),
+		t.Minute(), t.Second())
 
 	ansic := "Mon Jan _2 15:04:05 2006"
 	_, e := time.Parse(ansic, "8:41PM")
