@@ -14,10 +14,10 @@ func check(err error) {
 }
 
 func main() {
-	//err := os.Mkdir("subdir", 0755)
-	//check(err)
+	err := os.Mkdir("subdir", 0755)
+	check(err)
 
-	//defer os.RemoveAll("subdir")
+	defer os.RemoveAll("subdir")
 
 	createEmptyFile := func(name string) {
 		d := []byte("")
@@ -26,7 +26,7 @@ func main() {
 
 	createEmptyFile("subdir/file1")
 
-	err := os.MkdirAll("subdir/parent/child", 0755)
+	err = os.MkdirAll("subdir/parent/child", 0755)
 	check(err)
 
 	createEmptyFile("subdir/parent/file2")
