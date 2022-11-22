@@ -10,6 +10,8 @@ func main() {
 	m["k1"] = 7
 	m["k2"] = 8
 	fmt.Println("map:", m)
+	v, k := m["k2"]
+	fmt.Println(v, k)
 
 	v1 := m["k1"]
 	fmt.Println("v1:", v1)

@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"math"
 	"net/url"
 	"strings"
 )
@@ -33,4 +34,10 @@ func main() {
 	m, _ := url.ParseQuery(u.RawQuery)
 	fmt.Println(m)
 	fmt.Println(m["k"][0])
+
+	thumbnail := "https://vecarbon-p.cn-sh2.ufileos.com/d/liuting/1471841930349401956/1471841930349401947/thumbnail_1666070897412.jpeg"
+	fileName := strings.Split(thumbnail, "/")
+	fmt.Println(fileName[len(fileName)-1])
+
+	fmt.Println(math.Trunc(9.815*1e2+0.5) * 1e-2)
 }
