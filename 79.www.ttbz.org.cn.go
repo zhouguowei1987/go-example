@@ -17,22 +17,22 @@ import (
 // @Title 获取全国团体标准信息平台Pdf文档
 // @Description http://www.ttbz.org.cn/，将全国团体标准信息平台Pdf文档入库
 func main() {
-	//var startId = 60648
-	//var endId = 72777
-	//var id = startId
-	//var isGoGo = true
-	//for isGoGo {
-	//	fmt.Println(id)
-	//	err := tbzSpider(id)
-	//	id++
-	//	if err != nil {
-	//		continue
-	//	}
-	//	if id >= endId {
-	//		isGoGo = false
-	//	}
-	//}
-	tbzSpider(68206)
+	var startId = 72777
+	var endId = 74229
+	var id = startId
+	var isGoGo = true
+	for isGoGo {
+		fmt.Println(id)
+		err := tbzSpider(id)
+		id++
+		if err != nil {
+			continue
+		}
+		if id >= endId {
+			isGoGo = false
+		}
+	}
+	//tbzSpider(68206)
 }
 
 func getTbz(url string) (doc *html.Node, err error) {
