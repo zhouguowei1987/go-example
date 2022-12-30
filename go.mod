@@ -9,8 +9,8 @@ require (
 
 require (
 	github.com/antchfx/xpath v1.2.1 // indirect
-	github.com/aws/aws-sdk-go v1.44.126 // indirect
+	github.com/axgle/mahonia v0.0.0-20180208002826-3358181d7394 // indirect
+	github.com/djimenez/iconv-go v0.0.0-20160305225143-8960e66bd3da // indirect
 	github.com/golang/groupcache v0.0.0-20200121045136-8c9f03a8e57e // indirect
-	github.com/jmespath/go-jmespath v0.4.0 // indirect
 	golang.org/x/text v0.3.7 // indirect
 )
