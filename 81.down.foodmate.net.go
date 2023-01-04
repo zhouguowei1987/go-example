@@ -40,6 +40,7 @@ func main() {
 	// 国内标准列表
 	var allCategory = []internalCategory{
 		{id: 1, name: "国内标准"},
+		{id: 2, name: "国外标准"},
 		//{id: 3, name: "国家标准"},
 		//{id: 4, name: "进出口行业标准"},
 		//{id: 5, name: "农业标准"},
@@ -57,9 +58,8 @@ func main() {
 		//{id: 46, name: "认证认可标准"},
 	}
 	for _, category := range allCategory {
-		i := 1
+		i := 128
 		isPageGo := true
-		fmt.Println(category.id, i, category.name)
 		for isPageGo {
 			listUrl := fmt.Sprintf("http://down.foodmate.net/standard/sort/%d/index-%d.html", category.id, i)
 			fmt.Println(listUrl)
@@ -67,6 +67,7 @@ func main() {
 			liNodes := htmlquery.Find(listDoc, `//div[@class="bz_list"]/ul/li`)
 			if len(liNodes) >= 1 {
 				for _, liNode := range liNodes {
+					fmt.Println(category.id, i, category.name)
 					detailUrl := htmlquery.InnerText(htmlquery.FindOne(liNode, `./div[@class="bz_listl"]/ul[1]/a/@href`))
 					fmt.Println(detailUrl)
 					detailDoc, _ := htmlquery.LoadURL(detailUrl)
@@ -77,9 +78,6 @@ func main() {
 						title = strings.ReplaceAll(title, "/", "-")
 						title = strings.ReplaceAll(title, " ", "")
 						fmt.Println(title)
-						if strings.Index(title, "GB") != -1 {
-							continue
-						}
 
 						downloadUrl := htmlquery.InnerText(htmlquery.FindOne(downNodes[1], `./@href`))
 						fmt.Println(downloadUrl)
