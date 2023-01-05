@@ -53,6 +53,7 @@ func main() {
 
 				standardNo := htmlquery.InnerText(htmlquery.FindOne(detailDoc, `//div[@class="traits"]/table/tbody/tr[3]/td[2]`))
 				standardNo = strings.ReplaceAll(standardNo, "/", "-")
+				standardNo = strings.ReplaceAll(standardNo, ":", "-")
 				standardNo = strings.ReplaceAll(standardNo, " ", "")
 				//fmt.Println(standardNo)
 
