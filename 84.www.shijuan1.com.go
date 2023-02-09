@@ -44,20 +44,22 @@ var AllTestCategory = []TestCategory{
 	{
 		name: "语文试卷",
 		category: []Grade{
-			{name: "一年级", url: "https://www.shijuan1.com/a/sjyw1/"},
-			{name: "二年级", url: "https://www.shijuan1.com/a/sjyw2/"},
-			{name: "三年级", url: "https://www.shijuan1.com/a/sjyw3/"},
-			{name: "四年级", url: "https://www.shijuan1.com/a/sjyw4/"},
-			{name: "五年级", url: "https://www.shijuan1.com/a/sjyw5/"},
-			{name: "六年级", url: "https://www.shijuan1.com/a/sjyw6/"},
-			{name: "七年级", url: "https://www.shijuan1.com/a/sjyw7/"},
-			{name: "八年级", url: "https://www.shijuan1.com/a/sjyw8/"},
-			{name: "九年级", url: "https://www.shijuan1.com/a/sjyw9/"},
 			{name: "中考试卷", url: "https://www.shijuan1.com/a/sjywzk/"},
-			{name: "高一", url: "https://www.shijuan1.com/a/sjywg1/"},
-			{name: "高二", url: "https://www.shijuan1.com/a/sjywg2/"},
-			{name: "高三", url: "https://www.shijuan1.com/a/sjywg3/"},
 			{name: "高考试卷", url: "https://www.shijuan1.com/a/sjywgk/"},
+		},
+	},
+	{
+		name: "数学试卷",
+		category: []Grade{
+			{name: "中考试卷", url: "https://www.shijuan1.com/a/sjsxzk/"},
+			{name: "高考试卷", url: "https://www.shijuan1.com/a/sjsxgk/"},
+		},
+	},
+	{
+		name: "英语试卷",
+		category: []Grade{
+			{name: "中考试卷", url: "https://www.shijuan1.com/a/sjyyzk/"},
+			{name: "高考试卷", url: "https://www.shijuan1.com/a/sjyygk/"},
 		},
 	},
 }
@@ -77,7 +79,6 @@ func main() {
 			isPageListGo := true
 			for isPageListGo {
 				pageListUrl := fmt.Sprintf(grade.url+"list_"+gradeId+"_%d.html", page)
-				fmt.Println(pageListUrl)
 				pageListDoc, _ := htmlquery.LoadURL(pageListUrl)
 				tableTrNodes := htmlquery.Find(pageListDoc, `//div[@class="pleft"]/div[@class="listbox"]/ul[@class="c1"]/table/tbody/tr`)
 				if len(tableTrNodes) >= 1 {
@@ -85,6 +86,8 @@ func main() {
 						if i == 0 {
 							continue
 						}
+						fmt.Println("=================================================================================")
+						fmt.Println(pageListUrl)
 
 						detailUrl := "https://www.shijuan1.com" + htmlquery.InnerText(htmlquery.FindOne(trNode, `./td[1]/a/@href`))
 						detailDoc, _ := htmlquery.LoadURL(detailUrl)
@@ -97,7 +100,7 @@ func main() {
 
 						updateDate := htmlquery.InnerText(htmlquery.FindOne(detailDoc, `//div[@class="pleft"]/div[@class="viewbox"]/div[@class="infolist"]/span[6]`))
 						yearMonthDay := strings.Split(updateDate, "-")
-						if year, _ := strconv.Atoi(yearMonthDay[0]); year < 2019 {
+						if year, _ := strconv.Atoi(yearMonthDay[0]); year < 2020 {
 							isPageListGo = false
 							page = 1
 							break
