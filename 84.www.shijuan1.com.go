@@ -41,25 +41,67 @@ type TestCategory struct {
 }
 
 var AllTestCategory = []TestCategory{
+	//{
+	//	name: "语文试卷",
+	//	category: []Grade{
+	//		{name: "中考试卷", url: "https://www.shijuan1.com/a/sjywzk/"},
+	//		{name: "高考试卷", url: "https://www.shijuan1.com/a/sjywgk/"},
+	//	},
+	//},
+	//{
+	//	name: "数学试卷",
+	//	category: []Grade{
+	//		{name: "中考试卷", url: "https://www.shijuan1.com/a/sjsxzk/"},
+	//		{name: "高考试卷", url: "https://www.shijuan1.com/a/sjsxgk/"},
+	//	},
+	//},
+	//{
+	//	name: "英语试卷",
+	//	category: []Grade{
+	//		{name: "中考试卷", url: "https://www.shijuan1.com/a/sjyyzk/"},
+	//		{name: "高考试卷", url: "https://www.shijuan1.com/a/sjyygk/"},
+	//	},
+	//},
 	{
-		name: "语文试卷",
+		name: "物理试卷",
 		category: []Grade{
-			{name: "中考试卷", url: "https://www.shijuan1.com/a/sjywzk/"},
-			{name: "高考试卷", url: "https://www.shijuan1.com/a/sjywgk/"},
+			{name: "中考试卷", url: "https://www.shijuan1.com/a/sjwlzk/"},
+			{name: "高考试卷", url: "https://www.shijuan1.com/a/sjwlgk/"},
 		},
 	},
 	{
-		name: "数学试卷",
+		name: "化学试卷",
 		category: []Grade{
-			{name: "中考试卷", url: "https://www.shijuan1.com/a/sjsxzk/"},
-			{name: "高考试卷", url: "https://www.shijuan1.com/a/sjsxgk/"},
+			{name: "中考试卷", url: "https://www.shijuan1.com/a/sjhxzk/"},
+			{name: "高考试卷", url: "https://www.shijuan1.com/a/sjhxgk/"},
 		},
 	},
 	{
-		name: "英语试卷",
+		name: "政治试卷",
 		category: []Grade{
-			{name: "中考试卷", url: "https://www.shijuan1.com/a/sjyyzk/"},
-			{name: "高考试卷", url: "https://www.shijuan1.com/a/sjyygk/"},
+			{name: "中考试卷", url: "https://www.shijuan1.com/a/sjzzzk/"},
+			{name: "高考试卷", url: "https://www.shijuan1.com/a/sjzzgk/"},
+		},
+	},
+	{
+		name: "历史试卷",
+		category: []Grade{
+			{name: "中考试卷", url: "https://www.shijuan1.com/a/sjlszk/"},
+			{name: "高考试卷", url: "https://www.shijuan1.com/a/sjlsgk/"},
+		},
+	},
+	{
+		name: "地理试卷",
+		category: []Grade{
+			{name: "中考试卷", url: "https://www.shijuan1.com/a/sjdlzk/"},
+			{name: "高考试卷", url: "https://www.shijuan1.com/a/sjdlgk/"},
+		},
+	},
+	{
+		name: "生物试卷",
+		category: []Grade{
+			{name: "中考试卷", url: "https://www.shijuan1.com/a/sjswzk/"},
+			{name: "高考试卷", url: "https://www.shijuan1.com/a/sjswgk/"},
 		},
 	},
 }
