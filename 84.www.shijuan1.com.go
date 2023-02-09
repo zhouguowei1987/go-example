@@ -41,27 +41,27 @@ type TestCategory struct {
 }
 
 var AllTestCategory = []TestCategory{
-	//{
-	//	name: "语文试卷",
-	//	category: []Grade{
-	//		{name: "中考试卷", url: "https://www.shijuan1.com/a/sjywzk/"},
-	//		{name: "高考试卷", url: "https://www.shijuan1.com/a/sjywgk/"},
-	//	},
-	//},
-	//{
-	//	name: "数学试卷",
-	//	category: []Grade{
-	//		{name: "中考试卷", url: "https://www.shijuan1.com/a/sjsxzk/"},
-	//		{name: "高考试卷", url: "https://www.shijuan1.com/a/sjsxgk/"},
-	//	},
-	//},
-	//{
-	//	name: "英语试卷",
-	//	category: []Grade{
-	//		{name: "中考试卷", url: "https://www.shijuan1.com/a/sjyyzk/"},
-	//		{name: "高考试卷", url: "https://www.shijuan1.com/a/sjyygk/"},
-	//	},
-	//},
+	{
+		name: "语文试卷",
+		category: []Grade{
+			{name: "中考试卷", url: "https://www.shijuan1.com/a/sjywzk/"},
+			{name: "高考试卷", url: "https://www.shijuan1.com/a/sjywgk/"},
+		},
+	},
+	{
+		name: "数学试卷",
+		category: []Grade{
+			{name: "中考试卷", url: "https://www.shijuan1.com/a/sjsxzk/"},
+			{name: "高考试卷", url: "https://www.shijuan1.com/a/sjsxgk/"},
+		},
+	},
+	{
+		name: "英语试卷",
+		category: []Grade{
+			{name: "中考试卷", url: "https://www.shijuan1.com/a/sjyyzk/"},
+			{name: "高考试卷", url: "https://www.shijuan1.com/a/sjyygk/"},
+		},
+	},
 	{
 		name: "物理试卷",
 		category: []Grade{
@@ -115,12 +115,19 @@ func main() {
 		for _, grade := range testCategory.category {
 			firstPaperDoc, _ := htmlquery.LoadURL(grade.url)
 			firstPaperPagesNodes := htmlquery.Find(firstPaperDoc, `//div[@class="dede_pages"]/ul[@class="pagelist"][1]/li`)
-			secondPageUrl := htmlquery.InnerText(htmlquery.FindOne(firstPaperPagesNodes[2], `./a/@href`))
-			gradeId := strings.Split(secondPageUrl, "_")[1]
+
+			var gradeId = 0
+			if len(firstPaperPagesNodes) >= 3 {
+				secondPageUrl := htmlquery.InnerText(htmlquery.FindOne(firstPaperPagesNodes[2], `./a/@href`))
+				gradeId, _ = strconv.Atoi(strings.Split(secondPageUrl, "_")[1])
+			}
 
 			isPageListGo := true
 			for isPageListGo {
-				pageListUrl := fmt.Sprintf(grade.url+"list_"+gradeId+"_%d.html", page)
+				pageListUrl := fmt.Sprintf(grade.url)
+				if gradeId > 0 {
+					pageListUrl = fmt.Sprintf(grade.url+"list_"+strconv.Itoa(gradeId)+"_%d.html", page)
+				}
 				pageListDoc, _ := htmlquery.LoadURL(pageListUrl)
 				tableTrNodes := htmlquery.Find(pageListDoc, `//div[@class="pleft"]/div[@class="listbox"]/ul[@class="c1"]/table/tbody/tr`)
 				if len(tableTrNodes) >= 1 {
@@ -161,6 +168,12 @@ func main() {
 					}
 					page++
 				} else {
+					isPageListGo = false
+					page = 1
+					break
+				}
+
+				if gradeId == 0 {
 					isPageListGo = false
 					page = 1
 					break
