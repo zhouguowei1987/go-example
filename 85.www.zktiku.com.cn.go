@@ -18,7 +18,7 @@ import (
 
 const (
 	ZkTiKuEnableHttpProxy = false
-	ZkTiKuHttpProxyUrl    = "27.42.168.46:55481"
+	ZkTiKuHttpProxyUrl    = "218.1.200.211:57114"
 )
 
 func ZkTiKuSetHttpProxy() (httpclient *http.Client) {
@@ -149,11 +149,12 @@ func main() {
 
 							filePath := "../www.zktiku.com.cn/" + subject.name + "/"
 							fileName := fileTile + suffix
-							err := downloadZkTiKu(downloadUrl, filePath, fileName)
+							err := downloadZkTiKu(downloadUrl, detailUrl, filePath, fileName)
 							if err != nil {
 								fmt.Println(err)
 								continue
 							}
+							time.Sleep(time.Second * 3)
 						}
 					}
 				}
@@ -168,7 +169,25 @@ func main() {
 }
 
 func getZkTiKu(url string) (doc *html.Node, err error) {
-	client := &http.Client{}                     //初始化客户端
+	// 初始化客户端
+	var client *http.Client = &http.Client{
+		Transport: &http.Transport{
+			Dial: func(netw, addr string) (net.Conn, error) {
+				c, err := net.DialTimeout(netw, addr, time.Second*3)
+				if err != nil {
+					fmt.Println("dail timeout", err)
+					return nil, err
+				}
+				return c, nil
+
+			},
+			MaxIdleConnsPerHost:   10,
+			ResponseHeaderTimeout: time.Second * 3,
+		},
+	}
+	if ZkTiKuEnableHttpProxy {
+		client = ZkTiKuSetHttpProxy()
+	}
 	req, err := http.NewRequest("GET", url, nil) //建立连接
 	if err != nil {
 		return doc, err
@@ -189,7 +208,7 @@ func getZkTiKu(url string) (doc *html.Node, err error) {
 	return doc, nil
 }
 
-func downloadZkTiKu(attachmentUrl string, filePath string, fileName string) error {
+func downloadZkTiKu(attachmentUrl string, referer string, filePath string, fileName string) error {
 	// 初始化客户端
 	var client *http.Client = &http.Client{
 		Transport: &http.Transport{
@@ -213,6 +232,24 @@ func downloadZkTiKu(attachmentUrl string, filePath string, fileName string) erro
 	if err != nil {
 		return err
 	}
+
+	req.Header.Set("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7")
+	req.Header.Set("Accept-Encoding", "gzip, deflate, br")
+	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
+	req.Header.Set("Cache-Control", "no-cache")
+	req.Header.Set("Connection", "keep-alive")
+	req.Header.Set("Cookie", "JSESSIONID=3A8F4EE50A632A6FB92E2A9EBCE94173; __51vcke__JohyjbD1C0xg9qUz=0b89b92a-6862-5964-950c-fd0424460459; __51vuft__JohyjbD1C0xg9qUz=1676033539876; mobile=15238369929; __51uvsct__JohyjbD1C0xg9qUz=2; token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1SWQiOjE2MjM5ODczNDYxMDM3MDk2OTgsInVUeXBlIjoyLCJleHAiOjE2NzY2NDg0NjF9.5IKADrq3sJDU3JLqOpf8sPqdtfF7zLHo1QR4l6-FkJw; __vtins__JohyjbD1C0xg9qUz=%7B%22sid%22%3A%20%22a758379f-864f-534c-956e-72833e896a74%22%2C%20%22vd%22%3A%2020%2C%20%22stt%22%3A%206362691%2C%20%22dr%22%3A%20330320%2C%20%22expires%22%3A%201676044799999%2C%20%22ct%22%3A%201676043661433%7D")
+	req.Header.Set("Host", "www.zktiku.com.cn")
+	req.Header.Set("Referer", referer)
+	req.Header.Set("sec-ch-ua", "\"Chromium\";v=\"110\", \"Not A(Brand\";v=\"24\", \"Google Chrome\";v=\"110\"")
+	req.Header.Set("sec-ch-ua-mobile", "?0")
+	req.Header.Set("sec-ch-ua-platform", "\"macOS\"")
+	req.Header.Set("Sec-Fetch-Dest", "document")
+	req.Header.Set("Sec-Fetch-Mode", "navigate")
+	req.Header.Set("Sec-Fetch-Site", "same-origin")
+	req.Header.Set("Sec-Fetch-User", "?1")
+	req.Header.Set("Upgrade-Insecure-Requests", "1")
+	req.Header.Set("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36")
 	resp, err := client.Do(req) //拿到返回的内容
 	if err != nil {
 		return err
