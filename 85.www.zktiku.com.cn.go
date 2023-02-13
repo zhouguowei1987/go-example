@@ -1,16 +1,19 @@
 package main
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"github.com/antchfx/htmlquery"
 	"golang.org/x/net/html"
 	"io"
+	"io/ioutil"
 	"net"
 	"net/http"
 	"net/url"
 	"os"
 	"path/filepath"
+	"regexp"
 	"strconv"
 	"strings"
 	"time"
@@ -18,7 +21,7 @@ import (
 
 const (
 	ZkTiKuEnableHttpProxy = false
-	ZkTiKuHttpProxyUrl    = "218.1.200.211:57114"
+	ZkTiKuHttpProxyUrl    = "111.225.152.186:8089"
 )
 
 func ZkTiKuSetHttpProxy() (httpclient *http.Client) {
@@ -114,7 +117,6 @@ func main() {
 					fmt.Println(pageListUrl)
 
 					detailUrl := "https://www.zktiku.com.cn" + htmlquery.InnerText(htmlquery.FindOne(listNode, `./a/@href`))
-					fmt.Println(detailUrl)
 					detailDoc, err := getZkTiKu(detailUrl)
 					if err != nil {
 						fmt.Println(err)
@@ -143,13 +145,23 @@ func main() {
 							fileTile = strings.ReplaceAll(fileTile, "\r", "")
 							fmt.Println(fileTile)
 
-							downloadUrl := "https://www.zktiku.com.cn" + htmlquery.InnerText(htmlquery.FindOne(fileNode, `./div[@class="kemu-info-item-r"]/a/@href`))
-							downloadUrl = strings.ReplaceAll(downloadUrl, "preview?fileDetailId", "downloadexec?id")
-							fmt.Println(downloadUrl)
+							onClickText := htmlquery.InnerText(htmlquery.FindOne(fileNode, `./div[@class="kemu-info-item-r"]/a[@class="kemu-info-item-r-i bgc3c8c93"]/@onclick`))
+							reg := regexp.MustCompile(`[0-9]+`)
+							fileDetailId, _ := strconv.Atoi(reg.FindAllString(onClickText, -1)[0])
 
+							downloadUrl := "https://www.zktiku.com.cn/document/download"
+							fmt.Println(downloadUrl)
+							err = downloadZkTiKu(downloadUrl, detailUrl, fileDetailId)
+							if err != nil {
+								fmt.Println(err)
+								continue
+							}
+
+							downloadExecUrl := fmt.Sprintf("https://www.zktiku.com.cn/document/downloadexec?id=%d", fileDetailId)
+							fmt.Println(downloadExecUrl)
 							filePath := "../www.zktiku.com.cn/" + subject.name + "/"
 							fileName := fileTile + suffix
-							err := downloadZkTiKu(downloadUrl, detailUrl, filePath, fileName)
+							err = downloadExecZkTiKu(downloadExecUrl, detailUrl, filePath, fileName)
 							if err != nil {
 								fmt.Println(err)
 								continue
@@ -157,6 +169,7 @@ func main() {
 							time.Sleep(time.Second * 3)
 						}
 					}
+					time.Sleep(time.Second * 3)
 				}
 				page++
 			} else {
@@ -208,7 +221,82 @@ func getZkTiKu(url string) (doc *html.Node, err error) {
 	return doc, nil
 }
 
-func downloadZkTiKu(attachmentUrl string, referer string, filePath string, fileName string) error {
+type downloadResult struct {
+	Code int    `json:"code"`
+	Msg  string `json:"msg"`
+}
+
+func downloadZkTiKu(downloadUrl string, referer string, fileDetailId int) error {
+	// 初始化客户端
+	var client *http.Client = &http.Client{
+		Transport: &http.Transport{
+			Dial: func(netw, addr string) (net.Conn, error) {
+				c, err := net.DialTimeout(netw, addr, time.Second*3)
+				if err != nil {
+					fmt.Println("dail timeout", err)
+					return nil, err
+				}
+				return c, nil
+
+			},
+			MaxIdleConnsPerHost:   10,
+			ResponseHeaderTimeout: time.Second * 3,
+		},
+	}
+	if ZkTiKuEnableHttpProxy {
+		client = ZkTiKuSetHttpProxy()
+	}
+	postData := url.Values{}
+	postData.Add("id", strconv.Itoa(fileDetailId))
+	req, err := http.NewRequest("POST", downloadUrl, strings.NewReader(postData.Encode())) //建立连接
+
+	if err != nil {
+		return err
+	}
+
+	req.Header.Set("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9")
+	//req.Header.Set("Accept-Encoding", "gzip, deflate, br")
+	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
+	req.Header.Set("Connection", "keep-alive")
+	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+	req.Header.Set("Cookie", "__51vcke__JohyjbD1C0xg9qUz=0b89b92a-6862-5964-950c-fd0424460459; __51vuft__JohyjbD1C0xg9qUz=1676033539876; mobile=15238369929; JSESSIONID=2619B18AD9F7D848ED3D0ED88206F936; __51uvsct__JohyjbD1C0xg9qUz=3; token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1SWQiOjE2MjM5ODczNDYxMDM3MDk2OTgsInVUeXBlIjoyLCJleHAiOjE2NzY2NTcyNDR9.yB-IPSls4xcQTdNKqG43q1d9hz8w3FxIYWWw0xH0shM; __vtins__JohyjbD1C0xg9qUz=%7B%22sid%22%3A%20%22647da08c-62a8-599a-995e-4a351a7137c1%22%2C%20%22vd%22%3A%207%2C%20%22stt%22%3A%20395895%2C%20%22dr%22%3A%209501%2C%20%22expires%22%3A%201676054244939%2C%20%22ct%22%3A%201676052444939%7D")
+	req.Header.Set("Host", "www.zktiku.com.cn")
+	req.Header.Set("Origin", "https://www.zktiku.com.cn")
+	req.Header.Set("Referer", referer)
+	req.Header.Set("sec-ch-ua", "\"Chromium\";v=\"110\", \"Not A(Brand\";v=\"24\", \"Google Chrome\";v=\"110\"")
+	req.Header.Set("sec-ch-ua-mobile", "?0")
+	req.Header.Set("sec-ch-ua-platform", "\"macOS\"")
+	req.Header.Set("Sec-Fetch-Dest", "empty")
+	req.Header.Set("Sec-Fetch-Mode", "cors")
+	req.Header.Set("Sec-Fetch-Site", "same-origin")
+	req.Header.Set("token", "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1SWQiOjE2MjM5ODczNDYxMDM3MDk2OTgsInVUeXBlIjoyLCJleHAiOjE2NzY2NTk2MTJ9.QkOLuwo8vwfNne0ClPbDYgtqZphDr4vuuFM9Ny9yb0I")
+	req.Header.Set("Sec-Fetch-User", "?1")
+	req.Header.Set("Upgrade-Insecure-Requests", "1")
+	req.Header.Set("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36")
+	req.Header.Set("X-Requested-With", "XMLHttpRequest")
+	resp, err := client.Do(req) //拿到返回的内容
+	if err != nil {
+		return err
+	}
+	defer resp.Body.Close()
+
+	respBytes, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return err
+	}
+	downloadResult := &downloadResult{}
+	err = json.Unmarshal(respBytes, downloadResult)
+	if err != nil {
+		fmt.Println(111)
+		return err
+	}
+	if downloadResult.Code != 1 {
+		return errors.New(downloadResult.Msg)
+	}
+	return nil
+}
+
+func downloadExecZkTiKu(attachmentUrl string, referer string, filePath string, fileName string) error {
 	// 初始化客户端
 	var client *http.Client = &http.Client{
 		Transport: &http.Transport{
@@ -236,9 +324,8 @@ func downloadZkTiKu(attachmentUrl string, referer string, filePath string, fileN
 	req.Header.Set("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7")
 	req.Header.Set("Accept-Encoding", "gzip, deflate, br")
 	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
-	req.Header.Set("Cache-Control", "no-cache")
 	req.Header.Set("Connection", "keep-alive")
-	req.Header.Set("Cookie", "JSESSIONID=3A8F4EE50A632A6FB92E2A9EBCE94173; __51vcke__JohyjbD1C0xg9qUz=0b89b92a-6862-5964-950c-fd0424460459; __51vuft__JohyjbD1C0xg9qUz=1676033539876; mobile=15238369929; __51uvsct__JohyjbD1C0xg9qUz=2; token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1SWQiOjE2MjM5ODczNDYxMDM3MDk2OTgsInVUeXBlIjoyLCJleHAiOjE2NzY2NDg0NjF9.5IKADrq3sJDU3JLqOpf8sPqdtfF7zLHo1QR4l6-FkJw; __vtins__JohyjbD1C0xg9qUz=%7B%22sid%22%3A%20%22a758379f-864f-534c-956e-72833e896a74%22%2C%20%22vd%22%3A%2020%2C%20%22stt%22%3A%206362691%2C%20%22dr%22%3A%20330320%2C%20%22expires%22%3A%201676044799999%2C%20%22ct%22%3A%201676043661433%7D")
+	req.Header.Set("Cookie", "__51vcke__JohyjbD1C0xg9qUz=0b89b92a-6862-5964-950c-fd0424460459; __51vuft__JohyjbD1C0xg9qUz=1676033539876; mobile=15238369929; JSESSIONID=2619B18AD9F7D848ED3D0ED88206F936; __51uvsct__JohyjbD1C0xg9qUz=3; token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1SWQiOjE2MjM5ODczNDYxMDM3MDk2OTgsInVUeXBlIjoyLCJleHAiOjE2NzY2NTcyNDR9.yB-IPSls4xcQTdNKqG43q1d9hz8w3FxIYWWw0xH0shM; __vtins__JohyjbD1C0xg9qUz=%7B%22sid%22%3A%20%22647da08c-62a8-599a-995e-4a351a7137c1%22%2C%20%22vd%22%3A%207%2C%20%22stt%22%3A%20395895%2C%20%22dr%22%3A%209501%2C%20%22expires%22%3A%201676054244939%2C%20%22ct%22%3A%201676052444939%7D")
 	req.Header.Set("Host", "www.zktiku.com.cn")
 	req.Header.Set("Referer", referer)
 	req.Header.Set("sec-ch-ua", "\"Chromium\";v=\"110\", \"Not A(Brand\";v=\"24\", \"Google Chrome\";v=\"110\"")
