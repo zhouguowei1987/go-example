@@ -94,14 +94,14 @@ func main() {
 							fileName := htmlquery.InnerText(htmlquery.FindOne(listNode, `./a`))
 							fmt.Println(fileName)
 							detailUrl := "https:" + htmlquery.InnerText(htmlquery.FindOne(listNode, `./a/@href`))
-							fmt.Println(pageListUrl)
+							fmt.Println(detailUrl)
 							// 下载预览URL
 							downDetailUrl := "https://s.diyifanwen.com/down/down.asp?url=" + detailUrl + "&obid=fanwen"
 							// 下载文档URL
 							downLoadUrl := "https://s.diyifanwen.com/down/doc.asp?id=" + detailUrl
 							filePath := "../www.diyifanwen.com/" + category.name + "/" + childCategoryListName + "/"
 							err = downloadDiYiFanWen(downLoadUrl, downDetailUrl, filePath, fileName+".doc")
-							time.Sleep(time.Second * 3)
+							time.Sleep(time.Second * 15)
 							if err != nil {
 								fmt.Println(err)
 								continue
