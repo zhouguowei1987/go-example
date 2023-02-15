@@ -76,7 +76,13 @@ func main() {
 				page := 1
 				isPageListGo := true
 				for isPageListGo {
-					pageListUrl := fmt.Sprintf(childCategoryListUrl+"list_"+strconv.Itoa(page)+"_%d.html", page)
+					// 只爬取10页数据
+					if page > 10 {
+						isPageListGo = false
+						page = 1
+						break
+					}
+					pageListUrl := fmt.Sprintf(childCategoryListUrl+"index_%d.html", page)
 					if page == 1 {
 						pageListUrl = childCategoryListUrl
 					}
