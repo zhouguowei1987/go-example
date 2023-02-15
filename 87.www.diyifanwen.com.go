@@ -101,11 +101,11 @@ func main() {
 							downLoadUrl := "https://s.diyifanwen.com/down/doc.asp?id=" + detailUrl
 							filePath := "../www.diyifanwen.com/" + category.name + "/" + childCategoryListName + "/"
 							err = downloadDiYiFanWen(downLoadUrl, downDetailUrl, filePath, fileName+".doc")
+							time.Sleep(time.Second * 3)
 							if err != nil {
 								fmt.Println(err)
 								continue
 							}
-							time.Sleep(time.Second * 3)
 						}
 						page++
 					} else {
