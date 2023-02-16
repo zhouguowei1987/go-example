@@ -77,7 +77,7 @@ func main() {
 				isPageListGo := true
 				for isPageListGo {
 					// 只爬取10页数据
-					if page > 10 {
+					if page > 3 {
 						isPageListGo = false
 						page = 1
 						break
@@ -107,7 +107,7 @@ func main() {
 							downLoadUrl := "https://s.diyifanwen.com/down/doc.asp?id=" + detailUrl
 							filePath := "../www.diyifanwen.com/" + category.name + "/" + childCategoryListName + "/"
 							err = downloadDiYiFanWen(downLoadUrl, downDetailUrl, filePath, fileName+".doc")
-							time.Sleep(time.Second * 15)
+							time.Sleep(time.Second * 6)
 							if err != nil {
 								fmt.Println(err)
 								continue
