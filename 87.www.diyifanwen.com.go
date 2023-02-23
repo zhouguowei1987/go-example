@@ -73,7 +73,7 @@ func main() {
 				isPageListGo := true
 				for isPageListGo {
 					// 只爬取10页数据
-					if page > 3 {
+					if page > 2 {
 						isPageListGo = false
 						page = 1
 						break
