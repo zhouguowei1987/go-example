@@ -36,26 +36,26 @@ type ChaZiDianSubject struct {
 }
 
 var AllChaZiDianSubject = []ChaZiDianSubject{
-	{
-		name: "生物试题",
-		url:  "https://shengwu.chazidian.com/shiti/",
-	},
-	{
-		name: "物理试题",
-		url:  "https://wuli.chazidian.com/shiti/",
-	},
-	{
-		name: "化学试题",
-		url:  "https://huaxue.chazidian.com/shiti/",
-	},
-	{
-		name: "政治试题",
-		url:  "https://zhengzhi.chazidian.com/shiti/",
-	},
-	{
-		name: "历史试题",
-		url:  "https://lishi.chazidian.com/shiti/",
-	},
+	//{
+	//	name: "生物试题",
+	//	url:  "https://shengwu.chazidian.com/shiti/",
+	//},
+	//{
+	//	name: "物理试题",
+	//	url:  "https://wuli.chazidian.com/shiti/",
+	//},
+	//{
+	//	name: "化学试题",
+	//	url:  "https://huaxue.chazidian.com/shiti/",
+	//},
+	//{
+	//	name: "政治试题",
+	//	url:  "https://zhengzhi.chazidian.com/shiti/",
+	//},
+	//{
+	//	name: "历史试题",
+	//	url:  "https://lishi.chazidian.com/shiti/",
+	//},
 	{
 		name: "地理试题",
 		url:  "https://dili.chazidian.com/shiti/",
@@ -94,7 +94,7 @@ func main() {
 					fmt.Println(uploadDate)
 
 					yearMonthDay := strings.Split(uploadDate, "-")
-					if year, _ := strconv.Atoi(yearMonthDay[0]); year < 2018 {
+					if year, _ := strconv.Atoi(yearMonthDay[0]); year < 2019 {
 						isPageListGo = false
 						page = 1
 						break
@@ -108,10 +108,10 @@ func main() {
 
 					// 下载文档URL
 					downLoadUrl := strings.ReplaceAll(subject.url, "/shiti/", "") + htmlquery.InnerText(htmlquery.FindOne(detailDoc, `//div[@class="jxff-l"]/dl[@class="wz-zyxq"]/dd[@class="zy-djxz"]/a/@href`))
+					//downLoadUrl := htmlquery.InnerText(htmlquery.FindOne(detailDoc, `//div[@class="jxff-l"]/dl[@class="wz-zyxq"]/dd[@class="zy-djxz"]/a/@href`))
 					fmt.Println(downLoadUrl)
 					filePath := "../www.chazidian.com/" + subject.name + "/"
 					err = downloadChaZiDian(downLoadUrl, filePath, fileName+"."+attachmentFormat)
-					time.Sleep(time.Second * 2)
 					if err != nil {
 						fmt.Println(err)
 						continue
