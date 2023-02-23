@@ -35,21 +35,17 @@ type Category struct {
 }
 
 var AllCategory = []Category{
-	{
-		name: "合同范本",
-		url:  "https://www.diyifanwen.com/fanwen/hetongfanwen/",
-	},
-	{
-		name: "工作计划",
-		url:  "https://www.diyifanwen.com/fanwen/gongzuojihua/",
-	},
+	//{
+	//	name: "导游词",
+	//	url:  "https://www.diyifanwen.com/fanwen/daoyouci/",
+	//},
 	{
 		name: "工作总结",
 		url:  "https://www.diyifanwen.com/fanwen/gongzuozongjie/",
 	},
 	{
-		name: "心得体会",
-		url:  "https://www.diyifanwen.com/fanwen/xindetihui2/",
+		name: "工作计划",
+		url:  "https://www.diyifanwen.com/fanwen/gongzuojihua/",
 	},
 	{
 		name: "演讲稿",
@@ -107,7 +103,7 @@ func main() {
 							downLoadUrl := "https://s.diyifanwen.com/down/doc.asp?id=" + detailUrl
 							filePath := "../www.diyifanwen.com/" + category.name + "/" + childCategoryListName + "/"
 							err = downloadDiYiFanWen(downLoadUrl, downDetailUrl, filePath, fileName+".doc")
-							time.Sleep(time.Second * 6)
+							time.Sleep(time.Second * 5)
 							if err != nil {
 								fmt.Println(err)
 								continue
