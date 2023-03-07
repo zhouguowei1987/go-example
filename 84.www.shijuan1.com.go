@@ -225,7 +225,7 @@ func main() {
 						downloadUrl := "https://www.shijuan1.com" + htmlquery.InnerText(htmlquery.FindOne(detailDoc, `//ul[@class="downurllist"]/li/a/@href`))
 						fmt.Println(downloadUrl)
 
-						filePath := "../final-www.shijuan1.com/" + testCategory.name + "/" + grade.name + "/"
+						filePath := "../www.shijuan1.com/" + testCategory.name + "/" + grade.name + "/"
 
 						err := downloadShiJuan1(downloadUrl, detailUrl, filePath, title)
 						if err != nil {
@@ -280,7 +280,7 @@ func downloadShiJuan1(attachmentUrl string, referer string, filePath string, tit
 	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
 	req.Header.Set("Cache-Control", "max-age=0")
 	req.Header.Set("Connection", "keep-alive")
-	req.Header.Set("Cookie", "Hm_lvt_9400c877dfe1cf77b070ccf1be7b66af=1675857919; __gads=ID=4fa9d5896738b30a-22c549a298d900b7:T=1675857919:RT=1675857919:S=ALNI_MaRt-4lkuhslkcGEubyXiLA8ppUFw; __gpi=UID=00000bb7d488d640:T=1675857919:RT=1675857919:S=ALNI_MYmUZlhJSzKAlMesX2_56vkD0Vd_g; Hm_lpvt_9400c877dfe1cf77b070ccf1be7b66af=1675865606")
+	req.Header.Set("Cookie", "__gads=ID=4fa9d5896738b30a-22c549a298d900b7:T=1675857919:RT=1675857919:S=ALNI_MaRt-4lkuhslkcGEubyXiLA8ppUFw; Hm_lvt_9400c877dfe1cf77b070ccf1be7b66af=1675857919,1676652604,1677259973,1677602207; __gpi=UID=00000bb7d488d640:T=1675857919:RT=1678152152:S=ALNI_MYmUZlhJSzKAlMesX2_56vkD0Vd_g; Hm_lpvt_9400c877dfe1cf77b070ccf1be7b66af=1678154476")
 	req.Header.Set("Host", "www.shijuan1.com")
 	req.Header.Set("If-Modified-Since", "Wed, 16 Nov 2022 20:09:29 GMT")
 	req.Header.Set("If-None-Match", "W/\"63754379-2f74\"")
@@ -314,19 +314,18 @@ func downloadShiJuan1(attachmentUrl string, referer string, filePath string, tit
 	fileFullPath := filePath + title + ".rar"
 	_, err = os.Stat(fileFullPath)
 	if err != nil {
-		//文件已存在
-		return nil
-	}
-	out, err := os.Create(fileFullPath)
-	if err != nil {
-		return err
-	}
-	defer out.Close()
+		//文件不存在
+		out, err := os.Create(fileFullPath)
+		if err != nil {
+			return err
+		}
+		defer out.Close()
 
-	// 然后将响应流和文件流对接起来
-	_, err = io.Copy(out, resp.Body)
-	if err != nil {
-		return err
+		// 然后将响应流和文件流对接起来
+		_, err = io.Copy(out, resp.Body)
+		if err != nil {
+			return err
+		}
 	}
 	return nil
 }
