@@ -42,45 +42,45 @@ type Subject struct {
 var AllSubject = []Subject{
 	{
 		name: "语文",
-		url:  "https://www.zktiku.com.cn/document/list?subjectId=1550777663498985474",
+		url:  "https://bilianku.com/document/list?subjectId=1550777663498985474",
 	},
 	{
 		name: "数学",
-		url:  "https://www.zktiku.com.cn/document/list?subjectId=1550777680674660353",
+		url:  "https://bilianku.com/document/list?subjectId=1550777680674660353",
 	},
 	{
 		name: "英语",
-		url:  "https://www.zktiku.com.cn/document/list?subjectId=1550777696118087682",
+		url:  "https://bilianku.com/document/list?subjectId=1550777696118087682",
 	},
 	{
 		name: "物理",
-		url:  "https://www.zktiku.com.cn/document/list?subjectId=1550777712421347330",
+		url:  "https://bilianku.com/document/list?subjectId=1550777712421347330",
 	},
 	{
 		name: "化学",
-		url:  "https://www.zktiku.com.cn/document/list?subjectId=1550777727697002498",
+		url:  "https://bilianku.com/document/list?subjectId=1550777727697002498",
 	},
 	{
 		name: "生物学",
-		url:  "https://www.zktiku.com.cn/document/list?subjectId=1550777745950613506",
+		url:  "https://bilianku.com/document/list?subjectId=1550777745950613506",
 	},
 	{
 		name: "历史",
-		url:  "https://www.zktiku.com.cn/document/list?subjectId=1550777926037250049",
+		url:  "https://bilianku.com/document/list?subjectId=1550777926037250049",
 	},
 	{
 		name: "思想政治",
-		url:  "https://www.zktiku.com.cn/document/list?subjectId=1550777827135561729",
+		url:  "https://bilianku.com/document/list?subjectId=1550777827135561729",
 	},
 	{
 		name: "地理",
-		url:  "https://www.zktiku.com.cn/document/list?subjectId=1550777951320514561",
+		url:  "https://bilianku.com/document/list?subjectId=1550777951320514561",
 	},
 }
 
 // ychEduSpider 获取名校教研文档
 // @Title 获取名校教研文档
-// @Description https://www.zktiku.com.cn/，获取名校教研文档
+// @Description https://bilianku.com/，获取名校教研文档
 func main() {
 	for _, subject := range AllSubject {
 		page := 1
@@ -116,7 +116,7 @@ func main() {
 					fmt.Println("=================================================================================")
 					fmt.Println(pageListUrl)
 
-					detailUrl := "https://www.zktiku.com.cn" + htmlquery.InnerText(htmlquery.FindOne(listNode, `./a/@href`))
+					detailUrl := "https://bilianku.com" + htmlquery.InnerText(htmlquery.FindOne(listNode, `./a/@href`))
 					detailDoc, err := getZkTiKu(detailUrl)
 					if err != nil {
 						fmt.Println(err)
@@ -149,7 +149,7 @@ func main() {
 							reg := regexp.MustCompile(`[0-9]+`)
 							fileDetailId, _ := strconv.Atoi(reg.FindAllString(onClickText, -1)[0])
 
-							downloadUrl := "https://www.zktiku.com.cn/document/download"
+							downloadUrl := "https://bilianku.com/document/download"
 							fmt.Println(downloadUrl)
 							err = downloadZkTiKu(downloadUrl, detailUrl, fileDetailId)
 							if err != nil {
@@ -157,9 +157,9 @@ func main() {
 								continue
 							}
 
-							downloadExecUrl := fmt.Sprintf("https://www.zktiku.com.cn/document/downloadexec?id=%d", fileDetailId)
+							downloadExecUrl := fmt.Sprintf("https://bilianku.com/document/downloadexec?id=%d", fileDetailId)
 							fmt.Println(downloadExecUrl)
-							filePath := "../www.zktiku.com.cn/" + subject.name + "/"
+							filePath := "../bilianku.com/" + subject.name + "/"
 							fileName := fileTile + suffix
 							err = downloadExecZkTiKu(downloadExecUrl, detailUrl, filePath, fileName)
 							if err != nil {
@@ -260,8 +260,8 @@ func downloadZkTiKu(downloadUrl string, referer string, fileDetailId int) error 
 	req.Header.Set("Connection", "keep-alive")
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 	req.Header.Set("Cookie", "__51vcke__JohyjbD1C0xg9qUz=0b89b92a-6862-5964-950c-fd0424460459; __51vuft__JohyjbD1C0xg9qUz=1676033539876; mobile=15238369929; JSESSIONID=2619B18AD9F7D848ED3D0ED88206F936; __51uvsct__JohyjbD1C0xg9qUz=3; token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1SWQiOjE2MjM5ODczNDYxMDM3MDk2OTgsInVUeXBlIjoyLCJleHAiOjE2NzY2NTcyNDR9.yB-IPSls4xcQTdNKqG43q1d9hz8w3FxIYWWw0xH0shM; __vtins__JohyjbD1C0xg9qUz=%7B%22sid%22%3A%20%22647da08c-62a8-599a-995e-4a351a7137c1%22%2C%20%22vd%22%3A%207%2C%20%22stt%22%3A%20395895%2C%20%22dr%22%3A%209501%2C%20%22expires%22%3A%201676054244939%2C%20%22ct%22%3A%201676052444939%7D")
-	req.Header.Set("Host", "www.zktiku.com.cn")
-	req.Header.Set("Origin", "https://www.zktiku.com.cn")
+	req.Header.Set("Host", "bilianku.com")
+	req.Header.Set("Origin", "https://bilianku.com")
 	req.Header.Set("Referer", referer)
 	req.Header.Set("sec-ch-ua", "\"Chromium\";v=\"110\", \"Not A(Brand\";v=\"24\", \"Google Chrome\";v=\"110\"")
 	req.Header.Set("sec-ch-ua-mobile", "?0")
@@ -326,7 +326,7 @@ func downloadExecZkTiKu(attachmentUrl string, referer string, filePath string, f
 	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
 	req.Header.Set("Connection", "keep-alive")
 	req.Header.Set("Cookie", "__51vcke__JohyjbD1C0xg9qUz=0b89b92a-6862-5964-950c-fd0424460459; __51vuft__JohyjbD1C0xg9qUz=1676033539876; mobile=15238369929; JSESSIONID=2619B18AD9F7D848ED3D0ED88206F936; __51uvsct__JohyjbD1C0xg9qUz=3; token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1SWQiOjE2MjM5ODczNDYxMDM3MDk2OTgsInVUeXBlIjoyLCJleHAiOjE2NzY2NTcyNDR9.yB-IPSls4xcQTdNKqG43q1d9hz8w3FxIYWWw0xH0shM; __vtins__JohyjbD1C0xg9qUz=%7B%22sid%22%3A%20%22647da08c-62a8-599a-995e-4a351a7137c1%22%2C%20%22vd%22%3A%207%2C%20%22stt%22%3A%20395895%2C%20%22dr%22%3A%209501%2C%20%22expires%22%3A%201676054244939%2C%20%22ct%22%3A%201676052444939%7D")
-	req.Header.Set("Host", "www.zktiku.com.cn")
+	req.Header.Set("Host", "bilianku.com")
 	req.Header.Set("Referer", referer)
 	req.Header.Set("sec-ch-ua", "\"Chromium\";v=\"110\", \"Not A(Brand\";v=\"24\", \"Google Chrome\";v=\"110\"")
 	req.Header.Set("sec-ch-ua-mobile", "?0")
