@@ -285,22 +285,11 @@ type apiBiLianKuResultCount struct {
 }
 
 type apiBiLianKuResultData struct {
-	Id          string `json:"id"`
-	Title       string `json:"title"`
-	InputTime   string `json:"inputtime"`
-	Time        string `json:"time"`
-	Hot         string `json:"hot"`
-	DownMianFei string `json:"downmianfei"`
-	DowXueBi    string `json:"dowxuebi"`
+	Id    string `json:"id"`
+	Title string `json:"title"`
 }
 type apiBiLianKuResultMulti struct {
-	BackPage  int         `json:"BackPage"`
-	NextPage  int         `json:"NextPage"`
-	Page      int         `json:"Page"`
-	PageCount int         `json:"PageCount"`
-	PageNums  map[int]int `json:"PageNums"`
-	PageSize  int         `json:"PageSize"`
-	RecordNum int         `json:"RecordNum"`
+	PageCount int `json:"PageCount"`
 }
 
 // ychEduSpider 获取必练库文档
@@ -378,9 +367,10 @@ func main() {
 					page = 1
 					break
 				}
+				fmt.Println("======================================================")
+				fmt.Println(subject.name, category.name, page)
+				filePath := "../bilianku.com/" + subject.name + "/" + category.name + "/"
 				for _, paper := range apiBiLianKuResult.Data {
-					filePath := "../bilianku.com/" + subject.name + "/" + category.name + "/"
-					fmt.Println(filePath)
 					paperId, _ := strconv.Atoi(paper.Id)
 					paperTtle := paper.Title
 					fmt.Println(paperTtle)
