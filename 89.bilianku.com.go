@@ -379,11 +379,14 @@ func main() {
 					break
 				}
 				for _, paper := range apiBiLianKuResult.Data {
+					filePath := "../bilianku.com/" + subject.name + "/" + category.name + "/"
+					fmt.Println(filePath)
 					paperId, _ := strconv.Atoi(paper.Id)
 					paperTtle := paper.Title
+					fmt.Println(paperTtle, paperId)
+
 					downloadUrl := fmt.Sprintf("http://bilianku.com/down-%d/", paperId)
 					detailUrl := fmt.Sprintf("http://bilianku.com/shijuan-%d/", paperId)
-					filePath := "../bilianku.com/" + subject.name + "/" + category.name + "/"
 					fileName := paperTtle + ".pdf"
 					err = downloadBiLianKu(downloadUrl, detailUrl, filePath, fileName)
 					if err != nil {
