@@ -373,6 +373,8 @@ func main() {
 				for _, paper := range apiBiLianKuResult.Data {
 					paperId, _ := strconv.Atoi(paper.Id)
 					paperTtle := paper.Title
+					paperTtle = strings.ReplaceAll(paperTtle, "/", "-")
+					paperTtle = strings.ReplaceAll(paperTtle, " ", "")
 					fmt.Println(paperTtle)
 
 					downloadUrl := fmt.Sprintf("http://bilianku.com/down-%d/", paperId)
