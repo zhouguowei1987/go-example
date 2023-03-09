@@ -39,17 +39,21 @@ var AllCategory = []Category{
 	//	name: "导游词",
 	//	url:  "https://www.diyifanwen.com/fanwen/daoyouci/",
 	//},
+	//{
+	//	name: "工作总结",
+	//	url:  "https://www.diyifanwen.com/fanwen/gongzuozongjie/",
+	//},
+	//{
+	//	name: "工作计划",
+	//	url:  "https://www.diyifanwen.com/fanwen/gongzuojihua/",
+	//},
+	//{
+	//	name: "演讲稿",
+	//	url:  "https://www.diyifanwen.com/yanjianggao/",
+	//},
 	{
-		name: "工作总结",
-		url:  "https://www.diyifanwen.com/fanwen/gongzuozongjie/",
-	},
-	{
-		name: "工作计划",
-		url:  "https://www.diyifanwen.com/fanwen/gongzuojihua/",
-	},
-	{
-		name: "演讲稿",
-		url:  "https://www.diyifanwen.com/yanjianggao/",
+		name: "工作报告",
+		url:  "https://www.diyifanwen.com/fanwen/zongjiebaodao/",
 	},
 }
 
@@ -73,7 +77,7 @@ func main() {
 				isPageListGo := true
 				for isPageListGo {
 					// 只爬取10页数据
-					if page > 2 {
+					if page >= 2 {
 						isPageListGo = false
 						page = 1
 						break
