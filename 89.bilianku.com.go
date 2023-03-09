@@ -383,7 +383,7 @@ func main() {
 					fmt.Println(filePath)
 					paperId, _ := strconv.Atoi(paper.Id)
 					paperTtle := paper.Title
-					fmt.Println(paperTtle, paperId)
+					fmt.Println(paperTtle)
 
 					downloadUrl := fmt.Sprintf("http://bilianku.com/down-%d/", paperId)
 					detailUrl := fmt.Sprintf("http://bilianku.com/shijuan-%d/", paperId)
@@ -396,6 +396,9 @@ func main() {
 				}
 				if apiBiLianKuResult.Multi.PageCount > page {
 					page++
+				} else {
+					page = 1
+					break
 				}
 			}
 		}
