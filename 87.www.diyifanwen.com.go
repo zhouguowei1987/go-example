@@ -11,6 +11,7 @@ import (
 	"os"
 	"path/filepath"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -39,10 +40,10 @@ var AllCategory = []Category{
 	//	name: "导游词",
 	//	url:  "https://www.diyifanwen.com/fanwen/daoyouci/",
 	//},
-	//{
-	//	name: "工作总结",
-	//	url:  "https://www.diyifanwen.com/fanwen/gongzuozongjie/",
-	//},
+	{
+		name: "工作总结",
+		url:  "https://www.diyifanwen.com/fanwen/gongzuozongjie/",
+	},
 	//{
 	//	name: "工作计划",
 	//	url:  "https://www.diyifanwen.com/fanwen/gongzuojihua/",
@@ -51,10 +52,18 @@ var AllCategory = []Category{
 	//	name: "演讲稿",
 	//	url:  "https://www.diyifanwen.com/yanjianggao/",
 	//},
-	{
-		name: "工作报告",
-		url:  "https://www.diyifanwen.com/fanwen/zongjiebaodao/",
-	},
+	//{
+	//	name: "工作报告",
+	//	url:  "https://www.diyifanwen.com/fanwen/zongjiebaodao/",
+	//},
+	//{
+	//	name: "学生评语",
+	//	url:  "https://www.diyifanwen.com/fanwen/xueshengpingyu/",
+	//},
+	//{
+	//	name: "礼仪",
+	//	url:  "https://www.diyifanwen.com/fanwen/liyu/",
+	//},
 }
 
 // ychEduSpider 获取第一范文网文档
@@ -98,6 +107,10 @@ func main() {
 							fmt.Println("=================================================================================")
 							// 文档详情URL
 							fileName := htmlquery.InnerText(htmlquery.FindOne(listNode, `./a`))
+							lastBracketIndex := strings.LastIndex(fileName, "（")
+							if lastBracketIndex != -1 {
+								fileName = fileName[:lastBracketIndex]
+							}
 							fmt.Println(fileName)
 							detailUrl := "https:" + htmlquery.InnerText(htmlquery.FindOne(listNode, `./a/@href`))
 							fmt.Println(detailUrl)
@@ -106,10 +119,15 @@ func main() {
 							// 下载文档URL
 							downLoadUrl := "https://s.diyifanwen.com/down/doc.asp?id=" + detailUrl
 							filePath := "../www.diyifanwen.com/" + category.name + "/" + childCategoryListName + "/"
-							err = downloadDiYiFanWen(downLoadUrl, downDetailUrl, filePath, fileName+".doc")
-							time.Sleep(time.Second * 5)
-							if err != nil {
-								fmt.Println(err)
+							fileName = "【" + childCategoryListName + "】" + fileName + ".doc"
+							if _, err := os.Stat(filePath + fileName); os.IsNotExist(err) {
+								err = downloadDiYiFanWen(downLoadUrl, downDetailUrl, filePath, fileName)
+								time.Sleep(time.Second * 3)
+								if err != nil {
+									fmt.Println(err)
+									continue
+								}
+							} else {
 								continue
 							}
 						}
