@@ -37,37 +37,89 @@ type Pc6Subject struct {
 }
 
 var AllPc6Subject = []Pc6Subject{
+	//{
+	//	name: "公文通知",
+	//	url:  "https://www.pc6.com/pc/gwtzfwmb/",
+	//},
+	//{
+	//	name: "规章制度",
+	//	url:  "https://www.pc6.com/pc/gzzdwordmb/",
+	//},
+	//{
+	//	name: "营销策划",
+	//	url:  "https://www.pc6.com/pc/yxchwordmb/",
+	//},
+	//{
+	//	name: "总结报告",
+	//	url:  "https://www.pc6.com/pc/gzzjwordmb/",
+	//},
+	//{
+	//	name: "演讲稿范文",
+	//	url:  "https://www.pc6.com/pc/yjgfwmb/",
+	//},
+	//{
+	//	name: "行政管理",
+	//	url:  "https://www.pc6.com/pc/xzglwordmb/",
+	//},
+	//{
+	//	name: "合同范本",
+	//	url:  "https://www.pc6.com/pc/htfbwordmb/",
+	//},
+	//{
+	//	name: "简历模板",
+	//	url:  "https://www.pc6.com/pc/grjlwordmb/",
+	//},
 	{
-		name: "公文通知",
-		url:  "https://www.pc6.com/pc/gwtzfwmb/",
+		name: "读书分享",
+		url:  "https://www.pc6.com/pc/dsfxpptmb/",
 	},
 	{
-		name: "规章制度",
-		url:  "https://www.pc6.com/pc/gzzdwordmb/",
+		name: "主题班会",
+		url:  "https://www.pc6.com/pc/ztbhpptmb/",
 	},
 	{
-		name: "营销策划",
-		url:  "https://www.pc6.com/pc/yxchwordmb/",
+		name: "活动策划",
+		url:  "https://www.pc6.com/pc/hdchpptmb/",
 	},
 	{
-		name: "总结报告",
-		url:  "https://www.pc6.com/pc/gzzjwordmb/",
+		name: "企业宣传",
+		url:  "https://www.pc6.com/pc/qyxcpptmb/",
 	},
 	{
-		name: "演讲稿范文",
-		url:  "https://www.pc6.com/pc/yjgfwmb/",
+		name: "工作计划",
+		url:  "https://www.pc6.com/pc/gzjhpptmb/",
 	},
 	{
-		name: "行政管理",
-		url:  "https://www.pc6.com/pc/xzglwordmb/",
+		name: "毕业答辩",
+		url:  "https://www.pc6.com/pc/ztbhpptmb/",
 	},
 	{
-		name: "合同范本",
-		url:  "https://www.pc6.com/pc/htfbwordmb/",
+		name: "企业培训",
+		url:  "https://www.pc6.com/pc/qypxpptmb/",
 	},
 	{
-		name: "简历模板",
-		url:  "https://www.pc6.com/pc/grjlwordmb/",
+		name: "节日庆典",
+		url:  "https://www.pc6.com/pc/jrqdpptmb/",
+	},
+	{
+		name: "个人简历",
+		url:  "https://www.pc6.com/pc/grjlpptmb/",
+	},
+	{
+		name: "教育教学",
+		url:  "https://www.pc6.com/pc/jyjxpptmb/",
+	},
+	{
+		name: "竞聘述职",
+		url:  "https://www.pc6.com/pc/jpszbgpptmb/",
+	},
+	{
+		name: "商业计划书",
+		url:  "https://www.pc6.com/pc/syjhspptmb/",
+	},
+	{
+		name: "工作总结",
+		url:  "https://www.pc6.com/pc/gzzjpptmb/",
 	},
 }
 
