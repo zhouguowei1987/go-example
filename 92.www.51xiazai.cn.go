@@ -63,7 +63,7 @@ func main() {
 				break
 			}
 
-			dlNodes := htmlquery.Find(pageListDoc, `//div[@class="listCont"]/ul[@id="soft_list"]/li]`)
+			dlNodes := htmlquery.Find(pageListDoc, `//div[@class="listCont"]/ul[@id="soft_list"]/li`)
 			if len(dlNodes) >= 1 {
 				for _, dlNode := range dlNodes {
 
