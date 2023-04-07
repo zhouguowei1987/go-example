@@ -105,10 +105,13 @@ func main() {
 								attachmentFormat := strings.Split(downLoadUrl, ".")
 
 								filePath := "../www.ppt818.com/" + subject.name + "/"
-								err = downloadPpt818(downLoadUrl, detailUrl, filePath, "【"+categoryName+"】"+fileName+"."+attachmentFormat[len(attachmentFormat)-1])
-								if err != nil {
-									fmt.Println(err)
-									continue
+								fileName = "【" + categoryName + "】" + fileName + "." + attachmentFormat[len(attachmentFormat)-1]
+								if _, err = os.Stat(filePath + fileName); err != nil {
+									err = downloadPpt818(downLoadUrl, detailUrl, filePath, fileName)
+									if err != nil {
+										fmt.Println(err)
+										continue
+									}
 								}
 							}
 							page++
