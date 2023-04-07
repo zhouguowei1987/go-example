@@ -41,9 +41,13 @@ var AllPpt818Subject = []Ppt818Subject{
 	//	url:  "http://www.ppt818.com/list_1_quanbu/",
 	//},
 	{
-		name: "word模板",
-		url:  "http://www.ppt818.com/list_3_quanbu/",
+		name: "ppt模板",
+		url:  "http://www.ppt818.com/list_2_quanbu/",
 	},
+	//{
+	//	name: "word模板",
+	//	url:  "http://www.ppt818.com/list_3_quanbu/",
+	//},
 }
 
 // ychEduSpider 获取pc6文档
@@ -106,7 +110,6 @@ func main() {
 									fmt.Println(err)
 									continue
 								}
-								time.Sleep(time.Second * 1)
 							}
 							page++
 						} else {
