@@ -54,7 +54,7 @@ func main() {
 		fileName, _ = iconv.ConvertString(fileName, "gb2312", "utf-8")
 		fmt.Println(fileName)
 
-		filePath := "../final.zuowenwang.net/"
+		filePath := "../www.zuowenwang.net/ " + strconv.Itoa(id%28) + "/"
 		fileName = strconv.Itoa(id) + "-" + fileName + ".docx"
 		if _, err := os.Stat(filePath + fileName); err != nil {
 			err := downloadZuoWenWang(attachmentUrl, detailUrl, filePath, fileName)
