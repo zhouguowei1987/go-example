@@ -36,8 +36,8 @@ func ZuoWenWangSetHttpProxy() (httpclient *http.Client) {
 // @Title 获取满分作文网文档
 // @Description https://www.zuowenwang.net/，获取满分作文网文档
 func main() {
-	var startId = 40498
-	var endId = 279370
+	var startId = 100016
+	var endId = 100017
 	var id = startId
 	var isGoGo = true
 	for isGoGo {
@@ -59,7 +59,7 @@ func main() {
 		fileName, _ = iconv.ConvertString(fileName, "gb2312", "utf-8")
 		fmt.Println(fileName)
 
-		filePath := "../www.zuowenwang.net/ " + strconv.Itoa(id%28) + "/"
+		filePath := "../www.zuowenwang.net/" + strconv.Itoa(id%28) + "/"
 		fileName = strconv.Itoa(id) + "-" + fileName + ".docx"
 		id++
 		if _, err := os.Stat(filePath + fileName); err != nil {
