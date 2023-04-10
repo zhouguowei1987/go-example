@@ -36,7 +36,7 @@ func ZuoWenWangSetHttpProxy() (httpclient *http.Client) {
 // @Title 获取满分作文网文档
 // @Description https://www.zuowenwang.net/，获取满分作文网文档
 func main() {
-	var startId = 1
+	var startId = 40498
 	var endId = 279370
 	var id = startId
 	var isGoGo = true
@@ -48,7 +48,12 @@ func main() {
 
 		detailDoc, _ := getZuoWenWangDetail(detailUrl)
 		//fileName := htmlquery.InnerText(htmlquery.FindOne(detailDoc, `//div[@class="article-t"]/h1`))
-		fileName := htmlquery.InnerText(htmlquery.FindOne(detailDoc, `//div[@class="relates"]/ul/p[1]/strong`))
+		fileNameNode := htmlquery.FindOne(detailDoc, `//div[@class="relates"]/ul/p[1]/strong`)
+		if fileNameNode == nil {
+			id++
+			continue
+		}
+		fileName := htmlquery.InnerText(fileNameNode)
 		fileName = strings.ReplaceAll(fileName, "/", "-")
 		fileName = strings.ReplaceAll(fileName, " ", "")
 		fileName, _ = iconv.ConvertString(fileName, "gb2312", "utf-8")
@@ -56,6 +61,7 @@ func main() {
 
 		filePath := "../www.zuowenwang.net/ " + strconv.Itoa(id%28) + "/"
 		fileName = strconv.Itoa(id) + "-" + fileName + ".docx"
+		id++
 		if _, err := os.Stat(filePath + fileName); err != nil {
 			err := downloadZuoWenWang(attachmentUrl, detailUrl, filePath, fileName)
 			//time.Sleep(time.Second * 1)
@@ -64,7 +70,6 @@ func main() {
 				continue
 			}
 		}
-		id++
 		if id >= endId {
 			isGoGo = false
 		}
