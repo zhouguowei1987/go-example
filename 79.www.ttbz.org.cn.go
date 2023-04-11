@@ -17,8 +17,8 @@ import (
 // @Title 获取全国团体标准信息平台Pdf文档
 // @Description http://www.ttbz.org.cn/，将全国团体标准信息平台Pdf文档入库
 func main() {
-	var startId = 79435
-	var endId = 79912
+	var startId = 79911
+	var endId = 80106
 	var id = startId
 	var isGoGo = true
 	for isGoGo {
