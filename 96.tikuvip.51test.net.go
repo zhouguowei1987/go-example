@@ -353,6 +353,8 @@ func PathList(path string) (tiKuVip51TestPathListDataFileList []TiKuVip51TestPat
 	return tiKuVip51TestPathListDataFileList, nil
 }
 
+var downloadNumber = 0
+
 func tiKuVip51TestDownloadUrl(tiKuVip51TestPathListDataFileList []TiKuVip51TestPathListDataFileList) {
 	for _, pathListDataFile := range tiKuVip51TestPathListDataFileList {
 		pathArray := strings.Split(pathListDataFile.Path, "/")
@@ -372,11 +374,18 @@ func tiKuVip51TestDownloadUrl(tiKuVip51TestPathListDataFileList []TiKuVip51TestP
 		fmt.Println(fileName)
 
 		err := downloadTiKuVip51Test(downloadUrl, filePath, fileName)
+		downloadNumber++
 		if err != nil {
 			fmt.Println(err)
 			continue
 		}
-		time.Sleep(time.Second * 1)
+		if downloadNumber >= 20 {
+			time.Sleep(time.Second * 20)
+			downloadNumber = 0
+		} else {
+			time.Sleep(time.Second * 1)
+		}
+
 	}
 }
 
