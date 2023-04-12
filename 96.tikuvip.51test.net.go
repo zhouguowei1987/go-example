@@ -377,7 +377,7 @@ func tiKuVip51TestDownloadUrl(tiKuVip51TestPathListDataFileList []TiKuVip51TestP
 			fmt.Println(err)
 			continue
 		}
-		if downloadNumber > 20 {
+		if downloadNumber >= 15 {
 			time.Sleep(time.Second * 40)
 			downloadNumber = 0
 		} else {
