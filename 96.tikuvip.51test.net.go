@@ -367,6 +367,7 @@ func tiKuVip51TestDownloadUrl(tiKuVip51TestPathListDataFileList []TiKuVip51TestP
 		// 只保留一级目录
 		filePath := "../tikuvip.51test.net/" + handlePath[0] + "/"
 		fileName := pathListDataFile.Name
+		fileName = strings.Trim(fileName, " ")
 		for _, year := range saveYear {
 			if strings.Contains(fileName, year) {
 				// 开始下载
