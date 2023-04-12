@@ -379,12 +379,14 @@ func tiKuVip51TestDownloadUrl(tiKuVip51TestPathListDataFileList []TiKuVip51TestP
 				fmt.Println(fileName)
 
 				if _, err := os.Stat(filePath + fileName); err != nil {
+					fmt.Println("=======开始下载========")
 					err := downloadTiKuVip51Test(downloadUrl, filePath, fileName)
 					downloadNumber++
 					if err != nil {
 						fmt.Println(err)
 						continue
 					}
+					fmt.Println("=======开始完成========")
 					if downloadNumber >= 15 {
 						fmt.Printf("=======下载15个文件，暂停%d秒=======\n", sleepSecond)
 						time.Sleep(time.Second * time.Duration(sleepSecond))
