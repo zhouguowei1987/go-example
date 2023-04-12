@@ -380,7 +380,7 @@ func tiKuVip51TestDownloadUrl(tiKuVip51TestPathListDataFileList []TiKuVip51TestP
 				continue
 			}
 			if downloadNumber >= 15 {
-				fmt.Println("=======下载15个文件，暂停" + string(sleepSecond) + "秒=======")
+				fmt.Sprintf("=======下载15个文件，暂停%d秒=======", sleepSecond)
 				time.Sleep(time.Second * time.Duration(sleepSecond))
 				downloadNumber = 0
 			} else {
