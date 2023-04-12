@@ -352,6 +352,7 @@ func PathList(path string) (tiKuVip51TestPathListDataFileList []TiKuVip51TestPat
 	return tiKuVip51TestPathListDataFileList, nil
 }
 
+var maxDownloadNumber = 20
 var downloadNumber = 0
 var sleepSecond = 30
 
@@ -389,8 +390,8 @@ func tiKuVip51TestDownloadUrl(tiKuVip51TestPathListDataFileList []TiKuVip51TestP
 						continue
 					}
 					fmt.Println("=======开始完成========")
-					if downloadNumber >= 15 {
-						fmt.Printf("=======下载15个文件，暂停%d秒=======\n", sleepSecond)
+					if downloadNumber >= maxDownloadNumber {
+						fmt.Printf("=======下载%d个文件，暂停%d秒=======\n", maxDownloadNumber, sleepSecond)
 						time.Sleep(time.Second * time.Duration(sleepSecond))
 						downloadNumber = 0
 					} else {
