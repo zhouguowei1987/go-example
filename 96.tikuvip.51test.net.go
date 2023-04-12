@@ -361,7 +361,8 @@ func tiKuVip51TestDownloadUrl(tiKuVip51TestPathListDataFileList []TiKuVip51TestP
 				handlePath = append(handlePath, v)
 			}
 		}
-		filePath := "../tikuvip.51test.net/" + strings.Join(handlePath, "/") + "/"
+		// 只保留一级目录
+		filePath := "../tikuvip.51test.net/" + handlePath[0] + "/"
 		fileName := pathListDataFile.Name
 		downloadUrl := fmt.Sprintf("https://tikuvip.51test.net/index.php?pluginApp/to/officeLive/&path={userShare}:100/真题题库%s", pathListDataFile.Path)
 
