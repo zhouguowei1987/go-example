@@ -353,6 +353,8 @@ func PathList(path string) (tiKuVip51TestPathListDataFileList []TiKuVip51TestPat
 var downloadNumber = 0
 var sleepSecond = 30
 
+var saveYear = []string{"2018", "2019", "2020", "2021", "2022", "2023"}
+
 func tiKuVip51TestDownloadUrl(tiKuVip51TestPathListDataFileList []TiKuVip51TestPathListDataFileList) {
 	for _, pathListDataFile := range tiKuVip51TestPathListDataFileList {
 		pathArray := strings.Split(pathListDataFile.Path, "/")
@@ -365,26 +367,32 @@ func tiKuVip51TestDownloadUrl(tiKuVip51TestPathListDataFileList []TiKuVip51TestP
 		// 只保留一级目录
 		filePath := "../tikuvip.51test.net/" + handlePath[0] + "/"
 		fileName := pathListDataFile.Name
-		downloadUrl := fmt.Sprintf("https://tikuvip.51test.net/index.php?pluginApp/to/officeLive/&path={userShare}:100/真题题库%s", pathListDataFile.Path)
+		for _, year := range saveYear {
+			if strings.Contains(fileName, year) {
+				// 开始下载
+				downloadUrl := fmt.Sprintf("https://tikuvip.51test.net/index.php?pluginApp/to/officeLive/&path={userShare}:100/真题题库%s", pathListDataFile.Path)
 
-		fmt.Println("=======================")
-		fmt.Println(downloadUrl)
-		fmt.Println(filePath)
-		fmt.Println(fileName)
+				fmt.Println("=======================")
+				fmt.Println(downloadUrl)
+				fmt.Println(filePath)
+				fmt.Println(fileName)
 
-		if _, err := os.Stat(filePath + fileName); err != nil {
-			err := downloadTiKuVip51Test(downloadUrl, filePath, fileName)
-			downloadNumber++
-			if err != nil {
-				fmt.Println(err)
-				continue
-			}
-			if downloadNumber >= 15 {
-				fmt.Printf("=======下载15个文件，暂停%d秒=======\n", sleepSecond)
-				time.Sleep(time.Second * time.Duration(sleepSecond))
-				downloadNumber = 0
-			} else {
-				time.Sleep(time.Second * 1)
+				if _, err := os.Stat(filePath + fileName); err != nil {
+					err := downloadTiKuVip51Test(downloadUrl, filePath, fileName)
+					downloadNumber++
+					if err != nil {
+						fmt.Println(err)
+						continue
+					}
+					if downloadNumber >= 15 {
+						fmt.Printf("=======下载15个文件，暂停%d秒=======\n", sleepSecond)
+						time.Sleep(time.Second * time.Duration(sleepSecond))
+						downloadNumber = 0
+					} else {
+						time.Sleep(time.Second * 1)
+					}
+				}
+				break
 			}
 		}
 	}
