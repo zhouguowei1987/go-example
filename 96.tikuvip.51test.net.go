@@ -44,7 +44,7 @@ func main() {
 	for _, treeListInitData := range tiKuVip51TestTreeListInitData {
 		fmt.Println(treeListInitData.Name)
 		for _, childTreeListInitData := range treeListInitData.Children {
-			if childTreeListInitData.Name != "高考" && childTreeListInitData.Name != "中考" {
+			if childTreeListInitData.Name != "高考" && childTreeListInitData.Name != "中考" && childTreeListInitData.Name != "小升初" {
 				// 请求下级文件夹
 				tiKuVip51TestOneLevelTreeListData, err := treeList(childTreeListInitData.Path)
 				if err != nil {
