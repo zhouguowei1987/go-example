@@ -61,10 +61,7 @@ func main() {
 					for _, twoLevelTreeListData := range tiKuVip51TestTwoLevelTreeListData {
 						if twoLevelTreeListData.IsParent {
 							// 请求下级文件夹
-							fmt.Println(twoLevelTreeListData.Path)
 							tiKuVip51TestThreeLevelTreeListData, err := treeList(twoLevelTreeListData.Path)
-							fmt.Printf("%+v", tiKuVip51TestThreeLevelTreeListData)
-							os.Exit(1)
 							if err != nil {
 								fmt.Println(err)
 								continue
@@ -380,7 +377,7 @@ func tiKuVip51TestDownloadUrl(tiKuVip51TestPathListDataFileList []TiKuVip51TestP
 			continue
 		}
 		if downloadNumber > 20 {
-			time.Sleep(time.Second * 35)
+			time.Sleep(time.Second * 40)
 			downloadNumber = 0
 		} else {
 			time.Sleep(time.Second * 1)
