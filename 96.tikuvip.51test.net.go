@@ -371,19 +371,20 @@ func tiKuVip51TestDownloadUrl(tiKuVip51TestPathListDataFileList []TiKuVip51TestP
 		fmt.Println(filePath)
 		fmt.Println(fileName)
 
-		err := downloadTiKuVip51Test(downloadUrl, filePath, fileName)
-		downloadNumber++
-		if err != nil {
-			fmt.Println(err)
-			continue
+		if _, err := os.Stat(filePath + fileName); err != nil {
+			err := downloadTiKuVip51Test(downloadUrl, filePath, fileName)
+			downloadNumber++
+			if err != nil {
+				fmt.Println(err)
+				continue
+			}
+			if downloadNumber >= 15 {
+				time.Sleep(time.Second * 30)
+				downloadNumber = 0
+			} else {
+				time.Sleep(time.Second * 1)
+			}
 		}
-		if downloadNumber >= 15 {
-			time.Sleep(time.Second * 40)
-			downloadNumber = 0
-		} else {
-			time.Sleep(time.Second * 1)
-		}
-
 	}
 }
 
