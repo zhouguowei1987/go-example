@@ -103,12 +103,17 @@ func main() {
 					downLoadUrl := fmt.Sprintf("https://www.jianlisheji.com/download/vip_download_word/?code=%s&keyid=%s&time=%s&encrypt=%s", vipCheckReturn.code, vipCheckReturn.keyid, vipCheckReturn.time, vipCheckReturn.encrypt)
 
 					filePath := "../www.jianlisheji.com/" + subject.name + "/"
-					err = downloadJianLiSheJi(downLoadUrl, detailUrl, filePath, fileName+"."+fileFormat)
-					if err != nil {
-						fmt.Println(err)
-						continue
+					fileName = fileName + "." + fileFormat
+					if _, err := os.Stat(filePath + fileName); err != nil {
+						fmt.Println("=======开始下载========")
+						err = downloadJianLiSheJi(downLoadUrl, detailUrl, filePath, fileName)
+						if err != nil {
+							fmt.Println(err)
+							continue
+						}
+						fmt.Println("=======开始完成========")
+						time.Sleep(time.Second * 1)
 					}
-					time.Sleep(time.Second * 1)
 				}
 				page++
 			} else {
