@@ -44,62 +44,59 @@ func main() {
 	for _, treeListInitData := range tiKuVip51TestTreeListInitData {
 		fmt.Println(treeListInitData.Name)
 		for _, childTreeListInitData := range treeListInitData.Children {
-			//if childTreeListInitData.Name != "高考" && childTreeListInitData.Name != "中考" && childTreeListInitData.Name != "小升初" {
-			if childTreeListInitData.Name == "高考" {
-				// 请求下级文件夹
-				tiKuVip51TestOneLevelTreeListData, err := treeList(childTreeListInitData.Path)
-				if err != nil {
-					fmt.Println(err)
-					continue
-				}
+			// 请求下级文件夹
+			tiKuVip51TestOneLevelTreeListData, err := treeList(childTreeListInitData.Path)
+			if err != nil {
+				fmt.Println(err)
+				continue
+			}
 
-				for _, oneLevelTreeListData := range tiKuVip51TestOneLevelTreeListData {
-					if oneLevelTreeListData.IsParent {
-						tiKuVip51TestTwoLevelTreeListData, err := treeList(oneLevelTreeListData.Path)
-						if err != nil {
-							fmt.Println(err)
-							continue
-						}
-						for _, twoLevelTreeListData := range tiKuVip51TestTwoLevelTreeListData {
-							if twoLevelTreeListData.IsParent {
-								// 请求下级文件夹
-								tiKuVip51TestThreeLevelTreeListData, err := treeList(twoLevelTreeListData.Path)
-								if err != nil {
-									fmt.Println(err)
-									continue
-								}
-								for _, threeLevelTreeListData := range tiKuVip51TestThreeLevelTreeListData {
-									if !threeLevelTreeListData.IsParent {
-										// 请求文件
-										tiKuVip51TestThreeLevelTreeListDataPathListDataFileList, err := PathList(threeLevelTreeListData.Path)
-										if err != nil {
-											fmt.Println(err)
-											continue
-										}
-										tiKuVip51TestDownloadUrl(tiKuVip51TestThreeLevelTreeListDataPathListDataFileList)
-									}
-								}
-							} else {
-								// 请求文件
-								tiKuVip51TestTwoLevelTreeListDataPathListDataFileList, err := PathList(twoLevelTreeListData.Path)
-								if err != nil {
-									fmt.Println(err)
-									continue
-								}
-								// 下载文件
-								tiKuVip51TestDownloadUrl(tiKuVip51TestTwoLevelTreeListDataPathListDataFileList)
-							}
-						}
-					} else {
-						// 请求文件
-						tiKuVip51TestOneLevelTreeListDataPathListDataFileList, err := PathList(oneLevelTreeListData.Path)
-						if err != nil {
-							fmt.Println(err)
-							continue
-						}
-						// 下载文件
-						tiKuVip51TestDownloadUrl(tiKuVip51TestOneLevelTreeListDataPathListDataFileList)
+			for _, oneLevelTreeListData := range tiKuVip51TestOneLevelTreeListData {
+				if oneLevelTreeListData.IsParent {
+					tiKuVip51TestTwoLevelTreeListData, err := treeList(oneLevelTreeListData.Path)
+					if err != nil {
+						fmt.Println(err)
+						continue
 					}
+					for _, twoLevelTreeListData := range tiKuVip51TestTwoLevelTreeListData {
+						if twoLevelTreeListData.IsParent {
+							// 请求下级文件夹
+							tiKuVip51TestThreeLevelTreeListData, err := treeList(twoLevelTreeListData.Path)
+							if err != nil {
+								fmt.Println(err)
+								continue
+							}
+							for _, threeLevelTreeListData := range tiKuVip51TestThreeLevelTreeListData {
+								if !threeLevelTreeListData.IsParent {
+									// 请求文件
+									tiKuVip51TestThreeLevelTreeListDataPathListDataFileList, err := PathList(threeLevelTreeListData.Path)
+									if err != nil {
+										fmt.Println(err)
+										continue
+									}
+									tiKuVip51TestDownloadUrl(tiKuVip51TestThreeLevelTreeListDataPathListDataFileList)
+								}
+							}
+						} else {
+							// 请求文件
+							tiKuVip51TestTwoLevelTreeListDataPathListDataFileList, err := PathList(twoLevelTreeListData.Path)
+							if err != nil {
+								fmt.Println(err)
+								continue
+							}
+							// 下载文件
+							tiKuVip51TestDownloadUrl(tiKuVip51TestTwoLevelTreeListDataPathListDataFileList)
+						}
+					}
+				} else {
+					// 请求文件
+					tiKuVip51TestOneLevelTreeListDataPathListDataFileList, err := PathList(oneLevelTreeListData.Path)
+					if err != nil {
+						fmt.Println(err)
+						continue
+					}
+					// 下载文件
+					tiKuVip51TestDownloadUrl(tiKuVip51TestOneLevelTreeListDataPathListDataFileList)
 				}
 			}
 		}
