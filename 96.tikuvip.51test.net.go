@@ -371,7 +371,7 @@ var maxDownloadNumber = 20
 var downloadNumber = 0
 var sleepSecond = 30
 
-var saveYear = []string{"2018", "2019", "2020", "2021", "2022", "2023"}
+var saveYear = []string{"2020", "2021", "2022", "2023"}
 
 func tiKuVip51TestDownloadUrl(tiKuVip51TestPathListDataFileList []TiKuVip51TestPathListDataFileList) {
 	for _, pathListDataFile := range tiKuVip51TestPathListDataFileList {
