@@ -37,6 +37,19 @@ func TiKuVip51TestSetHttpProxy() (httpclient *http.Client) {
 // @Title 获取无忧考试网真题
 // @Description https://tikuvip.51test.net/，获取无忧考试网真题
 func main() {
+	saveCategory := map[string]bool{
+		"自考":      true,
+		"专升本考试":   true,
+		"一级建造师考试": true,
+		"小升初":     true,
+		"考研":      true,
+		"公务员考试":   true,
+		"高中会考":    true,
+		"高考":      true,
+		"二级建造师考试": true,
+		"成人高考":    true,
+		"中考":      true,
+	}
 	tiKuVip51TestTreeListInitData, err := treeListInit()
 	if err != nil {
 		fmt.Println(err)
@@ -44,6 +57,10 @@ func main() {
 	for _, treeListInitData := range tiKuVip51TestTreeListInitData {
 		fmt.Println(treeListInitData.Name)
 		for _, childTreeListInitData := range treeListInitData.Children {
+			fmt.Println(childTreeListInitData.Name)
+			if _, ok := saveCategory[childTreeListInitData.Name]; !ok {
+				continue
+			}
 			// 请求下级文件夹
 			tiKuVip51TestOneLevelTreeListData, err := treeList(childTreeListInitData.Path)
 			if err != nil {
@@ -354,7 +371,7 @@ var maxDownloadNumber = 20
 var downloadNumber = 0
 var sleepSecond = 30
 
-var saveYear = []string{"2018", "2019", "2020", "2021", "2022", "2023"}
+var saveYear = []string{"2020", "2021", "2022", "2023"}
 
 func tiKuVip51TestDownloadUrl(tiKuVip51TestPathListDataFileList []TiKuVip51TestPathListDataFileList) {
 	for _, pathListDataFile := range tiKuVip51TestPathListDataFileList {
