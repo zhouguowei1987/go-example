@@ -49,6 +49,7 @@ func main() {
 		"二级建造师考试": true,
 		"成人高考":    true,
 		"中考":      true,
+		"事业单位招聘":  true,
 	}
 	tiKuVip51TestTreeListInitData, err := treeListInit()
 	if err != nil {
@@ -383,7 +384,7 @@ func tiKuVip51TestDownloadUrl(tiKuVip51TestPathListDataFileList []TiKuVip51TestP
 			}
 		}
 		// 只保留一级目录
-		filePath := "../tikuvip.51test.net/" + handlePath[0] + "/"
+		filePath := "../tikuvip（2020-2023）.51test.net/" + handlePath[0] + "/"
 		fileName := pathListDataFile.Name
 		fileName = strings.Trim(fileName, " ")
 		for _, year := range saveYear {
