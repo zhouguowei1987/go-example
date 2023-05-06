@@ -17,8 +17,8 @@ import (
 // @Title 获取全国团体标准信息平台Pdf文档
 // @Description http://www.ttbz.org.cn/，将全国团体标准信息平台Pdf文档入库
 func main() {
-	var startId = 21027
-	var endId = 80821
+	var startId = 80917
+	var endId = 81023
 	var id = startId
 	var isGoGo = true
 	for isGoGo {
@@ -153,6 +153,9 @@ func tbzSpider(id int) error {
 					standardNo := htmlquery.InnerText(htmlquery.FindOne(standardNoTdNodes[1], `./span[@id="r1_c5"]`))
 					standardNo = strings.ReplaceAll(standardNo, "/", "-")
 					fmt.Println(standardNo)
+					if strings.Contains(standardNo, "T-ZZB") {
+						return nil
+					}
 
 					// 中文标题
 					chineseTitleTrNode := trNodes[3]
