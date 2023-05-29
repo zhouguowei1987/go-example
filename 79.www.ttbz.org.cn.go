@@ -17,20 +17,18 @@ import (
 // @Title 获取全国团体标准信息平台Pdf文档
 // @Description http://www.ttbz.org.cn/，将全国团体标准信息平台Pdf文档入库
 func main() {
-	var startId = 81901
-	var endId = 81956
-	var id = startId
-	var isGoGo = true
-	for isGoGo {
-		fmt.Println(id)
-		err := tbzSpider(id)
-		id++
-		if err != nil {
-			continue
-		}
-		if id >= endId {
-			isGoGo = false
-		}
+	var startId = 58947
+	var endId = 82531
+	goCh := make(chan struct{}, 10)
+	for id := startId; id <= endId; id++ {
+		go func() {
+			err := tbzSpider(id)
+			if err != nil {
+				fmt.Println(err)
+			}
+			goCh <- struct{}{}
+		}()
+		<-goCh
 	}
 	//tbzSpider(68206)
 }
@@ -115,6 +113,7 @@ func downloadPdf(pdfUrl string, filePath string) error {
 }
 
 func tbzSpider(id int) error {
+	fmt.Println(id)
 	detailUrl := fmt.Sprintf("http://www.ttbz.org.cn/StandardManage/Detail/%d", id)
 	detailDoc, err := getTbz(detailUrl)
 	if err != nil {
