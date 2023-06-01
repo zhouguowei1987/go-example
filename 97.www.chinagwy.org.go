@@ -57,15 +57,14 @@ func main() {
 				for _, year := range ChinaGwySaveYear {
 					// 文档详情URL
 					detailUrl := htmlquery.InnerText(htmlquery.FindOne(dlNode, `./a[2]/@href`))
-					fmt.Println(detailUrl)
 					detailDoc, _ := htmlquery.LoadURL(detailUrl)
-
 					fileNameNode := htmlquery.FindOne(detailDoc, `//div[@class="c_l_c_2"]/h1[@class="bold"]`)
 					if fileNameNode == nil {
 						continue
 					}
 					fileName := htmlquery.InnerText(fileNameNode)
 					if strings.Contains(fileName, year) {
+						fmt.Println(detailUrl)
 						fileName = strings.ReplaceAll(fileName, "/", "-")
 						fileName = strings.ReplaceAll(fileName, ".", "")
 						fileName = strings.ReplaceAll(fileName, " ", "")
