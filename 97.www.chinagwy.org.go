@@ -31,6 +31,8 @@ func ChinaGwySetHttpProxy() (httpclient *http.Client) {
 	return httpclient
 }
 
+var ChinaGwySaveYear = []string{"2018", "2019", "2020", "2021", "2022", "2023", "2024"}
+
 // ychEduSpider 获取公考资讯网文档
 // @Title 获取公考资讯网文档
 // @Description https://www.chinagwy.org/，获取公考资讯网文档
@@ -69,41 +71,45 @@ func main() {
 				fileName = strings.ReplaceAll(fileName, "（", "(")
 				fileName = strings.ReplaceAll(fileName, "）", ")")
 				fmt.Println(fileName)
+				for _, year := range ChinaGwySaveYear {
+					if strings.Contains(fileName, year) {
+						detailUrl := htmlquery.InnerText(htmlquery.FindOne(dlNode, `./a[2]/@href`))
+						fmt.Println(detailUrl)
 
-				detailUrl := htmlquery.InnerText(htmlquery.FindOne(dlNode, `./a[2]/@href`))
-				fmt.Println(detailUrl)
+						detailDoc, _ := htmlquery.LoadURL(detailUrl)
+						detailDocText := htmlquery.OutputHTML(detailDoc, true)
 
-				detailDoc, _ := htmlquery.LoadURL(detailUrl)
-				detailDocText := htmlquery.OutputHTML(detailDoc, true)
+						reg := regexp.MustCompile(`<a href="http://www.chinagwy.org/files/(.*?).pdf" target="_blank">(.*?)</a>`)
+						regFindStingMatch := reg.FindStringSubmatch(detailDocText)
 
-				reg := regexp.MustCompile(`<a href="http://www.chinagwy.org/files/(.*?).pdf" target="_blank">(.*?)</a>`)
-				regFindStingMatch := reg.FindStringSubmatch(detailDocText)
+						if len(regFindStingMatch) != 3 {
+							continue
+						}
+						aPdfFileName := regFindStingMatch[1]
+						if strings.Index(regFindStingMatch[2], "答案") == -1 {
+							continue
+						}
 
-				if len(regFindStingMatch) != 3 {
-					continue
-				}
-				aPdfFileName := regFindStingMatch[1]
-				if strings.Index(regFindStingMatch[2], "答案") == -1 {
-					continue
-				}
+						// 下载文档URL
+						downLoadUrl := fmt.Sprintf("http://www.chinagwy.org/files/%s.pdf", aPdfFileName)
+						fmt.Println(downLoadUrl)
 
-				// 下载文档URL
-				downLoadUrl := fmt.Sprintf("http://www.chinagwy.org/files/%s.pdf", aPdfFileName)
-				fmt.Println(downLoadUrl)
-
-				// 文件格式
-				attachmentFormat := strings.Split(downLoadUrl, ".")
-				filePath := "../www.chinagwy.org/" + fileName + "." + attachmentFormat[len(attachmentFormat)-1]
-				if _, err := os.Stat(filePath); err != nil {
-					fmt.Println("=======开始下载========")
-					err = downloadChinaGwy(downLoadUrl, detailUrl, filePath)
-					if err != nil {
-						fmt.Println(err)
-						continue
+						// 文件格式
+						attachmentFormat := strings.Split(downLoadUrl, ".")
+						filePath := "../www.chinagwy.org/" + fileName + "." + attachmentFormat[len(attachmentFormat)-1]
+						if _, err := os.Stat(filePath); err != nil {
+							fmt.Println("=======开始下载========")
+							err = downloadChinaGwy(downLoadUrl, detailUrl, filePath)
+							if err != nil {
+								fmt.Println(err)
+								continue
+							}
+							fmt.Println("=======开始完成========")
+						}
+						time.Sleep(time.Second * 1)
+						break
 					}
-					fmt.Println("=======开始完成========")
 				}
-				time.Sleep(time.Second * 1)
 			}
 			page++
 			if page > maxPage {
