@@ -36,7 +36,7 @@ func ChinaGwySetHttpProxy() (httpclient *http.Client) {
 // @Description https://www.chinagwy.org/，获取公考资讯网文档
 func main() {
 	maxPage := 50
-	page := 1
+	page := 26
 	isPageListGo := true
 	for isPageListGo {
 		pageListUrl := fmt.Sprintf("https://www.chinagwy.org/html/stzx/7_%d.html", page)
@@ -63,7 +63,7 @@ func main() {
 				detailDoc, _ := htmlquery.LoadURL(detailUrl)
 				detailDocText := htmlquery.OutputHTML(detailDoc, true)
 
-				reg := regexp.MustCompile(`<a href="http://www.chinagwy.org/files/(.*?).pdf" target="_blank">(.*?).pdf</a>`)
+				reg := regexp.MustCompile(`<a href="http://www.chinagwy.org/files/(.*?).pdf" target="_blank">(.*?)</a>`)
 				regFindStingMatch := reg.FindStringSubmatch(detailDocText)
 
 				if len(regFindStingMatch) != 3 {
@@ -80,7 +80,7 @@ func main() {
 
 				// 文件格式
 				attachmentFormat := strings.Split(downLoadUrl, ".")
-				filePath := "../www.chinagwy.org/" + fileName + "(含答案)." + attachmentFormat[len(attachmentFormat)-1]
+				filePath := "../www.chinagwy.org/" + fileName + "." + attachmentFormat[len(attachmentFormat)-1]
 				if _, err := os.Stat(filePath); err != nil {
 					fmt.Println("=======开始下载========")
 					err = downloadChinaGwy(downLoadUrl, detailUrl, filePath)
