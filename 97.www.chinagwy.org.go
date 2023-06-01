@@ -58,6 +58,7 @@ func main() {
 				// 文档详情URL
 				fileName := htmlquery.InnerText(htmlquery.FindOne(dlNode, `./a[2]`))
 				fileName = strings.ReplaceAll(fileName, "/", "-")
+				fileName = strings.ReplaceAll(fileName, ".", "")
 				fileName = strings.ReplaceAll(fileName, " ", "")
 				fileName = strings.ReplaceAll(fileName, "（", "(")
 				fileName = strings.ReplaceAll(fileName, "）", ")")
