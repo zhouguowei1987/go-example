@@ -53,24 +53,26 @@ func main() {
 		dlNodes := htmlquery.Find(pageListDoc, `//div[@class="con"]/ul[@class="list01"]/li[not(@class="line")]`)
 		if len(dlNodes) >= 1 {
 			for _, dlNode := range dlNodes {
-
 				fmt.Println("=================================================================================")
-				// 文档详情URL
-				fileName := htmlquery.InnerText(htmlquery.FindOne(dlNode, `./a[2]`))
-				fileName = strings.ReplaceAll(fileName, "/", "-")
-				fileName = strings.ReplaceAll(fileName, ".", "")
-				fileName = strings.ReplaceAll(fileName, " ", "")
-				fileName = strings.ReplaceAll(fileName, "（", "(")
-				fileName = strings.ReplaceAll(fileName, "）", ")")
-				fmt.Println(fileName)
 				for _, year := range ChinaGwySaveYear {
+					// 文档详情URL
+					detailUrl := htmlquery.InnerText(htmlquery.FindOne(dlNode, `./a[2]/@href`))
+					fmt.Println(detailUrl)
+					detailDoc, _ := htmlquery.LoadURL(detailUrl)
+
+					fileNameNode := htmlquery.FindOne(detailDoc, `//div[@class="c_l_c_2"]/h1[@class="bold"]`)
+					if fileNameNode == nil {
+						continue
+					}
+					fileName := htmlquery.InnerText(fileNameNode)
+					fileName = strings.ReplaceAll(fileName, "/", "-")
+					fileName = strings.ReplaceAll(fileName, ".", "")
+					fileName = strings.ReplaceAll(fileName, " ", "")
+					fileName = strings.ReplaceAll(fileName, "（", "(")
+					fileName = strings.ReplaceAll(fileName, "）", ")")
+					fmt.Println(fileName)
 					if strings.Contains(fileName, year) {
-						detailUrl := htmlquery.InnerText(htmlquery.FindOne(dlNode, `./a[2]/@href`))
-						fmt.Println(detailUrl)
-
-						detailDoc, _ := htmlquery.LoadURL(detailUrl)
 						detailDocText := htmlquery.OutputHTML(detailDoc, true)
-
 						reg := regexp.MustCompile(`<a href="http://www.chinagwy.org/files/(.*?).pdf" target="_blank">(.*?)</a>`)
 						regFindStingMatch := reg.FindStringSubmatch(detailDocText)
 
