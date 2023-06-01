@@ -100,6 +100,7 @@ func main() {
 							}
 							fmt.Println("=======开始完成========")
 						}
+						time.Sleep(time.Second * 1)
 						break
 					}
 				}
