@@ -36,7 +36,7 @@ func ChinaGwySetHttpProxy() (httpclient *http.Client) {
 // @Description https://www.chinagwy.org/，获取公考资讯网文档
 func main() {
 	maxPage := 50
-	page := 2
+	page := 1
 	isPageListGo := true
 	for isPageListGo {
 		pageListUrl := fmt.Sprintf("https://www.chinagwy.org/html/stzx/7_%d.html", page)
@@ -65,12 +65,12 @@ func main() {
 
 				reg := regexp.MustCompile(`<a href="http://www.chinagwy.org/files/(.*?).pdf" target="_blank">(.*?).pdf</a>`)
 				regFindStingMatch := reg.FindStringSubmatch(detailDocText)
-				if len(regFindStingMatch) < 3 {
+
+				if len(regFindStingMatch) != 3 {
 					continue
 				}
 				aPdfFileName := regFindStingMatch[1]
-				aPdfTextName := regFindStingMatch[1]
-				if strings.Index(aPdfTextName, "答案") == -1 {
+				if strings.Index(regFindStingMatch[2], "答案") == -1 {
 					continue
 				}
 
@@ -80,11 +80,15 @@ func main() {
 
 				// 文件格式
 				attachmentFormat := strings.Split(downLoadUrl, ".")
-				filePath := "../www.chinagwy.org/"
-				err = downloadChinaGwy(downLoadUrl, detailUrl, filePath, fileName+"(含答案)."+attachmentFormat[len(attachmentFormat)-1])
-				if err != nil {
-					fmt.Println(err)
-					continue
+				filePath := "../www.chinagwy.org/" + fileName + "(含答案)." + attachmentFormat[len(attachmentFormat)-1]
+				if _, err := os.Stat(filePath); err != nil {
+					fmt.Println("=======开始下载========")
+					err = downloadChinaGwy(downLoadUrl, detailUrl, filePath)
+					if err != nil {
+						fmt.Println(err)
+						continue
+					}
+					fmt.Println("=======开始完成========")
 				}
 				time.Sleep(time.Second * 1)
 			}
@@ -99,7 +103,7 @@ func main() {
 		}
 	}
 }
-func downloadChinaGwy(attachmentUrl string, referer string, filePath string, fileName string) error {
+func downloadChinaGwy(attachmentUrl string, referer string, filePath string) error {
 	// 初始化客户端
 	var client *http.Client = &http.Client{
 		Transport: &http.Transport{
@@ -148,7 +152,7 @@ func downloadChinaGwy(attachmentUrl string, referer string, filePath string, fil
 			return err
 		}
 	}
-	out, err := os.Create(filePath + fileName)
+	out, err := os.Create(filePath)
 	if err != nil {
 		return err
 	}
