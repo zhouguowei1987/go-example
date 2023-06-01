@@ -67,7 +67,7 @@ func main() {
 				fileName = strings.ReplaceAll(fileName, "精选题", "试题")
 				fileName = strings.ReplaceAll(fileName, "精选", "")
 				fileName = strings.ReplaceAll(fileName, "真题", "试题")
-				fileName = strings.ReplaceAll(fileName, "题", "题(含答案)")
+				fileName = strings.ReplaceAll(fileName, "题", "题及参考答案")
 				fileName = strings.ReplaceAll(fileName, "（", "(")
 				fileName = strings.ReplaceAll(fileName, "）", ")")
 				fmt.Println(fileName)
