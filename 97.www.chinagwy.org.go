@@ -65,13 +65,14 @@ func main() {
 						continue
 					}
 					fileName := htmlquery.InnerText(fileNameNode)
-					fileName = strings.ReplaceAll(fileName, "/", "-")
-					fileName = strings.ReplaceAll(fileName, ".", "")
-					fileName = strings.ReplaceAll(fileName, " ", "")
-					fileName = strings.ReplaceAll(fileName, "（", "(")
-					fileName = strings.ReplaceAll(fileName, "）", ")")
-					fmt.Println(fileName)
 					if strings.Contains(fileName, year) {
+						fileName = strings.ReplaceAll(fileName, "/", "-")
+						fileName = strings.ReplaceAll(fileName, ".", "")
+						fileName = strings.ReplaceAll(fileName, " ", "")
+						fileName = strings.ReplaceAll(fileName, "（", "(")
+						fileName = strings.ReplaceAll(fileName, "）", ")")
+						fmt.Println(fileName)
+
 						detailDocText := htmlquery.OutputHTML(detailDoc, true)
 						reg := regexp.MustCompile(`<a href="http://www.chinagwy.org/files/(.*?).pdf" target="_blank">(.*?)</a>`)
 						regFindStingMatch := reg.FindStringSubmatch(detailDocText)
