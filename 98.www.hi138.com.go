@@ -30,7 +30,7 @@ func Hi138SetHttpProxy() (httpclient *http.Client) {
 	return httpclient
 }
 
-var Hi138SaveYear = []string{"2018", "2019", "2020", "2021", "2022", "2023", "2024"}
+var Hi138SaveYear = []string{"2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024"}
 
 // ychEduSpider 获取免费论文下载中心文档
 // @Title 获取免费论文下载中心文档
@@ -96,7 +96,7 @@ func main() {
 									fmt.Println(downLoadUrl)
 
 									//filePath := "../www.hi138.com/" + bigSubjectName + "/" + smallSubjectName + "/" + fileName + ".docx"
-									filePath := "../www.hi138.com/" + fileName + ".docx"
+									filePath := "../www.hi138.com/" + fileName + ".doc"
 									if _, err := os.Stat(filePath); err != nil {
 										fmt.Println("=======开始下载========")
 										err = downloadHi138(downLoadUrl, detailUrl, filePath)
