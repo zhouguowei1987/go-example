@@ -83,7 +83,7 @@ func main() {
 								fileId, _ := strconv.Atoi(fileIdString)
 								fileName := htmlquery.InnerText(htmlquery.FindOne(liNode, `./a`))
 								fileNameDate := htmlquery.InnerText(htmlquery.FindOne(liNode, `./span`))
-								if strings.Contains(fileNameDate, year) && strings.Contains(fileName, year) {
+								if strings.Contains(fileNameDate, year) && !strings.Contains(fileName, year) {
 									fileName = strings.ReplaceAll(fileName, "/", "-")
 									fileName = strings.ReplaceAll(fileName, ".", "")
 									fileName = strings.ReplaceAll(fileName, " ", "")
