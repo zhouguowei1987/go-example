@@ -53,14 +53,14 @@ func main() {
 			break
 		}
 		for _, dlNode := range dlNodes {
-			bigSubject := htmlquery.FindOne(dlNode, `./dt/a[@class="big"]`)
-			bigSubjectName := htmlquery.InnerText(bigSubject)
+			//bigSubject := htmlquery.FindOne(dlNode, `./dt/a[@class="big"]`)
+			//bigSubjectName := htmlquery.InnerText(bigSubject)
 			smallSubjects := htmlquery.Find(dlNode, `./dt/a[not(@class="big")]`)
 			if len(smallSubjects) <= 0 {
 				break
 			}
 			for _, smallSubject := range smallSubjects {
-				smallSubjectName := htmlquery.InnerText(smallSubject)
+				//smallSubjectName := htmlquery.InnerText(smallSubject)
 				smallSubjectUrl := htmlquery.InnerText(htmlquery.FindOne(smallSubject, `./@href`))
 				for {
 					smallSubjectListUrl := fmt.Sprintf("http://www.hi138.com"+smallSubjectUrl+"%d/", page)
@@ -95,7 +95,8 @@ func main() {
 									downLoadUrl := fmt.Sprintf("http://down.hi138.com/downloadfile.asp?id=%d", fileId)
 									fmt.Println(downLoadUrl)
 
-									filePath := "../www.hi138.com/" + bigSubjectName + "/" + smallSubjectName + "/" + fileName + ".docx"
+									//filePath := "../www.hi138.com/" + bigSubjectName + "/" + smallSubjectName + "/" + fileName + ".docx"
+									filePath := "../www.hi138.com/" + fileName + ".docx"
 									if _, err := os.Stat(filePath); err != nil {
 										fmt.Println("=======开始下载========")
 										err = downloadHi138(downLoadUrl, detailUrl, filePath)
