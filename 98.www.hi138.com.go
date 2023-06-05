@@ -56,16 +56,13 @@ func main() {
 		for _, dlNode := range dlNodes {
 			bigSubject := htmlquery.FindOne(dlNode, `./dt/a[@class="big"]`)
 			bigSubjectName := htmlquery.InnerText(bigSubject)
-			fmt.Println(bigSubjectName)
 			smallSubjects := htmlquery.Find(dlNode, `./dt/a[not(@class="big")]`)
 			if len(smallSubjects) <= 0 {
 				break
 			}
 			for _, smallSubject := range smallSubjects {
 				smallSubjectName := htmlquery.InnerText(smallSubject)
-				fmt.Println(smallSubjectName)
 				smallSubjectUrl := htmlquery.InnerText(htmlquery.FindOne(smallSubject, `./@href`))
-				fmt.Println(smallSubjectUrl)
 				for isPageListGo {
 					smallSubjectListUrl := fmt.Sprintf("http://www.hi138.com"+smallSubjectUrl+"%d/", page)
 					fmt.Println(smallSubjectListUrl)
@@ -89,7 +86,6 @@ func main() {
 								fileName := htmlquery.InnerText(htmlquery.FindOne(liNode, `./a`))
 								fileNameDate := htmlquery.InnerText(htmlquery.FindOne(liNode, `./span`))
 								if strings.Contains(fileNameDate, year) {
-									fmt.Println(detailUrl)
 									fileName = strings.ReplaceAll(fileName, "/", "-")
 									fileName = strings.ReplaceAll(fileName, ".", "")
 									fileName = strings.ReplaceAll(fileName, " ", "")
