@@ -30,12 +30,14 @@ func Hi138SetHttpProxy() (httpclient *http.Client) {
 	return httpclient
 }
 
+var Hi138SaveYear = []string{"2018", "2019", "2020", "2021", "2022", "2023", "2024"}
+
 // ychEduSpider 获取免费论文下载中心文档
 // @Title 获取免费论文下载中心文档
 // @Description http://www.hi138.com/，获取免费论文下载中心文档
 func main() {
+	maxPage := 10
 	page := 1
-	isPageListGo := true
 	indexDoc, err := htmlquery.LoadURL("http://www.hi138.com")
 	if err != nil {
 		fmt.Println(err)
@@ -60,7 +62,7 @@ func main() {
 			for _, smallSubject := range smallSubjects {
 				smallSubjectName := htmlquery.InnerText(smallSubject)
 				smallSubjectUrl := htmlquery.InnerText(htmlquery.FindOne(smallSubject, `./@href`))
-				for isPageListGo {
+				for {
 					smallSubjectListUrl := fmt.Sprintf("http://www.hi138.com"+smallSubjectUrl+"%d/", page)
 					fmt.Println(smallSubjectListUrl)
 
@@ -73,36 +75,47 @@ func main() {
 					liNodes := htmlquery.Find(pageListDoc, `//div[@class="bleft"]/ul[@class="list list_b"]/li`)
 					if len(liNodes) >= 1 {
 						for _, liNode := range liNodes {
-							// 文档详情URL
-							detailUrl := htmlquery.InnerText(htmlquery.FindOne(liNode, `./a/@href`))
-							detailUrlSplit := strings.Split(detailUrl, "/")
-							fileIdString := strings.ReplaceAll(detailUrlSplit[len(detailUrlSplit)-1], ".asp", "")
-							fileId, _ := strconv.Atoi(fileIdString)
-							fileName := htmlquery.InnerText(htmlquery.FindOne(liNode, `./a`))
-							fileName = strings.ReplaceAll(fileName, "/", "-")
-							fileName = strings.ReplaceAll(fileName, ".", "")
-							fileName = strings.ReplaceAll(fileName, " ", "")
-							fmt.Println(fileName)
-							// 下载文档URL
-							downLoadUrl := fmt.Sprintf("http://down.hi138.com/downloadfile.asp?id=%d", fileId)
-							fmt.Println(downLoadUrl)
+							for _, year := range Hi138SaveYear {
+								// 文档详情URL
+								detailUrl := htmlquery.InnerText(htmlquery.FindOne(liNode, `./a/@href`))
+								detailUrlSplit := strings.Split(detailUrl, "/")
+								fileIdString := strings.ReplaceAll(detailUrlSplit[len(detailUrlSplit)-1], ".asp", "")
+								fileId, _ := strconv.Atoi(fileIdString)
+								fileName := htmlquery.InnerText(htmlquery.FindOne(liNode, `./a`))
+								fileNameDate := htmlquery.InnerText(htmlquery.FindOne(liNode, `./span`))
+								if strings.Contains(fileNameDate, year) {
+									fileName = strings.ReplaceAll(fileName, "/", "-")
+									fileName = strings.ReplaceAll(fileName, ".", "")
+									fileName = strings.ReplaceAll(fileName, " ", "")
+									fileName = strings.ReplaceAll(fileName, "（", "(")
+									fileName = strings.ReplaceAll(fileName, "）", ")")
+									fmt.Println(fileName)
 
-							filePath := "../www.hi138.com/" + bigSubjectName + "/" + smallSubjectName + "/" + fileName + ".docx"
-							if _, err := os.Stat(filePath); err != nil {
-								fmt.Println("=======开始下载========")
-								err = downloadHi138(downLoadUrl, detailUrl, filePath)
-								if err != nil {
-									fmt.Println(err)
-									continue
+									// 下载文档URL
+									downLoadUrl := fmt.Sprintf("http://down.hi138.com/downloadfile.asp?id=%d", fileId)
+									fmt.Println(downLoadUrl)
+
+									filePath := "../www.hi138.com/" + bigSubjectName + "/" + smallSubjectName + "/" + fileName + ".docx"
+									if _, err := os.Stat(filePath); err != nil {
+										fmt.Println("=======开始下载========")
+										err = downloadHi138(downLoadUrl, detailUrl, filePath)
+										if err != nil {
+											fmt.Println(err)
+											continue
+										}
+										fmt.Println("=======开始完成========")
+									}
+									time.Sleep(time.Second * 1)
+									break
 								}
-								fmt.Println("=======开始完成========")
 							}
-							time.Sleep(time.Second * 1)
-							break
 						}
 						page++
+						if page > maxPage {
+							page = 1
+							break
+						}
 					} else {
-						isPageListGo = false
 						page = 1
 						break
 					}
