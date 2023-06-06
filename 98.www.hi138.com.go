@@ -82,16 +82,15 @@ func main() {
 								fileIdString := strings.ReplaceAll(detailUrlSplit[len(detailUrlSplit)-1], ".asp", "")
 								fileId, _ := strconv.Atoi(fileIdString)
 								fileName := htmlquery.InnerText(htmlquery.FindOne(liNode, `./a`))
+								fileName = strings.ReplaceAll(fileName, "/", "-")
+								fileName = strings.ReplaceAll(fileName, ".", "")
+								fileName = strings.ReplaceAll(fileName, "、", "-")
+								fileName = strings.ReplaceAll(fileName, " ", "")
+								fileName = strings.ReplaceAll(fileName, "（", "(")
+								fileName = strings.ReplaceAll(fileName, "）", ")")
+								fmt.Println(fileName)
 								fileNameDate := htmlquery.InnerText(htmlquery.FindOne(liNode, `./span`))
 								if strings.Contains(fileNameDate, year) && !strings.Contains(fileName, year) {
-									fileName = strings.ReplaceAll(fileName, "/", "-")
-									fileName = strings.ReplaceAll(fileName, ".", "")
-									fileName = strings.ReplaceAll(fileName, "、", "-")
-									fileName = strings.ReplaceAll(fileName, " ", "")
-									fileName = strings.ReplaceAll(fileName, "（", "(")
-									fileName = strings.ReplaceAll(fileName, "）", ")")
-									fmt.Println(fileName)
-
 									// 下载文档URL
 									downLoadUrl := fmt.Sprintf("http://down.hi138.com/downloadfile.asp?id=%d", fileId)
 									fmt.Println(downLoadUrl)
