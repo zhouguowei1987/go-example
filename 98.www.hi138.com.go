@@ -36,7 +36,7 @@ var Hi138SaveYear = []string{"2012", "2013", "2014", "2015", "2016", "2017", "20
 // @Title 获取免费论文下载中心文档
 // @Description http://www.hi138.com/，获取免费论文下载中心文档
 func main() {
-	maxPage := 20
+	maxPage := 15
 	page := 1
 	indexDoc, err := htmlquery.LoadURL("http://www.hi138.com")
 	if err != nil {
@@ -86,6 +86,7 @@ func main() {
 								if strings.Contains(fileNameDate, year) && !strings.Contains(fileName, year) {
 									fileName = strings.ReplaceAll(fileName, "/", "-")
 									fileName = strings.ReplaceAll(fileName, ".", "")
+									fileName = strings.ReplaceAll(fileName, "、", "-")
 									fileName = strings.ReplaceAll(fileName, " ", "")
 									fileName = strings.ReplaceAll(fileName, "（", "(")
 									fileName = strings.ReplaceAll(fileName, "）", ")")
