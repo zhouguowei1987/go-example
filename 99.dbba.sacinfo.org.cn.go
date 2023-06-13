@@ -58,8 +58,8 @@ type ResponseDataRecords struct {
 // @Description https://dbba.sacinfo.org.cn/，获取地方标准文档
 func main() {
 	requestUrl := "https://dbba.sacinfo.org.cn/stdQueryList"
-	current := 28
-	size := 15
+	current := 1
+	size := 50
 	status := "现行"
 	isPageListGo := true
 	for isPageListGo {
