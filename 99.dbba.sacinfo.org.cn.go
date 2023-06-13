@@ -73,6 +73,7 @@ func main() {
 				if records.Empty == false {
 					chName := strings.ReplaceAll(records.ChName, " ", "")
 					chName = strings.ReplaceAll(chName, "/", "-")
+					chName = strings.ReplaceAll(chName, ":", "-")
 
 					code := strings.ReplaceAll(records.Code, "/", "-")
 
