@@ -88,7 +88,7 @@ func main() {
 
 					filePath := "../dbba.sacinfo.org.cn/" + fileName + ".pdf"
 					if _, err := os.Stat(filePath); err != nil {
-						fmt.Println("=======开始下载========")
+						fmt.Println("=======开始下载" + strconv.Itoa(current) + "========")
 						err = downloadDbBa(downLoadUrl, detailUrl, filePath)
 						if err != nil {
 							fmt.Println(err)
