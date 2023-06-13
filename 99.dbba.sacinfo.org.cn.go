@@ -58,7 +58,7 @@ type ResponseDataRecords struct {
 // @Description https://dbba.sacinfo.org.cn/，获取地方标准文档
 func main() {
 	requestUrl := "https://dbba.sacinfo.org.cn/stdQueryList"
-	current := 1
+	current := 28
 	size := 15
 	status := "现行"
 	isPageListGo := true
@@ -78,6 +78,7 @@ func main() {
 					chName = strings.ReplaceAll(chName, "：", "-")
 
 					code := strings.ReplaceAll(records.Code, "/", "-")
+					code = strings.ReplaceAll(code, "\n", "")
 
 					fileName := chName + "(" + code + ")"
 					fmt.Println(fileName)
