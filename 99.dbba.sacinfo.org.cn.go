@@ -71,7 +71,7 @@ func main() {
 		if len(responseData.Records) >= 1 {
 			for _, records := range responseData.Records {
 				if records.Empty == false {
-					fileName := strings.Trim(records.ChName, " ") + "(" + strings.ReplaceAll(records.Code, "/", "-") + ")"
+					fileName := strings.ReplaceAll(records.ChName, " ", "") + "(" + strings.ReplaceAll(records.Code, "/", "-") + ")"
 					fmt.Println(fileName)
 
 					downLoadUrl := fmt.Sprintf("https://dbba.sacinfo.org.cn/attachment/downloadStdFile?pk=%s", records.Pk)
@@ -80,7 +80,6 @@ func main() {
 					detailUrl := fmt.Sprintf("https://dbba.sacinfo.org.cn/stdDetail/%s", records.Pk)
 					fmt.Println(detailUrl)
 
-					os.Exit(1)
 					filePath := "../dbba.sacinfo.org.cn/" + fileName + ".pdf"
 					if _, err := os.Stat(filePath); err != nil {
 						fmt.Println("=======开始下载========")
