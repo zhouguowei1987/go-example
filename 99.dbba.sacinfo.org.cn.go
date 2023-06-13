@@ -71,7 +71,12 @@ func main() {
 		if len(responseData.Records) >= 1 {
 			for _, records := range responseData.Records {
 				if records.Empty == false {
-					fileName := strings.ReplaceAll(records.ChName, " ", "") + "(" + strings.ReplaceAll(records.Code, "/", "-") + ")"
+					chName := strings.ReplaceAll(records.ChName, " ", "")
+					chName = strings.ReplaceAll(chName, "/", "-")
+
+					code := strings.ReplaceAll(records.Code, "/", "-")
+
+					fileName := chName + "(" + code + ")"
 					fmt.Println(fileName)
 
 					downLoadUrl := fmt.Sprintf("https://dbba.sacinfo.org.cn/attachment/downloadStdFile?pk=%s", records.Pk)
