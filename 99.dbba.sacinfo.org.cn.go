@@ -75,6 +75,7 @@ func main() {
 					chName = strings.ReplaceAll(chName, "/", "-")
 					chName = strings.ReplaceAll(chName, "\n", "")
 					chName = strings.ReplaceAll(chName, ":", "-")
+					chName = strings.ReplaceAll(chName, "：", "-")
 
 					code := strings.ReplaceAll(records.Code, "/", "-")
 
