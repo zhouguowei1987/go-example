@@ -68,7 +68,7 @@ func main() {
 			fmt.Println(err)
 			break
 		}
-		if len(responseData.Records) >= 1 {
+		if len(responseData.Records) > 0 {
 			for _, records := range responseData.Records {
 				if records.Empty == false {
 					chName := strings.ReplaceAll(records.ChName, " ", "")
@@ -99,12 +99,23 @@ func main() {
 						}
 						fmt.Println("=======开始完成========")
 					}
+					// 查看文件大小，如果是空文件，则删除
+
+					fi, err := os.Stat(filePath)
+					if err == nil && fi.Size() == 0 {
+						os.Remove(filePath)
+					}
+
 					time.Sleep(time.Millisecond * 100)
 				}
 			}
 
 			if current < responseData.Pages {
 				current++
+			} else {
+				isPageListGo = false
+				current = 1
+				break
 			}
 		} else {
 			isPageListGo = false
