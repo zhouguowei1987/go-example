@@ -71,6 +71,7 @@ func main() {
 		if len(responseData.Records) > 0 {
 			for _, records := range responseData.Records {
 				if records.Empty == false {
+					fmt.Println("=======当前页为：" + strconv.Itoa(current) + "========")
 					chName := strings.ReplaceAll(records.ChName, " ", "")
 					chName = strings.ReplaceAll(chName, "/", "-")
 					chName = strings.ReplaceAll(chName, "\n", "")
