@@ -100,10 +100,10 @@ func main() {
 						}
 						fmt.Println("=======开始完成========")
 					}
-					// 查看文件大小，如果是空文件，则删除
 
+					// 查看文件大小，如果是空文件或超大文件，则删除
 					fi, err := os.Stat(filePath)
-					if err == nil && fi.Size() == 0 {
+					if err == nil && (fi.Size() == 0 || fi.Size() > 14*1024*1024) {
 						err := os.Remove(filePath)
 						if err != nil {
 							continue
