@@ -103,7 +103,10 @@ func main() {
 
 					fi, err := os.Stat(filePath)
 					if err == nil && fi.Size() == 0 {
-						os.Remove(filePath)
+						err := os.Remove(filePath)
+						if err != nil {
+							continue
+						}
 					}
 
 					time.Sleep(time.Millisecond * 100)
