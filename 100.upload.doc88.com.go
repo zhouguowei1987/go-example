@@ -251,8 +251,8 @@ func main() {
 			fmt.Println(uploadResponseData.Message)
 			break
 		}
-		fmt.Println("==========上传3秒后编辑文件所属类别和下载积分==============")
-		time.Sleep(time.Second * 3)
+		fmt.Println("==========上传5秒后编辑文件所属类别和下载积分==============")
+		time.Sleep(time.Second * 5)
 		// 编辑文件所需分类和下载所需积分
 		doccode := uploadResponseData.DocCode
 		title := strings.ReplaceAll(fileName, fileExt, "")
