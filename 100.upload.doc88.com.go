@@ -223,6 +223,13 @@ type UploadChildDir struct {
 func main() {
 	var uploadChildDirArr = []UploadChildDir{
 		{
+			dirName:    "finish-www.ttbz.org.cn",
+			fileExt:    ".pdf",
+			pCid:       8370,
+			Price:      368,
+			pDocFormat: "PDF",
+		},
+		{
 			dirName:    "finish-dbba.sacinfo.org.cn",
 			fileExt:    ".pdf",
 			pCid:       8371,
@@ -232,7 +239,7 @@ func main() {
 	}
 	rootPath := "../upload.doc88.com/"
 	for _, childDir := range uploadChildDirArr {
-		childDirPath := rootPath + childDir.dirName
+		childDirPath := rootPath + childDir.dirName + "/"
 		files, err := ioutil.ReadDir(childDirPath)
 		if err != nil {
 			continue
@@ -247,7 +254,7 @@ func main() {
 				continue
 			}
 			fmt.Println("==========开始上传==============")
-			filePath := rootPath + fileName
+			filePath := childDirPath + fileName
 			fmt.Println(filePath)
 			uploadKey, err := getKey()
 			if err != nil {
@@ -270,22 +277,8 @@ func main() {
 				fmt.Println(uploadResponseData.Message)
 				break
 			}
-			fmt.Println("==========上传5秒后编辑文件所属类别和下载积分==============")
-			time.Sleep(time.Second * 5)
-			// 编辑文件所需分类和下载所需积分
-			docCode := uploadResponseData.DocCode
-			title := strings.ReplaceAll(fileName, fileExt, "")
-			intro := title
-			// 地方标准分类8371，团体标准分类8370
-			pCid := childDir.pCid
-			price := childDir.Price
-			pDocFormat := childDir.pDocFormat
-			editResponseData, err := editFile(docCode, title, intro, pCid, price, pDocFormat)
-			if err != nil {
-				fmt.Println(err)
-				break
-			}
-			fmt.Println(editResponseData)
+			fmt.Println("==========上传3秒后编辑文件所属类别和下载积分==============")
+			time.Sleep(time.Second * 3)
 
 			// 将上传过文件移动到"../final-upload.doc88.com/"
 			finalDir := "../final-upload.doc88.com/" + childDir.dirName
@@ -301,6 +294,20 @@ func main() {
 				fmt.Println(err)
 				break
 			}
+
+			// 编辑文件所需分类和下载所需积分
+			docCode := uploadResponseData.DocCode
+			title := strings.ReplaceAll(fileName, fileExt, "")
+			intro := title
+			pCid := childDir.pCid
+			price := childDir.Price
+			pDocFormat := childDir.pDocFormat
+			editResponseData, err := editFile(docCode, title, intro, pCid, price, pDocFormat)
+			if err != nil {
+				fmt.Println(err)
+				break
+			}
+			fmt.Println(editResponseData)
 
 			fmt.Println("==========上传完成==============")
 		}
