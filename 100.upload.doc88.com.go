@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"io"
@@ -61,34 +62,55 @@ func reverseString(s string) string {
 
 }
 
-func uploadFile(uploadKey string, ck string) {
-	buf := new(bytes.Buffer)
-	writer := multipart.NewWriter(buf)
+type UploadResponseData struct {
+	Result  string `json:"result"`
+	Message string `json:"message"`
+	DocCode string `json:"doccode"`
+	PId     string `json:"p_id"`
+	PCode   string `json:"p_code"`
+}
 
-	file, err := os.Open("../finish-dbba.sacinfo.org.cn/12345政务服务便民热线诉求分类与代码(DB61-T 1663-2023).pdf")
+func uploadFile(uploadKey string, ck string) (uploadResponseData UploadResponseData, err error) {
+	body := new(bytes.Buffer)
+	writer := multipart.NewWriter(body)
+	uploadResponseData = UploadResponseData{}
+
+	fileName := "‘红美人’柑橘设施栽培生产技术规程(DB32／T 4431-2022).pdf"
+	filePath := "../finish-dbba.sacinfo.org.cn/" + fileName
+	file, err := os.Open(filePath)
 	if err != nil {
-		panic(err)
+		return uploadResponseData, err
 	}
-	fmt.Println(file.Name())
 	defer file.Close()
-	part, err := writer.CreateFormFile("fileName", file.Name())
+	formFile, err := writer.CreateFormFile("file", filePath)
 	if err != nil {
 		panic(err)
 	}
-	_, err = io.Copy(part, file)
+	_, err = io.Copy(formFile, file)
 	if err != nil {
-		panic(err)
+		return uploadResponseData, err
 	}
-	writer.WriteField("act", "upload")
-	writer.WriteField("upfile", "(binary)")
+	err = writer.WriteField("act", "upload")
+	if err != nil {
+		return uploadResponseData, err
+	}
+	err = writer.WriteField("fileName", fileName)
+	if err != nil {
+		return uploadResponseData, err
+	}
+	err = writer.WriteField("upfile", "(binary)")
+	if err != nil {
+		return uploadResponseData, err
+	}
 
 	uploadUrl := fmt.Sprintf("https://upload.doc88.com/u.do?v=1&uploadkey=%s&ck=%s", uploadKey, ck)
-	req, err := http.NewRequest("POST", uploadUrl, buf)
+	req, err := http.NewRequest("POST", uploadUrl, body)
 	if err != nil {
-		panic(err)
+		return uploadResponseData, err
 	}
+
 	req.Header.Set("Accept", "*/*")
-	req.Header.Set("Accept-Encoding", "gzip, deflate, br")
+	//req.Header.Set("Accept-Encoding", "gzip, deflate, br")
 	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
 	req.Header.Set("Connection", "keep-alive")
 	req.Header.Set("Content-Type", writer.FormDataContentType())
@@ -104,14 +126,18 @@ func uploadFile(uploadKey string, ck string) {
 	client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
-		panic(err)
+		return uploadResponseData, err
 	}
+
 	defer resp.Body.Close()
-	body, err := ioutil.ReadAll(resp.Body)
+	respBytes, err := ioutil.ReadAll(resp.Body)
+	err = json.Unmarshal(respBytes, &uploadResponseData)
+	fmt.Println(uploadResponseData)
+	os.Exit(1)
 	if err != nil {
-		panic(err)
+		return uploadResponseData, err
 	}
-	fmt.Println(string(body))
+	return uploadResponseData, nil
 }
 
 func main() {
@@ -125,5 +151,9 @@ func main() {
 		return
 	}
 	fmt.Println("ck：", ck)
-	uploadFile(uploadKey, ck)
+	uploadResponseData, err := uploadFile(uploadKey, ck)
+	if err != nil {
+		fmt.Println(err)
+	}
+	fmt.Println(uploadResponseData)
 }
