@@ -154,21 +154,21 @@ type EditResponseData struct {
 }
 
 // 编辑文件所属分类和下载所需积分
-func editFile(doccode string, title string, intro string, pcid int, price int) (editResponseData EditResponseData, err error) {
+func editFile(docCode string, title string, intro string, pCid int, price int, pDocFormat string) (editResponseData EditResponseData, err error) {
 	client := &http.Client{}
 	editResponseData = EditResponseData{}
 	postData := url.Values{}
-	postData.Add("doccode", doccode)
+	postData.Add("doccode", docCode)
 	postData.Add("title", title)
 	postData.Add("intro", intro)
-	postData.Add("pcid", strconv.Itoa(pcid))
+	postData.Add("pcid", strconv.Itoa(pCid))
 	postData.Add("keyword", "")
 	postData.Add("sharetodoc", "1")
 	postData.Add("download", "2")
 	postData.Add("p_price", strconv.Itoa(price))
 	postData.Add("p_default_points", "1")
 	postData.Add("p_pagecount", "")
-	postData.Add("p_doc_format", "PDF")
+	postData.Add("p_doc_format", pDocFormat)
 	postData.Add("act", "save_info")
 	postData.Add("group_list", "")
 	postData.Add("group_free_list", "")
@@ -211,80 +211,98 @@ func editFile(doccode string, title string, intro string, pcid int, price int) (
 	}
 	return editResponseData, nil
 }
+
+type UploadChildDir struct {
+	dirName    string
+	fileExt    string
+	pCid       int
+	Price      int
+	pDocFormat string
+}
+
 func main() {
-	rootPath := "../finish-dbba.sacinfo.org.cn/"
-	files, err := ioutil.ReadDir(rootPath)
-	if err != nil {
-		return
+	var uploadChildDirArr = []UploadChildDir{
+		{
+			dirName:    "finish-dbba.sacinfo.org.cn",
+			fileExt:    ".pdf",
+			pCid:       8371,
+			Price:      368,
+			pDocFormat: "PDF",
+		},
 	}
-	for _, file := range files {
-		if file.IsDir() {
+	rootPath := "../upload.doc88.com/"
+	for _, childDir := range uploadChildDirArr {
+		childDirPath := rootPath + childDir.dirName
+		files, err := ioutil.ReadDir(childDirPath)
+		if err != nil {
 			continue
 		}
-		fileName := file.Name()
-		fileExt := path.Ext(fileName)
-		if fileExt != ".pdf" {
-			continue
-		}
-		fmt.Println("==========开始上传==============")
-		filePath := rootPath + fileName
-		fmt.Println(filePath)
-		uploadKey, err := getKey()
-		if err != nil {
-			fmt.Println(err)
-			continue
-		}
-		ck := reverseString(uploadKey[3:8])
-		if err != nil {
-			fmt.Println(err)
-			continue
-		}
-		uploadResponseData, err := uploadFile(filePath, uploadKey, ck)
-		if err != nil {
-			fmt.Println(err)
-			break
-		}
-		fmt.Println(uploadResponseData)
-
-		if result, _ := strconv.Atoi(uploadResponseData.Result); result != 0 {
-			fmt.Println(uploadResponseData.Message)
-			break
-		}
-		fmt.Println("==========上传5秒后编辑文件所属类别和下载积分==============")
-		time.Sleep(time.Second * 5)
-		// 编辑文件所需分类和下载所需积分
-		doccode := uploadResponseData.DocCode
-		title := strings.ReplaceAll(fileName, fileExt, "")
-		intro := title
-		// 地方标准分类8371，团体标准分类8370
-		pcid := 8370
-		if strings.Contains(fileName, "DB") {
-			pcid = 8371
-		}
-
-		price := 368
-		editResponseData, err := editFile(doccode, title, intro, pcid, price)
-		if err != nil {
-			fmt.Println(err)
-			break
-		}
-		fmt.Println(editResponseData)
-
-		// 将上传过文件移动到"../final-dbba.sacinfo.org.cn/"
-		finalDir := "../final-dbba.sacinfo.org.cn"
-		if _, err = os.Stat(finalDir); err != nil {
-			if os.MkdirAll(finalDir, 0777) != nil {
+		for _, file := range files {
+			if file.IsDir() {
+				continue
+			}
+			fileName := file.Name()
+			fileExt := path.Ext(fileName)
+			if fileExt != childDir.fileExt {
+				continue
+			}
+			fmt.Println("==========开始上传==============")
+			filePath := rootPath + fileName
+			fmt.Println(filePath)
+			uploadKey, err := getKey()
+			if err != nil {
+				fmt.Println(err)
+				continue
+			}
+			ck := reverseString(uploadKey[3:8])
+			if err != nil {
+				fmt.Println(err)
+				continue
+			}
+			uploadResponseData, err := uploadFile(filePath, uploadKey, ck)
+			if err != nil {
 				fmt.Println(err)
 				break
 			}
-		}
-		fileFinal := finalDir + "/" + fileName
-		err = os.Rename(filePath, fileFinal)
-		if err != nil {
-			fmt.Println(err)
-			break
-		}
+			fmt.Println(uploadResponseData)
 
-		fmt.Println("==========上传完成==============")
+			if result, _ := strconv.Atoi(uploadResponseData.Result); result != 0 {
+				fmt.Println(uploadResponseData.Message)
+				break
+			}
+			fmt.Println("==========上传5秒后编辑文件所属类别和下载积分==============")
+			time.Sleep(time.Second * 5)
+			// 编辑文件所需分类和下载所需积分
+			docCode := uploadResponseData.DocCode
+			title := strings.ReplaceAll(fileName, fileExt, "")
+			intro := title
+			// 地方标准分类8371，团体标准分类8370
+			pCid := childDir.pCid
+			price := childDir.Price
+			pDocFormat := childDir.pDocFormat
+			editResponseData, err := editFile(docCode, title, intro, pCid, price, pDocFormat)
+			if err != nil {
+				fmt.Println(err)
+				break
+			}
+			fmt.Println(editResponseData)
+
+			// 将上传过文件移动到"../final-upload.doc88.com/"
+			finalDir := "../final-upload.doc88.com/" + childDir.dirName
+			if _, err = os.Stat(finalDir); err != nil {
+				if os.MkdirAll(finalDir, 0777) != nil {
+					fmt.Println(err)
+					break
+				}
+			}
+			fileFinal := finalDir + "/" + fileName
+			err = os.Rename(filePath, fileFinal)
+			if err != nil {
+				fmt.Println(err)
+				break
+			}
+
+			fmt.Println("==========上传完成==============")
+		}
 	}
 }
