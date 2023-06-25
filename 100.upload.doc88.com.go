@@ -1,10 +1,14 @@
 package main
 
 import (
+	"bytes"
 	"errors"
 	"fmt"
+	"io"
 	"io/ioutil"
+	"mime/multipart"
 	"net/http"
+	"os"
 	"strconv"
 )
 
@@ -47,6 +51,79 @@ func getKey() (uploadKey string, err error) {
 	return uploadKey, nil
 }
 
+func reverseString(s string) string {
+	b := []byte(s)
+	n := len(b)
+	for i := 0; i < n/2; i++ {
+		b[i], b[n-i-1] = b[n-i-1], b[i]
+	}
+	return string(b)
+
+}
+
+func uploadFile(uploadKey string, ck string) {
+	buf := new(bytes.Buffer)
+	writer := multipart.NewWriter(buf)
+
+	file, err := os.Open("../finish-dbba.sacinfo.org.cn/12345政务服务便民热线诉求分类与代码(DB61-T 1663-2023).pdf")
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(file.Name())
+	defer file.Close()
+	part, err := writer.CreateFormFile("fileName", file.Name())
+	if err != nil {
+		panic(err)
+	}
+	_, err = io.Copy(part, file)
+	if err != nil {
+		panic(err)
+	}
+	writer.WriteField("act", "upload")
+	writer.WriteField("upfile", "(binary)")
+
+	uploadUrl := fmt.Sprintf("https://upload.doc88.com/u.do?v=1&uploadkey=%s&ck=%s", uploadKey, ck)
+	req, err := http.NewRequest("POST", uploadUrl, buf)
+	if err != nil {
+		panic(err)
+	}
+	req.Header.Set("Accept", "*/*")
+	req.Header.Set("Accept-Encoding", "gzip, deflate, br")
+	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
+	req.Header.Set("Connection", "keep-alive")
+	req.Header.Set("Content-Type", writer.FormDataContentType())
+	req.Header.Set("Host", "upload.doc88.com")
+	req.Header.Set("Origin", "https://www.doc88.com")
+	req.Header.Set("Referer", "https://www.doc88.com/")
+	req.Header.Set("Sec-Ch-Ua", "\"Not.A/Brand\";v=\"8\", \"Chromium\";v=\"114\", \"Google Chrome\";v=\"114\"")
+	req.Header.Set("Sec-Ch-Ua-Mobile", "?0")
+	req.Header.Set("Sec-Ch-Ua-Platform", "\"macOS\"")
+	req.Header.Set("Sec-Fetch-Dest", "empty")
+	req.Header.Set("Sec-Fetch-Mode", "cors")
+	req.Header.Set("Sec-Fetch-Site", "same-origin")
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		panic(err)
+	}
+	defer resp.Body.Close()
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(string(body))
+}
+
 func main() {
-	fmt.Println(getKey())
+	uploadKey, err := getKey()
+	if err != nil {
+		return
+	}
+	fmt.Println("uploadKey：", uploadKey)
+	ck := reverseString(uploadKey[3:8])
+	if err != nil {
+		return
+	}
+	fmt.Println("ck：", ck)
+	uploadFile(uploadKey, ck)
 }
