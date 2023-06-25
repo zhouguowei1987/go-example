@@ -7,7 +7,6 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
-	"log"
 	"mime/multipart"
 	"net/http"
 	"net/url"
@@ -259,10 +258,17 @@ func main() {
 		fmt.Println(editResponseData)
 
 		// 将上传过文件移动到"../final-dbba.sacinfo.org.cn/"
-		fileFinal := "../final-dbba.sacinfo.org.cn/" + fileName
+		finalDir := "../final-dbba.sacinfo.org.cn"
+		if _, err = os.Stat(finalDir); err != nil {
+			if os.MkdirAll(finalDir, 0777) != nil {
+				fmt.Println(err)
+				break
+			}
+		}
+		fileFinal := finalDir + "/" + fileName
 		err = os.Rename(filePath, fileFinal)
 		if err != nil {
-			log.Fatal(err)
+			fmt.Println(err)
 			break
 		}
 
