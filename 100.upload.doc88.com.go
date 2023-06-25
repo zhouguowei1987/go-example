@@ -226,7 +226,7 @@ func main() {
 			dirName:    "finish-www.ttbz.org.cn",
 			fileExt:    ".pdf",
 			pCid:       8370,
-			Price:      368,
+			Price:      468,
 			pDocFormat: "PDF",
 		},
 		{
