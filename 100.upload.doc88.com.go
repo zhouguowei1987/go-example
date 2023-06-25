@@ -155,7 +155,6 @@ type EditResponseData struct {
 
 // 编辑文件所属分类和下载所需积分
 func editFile(doccode string, title string, intro string, pcid int, price int) (editResponseData EditResponseData, err error) {
-	fmt.Println(doccode, title, intro, pcid, price)
 	client := &http.Client{}
 	editResponseData = EditResponseData{}
 	postData := url.Values{}
