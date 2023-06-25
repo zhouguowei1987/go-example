@@ -82,23 +82,22 @@ func uploadFile(uploadKey string, ck string) (uploadResponseData UploadResponseD
 		return uploadResponseData, err
 	}
 	defer file.Close()
-	formFile, err := writer.CreateFormFile("file", filePath)
-	if err != nil {
-		panic(err)
-	}
-	_, err = io.Copy(formFile, file)
-	if err != nil {
-		return uploadResponseData, err
-	}
+
 	err = writer.WriteField("act", "upload")
 	if err != nil {
 		return uploadResponseData, err
 	}
+
 	err = writer.WriteField("fileName", fileName)
 	if err != nil {
 		return uploadResponseData, err
 	}
-	err = writer.WriteField("upfile", "(binary)")
+
+	formFile, err := writer.CreateFormFile("upfile", file.Name())
+	if err != nil {
+		return uploadResponseData, err
+	}
+	_, err = io.Copy(formFile, file)
 	if err != nil {
 		return uploadResponseData, err
 	}
@@ -132,8 +131,6 @@ func uploadFile(uploadKey string, ck string) (uploadResponseData UploadResponseD
 	defer resp.Body.Close()
 	respBytes, err := ioutil.ReadAll(resp.Body)
 	err = json.Unmarshal(respBytes, &uploadResponseData)
-	fmt.Println(uploadResponseData)
-	os.Exit(1)
 	if err != nil {
 		return uploadResponseData, err
 	}
@@ -155,5 +152,6 @@ func main() {
 	if err != nil {
 		fmt.Println(err)
 	}
-	fmt.Println(uploadResponseData)
+	fmt.Printf("%+v", uploadResponseData)
+	//fmt.Println(uploadResponseData)
 }
