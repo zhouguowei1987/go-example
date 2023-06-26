@@ -13,6 +13,7 @@ import (
 	"os"
 	"path"
 	"path/filepath"
+	"rsc.io/pdf"
 	"strconv"
 	"strings"
 	"time"
@@ -256,6 +257,7 @@ func main() {
 			fmt.Println("==========开始上传==============")
 			filePath := childDirPath + fileName
 			fmt.Println(filePath)
+
 			uploadKey, err := getKey()
 			if err != nil {
 				fmt.Println(err)
@@ -288,6 +290,38 @@ func main() {
 					break
 				}
 			}
+
+			// 处理编辑文件时所需参数值
+			docCode := uploadResponseData.DocCode
+			title := strings.ReplaceAll(fileName, fileExt, "")
+			intro := title
+			pCid := childDir.pCid
+			price := childDir.Price
+			pDocFormat := childDir.pDocFormat
+			// 获取PDF文件，获取总页数，根据页数定义价格
+			if fileExt == ".pdf" {
+				pdfFile, err := pdf.Open(filePath)
+				if err != nil {
+					fmt.Println(err)
+					break
+				}
+				pdfFilePageNum := pdfFile.NumPage()
+				if pdfFilePageNum > 0 && pdfFilePageNum <= 5 {
+					price = 168
+				} else if pdfFilePageNum > 5 && pdfFilePageNum <= 10 {
+					price = 268
+				} else if pdfFilePageNum > 10 && pdfFilePageNum <= 15 {
+					price = 368
+				} else if pdfFilePageNum > 15 && pdfFilePageNum <= 20 {
+					price = 468
+				} else if pdfFilePageNum > 20 && pdfFilePageNum <= 25 {
+					price = 568
+				} else {
+					price = 768
+				}
+			}
+
+			// 将已上传的文件转移到指定文件夹
 			fileFinal := finalDir + "/" + fileName
 			err = os.Rename(filePath, fileFinal)
 			if err != nil {
@@ -296,12 +330,6 @@ func main() {
 			}
 
 			// 编辑文件所需分类和下载所需积分
-			docCode := uploadResponseData.DocCode
-			title := strings.ReplaceAll(fileName, fileExt, "")
-			intro := title
-			pCid := childDir.pCid
-			price := childDir.Price
-			pDocFormat := childDir.pDocFormat
 			editResponseData, err := editFile(docCode, title, intro, pCid, price, pDocFormat)
 			if err != nil {
 				fmt.Println(err)

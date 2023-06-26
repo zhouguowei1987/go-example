@@ -17,4 +17,5 @@ require (
 	github.com/pkg/errors v0.9.1 // indirect
 	golang.org/x/text v0.3.7 // indirect
 	moul.io/http2curl v1.0.0 // indirect
+	rsc.io/pdf v0.1.1 // indirect
 )
