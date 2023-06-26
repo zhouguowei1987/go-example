@@ -300,24 +300,21 @@ func main() {
 			pDocFormat := childDir.pDocFormat
 			// 获取PDF文件，获取总页数，根据页数定义价格
 			if fileExt == ".pdf" {
-				pdfFile, err := pdf.Open(filePath)
-				if err != nil {
-					fmt.Println(err)
-					break
-				}
-				pdfFilePageNum := pdfFile.NumPage()
-				if pdfFilePageNum > 0 && pdfFilePageNum <= 5 {
-					price = 168
-				} else if pdfFilePageNum > 5 && pdfFilePageNum <= 10 {
-					price = 268
-				} else if pdfFilePageNum > 10 && pdfFilePageNum <= 15 {
-					price = 368
-				} else if pdfFilePageNum > 15 && pdfFilePageNum <= 20 {
-					price = 468
-				} else if pdfFilePageNum > 20 && pdfFilePageNum <= 25 {
-					price = 568
-				} else {
-					price = 768
+				if pdfFile, err := pdf.Open(filePath); err == nil {
+					pdfFilePageNum := pdfFile.NumPage()
+					if pdfFilePageNum > 0 && pdfFilePageNum <= 5 {
+						price = 288
+					} else if pdfFilePageNum > 5 && pdfFilePageNum <= 10 {
+						price = 388
+					} else if pdfFilePageNum > 10 && pdfFilePageNum <= 15 {
+						price = 488
+					} else if pdfFilePageNum > 15 && pdfFilePageNum <= 20 {
+						price = 588
+					} else if pdfFilePageNum > 20 && pdfFilePageNum <= 25 {
+						price = 688
+					} else {
+						price = 888
+					}
 				}
 			}
 
