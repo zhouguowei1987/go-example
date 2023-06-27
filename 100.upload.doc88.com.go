@@ -294,6 +294,8 @@ func main() {
 			// 处理编辑文件时所需参数值
 			docCode := uploadResponseData.DocCode
 			title := strings.ReplaceAll(fileName, fileExt, "")
+			title = strings.Replace(title, "\"", "“", 1)
+			title = strings.Replace(title, "\"", "”", 1)
 			intro := title
 			pCid := childDir.pCid
 			price := childDir.Price
