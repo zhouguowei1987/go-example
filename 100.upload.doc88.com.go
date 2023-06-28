@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/360EntSecGroup-Skylar/excelize"
 	"io"
 	"io/ioutil"
 	"mime/multipart"
@@ -342,24 +343,30 @@ func main() {
 			pCid := childDir.pCid
 			price := childDir.Price
 			pDocFormat := childDir.pDocFormat
-			// 获取PDF文件，获取总页数，根据页数定义价格
+			filePageNum := 0
 			if fileExt == ".pdf" {
+				// 获取PDF文件，获取总页数
 				if pdfFile, err := pdf.Open(filePath); err == nil {
-					pdfFilePageNum := pdfFile.NumPage()
-					if pdfFilePageNum > 0 && pdfFilePageNum <= 5 {
-						price = 288
-					} else if pdfFilePageNum > 5 && pdfFilePageNum <= 10 {
-						price = 388
-					} else if pdfFilePageNum > 10 && pdfFilePageNum <= 15 {
-						price = 488
-					} else if pdfFilePageNum > 15 && pdfFilePageNum <= 20 {
-						price = 588
-					} else if pdfFilePageNum > 20 && pdfFilePageNum <= 25 {
-						price = 688
-					} else {
-						price = 888
-					}
+					filePageNum = pdfFile.NumPage()
 				}
+			} else if fileExt == ".docx" {
+				// 获取DOCX文件，获取总页数
+				if docxFile, err := excelize.OpenFile(filePath); err != nil {
+					filePageNum = len(docxFile.GetSheetMap())
+				}
+			}
+			if filePageNum > 0 && filePageNum <= 5 {
+				price = 288
+			} else if filePageNum > 5 && filePageNum <= 10 {
+				price = 388
+			} else if filePageNum > 10 && filePageNum <= 15 {
+				price = 488
+			} else if filePageNum > 15 && filePageNum <= 20 {
+				price = 588
+			} else if filePageNum > 20 && filePageNum <= 25 {
+				price = 688
+			} else {
+				price = 888
 			}
 
 			// 将已上传的文件转移到指定文件夹
