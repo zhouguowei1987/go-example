@@ -297,6 +297,7 @@ func main() {
 			if fileExt != childDir.fileExt {
 				continue
 			}
+
 			fmt.Println("==========开始上传==============")
 			filePath := childDirPath + fileName
 			fmt.Println(filePath)
@@ -356,15 +357,15 @@ func main() {
 				}
 			}
 			// 根据页数设置价格
-			if filePageNum > 0 && filePageNum <= 5 {
+			if filePageNum > 0 && filePageNum <= 8 {
 				price = 288
-			} else if filePageNum > 5 && filePageNum <= 10 {
+			} else if filePageNum > 8 && filePageNum <= 18 {
 				price = 388
-			} else if filePageNum > 10 && filePageNum <= 15 {
+			} else if filePageNum > 18 && filePageNum <= 28 {
 				price = 488
-			} else if filePageNum > 15 && filePageNum <= 20 {
+			} else if filePageNum > 28 && filePageNum <= 38 {
 				price = 588
-			} else if filePageNum > 20 && filePageNum <= 25 {
+			} else if filePageNum > 38 && filePageNum <= 48 {
 				price = 688
 			} else {
 				price = 888
