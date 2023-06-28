@@ -367,6 +367,8 @@ func main() {
 				price = 588
 			} else if filePageNum > 38 && filePageNum <= 48 {
 				price = 688
+			} else if filePageNum > 48 && filePageNum <= 58 {
+				price = 788
 			} else {
 				price = 888
 			}
