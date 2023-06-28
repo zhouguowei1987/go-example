@@ -355,6 +355,7 @@ func main() {
 					filePageNum = len(docxFile.GetSheetMap())
 				}
 			}
+			// 根据页数设置价格
 			if filePageNum > 0 && filePageNum <= 5 {
 				price = 288
 			} else if filePageNum > 5 && filePageNum <= 10 {
