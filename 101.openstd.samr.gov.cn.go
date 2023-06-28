@@ -90,7 +90,7 @@ func main() {
 				downLoadUrl := fmt.Sprintf("http://c.gb688.cn/bzgk/gb/viewGb?hcno=%s", HCno)
 				fmt.Println(downLoadUrl)
 
-				filePath := "../openstd.samr.gov.cn/" + StdName + ".pdf"
+				filePath := "../openstd.samr.gov.cn/" + StdName + "(" + StdNo + ")" + ".pdf"
 				if _, err := os.Stat(filePath); err != nil {
 					fmt.Println("=======开始下载========")
 					err = downloadOPenStd(downLoadUrl, detailUrl, filePath)
