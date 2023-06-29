@@ -96,7 +96,6 @@ func main() {
 			PId = PId[5:len(PId)]
 
 			detailUrl := "https://www.doc88.com/uc/usr_doc_manager.php?act=getDocInfo"
-			fmt.Println(detailUrl)
 			detailDoc, err := QueryEditDoc88Detail(detailUrl, PId)
 			if err != nil {
 				fmt.Println(err)
@@ -166,7 +165,7 @@ func main() {
 				break
 			}
 			fmt.Println(editDoc88ResponseData)
-			time.Sleep(time.Second * 2)
+			time.Sleep(time.Second * 1)
 		}
 		curPage++
 	}
