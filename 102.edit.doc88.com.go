@@ -179,13 +179,13 @@ func main() {
 			}
 			EditCount++
 			fmt.Println(editDoc88ResponseData)
-			if EditCount > 5 {
+			if EditCount > 4 {
 				EditCount = 1
-				fmt.Println("==========更新数量超过5，暂停120秒==========")
-				time.Sleep(time.Second * 120)
+				fmt.Println("==========更新数量超过5，暂停150秒==========")
+				time.Sleep(time.Second * 150)
 			} else {
-				fmt.Println("==========更新成功，暂停35秒==========")
-				time.Sleep(time.Second * 35)
+				fmt.Println("==========更新成功，暂停15秒==========")
+				time.Sleep(time.Second * 15)
 			}
 		}
 		fmt.Println("==========开始下一页，暂停5秒==========")
