@@ -166,6 +166,7 @@ func main() {
 				break
 			}
 			fmt.Println(editDoc88ResponseData)
+			time.Sleep(time.Second * 2)
 		}
 		curPage++
 	}
