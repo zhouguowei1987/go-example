@@ -93,6 +93,13 @@ func main() {
 		}
 		for _, liNode := range liNodes {
 
+			TitleNode := htmlquery.FindOne(liNode, `./div[@class="bookdoc"]/h3/a`)
+			Title := htmlquery.SelectAttr(TitleNode, "title")
+			fmt.Println(Title)
+
+			IntroNode := htmlquery.FindOne(liNode, `./div[@class="bookdoc"]/p`)
+			Intro := htmlquery.InnerText(IntroNode)
+
 			PPageCountNode := htmlquery.FindOne(liNode, `./div[@class="bookimg"]/em`)
 			PPageCount := htmlquery.InnerText(PPageCountNode)
 			PPageCount = PPageCount[2:]
@@ -135,18 +142,8 @@ func main() {
 				fmt.Println(err)
 				break
 			}
-
-			editUrl := "https://www.doc88.com/uc/index.php"
-
 			DocCodeNode := htmlquery.FindOne(detailDoc, `//dl[@class="editlayout"]/form/dd[1]/div[@class="booksedit"]/table[@class="edit-table"]/input`)
 			DocCode := htmlquery.SelectAttr(DocCodeNode, "value")
-
-			TitleNode := htmlquery.FindOne(detailDoc, `//dl[@class="editlayout"]/form/dd[1]/div[@class="booksedit"]/table[@class="edit-table"]/tbody/tr[1]/td[2]/input`)
-			Title := htmlquery.SelectAttr(TitleNode, "value")
-			fmt.Println(Title)
-
-			IntroNode := htmlquery.FindOne(detailDoc, `//dl[@class="editlayout"]/form/dd[1]/div[@class="booksedit"]/table[@class="edit-table"]/tbody/tr[2]/td[2]/textarea`)
-			Intro := htmlquery.InnerText(IntroNode)
 
 			PCidNode := htmlquery.FindOne(detailDoc, `//dl[@class="editlayout"]/form/dd[1]/div[@class="booksedit"]/table[@class="edit-table"]/tbody/tr[3]/td[2]/div[@class="layers"]/input`)
 			PCid := htmlquery.SelectAttr(PCidNode, "value")
@@ -154,6 +151,7 @@ func main() {
 			PDocFormatNode := htmlquery.FindOne(detailDoc, `//dl[@class="editlayout"]/form/dd[2]/div[@class="booksedit booksedit-bdr"]/table[@class="edit-table"]/tbody/tr[3]/td[2]/input[3]`)
 			PDocFormat := htmlquery.SelectAttr(PDocFormatNode, "value")
 
+			editUrl := "https://www.doc88.com/uc/index.php"
 			editDoc88FormData := EditDoc88FormData{
 				DocCode:        DocCode,
 				Title:          Title,
