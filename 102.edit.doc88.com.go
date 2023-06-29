@@ -182,7 +182,7 @@ func main() {
 			if EditCount > 5 {
 				EditCount = 1
 				fmt.Println("==========更新数量超过5，暂停120秒==========")
-				time.Sleep(time.Second * 30)
+				time.Sleep(time.Second * 120)
 			} else {
 				fmt.Println("==========更新成功，暂停8秒==========")
 				time.Sleep(time.Second * 8)
