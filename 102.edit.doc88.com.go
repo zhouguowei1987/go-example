@@ -70,7 +70,7 @@ type EditDoc88FormData struct {
 // @Title 编辑道客巴巴文档
 // @Description https://www.doc88.com/，编辑道客巴巴文档
 func main() {
-	curPage := 1
+	curPage := 221
 	for {
 		pageListUrl := fmt.Sprintf("https://www.doc88.com/uc/doc_manager.php?act=ajax_doc_list&curpage=%d", curPage)
 		fmt.Println(pageListUrl)
@@ -127,22 +127,29 @@ func main() {
 			PPrice := htmlquery.SelectAttr(PPriceNode, "value")
 
 			filePageNum, _ := strconv.Atoi(PPageCount)
+			PPriceNew := ""
 			// 根据页数设置价格
 			if filePageNum > 0 && filePageNum <= 8 {
-				PPrice = "288"
+				PPriceNew = "288"
 			} else if filePageNum > 8 && filePageNum <= 18 {
-				PPrice = "388"
+				PPriceNew = "388"
 			} else if filePageNum > 18 && filePageNum <= 28 {
-				PPrice = "488"
+				PPriceNew = "488"
 			} else if filePageNum > 28 && filePageNum <= 38 {
-				PPrice = "588"
+				PPriceNew = "588"
 			} else if filePageNum > 38 && filePageNum <= 48 {
-				PPrice = "688"
+				PPriceNew = "688"
 			} else if filePageNum > 48 && filePageNum <= 58 {
-				PPrice = "788"
+				PPriceNew = "788"
 			} else {
-				PPrice = "888"
+				PPriceNew = "888"
 			}
+
+			// 新旧价格一样，则跳过
+			if PPrice == PPriceNew {
+				continue
+			}
+
 			editDoc88FormData := EditDoc88FormData{
 				DocCode:        DocCode,
 				Title:          Title,
@@ -165,9 +172,9 @@ func main() {
 				break
 			}
 			fmt.Println(editDoc88ResponseData)
-			time.Sleep(time.Second * 1)
+			time.Sleep(time.Second * 2)
 		}
-		curPage++
+		curPage--
 	}
 }
 
