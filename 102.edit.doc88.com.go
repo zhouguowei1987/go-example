@@ -184,12 +184,12 @@ func main() {
 				fmt.Println("==========更新数量超过5，暂停120秒==========")
 				time.Sleep(time.Second * 120)
 			} else {
-				fmt.Println("==========更新成功，暂停20秒==========")
-				time.Sleep(time.Second * 20)
+				fmt.Println("==========更新成功，暂停35秒==========")
+				time.Sleep(time.Second * 35)
 			}
 		}
-		fmt.Println("==========开始下一页，暂停60秒==========")
-		time.Sleep(time.Second * 60)
+		fmt.Println("==========开始下一页，暂停5秒==========")
+		time.Sleep(time.Second * 5)
 		curPage++
 	}
 }
