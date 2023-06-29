@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/360EntSecGroup-Skylar/excelize"
 	"io"
 	"io/ioutil"
 	"mime/multipart"
@@ -237,6 +238,48 @@ func main() {
 			Price:      368,
 			pDocFormat: "PDF",
 		},
+		{
+			dirName:    "finish.tikuvip（2023）.51test.net-二级建造师考试",
+			fileExt:    ".docx",
+			pCid:       8210,
+			Price:      366,
+			pDocFormat: "DOCX",
+		},
+		{
+			dirName:    "finish.tikuvip（2023）.51test.net-高考",
+			fileExt:    ".docx",
+			pCid:       8244,
+			Price:      366,
+			pDocFormat: "DOCX",
+		},
+		{
+			dirName:    "finish.tikuvip（2023）.51test.net-高中会考",
+			fileExt:    ".docx",
+			pCid:       8244,
+			Price:      366,
+			pDocFormat: "DOCX",
+		},
+		{
+			dirName:    "finish.tikuvip（2023）.51test.net-公务员考试",
+			fileExt:    ".docx",
+			pCid:       8216,
+			Price:      366,
+			pDocFormat: "DOCX",
+		},
+		{
+			dirName:    "finish.tikuvip（2023）.51test.net-考研",
+			fileExt:    ".docx",
+			pCid:       8245,
+			Price:      366,
+			pDocFormat: "DOCX",
+		},
+		{
+			dirName:    "finish.tikuvip（2023）.51test.net-中考",
+			fileExt:    ".docx",
+			pCid:       8243,
+			Price:      366,
+			pDocFormat: "DOCX",
+		},
 	}
 	rootPath := "../upload.doc88.com/"
 	for _, childDir := range uploadChildDirArr {
@@ -254,6 +297,7 @@ func main() {
 			if fileExt != childDir.fileExt {
 				continue
 			}
+
 			fmt.Println("==========开始上传==============")
 			filePath := childDirPath + fileName
 			fmt.Println(filePath)
@@ -300,24 +344,33 @@ func main() {
 			pCid := childDir.pCid
 			price := childDir.Price
 			pDocFormat := childDir.pDocFormat
-			// 获取PDF文件，获取总页数，根据页数定义价格
+			filePageNum := 0
 			if fileExt == ".pdf" {
+				// 获取PDF文件，获取总页数
 				if pdfFile, err := pdf.Open(filePath); err == nil {
-					pdfFilePageNum := pdfFile.NumPage()
-					if pdfFilePageNum > 0 && pdfFilePageNum <= 5 {
-						price = 288
-					} else if pdfFilePageNum > 5 && pdfFilePageNum <= 10 {
-						price = 388
-					} else if pdfFilePageNum > 10 && pdfFilePageNum <= 15 {
-						price = 488
-					} else if pdfFilePageNum > 15 && pdfFilePageNum <= 20 {
-						price = 588
-					} else if pdfFilePageNum > 20 && pdfFilePageNum <= 25 {
-						price = 688
-					} else {
-						price = 888
-					}
+					filePageNum = pdfFile.NumPage()
 				}
+			} else if fileExt == ".docx" {
+				// 获取DOCX文件，获取总页数
+				if docxFile, err := excelize.OpenFile(filePath); err != nil {
+					filePageNum = len(docxFile.GetSheetMap())
+				}
+			}
+			// 根据页数设置价格
+			if filePageNum > 0 && filePageNum <= 8 {
+				price = 288
+			} else if filePageNum > 8 && filePageNum <= 18 {
+				price = 388
+			} else if filePageNum > 18 && filePageNum <= 28 {
+				price = 488
+			} else if filePageNum > 28 && filePageNum <= 38 {
+				price = 588
+			} else if filePageNum > 38 && filePageNum <= 48 {
+				price = 688
+			} else if filePageNum > 48 && filePageNum <= 58 {
+				price = 788
+			} else {
+				price = 888
 			}
 
 			// 将已上传的文件转移到指定文件夹
