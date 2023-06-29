@@ -72,7 +72,7 @@ var Cookie = "__root_domain_v=.doc88.com; _qddaz=QD.155181178889683; _qddab=3-gv
 // @Title 编辑道客巴巴文档
 // @Description https://www.doc88.com/，编辑道客巴巴文档
 func main() {
-	curPage := 6
+	curPage := 9
 	for {
 		pageListUrl := fmt.Sprintf("https://www.doc88.com/uc/doc_manager.php?act=ajax_doc_list&curpage=%d", curPage)
 		fmt.Println(pageListUrl)
@@ -178,6 +178,7 @@ func main() {
 			fmt.Println(editDoc88ResponseData)
 			time.Sleep(time.Second * 5)
 		}
+		time.Sleep(time.Second * 15)
 		curPage++
 	}
 }
