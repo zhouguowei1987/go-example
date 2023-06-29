@@ -92,39 +92,13 @@ func main() {
 			break
 		}
 		for _, liNode := range liNodes {
-			PId := htmlquery.SelectAttr(liNode, "id")
-			PId = PId[5:len(PId)]
 
-			detailUrl := "https://www.doc88.com/uc/usr_doc_manager.php?act=getDocInfo"
-			detailDoc, err := QueryEditDoc88Detail(detailUrl, PId)
-			if err != nil {
-				fmt.Println(err)
-				break
-			}
+			PPageCountNode := htmlquery.FindOne(liNode, `./div[@class="bookimg"]/em`)
+			PPageCount := htmlquery.InnerText(PPageCountNode)
+			PPageCount = PPageCount[2:]
 
-			editUrl := "https://www.doc88.com/uc/index.php"
-
-			DocCodeNode := htmlquery.FindOne(detailDoc, `//dl[@class="editlayout"]/form/dd[1]/div[@class="booksedit"]/table[@class="edit-table"]/input`)
-			DocCode := htmlquery.SelectAttr(DocCodeNode, "value")
-
-			TitleNode := htmlquery.FindOne(detailDoc, `//dl[@class="editlayout"]/form/dd[1]/div[@class="booksedit"]/table[@class="edit-table"]/tbody/tr[1]/td[2]/input`)
-			Title := htmlquery.SelectAttr(TitleNode, "value")
-			fmt.Println(Title)
-
-			IntroNode := htmlquery.FindOne(detailDoc, `//dl[@class="editlayout"]/form/dd[1]/div[@class="booksedit"]/table[@class="edit-table"]/tbody/tr[2]/td[2]/textarea`)
-			Intro := htmlquery.InnerText(IntroNode)
-
-			PCidNode := htmlquery.FindOne(detailDoc, `//dl[@class="editlayout"]/form/dd[1]/div[@class="booksedit"]/table[@class="edit-table"]/tbody/tr[3]/td[2]/div[@class="layers"]/input`)
-			PCid := htmlquery.SelectAttr(PCidNode, "value")
-
-			PPageCountNode := htmlquery.FindOne(detailDoc, `//dl[@class="editlayout"]/form/dd[2]/div[@class="booksedit booksedit-bdr"]/table[@class="edit-table"]/tbody/tr[3]/td[2]/input[2]`)
-			PPageCount := htmlquery.SelectAttr(PPageCountNode, "value")
-
-			PDocFormatNode := htmlquery.FindOne(detailDoc, `//dl[@class="editlayout"]/form/dd[2]/div[@class="booksedit booksedit-bdr"]/table[@class="edit-table"]/tbody/tr[3]/td[2]/input[3]`)
-			PDocFormat := htmlquery.SelectAttr(PDocFormatNode, "value")
-
-			PPriceNode := htmlquery.FindOne(detailDoc, `//dl[@class="editlayout"]/form/dd[2]/div[@class="booksedit booksedit-bdr"]/table[@class="edit-table"]/tbody/tr[2]/td[2]/span/input`)
-			PPrice := htmlquery.SelectAttr(PPriceNode, "value")
+			PPriceNode := htmlquery.FindOne(liNode, `./div[@class="bookdoc"]/ul[@class="position"]/li[6]/span[@class="jifentip"]/strong[@class="red"]`)
+			PPrice := htmlquery.InnerText(PPriceNode)
 
 			filePageNum, _ := strconv.Atoi(PPageCount)
 			PPriceNew := ""
@@ -152,6 +126,34 @@ func main() {
 			}
 			fmt.Println("===========开始修改价格=============")
 
+			PId := htmlquery.SelectAttr(liNode, "id")
+			PId = PId[5:len(PId)]
+
+			detailUrl := "https://www.doc88.com/uc/usr_doc_manager.php?act=getDocInfo"
+			detailDoc, err := QueryEditDoc88Detail(detailUrl, PId)
+			if err != nil {
+				fmt.Println(err)
+				break
+			}
+
+			editUrl := "https://www.doc88.com/uc/index.php"
+
+			DocCodeNode := htmlquery.FindOne(detailDoc, `//dl[@class="editlayout"]/form/dd[1]/div[@class="booksedit"]/table[@class="edit-table"]/input`)
+			DocCode := htmlquery.SelectAttr(DocCodeNode, "value")
+
+			TitleNode := htmlquery.FindOne(detailDoc, `//dl[@class="editlayout"]/form/dd[1]/div[@class="booksedit"]/table[@class="edit-table"]/tbody/tr[1]/td[2]/input`)
+			Title := htmlquery.SelectAttr(TitleNode, "value")
+			fmt.Println(Title)
+
+			IntroNode := htmlquery.FindOne(detailDoc, `//dl[@class="editlayout"]/form/dd[1]/div[@class="booksedit"]/table[@class="edit-table"]/tbody/tr[2]/td[2]/textarea`)
+			Intro := htmlquery.InnerText(IntroNode)
+
+			PCidNode := htmlquery.FindOne(detailDoc, `//dl[@class="editlayout"]/form/dd[1]/div[@class="booksedit"]/table[@class="edit-table"]/tbody/tr[3]/td[2]/div[@class="layers"]/input`)
+			PCid := htmlquery.SelectAttr(PCidNode, "value")
+
+			PDocFormatNode := htmlquery.FindOne(detailDoc, `//dl[@class="editlayout"]/form/dd[2]/div[@class="booksedit booksedit-bdr"]/table[@class="edit-table"]/tbody/tr[3]/td[2]/input[3]`)
+			PDocFormat := htmlquery.SelectAttr(PDocFormatNode, "value")
+
 			editDoc88FormData := EditDoc88FormData{
 				DocCode:        DocCode,
 				Title:          Title,
@@ -174,7 +176,7 @@ func main() {
 				break
 			}
 			fmt.Println(editDoc88ResponseData)
-			time.Sleep(time.Second * 15)
+			time.Sleep(time.Second * 5)
 		}
 		curPage++
 	}
@@ -185,7 +187,7 @@ func QueryEditDoc88List(requestUrl string, queryEditDoc88ListFormData QueryEditD
 	var client *http.Client = &http.Client{
 		Transport: &http.Transport{
 			Dial: func(netw, addr string) (net.Conn, error) {
-				c, err := net.DialTimeout(netw, addr, time.Second*3)
+				c, err := net.DialTimeout(netw, addr, time.Second*10)
 				if err != nil {
 					fmt.Println("dail timeout", err)
 					return nil, err
@@ -194,7 +196,7 @@ func QueryEditDoc88List(requestUrl string, queryEditDoc88ListFormData QueryEditD
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 10,
 		},
 	}
 	if EditDoc88EnableHttpProxy {
@@ -251,7 +253,7 @@ func QueryEditDoc88Detail(requestUrl string, PId string) (doc *html.Node, err er
 	var client *http.Client = &http.Client{
 		Transport: &http.Transport{
 			Dial: func(netw, addr string) (net.Conn, error) {
-				c, err := net.DialTimeout(netw, addr, time.Second*3)
+				c, err := net.DialTimeout(netw, addr, time.Second*10)
 				if err != nil {
 					fmt.Println("dail timeout", err)
 					return nil, err
@@ -260,7 +262,7 @@ func QueryEditDoc88Detail(requestUrl string, PId string) (doc *html.Node, err er
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 10,
 		},
 	}
 	if EditDoc88EnableHttpProxy {
@@ -308,7 +310,25 @@ func QueryEditDoc88Detail(requestUrl string, PId string) (doc *html.Node, err er
 }
 
 func EditDoc88(requestUrl string, editDoc88FormData EditDoc88FormData) (editDoc88ResponseData EditDoc88ResponseData, err error) {
-	client := &http.Client{}
+	// 初始化客户端
+	var client *http.Client = &http.Client{
+		Transport: &http.Transport{
+			Dial: func(netw, addr string) (net.Conn, error) {
+				c, err := net.DialTimeout(netw, addr, time.Second*10)
+				if err != nil {
+					fmt.Println("dail timeout", err)
+					return nil, err
+				}
+				return c, nil
+
+			},
+			MaxIdleConnsPerHost:   10,
+			ResponseHeaderTimeout: time.Second * 10,
+		},
+	}
+	if EditDoc88EnableHttpProxy {
+		client = EditDoc88SetHttpProxy()
+	}
 	editDoc88ResponseData = EditDoc88ResponseData{}
 	postData := url.Values{}
 	postData.Add("doccode", editDoc88FormData.DocCode)
