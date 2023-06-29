@@ -72,7 +72,7 @@ var Cookie = "__root_domain_v=.doc88.com; _qddaz=QD.155181178889683; _qddab=3-gv
 // @Title 编辑道客巴巴文档
 // @Description https://www.doc88.com/，编辑道客巴巴文档
 func main() {
-	curPage := 9
+	curPage := 10
 	for {
 		pageListUrl := fmt.Sprintf("https://www.doc88.com/uc/doc_manager.php?act=ajax_doc_list&curpage=%d", curPage)
 		fmt.Println(pageListUrl)
@@ -178,7 +178,7 @@ func main() {
 			fmt.Println(editDoc88ResponseData)
 			time.Sleep(time.Second * 5)
 		}
-		time.Sleep(time.Second * 15)
+		time.Sleep(time.Second * 25)
 		curPage++
 	}
 }
@@ -188,7 +188,7 @@ func QueryEditDoc88List(requestUrl string, queryEditDoc88ListFormData QueryEditD
 	var client *http.Client = &http.Client{
 		Transport: &http.Transport{
 			Dial: func(netw, addr string) (net.Conn, error) {
-				c, err := net.DialTimeout(netw, addr, time.Second*10)
+				c, err := net.DialTimeout(netw, addr, time.Second*3)
 				if err != nil {
 					fmt.Println("dail timeout", err)
 					return nil, err
@@ -197,7 +197,7 @@ func QueryEditDoc88List(requestUrl string, queryEditDoc88ListFormData QueryEditD
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 10,
+			ResponseHeaderTimeout: time.Second * 3,
 		},
 	}
 	if EditDoc88EnableHttpProxy {
@@ -254,7 +254,7 @@ func QueryEditDoc88Detail(requestUrl string, PId string) (doc *html.Node, err er
 	var client *http.Client = &http.Client{
 		Transport: &http.Transport{
 			Dial: func(netw, addr string) (net.Conn, error) {
-				c, err := net.DialTimeout(netw, addr, time.Second*10)
+				c, err := net.DialTimeout(netw, addr, time.Second*3)
 				if err != nil {
 					fmt.Println("dail timeout", err)
 					return nil, err
@@ -263,7 +263,7 @@ func QueryEditDoc88Detail(requestUrl string, PId string) (doc *html.Node, err er
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 10,
+			ResponseHeaderTimeout: time.Second * 3,
 		},
 	}
 	if EditDoc88EnableHttpProxy {
@@ -315,7 +315,7 @@ func EditDoc88(requestUrl string, editDoc88FormData EditDoc88FormData) (editDoc8
 	var client *http.Client = &http.Client{
 		Transport: &http.Transport{
 			Dial: func(netw, addr string) (net.Conn, error) {
-				c, err := net.DialTimeout(netw, addr, time.Second*10)
+				c, err := net.DialTimeout(netw, addr, time.Second*3)
 				if err != nil {
 					fmt.Println("dail timeout", err)
 					return nil, err
@@ -324,7 +324,7 @@ func EditDoc88(requestUrl string, editDoc88FormData EditDoc88FormData) (editDoc8
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 10,
+			ResponseHeaderTimeout: time.Second * 3,
 		},
 	}
 	if EditDoc88EnableHttpProxy {
