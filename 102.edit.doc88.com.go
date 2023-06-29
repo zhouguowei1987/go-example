@@ -74,7 +74,7 @@ var EditCount = 1
 // @Title 编辑道客巴巴文档
 // @Description https://www.doc88.com/，编辑道客巴巴文档
 func main() {
-	curPage := 6
+	curPage := 7
 	for {
 		pageListUrl := fmt.Sprintf("https://www.doc88.com/uc/doc_manager.php?act=ajax_doc_list&curpage=%d", curPage)
 		fmt.Println(pageListUrl)
@@ -181,7 +181,7 @@ func main() {
 			fmt.Println(editDoc88ResponseData)
 			if EditCount > 5 {
 				EditCount = 1
-				fmt.Println("==========更新数量超过5，暂停45秒==========")
+				fmt.Println("==========更新数量超过5，暂停120秒==========")
 				time.Sleep(time.Second * 30)
 			} else {
 				fmt.Println("==========更新成功，暂停8秒==========")
