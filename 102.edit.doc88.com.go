@@ -70,7 +70,7 @@ type EditDoc88FormData struct {
 // @Title 编辑道客巴巴文档
 // @Description https://www.doc88.com/，编辑道客巴巴文档
 func main() {
-	curPage := 221
+	curPage := 1
 	for {
 		pageListUrl := fmt.Sprintf("https://www.doc88.com/uc/doc_manager.php?act=ajax_doc_list&curpage=%d", curPage)
 		fmt.Println(pageListUrl)
@@ -146,9 +146,11 @@ func main() {
 			}
 
 			// 新旧价格一样，则跳过
+			fmt.Println(PPrice, PPriceNew)
 			if PPrice == PPriceNew {
 				continue
 			}
+			fmt.Println("===========开始修改价格=============")
 
 			editDoc88FormData := EditDoc88FormData{
 				DocCode:        DocCode,
@@ -158,7 +160,7 @@ func main() {
 				Keyword:        "",
 				ShareToDoc:     "1",
 				Download:       "2",
-				PPrice:         PPrice,
+				PPrice:         PPriceNew,
 				PDefaultPoints: "3",
 				PPageCount:     PPageCount,
 				PDocFormat:     PDocFormat,
@@ -172,9 +174,9 @@ func main() {
 				break
 			}
 			fmt.Println(editDoc88ResponseData)
-			time.Sleep(time.Second * 2)
+			time.Sleep(time.Second * 15)
 		}
-		curPage--
+		curPage++
 	}
 }
 
