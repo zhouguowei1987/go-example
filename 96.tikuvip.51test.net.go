@@ -177,7 +177,7 @@ func treeListInit() (tiKuVip51TestTreeListInitData []TiKuVip51TestTreeListInitDa
 		return tiKuVip51TestTreeListInitData, err
 	}
 	req.Header.Set("Accept", "application/json, text/plain, */*")
-	req.Header.Set("accept-encoding", "gzip, deflate, br")
+	//req.Header.Set("accept-encoding", "gzip, deflate, br")
 	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
 	req.Header.Set("cookie", "__yjs_duid=1_9906f2c8d7c017db33d48b6a18ccd56b1675842585518; __bid_n=18630008879d6e0aee4207; Hm_lvt_f4ae163e87a012d4ab5106f993decb4c=1678772717; HOST=https://tikuvip.51test.net/; APP_HOST=https://tikuvip.51test.net/; kodUserLanguage=zh-CN; KOD_SESSION_SSO=n8v73kudnk59513468tvhg87tb; KOD_SESSION_ID_8e194=4oqj9kpf2pv95a06ob9jtgn9t9; Hm_lvt_c3d24798f142b815b7069d109e892e45=1681193783; Hm_lpvt_c3d24798f142b815b7069d109e892e45=1681193791; FPTOKEN=UE8f6wb8MckxSxA89FIzTZ9nPQu2jojdRQf4VC8sc1QD/+6ogqCPSaSNzQEejyrOERvpDkcNLTobKcgtrh4HBHntkNvvf/elpIuqc/oTjkvNrkyQSRfyPlZ6jm9dYo3c/48EVuuYIExPhgwAdN3uYxIbH7T3h+s+F/RMB9b7hk8HDyBAJqiZIcMKwKqYgiPDRL8unhH+0FqFBIoJADdvPMAxfThWnvolGsCCpU+jZUPoXZmBCWUf88+amY4wvGNiBbcoIZYh1tZfd2Hd+AF+HWz0RsBdmMc0FHvDBx/mxmPIeZrFww3nE7PP185jycCBL2D4vAVHyVvvBI8R5nCUrC/zG8ya3XsTSI0LHdQsN/Dg8J5Fvjjlmfb//2zgb6jqF9AZvf0CZ/3R5YRO2kkdKw==|wfSc6dBQePRjKadw5Z+bnD3Mhzt+CJbcPPgSMmC9Td4=|10|acd5f2507c1333048f3938686dc63972; Hm_lpvt_f4ae163e87a012d4ab5106f993decb4c=1681195808; kodVersionCheck=check-at-1681195868")
 	req.Header.Set("referer", "https://tikuvip.51test.net/?share/folder&user=100&sid=BzcEWh8C&uid=8034602&uip=222.70.7.91&downloaddate=2023-04-11&token=00fded6d31b3f0bf47f14d3251bc120c")
@@ -259,7 +259,7 @@ func treeList(path string) (tiKuVip51TestTreeListData []TiKuVip51TestTreeListDat
 		return tiKuVip51TestTreeListData, err
 	}
 	req.Header.Set("Accept", "application/json, text/plain, */*")
-	req.Header.Set("accept-encoding", "gzip, deflate, br")
+	//req.Header.Set("accept-encoding", "gzip, deflate, br")
 	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
 	req.Header.Set("Content-Type", w.FormDataContentType())
 	req.Header.Set("cookie", "__yjs_duid=1_9906f2c8d7c017db33d48b6a18ccd56b1675842585518; __bid_n=18630008879d6e0aee4207; Hm_lvt_f4ae163e87a012d4ab5106f993decb4c=1678772717; HOST=https://tikuvip.51test.net/; APP_HOST=https://tikuvip.51test.net/; kodUserLanguage=zh-CN; KOD_SESSION_SSO=n8v73kudnk59513468tvhg87tb; KOD_SESSION_ID_8e194=4oqj9kpf2pv95a06ob9jtgn9t9; Hm_lvt_c3d24798f142b815b7069d109e892e45=1681193783; Hm_lpvt_c3d24798f142b815b7069d109e892e45=1681193791; FPTOKEN=UE8f6wb8MckxSxA89FIzTZ9nPQu2jojdRQf4VC8sc1QD/+6ogqCPSaSNzQEejyrOERvpDkcNLTobKcgtrh4HBHntkNvvf/elpIuqc/oTjkvNrkyQSRfyPlZ6jm9dYo3c/48EVuuYIExPhgwAdN3uYxIbH7T3h+s+F/RMB9b7hk8HDyBAJqiZIcMKwKqYgiPDRL8unhH+0FqFBIoJADdvPMAxfThWnvolGsCCpU+jZUPoXZmBCWUf88+amY4wvGNiBbcoIZYh1tZfd2Hd+AF+HWz0RsBdmMc0FHvDBx/mxmPIeZrFww3nE7PP185jycCBL2D4vAVHyVvvBI8R5nCUrC/zG8ya3XsTSI0LHdQsN/Dg8J5Fvjjlmfb//2zgb6jqF9AZvf0CZ/3R5YRO2kkdKw==|wfSc6dBQePRjKadw5Z+bnD3Mhzt+CJbcPPgSMmC9Td4=|10|acd5f2507c1333048f3938686dc63972; Hm_lpvt_f4ae163e87a012d4ab5106f993decb4c=1681195808; kodVersionCheck=check-at-1681195868")
@@ -341,7 +341,7 @@ func PathList(path string) (tiKuVip51TestPathListDataFileList []TiKuVip51TestPat
 		return tiKuVip51TestPathListDataFileList, err
 	}
 	req.Header.Set("Accept", "application/json, text/plain, */*")
-	req.Header.Set("accept-encoding", "gzip, deflate, br")
+	//req.Header.Set("accept-encoding", "gzip, deflate, br")
 	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
 	req.Header.Set("cookie", "__yjs_duid=1_9906f2c8d7c017db33d48b6a18ccd56b1675842585518; __bid_n=18630008879d6e0aee4207; Hm_lvt_f4ae163e87a012d4ab5106f993decb4c=1678772717; HOST=https://tikuvip.51test.net/; APP_HOST=https://tikuvip.51test.net/; kodUserLanguage=zh-CN; KOD_SESSION_SSO=n8v73kudnk59513468tvhg87tb; KOD_SESSION_ID_8e194=4oqj9kpf2pv95a06ob9jtgn9t9; Hm_lvt_c3d24798f142b815b7069d109e892e45=1681193783; Hm_lpvt_c3d24798f142b815b7069d109e892e45=1681193791; FPTOKEN=UE8f6wb8MckxSxA89FIzTZ9nPQu2jojdRQf4VC8sc1QD/+6ogqCPSaSNzQEejyrOERvpDkcNLTobKcgtrh4HBHntkNvvf/elpIuqc/oTjkvNrkyQSRfyPlZ6jm9dYo3c/48EVuuYIExPhgwAdN3uYxIbH7T3h+s+F/RMB9b7hk8HDyBAJqiZIcMKwKqYgiPDRL8unhH+0FqFBIoJADdvPMAxfThWnvolGsCCpU+jZUPoXZmBCWUf88+amY4wvGNiBbcoIZYh1tZfd2Hd+AF+HWz0RsBdmMc0FHvDBx/mxmPIeZrFww3nE7PP185jycCBL2D4vAVHyVvvBI8R5nCUrC/zG8ya3XsTSI0LHdQsN/Dg8J5Fvjjlmfb//2zgb6jqF9AZvf0CZ/3R5YRO2kkdKw==|wfSc6dBQePRjKadw5Z+bnD3Mhzt+CJbcPPgSMmC9Td4=|10|acd5f2507c1333048f3938686dc63972; Hm_lpvt_f4ae163e87a012d4ab5106f993decb4c=1681195808; kodVersionCheck=check-at-1681195868")
 	req.Header.Set("referer", "https://tikuvip.51test.net/?share/folder&user=100&sid=BzcEWh8C&uid=8034602&uip=222.70.7.91&downloaddate=2023-04-11&token=00fded6d31b3f0bf47f14d3251bc120c")
@@ -372,7 +372,7 @@ var maxDownloadNumber = 20
 var downloadNumber = 0
 var sleepSecond = 30
 
-var saveYear = []string{"2016", "2017"}
+var saveYear = []string{"2023"}
 
 func tiKuVip51TestDownloadUrl(tiKuVip51TestPathListDataFileList []TiKuVip51TestPathListDataFileList) {
 	for _, pathListDataFile := range tiKuVip51TestPathListDataFileList {
@@ -384,7 +384,7 @@ func tiKuVip51TestDownloadUrl(tiKuVip51TestPathListDataFileList []TiKuVip51TestP
 			}
 		}
 		// 只保留一级目录
-		filePath := "../tikuvip（2016-2017）.51test.net/" + handlePath[0] + "/"
+		filePath := "../tikuvip（2023）.51test.net/" + handlePath[0] + "/"
 		fileName := pathListDataFile.Name
 		fileName = strings.Trim(fileName, " ")
 		for _, year := range saveYear {
@@ -447,7 +447,7 @@ func downloadTiKuVip51Test(attachmentUrl string, filePath string, fileName strin
 	}
 
 	req.Header.Set("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9")
-	req.Header.Set("Accept-Encoding", "gzip, deflate, br")
+	//req.Header.Set("Accept-Encoding", "gzip, deflate, br")
 	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
 	req.Header.Set("Connection", "keep-alive")
 	req.Header.Set("cookie", "__yjs_duid=1_9906f2c8d7c017db33d48b6a18ccd56b1675842585518; __bid_n=18630008879d6e0aee4207; Hm_lvt_f4ae163e87a012d4ab5106f993decb4c=1678772717; HOST=https://tikuvip.51test.net/; APP_HOST=https://tikuvip.51test.net/; kodUserLanguage=zh-CN; KOD_SESSION_SSO=n8v73kudnk59513468tvhg87tb; KOD_SESSION_ID_8e194=4oqj9kpf2pv95a06ob9jtgn9t9; Hm_lvt_c3d24798f142b815b7069d109e892e45=1681193783; Hm_lpvt_c3d24798f142b815b7069d109e892e45=1681193791; FPTOKEN=UE8f6wb8MckxSxA89FIzTZ9nPQu2jojdRQf4VC8sc1QD/+6ogqCPSaSNzQEejyrOERvpDkcNLTobKcgtrh4HBHntkNvvf/elpIuqc/oTjkvNrkyQSRfyPlZ6jm9dYo3c/48EVuuYIExPhgwAdN3uYxIbH7T3h+s+F/RMB9b7hk8HDyBAJqiZIcMKwKqYgiPDRL8unhH+0FqFBIoJADdvPMAxfThWnvolGsCCpU+jZUPoXZmBCWUf88+amY4wvGNiBbcoIZYh1tZfd2Hd+AF+HWz0RsBdmMc0FHvDBx/mxmPIeZrFww3nE7PP185jycCBL2D4vAVHyVvvBI8R5nCUrC/zG8ya3XsTSI0LHdQsN/Dg8J5Fvjjlmfb//2zgb6jqF9AZvf0CZ/3R5YRO2kkdKw==|wfSc6dBQePRjKadw5Z+bnD3Mhzt+CJbcPPgSMmC9Td4=|10|acd5f2507c1333048f3938686dc63972; Hm_lpvt_f4ae163e87a012d4ab5106f993decb4c=1681195808; kodVersionCheck=check-at-1681195868")
