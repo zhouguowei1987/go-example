@@ -183,8 +183,8 @@ func main() {
 			fmt.Println(editDoc88ResponseData)
 			if EditCount > 3 {
 				EditCount = 1
-				fmt.Println("==========更新数量超过3，暂停120秒==========")
-				time.Sleep(time.Second * 120)
+				fmt.Println("==========更新数量超过3，暂停60秒==========")
+				time.Sleep(time.Second * 60)
 			} else {
 				fmt.Println("==========更新成功，暂停15秒==========")
 				time.Sleep(time.Second * 15)
