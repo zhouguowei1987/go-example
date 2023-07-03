@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/360EntSecGroup-Skylar/excelize"
 	"io"
 	"io/ioutil"
 	"mime/multipart"
@@ -351,12 +350,13 @@ func main() {
 				if pdfFile, err := pdf.Open(filePath); err == nil {
 					filePageNum = pdfFile.NumPage()
 				}
-			} else if fileExt == ".docx" {
-				// 获取DOCX文件，获取总页数
-				if docxFile, err := excelize.OpenFile(filePath); err == nil {
-					filePageNum = len(docxFile.GetSheetMap())
-				}
 			}
+			//else if fileExt == ".docx" {
+			//	// 获取DOCX文件，获取总页数
+			//	if docxFile, err := excelize.OpenFile(filePath); err == nil {
+			//		filePageNum = len(docxFile.GetSheetMap())
+			//	}
+			//}
 			// 根据页数设置价格
 			if filePageNum > 0 {
 				if filePageNum > 0 && filePageNum <= 8 {
