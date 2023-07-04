@@ -133,22 +133,15 @@ func downloadOPenStd(attachmentUrl string, referer string, filePath string) erro
 		return err
 	}
 
-	req.Header.Set("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7")
+	req.Header.Set("Accept", "text/plain, */*; q=0.01")
 	req.Header.Set("Accept-Encoding", "gzip, deflate, br")
-	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
+	req.Header.Set("Accept-Language", "zh-CN,zh-TW;q=0.9,zh;q=0.8,en-US;q=0.7,en;q=0.6")
 	req.Header.Set("Cookie", "JSESSIONID=9E471D8867368091138C5AD541926F0D; _yfx_firsttime_10000005=1682490279215; _yfx_cookie_10000005=20230426142439218633328741727619; Hm_lvt_50758913e6f0dfc9deacbfebce3637e4=1686634030; _yfx_visitcount_10000005=1687937505384; _yfx_returncount_10000005=4; _yfx_lasttime_10000005=1687937505384; Hm_lpvt_50758913e6f0dfc9deacbfebce3637e4=1687943495")
 	req.Header.Set("Connection", "keep-alive")
+	req.Header.Set("DNT", "1")
 	req.Header.Set("Host", "c.gb688.cn")
 	req.Header.Set("Origin", "http://c.gb688.cn")
 	req.Header.Set("Referer", referer)
-	req.Header.Set("sec-ch-ua", "\"Chromium\";v=\"110\", \"Not A(Brand\";v=\"24\", \"Google Chrome\";v=\"110\"")
-	req.Header.Set("sec-ch-ua-mobile", "?0")
-	req.Header.Set("sec-ch-ua-platform", "\"macOS\"")
-	req.Header.Set("Sec-Fetch-Dest", "document")
-	req.Header.Set("Sec-Fetch-Mode", "navigate")
-	req.Header.Set("Sec-Fetch-Site", "same-origin")
-	req.Header.Set("Sec-Fetch-User", "?1")
-	req.Header.Set("Upgrade-Insecure-Requests", "1")
 	req.Header.Set("X-Requested-With", "XMLHttpRequest")
 	req.Header.Set("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36")
 	resp, err := client.Do(req) //拿到返回的内容
