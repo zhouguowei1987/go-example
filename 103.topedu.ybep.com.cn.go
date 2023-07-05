@@ -55,9 +55,7 @@ func main() {
 		totalPage := 1
 		for page <= totalPage {
 			pageListUrl := subject.url
-			if page > 1 {
-				pageListUrl = fmt.Sprintf(subject.url+"&page=%d", page)
-			}
+			pageListUrl = fmt.Sprintf(subject.url+"&page=%d", page)
 			fmt.Println(pageListUrl)
 
 			pageListDoc, err := htmlquery.LoadURL(pageListUrl)
