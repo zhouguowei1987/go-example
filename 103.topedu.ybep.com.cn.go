@@ -80,7 +80,7 @@ func main() {
 					fmt.Println("=================================================================================")
 					// 文档详情URL
 					fileName := htmlquery.InnerText(htmlquery.FindOne(dlNode, `./span/em/a`))
-					fileName = strings.ReplaceAll(fileName, "-", "")
+					fileName = strings.ReplaceAll(fileName, "_", "")
 
 					fmt.Println(fileName)
 
