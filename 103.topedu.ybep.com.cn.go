@@ -45,6 +45,7 @@ var AllTopEduSubject = []TopEduSubject{
 		url:  "http://topedu.ybep.com.cn/project/really_test.php?tp=g",
 	},
 }
+var topEduSaveYear = []string{"2023", "2022", "2021", "2020", "2019", "2018", "2017", "2016"}
 
 // ychEduSpider 获取鼎尖资源网文档
 // @Title 获取鼎尖资源网文档
@@ -79,8 +80,23 @@ func main() {
 					// 文档详情URL
 					fileName := htmlquery.InnerText(htmlquery.FindOne(dlNode, `./span/em/a`))
 					fileName = strings.ReplaceAll(fileName, "_", "")
-
-					fmt.Println(fileName)
+					fileName = strings.ReplaceAll(fileName, " ", "")
+					if !strings.Contains(fileName, "doc") {
+						continue
+					}
+					ifSave := false
+					for _, year := range topEduSaveYear {
+						if strings.Contains(fileName, year) {
+							ifSave = true
+							break
+						}
+						if ifSave {
+							break
+						}
+					}
+					if !ifSave {
+						continue
+					}
 
 					detailUrl := htmlquery.InnerText(htmlquery.FindOne(dlNode, `./span/em/a/@href`))
 					detailUrl = "http://topedu.ybep.com.cn/project/" + detailUrl
