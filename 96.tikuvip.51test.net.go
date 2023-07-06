@@ -372,7 +372,7 @@ var maxDownloadNumber = 20
 var downloadNumber = 0
 var sleepSecond = 30
 
-var saveYear = []string{"2023"}
+var tiKuVip51TestSaveYear = []string{"2023"}
 
 func tiKuVip51TestDownloadUrl(tiKuVip51TestPathListDataFileList []TiKuVip51TestPathListDataFileList) {
 	for _, pathListDataFile := range tiKuVip51TestPathListDataFileList {
@@ -387,7 +387,7 @@ func tiKuVip51TestDownloadUrl(tiKuVip51TestPathListDataFileList []TiKuVip51TestP
 		filePath := "../tikuvip（2023）.51test.net/" + handlePath[0] + "/"
 		fileName := pathListDataFile.Name
 		fileName = strings.Trim(fileName, " ")
-		for _, year := range saveYear {
+		for _, year := range tiKuVip51TestSaveYear {
 			if strings.Contains(fileName, year) {
 				// 开始下载
 				downloadUrl := fmt.Sprintf("https://tikuvip.51test.net/index.php?pluginApp/to/officeLive/&path={userShare}:100/真题题库%s", pathListDataFile.Path)
