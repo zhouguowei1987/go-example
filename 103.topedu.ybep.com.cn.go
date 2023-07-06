@@ -79,8 +79,10 @@ func main() {
 					// 文档详情URL
 					fileName := htmlquery.InnerText(htmlquery.FindOne(dlNode, `./span/em/a`))
 					fileName = strings.ReplaceAll(fileName, "_", "")
-
-					fmt.Println(fileName)
+					fileName = strings.ReplaceAll(fileName, " ", "")
+					if !strings.Contains(fileName, "doc") {
+						continue
+					}
 
 					detailUrl := htmlquery.InnerText(htmlquery.FindOne(dlNode, `./span/em/a/@href`))
 					detailUrl = "http://topedu.ybep.com.cn/project/" + detailUrl
