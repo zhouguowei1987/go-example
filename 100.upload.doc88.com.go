@@ -237,48 +237,6 @@ func main() {
 			Price:      368,
 			pDocFormat: "PDF",
 		},
-		{
-			dirName:    "finish.tikuvip（2023）.51test.net-二级建造师考试",
-			fileExt:    ".docx",
-			pCid:       8210,
-			Price:      366,
-			pDocFormat: "DOCX",
-		},
-		{
-			dirName:    "finish.tikuvip（2023）.51test.net-高考",
-			fileExt:    ".docx",
-			pCid:       8244,
-			Price:      366,
-			pDocFormat: "DOCX",
-		},
-		{
-			dirName:    "finish.tikuvip（2023）.51test.net-高中会考",
-			fileExt:    ".docx",
-			pCid:       8244,
-			Price:      366,
-			pDocFormat: "DOCX",
-		},
-		{
-			dirName:    "finish.tikuvip（2023）.51test.net-公务员考试",
-			fileExt:    ".docx",
-			pCid:       8216,
-			Price:      366,
-			pDocFormat: "DOCX",
-		},
-		{
-			dirName:    "finish.tikuvip（2023）.51test.net-考研",
-			fileExt:    ".docx",
-			pCid:       8245,
-			Price:      366,
-			pDocFormat: "DOCX",
-		},
-		{
-			dirName:    "finish.tikuvip（2023）.51test.net-中考",
-			fileExt:    ".docx",
-			pCid:       8243,
-			Price:      366,
-			pDocFormat: "DOCX",
-		},
 	}
 	rootPath := "../upload.doc88.com/"
 	for _, childDir := range uploadChildDirArr {
@@ -351,12 +309,6 @@ func main() {
 					filePageNum = pdfFile.NumPage()
 				}
 			}
-			//else if fileExt == ".docx" {
-			//	// 获取DOCX文件，获取总页数
-			//	if docxFile, err := excelize.OpenFile(filePath); err == nil {
-			//		filePageNum = len(docxFile.GetSheetMap())
-			//	}
-			//}
 			// 根据页数设置价格
 			if filePageNum > 0 {
 				if filePageNum > 0 && filePageNum <= 8 {
