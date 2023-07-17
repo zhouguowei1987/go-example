@@ -431,7 +431,6 @@ func downloadTiKuVip51TestUrl(attachmentUrl string) (downloadUrl string, err err
 	// 初始化客户端
 	client := &http.Client{
 		CheckRedirect: func(req *http.Request, via []*http.Request) error {
-			fmt.Println("Redirecting to:", req.URL)
 			return http.ErrUseLastResponse
 		},
 	}
