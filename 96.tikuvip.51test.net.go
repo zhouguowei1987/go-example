@@ -33,6 +33,8 @@ func TiKuVip51TestSetHttpProxy() (httpclient *http.Client) {
 	return httpclient
 }
 
+var tiKuVipCookie = "__yjs_duid=1_9906f2c8d7c017db33d48b6a18ccd56b1675842585518; Hm_lvt_c3d24798f142b815b7069d109e892e45=1685671841; Hm_lpvt_c3d24798f142b815b7069d109e892e45=1685671841; __bid_n=18630008879d6e0aee4207; FPTOKEN=MGPTS+u3bngAqtwpnIUwMibRc1guZDiPU0y/2Ry3RnRwNpndpk8N5snuF0RDdLI6D7w8f5NXPlGBl14aAisNEV6A8iqHUQqR1EwEnrGn0sY+vFM7G6zIHTnvcpseJEolkFkvl7mQTyW5oghJsJns52laUwjY4Xwb3Ag54dTqGcjOgCTAY5JrqEIcPNQZE1j1+Pzwqu1X2jS2S8l2NQ9aTFwgIZQVTqzAY6AOna96FkqU/CvWAfQ12YXMJz9RncwRRP03odS/0u8JwxVAG+TlkJzeTdCimks1nzllXuTPQ0paE9/OS02kJEYFQRjxCcjeUJ3u98zwxWreQbiXuC11Bdxf5UNnooQHzp6zCEn9joxYb+QG6ftQ9R6pJjrjqthOLK8pNMcXuQY0SJakvg0Nwg==|MJv40hOMa4u5wYnIcPFTUVWo07Na1ehPiHJz0gCwQOk=|10|62703f260015d5c13013d6e6360b5596; Hm_lvt_f4ae163e87a012d4ab5106f993decb4c=1688434770; Hm_lvt_f0e5d9e2cfc9b0e39766d14a6cbd7c33=1688526341; Hm_lpvt_f0e5d9e2cfc9b0e39766d14a6cbd7c33=1688526341; Hm_lpvt_f4ae163e87a012d4ab5106f993decb4c=1689610425; KOD_SESSION_ID_8e194=dmr4nju6okomkthdpp9gg9m51c; PHPSESSID=26sqogif7l94h6gvitvhs745jh"
+
 // ychEduSpider 获取无忧考试网真题
 // @Title 获取无忧考试网真题
 // @Description https://tikuvip.51test.net/，获取无忧考试网真题
@@ -177,7 +179,7 @@ func treeListInit() (tiKuVip51TestTreeListInitData []TiKuVip51TestTreeListInitDa
 	req.Header.Set("Accept", "application/json, text/plain, */*")
 	//req.Header.Set("accept-encoding", "gzip, deflate, br")
 	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
-	req.Header.Set("cookie", "__yjs_duid=1_9906f2c8d7c017db33d48b6a18ccd56b1675842585518; __bid_n=18630008879d6e0aee4207; Hm_lvt_f4ae163e87a012d4ab5106f993decb4c=1678772717; HOST=https://tikuvip.51test.net/; APP_HOST=https://tikuvip.51test.net/; kodUserLanguage=zh-CN; KOD_SESSION_SSO=n8v73kudnk59513468tvhg87tb; KOD_SESSION_ID_8e194=4oqj9kpf2pv95a06ob9jtgn9t9; Hm_lvt_c3d24798f142b815b7069d109e892e45=1681193783; Hm_lpvt_c3d24798f142b815b7069d109e892e45=1681193791; FPTOKEN=UE8f6wb8MckxSxA89FIzTZ9nPQu2jojdRQf4VC8sc1QD/+6ogqCPSaSNzQEejyrOERvpDkcNLTobKcgtrh4HBHntkNvvf/elpIuqc/oTjkvNrkyQSRfyPlZ6jm9dYo3c/48EVuuYIExPhgwAdN3uYxIbH7T3h+s+F/RMB9b7hk8HDyBAJqiZIcMKwKqYgiPDRL8unhH+0FqFBIoJADdvPMAxfThWnvolGsCCpU+jZUPoXZmBCWUf88+amY4wvGNiBbcoIZYh1tZfd2Hd+AF+HWz0RsBdmMc0FHvDBx/mxmPIeZrFww3nE7PP185jycCBL2D4vAVHyVvvBI8R5nCUrC/zG8ya3XsTSI0LHdQsN/Dg8J5Fvjjlmfb//2zgb6jqF9AZvf0CZ/3R5YRO2kkdKw==|wfSc6dBQePRjKadw5Z+bnD3Mhzt+CJbcPPgSMmC9Td4=|10|acd5f2507c1333048f3938686dc63972; Hm_lpvt_f4ae163e87a012d4ab5106f993decb4c=1681195808; kodVersionCheck=check-at-1681195868")
+	req.Header.Set("Cookie", tiKuVipCookie)
 	req.Header.Set("referer", "https://tikuvip.51test.net/?share/folder&user=100&sid=BzcEWh8C&uid=8034602&uip=222.70.7.91&downloaddate=2023-04-11&token=00fded6d31b3f0bf47f14d3251bc120c")
 	req.Header.Set("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36")
 	resp, err := client.Do(req) //拿到返回的内容
@@ -260,7 +262,7 @@ func treeList(path string) (tiKuVip51TestTreeListData []TiKuVip51TestTreeListDat
 	//req.Header.Set("accept-encoding", "gzip, deflate, br")
 	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
 	req.Header.Set("Content-Type", w.FormDataContentType())
-	req.Header.Set("cookie", "__yjs_duid=1_9906f2c8d7c017db33d48b6a18ccd56b1675842585518; __bid_n=18630008879d6e0aee4207; Hm_lvt_f4ae163e87a012d4ab5106f993decb4c=1678772717; HOST=https://tikuvip.51test.net/; APP_HOST=https://tikuvip.51test.net/; kodUserLanguage=zh-CN; KOD_SESSION_SSO=n8v73kudnk59513468tvhg87tb; KOD_SESSION_ID_8e194=4oqj9kpf2pv95a06ob9jtgn9t9; Hm_lvt_c3d24798f142b815b7069d109e892e45=1681193783; Hm_lpvt_c3d24798f142b815b7069d109e892e45=1681193791; FPTOKEN=UE8f6wb8MckxSxA89FIzTZ9nPQu2jojdRQf4VC8sc1QD/+6ogqCPSaSNzQEejyrOERvpDkcNLTobKcgtrh4HBHntkNvvf/elpIuqc/oTjkvNrkyQSRfyPlZ6jm9dYo3c/48EVuuYIExPhgwAdN3uYxIbH7T3h+s+F/RMB9b7hk8HDyBAJqiZIcMKwKqYgiPDRL8unhH+0FqFBIoJADdvPMAxfThWnvolGsCCpU+jZUPoXZmBCWUf88+amY4wvGNiBbcoIZYh1tZfd2Hd+AF+HWz0RsBdmMc0FHvDBx/mxmPIeZrFww3nE7PP185jycCBL2D4vAVHyVvvBI8R5nCUrC/zG8ya3XsTSI0LHdQsN/Dg8J5Fvjjlmfb//2zgb6jqF9AZvf0CZ/3R5YRO2kkdKw==|wfSc6dBQePRjKadw5Z+bnD3Mhzt+CJbcPPgSMmC9Td4=|10|acd5f2507c1333048f3938686dc63972; Hm_lpvt_f4ae163e87a012d4ab5106f993decb4c=1681195808; kodVersionCheck=check-at-1681195868")
+	req.Header.Set("Cookie", tiKuVipCookie)
 	req.Header.Set("origin", "https://tikuvip.51test.net")
 	req.Header.Set("referer", "https://tikuvip.51test.net/?share/folder&user=100&sid=BzcEWh8C&uid=8034602&uip=222.70.7.91&downloaddate=2023-04-11&token=00fded6d31b3f0bf47f14d3251bc120c")
 	req.Header.Set("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36")
@@ -341,7 +343,7 @@ func PathList(path string) (tiKuVip51TestPathListDataFileList []TiKuVip51TestPat
 	req.Header.Set("Accept", "application/json, text/plain, */*")
 	//req.Header.Set("accept-encoding", "gzip, deflate, br")
 	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
-	req.Header.Set("cookie", "__yjs_duid=1_9906f2c8d7c017db33d48b6a18ccd56b1675842585518; __bid_n=18630008879d6e0aee4207; Hm_lvt_f4ae163e87a012d4ab5106f993decb4c=1678772717; HOST=https://tikuvip.51test.net/; APP_HOST=https://tikuvip.51test.net/; kodUserLanguage=zh-CN; KOD_SESSION_SSO=n8v73kudnk59513468tvhg87tb; KOD_SESSION_ID_8e194=4oqj9kpf2pv95a06ob9jtgn9t9; Hm_lvt_c3d24798f142b815b7069d109e892e45=1681193783; Hm_lpvt_c3d24798f142b815b7069d109e892e45=1681193791; FPTOKEN=UE8f6wb8MckxSxA89FIzTZ9nPQu2jojdRQf4VC8sc1QD/+6ogqCPSaSNzQEejyrOERvpDkcNLTobKcgtrh4HBHntkNvvf/elpIuqc/oTjkvNrkyQSRfyPlZ6jm9dYo3c/48EVuuYIExPhgwAdN3uYxIbH7T3h+s+F/RMB9b7hk8HDyBAJqiZIcMKwKqYgiPDRL8unhH+0FqFBIoJADdvPMAxfThWnvolGsCCpU+jZUPoXZmBCWUf88+amY4wvGNiBbcoIZYh1tZfd2Hd+AF+HWz0RsBdmMc0FHvDBx/mxmPIeZrFww3nE7PP185jycCBL2D4vAVHyVvvBI8R5nCUrC/zG8ya3XsTSI0LHdQsN/Dg8J5Fvjjlmfb//2zgb6jqF9AZvf0CZ/3R5YRO2kkdKw==|wfSc6dBQePRjKadw5Z+bnD3Mhzt+CJbcPPgSMmC9Td4=|10|acd5f2507c1333048f3938686dc63972; Hm_lpvt_f4ae163e87a012d4ab5106f993decb4c=1681195808; kodVersionCheck=check-at-1681195868")
+	req.Header.Set("Cookie", tiKuVipCookie)
 	req.Header.Set("referer", "https://tikuvip.51test.net/?share/folder&user=100&sid=BzcEWh8C&uid=8034602&uip=222.70.7.91&downloaddate=2023-04-11&token=00fded6d31b3f0bf47f14d3251bc120c")
 	req.Header.Set("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36")
 	resp, err := client.Do(req) //拿到返回的内容
@@ -388,16 +390,23 @@ func tiKuVip51TestDownloadUrl(tiKuVip51TestPathListDataFileList []TiKuVip51TestP
 		for _, year := range tiKuVip51TestSaveYear {
 			if strings.Contains(fileName, year) {
 				// 开始下载
-				downloadUrl := fmt.Sprintf("https://tikuvip.51test.net/index.php?pluginApp/to/officeLive/&path={userShare}:100/真题题库%s", pathListDataFile.Path)
+				attachmentUrl := fmt.Sprintf("https://tikuvip.51test.net/index.php?pluginApp/to/officeLive/&path={userShare}:100/真题题库%s", pathListDataFile.Path)
 
 				fmt.Println("=======================")
-				fmt.Println(downloadUrl)
-				fmt.Println(filePath)
-				fmt.Println(fileName)
+				fmt.Println(attachmentUrl)
+
+				downloadDocUrl, err := downloadTiKuVip51TestUrl(attachmentUrl)
+				if err != nil {
+					fmt.Println(err)
+					continue
+				}
+				fmt.Println(downloadDocUrl)
 
 				if _, err := os.Stat(filePath + fileName); err != nil {
 					fmt.Println("=======开始下载========")
-					err := downloadTiKuVip51Test(downloadUrl, filePath, fileName)
+					fmt.Println(filePath)
+					fmt.Println(fileName)
+					err := downloadTiKuVip51Test(downloadDocUrl, filePath, fileName)
 					downloadNumber++
 					if err != nil {
 						fmt.Println(err)
@@ -416,6 +425,51 @@ func tiKuVip51TestDownloadUrl(tiKuVip51TestPathListDataFileList []TiKuVip51TestP
 			}
 		}
 	}
+}
+
+func downloadTiKuVip51TestUrl(attachmentUrl string) (downloadUrl string, err error) {
+	// 初始化客户端
+	client := &http.Client{
+		CheckRedirect: func(req *http.Request, via []*http.Request) error {
+			fmt.Println("Redirecting to:", req.URL)
+			return http.ErrUseLastResponse
+		},
+	}
+
+	req, err := http.NewRequest("GET", attachmentUrl, nil) //建立连接
+	if err != nil {
+		return downloadUrl, err
+	}
+
+	req.Header.Set("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7")
+	req.Header.Set("Accept-Encoding", "zip, deflate, br")
+	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
+	req.Header.Set("Connection", "keep-alive")
+	req.Header.Set("Cookie", tiKuVipCookie)
+	req.Header.Set("Host", "tikuvip.51test.net")
+	req.Header.Set("Origin", "https://tikuvip.51test.net")
+	req.Header.Set("Referer", "https://tikuvip.51test.net/")
+	req.Header.Set("Sec-Ch-Ua", "\"Not.A/Brand\";v=\"8\", \"Chromium\";v=\"114\", \"Google Chrome\";v=\"114\"")
+	req.Header.Set("Sec-Ch-Ua-Mobile", "?0")
+	req.Header.Set("Sec-Ch-Ua-Platform", "\"macOS\"")
+	req.Header.Set("Sec-Fetch-Dest", "document")
+	req.Header.Set("Sec-Fetch-Mode", "navigate")
+	req.Header.Set("Sec-Fetch-Site", "none")
+	req.Header.Set("Sec-Fetch-User", "?1")
+	req.Header.Set("Upgrade-Insecure-Requests", "1")
+	req.Header.Set("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36")
+	resp, err := client.Do(req) //拿到返回的内容
+	if err != nil {
+		return downloadUrl, err
+	}
+	defer resp.Body.Close()
+	// 如果访问失败，就打印当前状态码
+	if resp.StatusCode == http.StatusOK {
+		downloadUrl = attachmentUrl
+	} else if resp.StatusCode == http.StatusFound {
+		downloadUrl = resp.Header.Get("Location")
+	}
+	return downloadUrl, nil
 }
 
 func downloadTiKuVip51Test(attachmentUrl string, filePath string, fileName string) error {
@@ -438,20 +492,28 @@ func downloadTiKuVip51Test(attachmentUrl string, filePath string, fileName strin
 	if TiKuVip51TestEnableHttpProxy {
 		client = TiKuVip51TestSetHttpProxy()
 	}
-	postData := url.Values{}
-	req, err := http.NewRequest("GET", attachmentUrl, strings.NewReader(postData.Encode())) //建立连接
+
+	req, err := http.NewRequest("GET", attachmentUrl, nil) //建立连接
 	if err != nil {
 		return err
 	}
 
-	req.Header.Set("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9")
-	//req.Header.Set("Accept-Encoding", "gzip, deflate, br")
+	req.Header.Set("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7")
+	req.Header.Set("Accept-Encoding", "zip, deflate, br")
 	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
 	req.Header.Set("Connection", "keep-alive")
-	req.Header.Set("cookie", "__yjs_duid=1_9906f2c8d7c017db33d48b6a18ccd56b1675842585518; __bid_n=18630008879d6e0aee4207; Hm_lvt_f4ae163e87a012d4ab5106f993decb4c=1678772717; HOST=https://tikuvip.51test.net/; APP_HOST=https://tikuvip.51test.net/; kodUserLanguage=zh-CN; KOD_SESSION_SSO=n8v73kudnk59513468tvhg87tb; KOD_SESSION_ID_8e194=4oqj9kpf2pv95a06ob9jtgn9t9; Hm_lvt_c3d24798f142b815b7069d109e892e45=1681193783; Hm_lpvt_c3d24798f142b815b7069d109e892e45=1681193791; FPTOKEN=UE8f6wb8MckxSxA89FIzTZ9nPQu2jojdRQf4VC8sc1QD/+6ogqCPSaSNzQEejyrOERvpDkcNLTobKcgtrh4HBHntkNvvf/elpIuqc/oTjkvNrkyQSRfyPlZ6jm9dYo3c/48EVuuYIExPhgwAdN3uYxIbH7T3h+s+F/RMB9b7hk8HDyBAJqiZIcMKwKqYgiPDRL8unhH+0FqFBIoJADdvPMAxfThWnvolGsCCpU+jZUPoXZmBCWUf88+amY4wvGNiBbcoIZYh1tZfd2Hd+AF+HWz0RsBdmMc0FHvDBx/mxmPIeZrFww3nE7PP185jycCBL2D4vAVHyVvvBI8R5nCUrC/zG8ya3XsTSI0LHdQsN/Dg8J5Fvjjlmfb//2zgb6jqF9AZvf0CZ/3R5YRO2kkdKw==|wfSc6dBQePRjKadw5Z+bnD3Mhzt+CJbcPPgSMmC9Td4=|10|acd5f2507c1333048f3938686dc63972; Hm_lpvt_f4ae163e87a012d4ab5106f993decb4c=1681195808; kodVersionCheck=check-at-1681195868")
+	req.Header.Set("Cookie", tiKuVipCookie)
 	req.Header.Set("Host", "tikuvip.51test.net")
 	req.Header.Set("Origin", "https://tikuvip.51test.net")
 	req.Header.Set("Referer", "https://tikuvip.51test.net/")
+	req.Header.Set("Sec-Ch-Ua", "\"Not.A/Brand\";v=\"8\", \"Chromium\";v=\"114\", \"Google Chrome\";v=\"114\"")
+	req.Header.Set("Sec-Ch-Ua-Mobile", "?0")
+	req.Header.Set("Sec-Ch-Ua-Platform", "\"macOS\"")
+	req.Header.Set("Sec-Fetch-Dest", "document")
+	req.Header.Set("Sec-Fetch-Mode", "navigate")
+	req.Header.Set("Sec-Fetch-Site", "none")
+	req.Header.Set("Sec-Fetch-User", "?1")
+	req.Header.Set("Upgrade-Insecure-Requests", "1")
 	req.Header.Set("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36")
 	resp, err := client.Do(req) //拿到返回的内容
 	if err != nil {
