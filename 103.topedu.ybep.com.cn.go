@@ -33,16 +33,19 @@ func TopEduSetHttpProxy() (httpclient *http.Client) {
 type TopEduSubject struct {
 	name string
 	url  string
+	tp   string
 }
 
 var AllTopEduSubject = []TopEduSubject{
-	//{
-	//	name: "中考真题",
-	//	url:  "http://topedu.ybep.com.cn/project/really_test.php?tp=z",
-	//},
+	{
+		name: "中考真题",
+		url:  "http://topedu.ybep.com.cn/project/really_test.php?tp=z",
+		tp:   "z",
+	},
 	{
 		name: "高考真题",
 		url:  "http://topedu.ybep.com.cn/project/really_test.php?tp=g",
+		tp:   "g",
 	},
 }
 var topEduSaveYear = []string{"2023", "2022", "2021", "2020", "2019", "2018", "2017", "2016"}
@@ -112,7 +115,8 @@ func main() {
 						fmt.Println(err)
 						continue
 					}
-					attachmentUrl := fmt.Sprintf("http://topedu.ybep.com.cn/project/clouddown.php?pg=really&id=%s&tp=z&opt=0", urlParam.Get("id"))
+					attachmentUrl := fmt.Sprintf("http://topedu.ybep.com.cn/project/clouddown.php?pg=really&id=%s&tp=%s&opt=0", urlParam.Get("id"), subject.tp)
+					fmt.Println(attachmentUrl)
 
 					filePath := "../topedu.ybep.com.cn/" + subject.name + "/" + fileName
 					if _, err := os.Stat(filePath); err != nil {
@@ -159,15 +163,17 @@ func downloadTopEdu(attachmentUrl string, referer string, filePath string) error
 	if err != nil {
 		return err
 	}
-	req.Header.Set("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9")
+	req.Header.Set("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7")
 	req.Header.Set("Accept-Encoding", "gzip, deflate")
 	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
-	req.Header.Set("Cache-Control", "max-age=0")
+	req.Header.Set("Cache-Control", "no-cache")
 	req.Header.Set("Connection", "keep-alive")
 	req.Header.Set("Cookie", "PHPSESSID=01a3l59n6nd4bsbbvea3g62ffd; __51vcke__JnUuVbB1pNBuOI9J=9abc1268-74e1-5c53-bdff-3d5142d26680; __51vuft__JnUuVbB1pNBuOI9J=1688548296298; __51uvsct__JnUuVbB1pNBuOI9J=3; _gid=GA1.3.1657144183.1689556817; __vtins__JnUuVbB1pNBuOI9J=%7B%22sid%22%3A%20%22f23c1d7a-ea5f-594c-8b66-217cabbb615a%22%2C%20%22vd%22%3A%206%2C%20%22stt%22%3A%2044437%2C%20%22dr%22%3A%201951%2C%20%22expires%22%3A%201689558658841%2C%20%22ct%22%3A%201689556858841%7D; _ga_34B604LFFQ=GS1.1.1689556817.4.1.1689556858.19.0.0; _ga=GA1.1.1239824823.1688548299")
 	req.Header.Set("Host", "opedu.ybep.com.cn")
+	req.Header.Set("Pragma", "no-cache")
 	req.Header.Set("Referer", referer)
-	req.Header.Set("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36")
+	req.Header.Set("Upgrade-Insecure-Requests", "1")
+	req.Header.Set("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36")
 	resp, err := client.Do(req) //拿到返回的内容
 	if err != nil {
 		return err
