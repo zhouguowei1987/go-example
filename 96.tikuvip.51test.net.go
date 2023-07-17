@@ -43,13 +43,11 @@ func main() {
 		"一级建造师考试": true,
 		"小升初":     true,
 		"考研":      true,
-		"公务员考试":   true,
 		"高中会考":    true,
 		"高考":      true,
 		"二级建造师考试": true,
 		"成人高考":    true,
 		"中考":      true,
-		"事业单位招聘":  true,
 	}
 	tiKuVip51TestTreeListInitData, err := treeListInit()
 	if err != nil {
