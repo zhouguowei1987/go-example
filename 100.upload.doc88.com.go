@@ -461,6 +461,20 @@ func main() {
 			Price:      468,
 			pDocFormat: "PDF",
 		},
+		{
+			dirName:    "pdf.topedu.ybep.com.cn/中考真题",
+			fileExt:    ".pdf",
+			pCid:       8243,
+			Price:      468,
+			pDocFormat: "PDF",
+		},
+		{
+			dirName:    "pdf.topedu.ybep.com.cn/高考真题",
+			fileExt:    ".pdf",
+			pCid:       8244,
+			Price:      468,
+			pDocFormat: "PDF",
+		},
 	}
 	rootPath := "../upload.doc88.com/"
 	for _, childDir := range uploadChildDirArr {
