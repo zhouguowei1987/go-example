@@ -40,16 +40,14 @@ var tiKuVipCookie = "__yjs_duid=1_9906f2c8d7c017db33d48b6a18ccd56b1675842585518;
 // @Description https://tikuvip.51test.net/，获取无忧考试网真题
 func main() {
 	saveCategory := map[string]bool{
-		"自考":      true,
-		"专升本考试":   true,
-		"一级建造师考试": true,
-		"小升初":     true,
-		"考研":      true,
-		"高中会考":    true,
-		"高考":      true,
-		"二级建造师考试": true,
-		"成人高考":    true,
-		"中考":      true,
+		"自考":    true,
+		"专升本考试": true,
+		"小升初":   true,
+		"考研":    true,
+		"高中会考":  true,
+		"高考":    true,
+		"成人高考":  true,
+		"中考":    true,
 	}
 	tiKuVip51TestTreeListInitData, err := treeListInit()
 	if err != nil {
