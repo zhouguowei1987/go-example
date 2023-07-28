@@ -59,10 +59,15 @@ type ResponseDataRecords struct {
 func main() {
 	requestUrl := "https://dbba.sacinfo.org.cn/stdQueryList"
 	current := 1
+	maxCurrent := 5
 	size := 50
 	status := "现行"
 	isPageListGo := true
 	for isPageListGo {
+		if current > maxCurrent {
+			isPageListGo = false
+			break
+		}
 		responseData, err := GetStdQueryList(requestUrl, current, size, status)
 		if err != nil {
 			fmt.Println(err)
