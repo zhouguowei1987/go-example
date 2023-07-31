@@ -59,7 +59,7 @@ type ResponseDataRecords struct {
 func main() {
 	requestUrl := "https://dbba.sacinfo.org.cn/stdQueryList"
 	current := 1
-	maxCurrent := 5
+	maxCurrent := 20
 	size := 50
 	status := "现行"
 	isPageListGo := true

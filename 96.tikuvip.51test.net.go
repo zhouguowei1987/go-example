@@ -370,7 +370,7 @@ var maxDownloadNumber = 20
 var downloadNumber = 0
 var sleepSecond = 30
 
-var tiKuVip51TestSaveYear = []string{"2023"}
+var tiKuVip51TestSaveYear = []string{"2014", "2015"}
 
 func tiKuVip51TestDownloadUrl(tiKuVip51TestPathListDataFileList []TiKuVip51TestPathListDataFileList) {
 	for _, pathListDataFile := range tiKuVip51TestPathListDataFileList {
@@ -382,7 +382,7 @@ func tiKuVip51TestDownloadUrl(tiKuVip51TestPathListDataFileList []TiKuVip51TestP
 			}
 		}
 		// 只保留一级目录
-		filePath := "../tikuvip（2023）.51test.net/" + handlePath[0] + "/"
+		filePath := "../tikuvip（2014-2015）.51test.net/" + handlePath[0] + "/"
 		fileName := pathListDataFile.Name
 		fileName = strings.Trim(fileName, " ")
 		for _, year := range tiKuVip51TestSaveYear {
