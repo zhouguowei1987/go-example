@@ -381,8 +381,6 @@ var maxDownloadNumber = 20
 var downloadNumber = 0
 var sleepSecond = 30
 
-var tiKuVip51TestSaveYear = []string{"2014", "2015"}
-
 func tiKuVip51TestDownloadUrl(tiKuVip51TestPathListDataFileList []TiKuVip51TestPathListDataFileList) {
 	for _, pathListDataFile := range tiKuVip51TestPathListDataFileList {
 		pathArray := strings.Split(pathListDataFile.Path, "/")
@@ -393,44 +391,54 @@ func tiKuVip51TestDownloadUrl(tiKuVip51TestPathListDataFileList []TiKuVip51TestP
 			}
 		}
 		// 只保留一级目录
-		filePath := "../tikuvip（2014-2015）.51test.net/" + handlePath[0] + "/"
+		filePath := ""
 		fileName := pathListDataFile.Name
 		fileName = strings.Trim(fileName, " ")
-		for _, year := range tiKuVip51TestSaveYear {
-			if strings.Contains(fileName, year) {
-				// 开始下载
-				attachmentUrl := fmt.Sprintf("https://tikuvip.51test.net/index.php?pluginApp/to/officeLive/&path={userShare}:100/真题题库%s", pathListDataFile.Path)
+		if strings.Contains(fileName, "2014") || strings.Contains(fileName, "2015") {
+			filePath = "../tikuvip（2014-2015）.51test.net/" + handlePath[0] + "/"
+		} else if strings.Contains(fileName, "2016") || strings.Contains(fileName, "2017") {
+			filePath = "../tikuvip（2016-2017）.51test.net/" + handlePath[0] + "/"
+		} else if strings.Contains(fileName, "2018") || strings.Contains(fileName, "2019") {
+			filePath = "../tikuvip（2018-2019）.51test.net/" + handlePath[0] + "/"
+		} else if strings.Contains(fileName, "2020") || strings.Contains(fileName, "2021") || strings.Contains(fileName, "2022") {
+			filePath = "../tikuvip（2020-2022）.51test.net/" + handlePath[0] + "/"
+		} else if strings.Contains(fileName, "2023") {
+			filePath = "../tikuvip（2023）.51test.net/" + handlePath[0] + "/"
+		}
+		if filePath == "" {
+			continue
+		}
 
-				fmt.Println("=======================")
-				fmt.Println(attachmentUrl)
+		// 开始下载
+		attachmentUrl := fmt.Sprintf("https://tikuvip.51test.net/index.php?pluginApp/to/officeLive/&path={userShare}:100/真题题库%s", pathListDataFile.Path)
 
-				downloadDocUrl, err := downloadTiKuVip51TestUrl(attachmentUrl)
-				if err != nil {
-					fmt.Println(err)
-					continue
-				}
-				fmt.Println(downloadDocUrl)
+		fmt.Println("=======================")
+		fmt.Println(attachmentUrl)
 
-				if _, err := os.Stat(filePath + fileName); err != nil {
-					fmt.Println("=======开始下载========")
-					fmt.Println(filePath)
-					fmt.Println(fileName)
-					err := downloadTiKuVip51Test(downloadDocUrl, filePath, fileName)
-					downloadNumber++
-					if err != nil {
-						fmt.Println(err)
-						continue
-					}
-					fmt.Println("=======开始完成========")
-					if downloadNumber >= maxDownloadNumber {
-						fmt.Printf("=======下载%d个文件，暂停%d秒=======\n", maxDownloadNumber, sleepSecond)
-						time.Sleep(time.Second * time.Duration(sleepSecond))
-						downloadNumber = 0
-					} else {
-						time.Sleep(time.Second * 1)
-					}
-				}
-				break
+		downloadDocUrl, err := downloadTiKuVip51TestUrl(attachmentUrl)
+		if err != nil {
+			fmt.Println(err)
+			continue
+		}
+		fmt.Println(downloadDocUrl)
+
+		if _, err := os.Stat(filePath + fileName); err != nil {
+			fmt.Println("=======开始下载========")
+			fmt.Println(filePath)
+			fmt.Println(fileName)
+			err := downloadTiKuVip51Test(downloadDocUrl, filePath, fileName)
+			downloadNumber++
+			if err != nil {
+				fmt.Println(err)
+				continue
+			}
+			fmt.Println("=======开始完成========")
+			if downloadNumber >= maxDownloadNumber {
+				fmt.Printf("=======下载%d个文件，暂停%d秒=======\n", maxDownloadNumber, sleepSecond)
+				time.Sleep(time.Second * time.Duration(sleepSecond))
+				downloadNumber = 0
+			} else {
+				time.Sleep(time.Second * 1)
 			}
 		}
 	}
