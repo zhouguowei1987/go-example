@@ -408,25 +408,24 @@ func tiKuVip51TestDownloadUrl(tiKuVip51TestPathListDataFileList []TiKuVip51TestP
 		if filePath == "" {
 			continue
 		}
-
-		// 开始下载
-		attachmentUrl := fmt.Sprintf("https://tikuvip.51test.net/index.php?pluginApp/to/officeLive/&path={userShare}:100/真题题库%s", pathListDataFile.Path)
-
-		fmt.Println("=======================")
-		fmt.Println(attachmentUrl)
-
-		downloadDocUrl, err := downloadTiKuVip51TestUrl(attachmentUrl)
-		if err != nil {
-			fmt.Println(err)
-			continue
-		}
-		fmt.Println(downloadDocUrl)
-
+		fmt.Println(filePath)
+		fmt.Println(fileName)
 		if _, err := os.Stat(filePath + fileName); err != nil {
 			fmt.Println("=======开始下载========")
-			fmt.Println(filePath)
-			fmt.Println(fileName)
-			err := downloadTiKuVip51Test(downloadDocUrl, filePath, fileName)
+
+			// 开始下载
+			attachmentUrl := fmt.Sprintf("https://tikuvip.51test.net/index.php?pluginApp/to/officeLive/&path={userShare}:100/真题题库%s", pathListDataFile.Path)
+
+			fmt.Println("=======================")
+			fmt.Println(attachmentUrl)
+
+			downloadDocUrl, err := downloadTiKuVip51TestUrl(attachmentUrl)
+			if err != nil {
+				fmt.Println(err)
+				continue
+			}
+			fmt.Println(downloadDocUrl)
+			err = downloadTiKuVip51Test(downloadDocUrl, filePath, fileName)
 			downloadNumber++
 			if err != nil {
 				fmt.Println(err)
