@@ -394,7 +394,9 @@ func tiKuVip51TestDownloadUrl(tiKuVip51TestPathListDataFileList []TiKuVip51TestP
 		filePath := ""
 		fileName := pathListDataFile.Name
 		fileName = strings.Trim(fileName, " ")
-		if strings.Contains(fileName, "2014") || strings.Contains(fileName, "2015") {
+		if strings.Contains(fileName, "2012") || strings.Contains(fileName, "2013") {
+			filePath = "../tikuvip（2012-2013）.51test.net/" + handlePath[0] + "/"
+		} else if strings.Contains(fileName, "2014") || strings.Contains(fileName, "2015") {
 			filePath = "../tikuvip（2014-2015）.51test.net/" + handlePath[0] + "/"
 		} else if strings.Contains(fileName, "2016") || strings.Contains(fileName, "2017") {
 			filePath = "../tikuvip（2016-2017）.51test.net/" + handlePath[0] + "/"
