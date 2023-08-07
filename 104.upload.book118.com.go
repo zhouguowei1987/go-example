@@ -579,7 +579,7 @@ func main() {
 			isAllowUpload, err := VerifyUploadDocument(fileName, childDir.format, price, fileMD5)
 			if err != nil || isAllowUpload == false {
 				fmt.Printf("isAllowUpload = %t, err = %s", isAllowUpload, err)
-				continue
+				break
 			}
 			fmt.Printf("isAllowUpload = %t\n", isAllowUpload)
 
