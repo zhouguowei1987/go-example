@@ -345,6 +345,176 @@ func main() {
 			format:  "pdf",
 			price:   "2000",
 		},
+		{
+			dirName: "pdf-finish.tikuvip（2016-2017）.51test.net/专升本考试",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "pdf-finish.tikuvip（2016-2017）.51test.net/中考",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "pdf-finish.tikuvip（2016-2017）.51test.net/小升初",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "pdf-finish.tikuvip（2016-2017）.51test.net/成人高考",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "pdf-finish.tikuvip（2016-2017）.51test.net/考研",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "pdf-finish.tikuvip（2016-2017）.51test.net/自考",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "pdf-finish.tikuvip（2016-2017）.51test.net/高中会考",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "pdf-finish.tikuvip（2016-2017）.51test.net/高考",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "pdf-finish.tikuvip（2018-2019）.51test.net/专升本考试",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "pdf-finish.tikuvip（2018-2019）.51test.net/中考",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "pdf-finish.tikuvip（2018-2019）.51test.net/小升初",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "pdf-finish.tikuvip（2018-2019）.51test.net/成人高考",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "pdf-finish.tikuvip（2018-2019）.51test.net/考研",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "pdf-finish.tikuvip（2018-2019）.51test.net/自考",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "pdf-finish.tikuvip（2018-2019）.51test.net/高中会考",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "pdf-finish.tikuvip（2018-2019）.51test.net/高考",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "pdf-finish.tikuvip（2020-2022）.51test.net/专升本考试",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "pdf-finish.tikuvip（2020-2022）.51test.net/中考",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "pdf-finish.tikuvip（2020-2022）.51test.net/小升初",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "pdf-finish.tikuvip（2020-2022）.51test.net/成人高考",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "pdf-finish.tikuvip（2020-2022）.51test.net/考研",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "pdf-finish.tikuvip（2020-2022）.51test.net/自考",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "pdf-finish.tikuvip（2020-2022）.51test.net/高中会考",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "pdf-finish.tikuvip（2020-2022）.51test.net/高考",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "pdf-finish.tikuvip（2023）.51test.net/专升本考试",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "pdf-finish.tikuvip（2023）.51test.net/中考",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "pdf-finish.tikuvip（2023）.51test.net/小升初",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "pdf-finish.tikuvip（2023）.51test.net/成人高考",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "pdf-finish.tikuvip（2023）.51test.net/考研",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "pdf-finish.tikuvip（2023）.51test.net/自考",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "pdf-finish.tikuvip（2023）.51test.net/高中会考",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "pdf-finish.tikuvip（2023）.51test.net/高考",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "pdf.topedu.ybep.com.cn/中考真题",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "pdf.topedu.ybep.com.cn/高考真题",
+			format:  "pdf",
+			price:   "2000",
+		},
 	}
 	rootPath := "../upload.book118.com/"
 	for _, childDir := range uploadChildDirArr {
