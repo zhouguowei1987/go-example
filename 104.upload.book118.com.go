@@ -346,6 +346,51 @@ func main() {
 			price:   "2000",
 		},
 		{
+			dirName: "finish.tikuvip（2010-2011）.51test.net/专升本考试",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "finish.tikuvip（2010-2011）.51test.net/初中一年级",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "finish.tikuvip（2010-2011）.51test.net/中考",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "finish.tikuvip（2010-2011）.51test.net/小升初",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "finish.tikuvip（2010-2011）.51test.net/成人高考",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "finish.tikuvip（2010-2011）.51test.net/考研",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "finish.tikuvip（2010-2011）.51test.net/自考",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "finish.tikuvip（2010-2011）.51test.net/高中会考",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "finish.tikuvip（2010-2011）.51test.net/高考",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
 			dirName: "finish.tikuvip（2016-2017）.51test.net/专升本考试",
 			format:  "pdf",
 			price:   "2000",
