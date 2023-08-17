@@ -670,19 +670,19 @@ func main() {
 			// 根据页数设置价格
 			if filePageNum > 0 {
 				if filePageNum > 0 && filePageNum <= 8 {
-					price = "288"
+					price = "28"
 				} else if filePageNum > 8 && filePageNum <= 18 {
-					price = "388"
+					price = "38"
 				} else if filePageNum > 18 && filePageNum <= 28 {
-					price = "488"
+					price = "48"
 				} else if filePageNum > 28 && filePageNum <= 38 {
-					price = "588"
+					price = "58"
 				} else if filePageNum > 38 && filePageNum <= 48 {
-					price = "688"
+					price = "68"
 				} else if filePageNum > 48 && filePageNum <= 58 {
-					price = "788"
+					price = "78"
 				} else {
-					price = "888"
+					price = "88"
 				}
 			}
 
