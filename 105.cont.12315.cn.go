@@ -104,6 +104,7 @@ func main() {
 						continue
 					}
 					fmt.Println("=======开始完成========")
+					time.Sleep(time.Millisecond * 200)
 				}
 
 				// 查看文件大小，如果是空文件，则删除
