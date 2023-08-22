@@ -75,6 +75,13 @@ func main() {
 					break
 				}
 
+				// 查看是否有下载按钮
+				downloadButtonNode := htmlquery.FindOne(viewDoc, `//div[@class="samr-view-right"]/div/button[@class="download-word"]`)
+				if downloadButtonNode == nil {
+					fmt.Println("没有下载按钮")
+					continue
+				}
+
 				releaseNumberNode := htmlquery.FindOne(viewDoc, `//div[@class="samr-view-info"]/div[3]/div[@class="info-content"]`)
 				if releaseNumberNode == nil {
 					continue
