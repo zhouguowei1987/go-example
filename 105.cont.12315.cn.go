@@ -7,6 +7,7 @@ import (
 	"github.com/antchfx/htmlquery"
 	"io"
 	"io/ioutil"
+	"mime"
 	"net"
 	"net/http"
 	"net/url"
@@ -237,6 +238,13 @@ func downloadCont(attachmentUrl string, referer string, filePath string) error {
 	if err != nil {
 		return err
 	}
+	// 从响应头获取文件名
+	fileName := getFilenameFromHeader(resp.Header)
+	if fileName != "" {
+		fileExt := strings.Split(fileName, ".")
+		filePath = strings.ReplaceAll(filePath, "docx", fileExt[1])
+	}
+
 	defer resp.Body.Close()
 	// 如果访问失败，就打印当前状态码
 	if resp.StatusCode != http.StatusOK {
@@ -262,4 +270,15 @@ func downloadCont(attachmentUrl string, referer string, filePath string) error {
 		return err
 	}
 	return nil
+}
+
+// 从响应头获取文件名
+func getFilenameFromHeader(header http.Header) string {
+	contentDisposition := header.Get("Content-Disposition")
+	_, params, err := mime.ParseMediaType(contentDisposition)
+	if err != nil {
+		// 如果获取不到文件名，则使用默认文件名
+		return ""
+	}
+	return params["filename"]
 }
