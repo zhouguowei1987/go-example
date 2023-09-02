@@ -90,8 +90,6 @@ func VerifyUploadDocument(title string, format string, price string, md5 string)
 	if err != nil {
 		return false, err
 	}
-	fmt.Println(1111)
-	os.Exit(1)
 	if verifyUploadDocumentResponse.Data.IsAllowUpload != "1" {
 		return false, errors.New(verifyUploadDocumentResponse.Data.Reason)
 	}
