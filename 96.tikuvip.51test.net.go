@@ -40,25 +40,35 @@ var tiKuVipCookie = "__yjs_duid=1_9906f2c8d7c017db33d48b6a18ccd56b1675842585518;
 // @Description https://tikuvip.51test.net/，获取无忧考试网真题
 func main() {
 	saveCategory := map[string]bool{
-		"自考":    true,
-		"专升本考试": true,
-		"初中一年级": true,
-		"初中二年级": true,
-		"初中三年级": true,
-		"小升初":   true,
-		"小学一年级": true,
-		"小学二年级": true,
-		"小学三年级": true,
-		"小学四年级": true,
-		"小学五年级": true,
-		"小学六年级": true,
-		"考研":    true,
-		"高中会考":  true,
-		"高一":    true,
-		"高二":    true,
-		"高考":    true,
-		"成人高考":  true,
-		"中考":    true,
+		//"自考":        true,
+		//"专升本考试":     true,
+		//"初中一年级":     true,
+		//"初中二年级":     true,
+		//"初中三年级":     true,
+		//"小升初":       true,
+		//"小学一年级":     true,
+		//"小学二年级":     true,
+		//"小学三年级":     true,
+		//"小学四年级":     true,
+		//"小学五年级":     true,
+		//"小学六年级":     true,
+		//"考研":        true,
+		//"高中会考":      true,
+		//"高一":        true,
+		//"高二":        true,
+		//"高考":        true,
+		//"成人高考":      true,
+		//"中考":        true,
+		"一级建造师考试":   true,
+		"二级建造师考试":   true,
+		"公务员考试":     true,
+		"教师招聘":      true,
+		"教师资格考试":    true,
+		"事业单位招聘":    true,
+		"消防工程师":     true,
+		"造价工程师考试":   true,
+		"证券从业资格考试":  true,
+		"注册安全工程师考试": true,
 	}
 	tiKuVip51TestTreeListInitData, err := treeListInit()
 	if err != nil {
@@ -395,19 +405,19 @@ func tiKuVip51TestDownloadUrl(tiKuVip51TestPathListDataFileList []TiKuVip51TestP
 		fileName := pathListDataFile.Name
 		fileName = strings.Trim(fileName, " ")
 		if strings.Contains(fileName, "2010") || strings.Contains(fileName, "2011") {
-			filePath = "../tikuvip（2010-2011）.51test.net/" + handlePath[0] + "/"
+			filePath = "../tikuvip-certification（2010-2011）.51test.net/" + handlePath[0] + "/"
 		} else if strings.Contains(fileName, "2012") || strings.Contains(fileName, "2013") {
-			filePath = "../tikuvip（2012-2013）.51test.net/" + handlePath[0] + "/"
+			filePath = "../tikuvip-certification（2012-2013）.51test.net/" + handlePath[0] + "/"
 		} else if strings.Contains(fileName, "2014") || strings.Contains(fileName, "2015") {
-			filePath = "../tikuvip（2014-2015）.51test.net/" + handlePath[0] + "/"
+			filePath = "../tikuvip-certification（2014-2015）.51test.net/" + handlePath[0] + "/"
 		} else if strings.Contains(fileName, "2016") || strings.Contains(fileName, "2017") {
-			filePath = "../tikuvip（2016-2017）.51test.net/" + handlePath[0] + "/"
+			filePath = "../tikuvip-certification（2016-2017）.51test.net/" + handlePath[0] + "/"
 		} else if strings.Contains(fileName, "2018") || strings.Contains(fileName, "2019") {
-			filePath = "../tikuvip（2018-2019）.51test.net/" + handlePath[0] + "/"
+			filePath = "../tikuvip-certification（2018-2019）.51test.net/" + handlePath[0] + "/"
 		} else if strings.Contains(fileName, "2020") || strings.Contains(fileName, "2021") || strings.Contains(fileName, "2022") {
-			filePath = "../tikuvip（2020-2022）.51test.net/" + handlePath[0] + "/"
+			filePath = "../tikuvip-certification（2020-2022）.51test.net/" + handlePath[0] + "/"
 		} else if strings.Contains(fileName, "2023") {
-			filePath = "../tikuvip（2023）.51test.net/" + handlePath[0] + "/"
+			filePath = "../tikuvip-certification（2023）.51test.net/" + handlePath[0] + "/"
 		}
 		if filePath == "" {
 			continue
