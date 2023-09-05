@@ -15,10 +15,10 @@ import (
 
 // TbzSpider 获取全国团体标准信息平台Pdf文档
 // @Title 获取全国团体标准信息平台Pdf文档
-// @Description http://www.ttbz.org.cn/，将全国团体标准信息平台Pdf文档入库
+// @Description https://www.ttbz.org.cn/，将全国团体标准信息平台Pdf文档入库
 func main() {
-	var startId = 88000
-	var endId = 88881
+	var startId = 88881
+	var endId = 88950
 	goCh := make(chan int, endId-startId)
 	for id := startId; id <= endId; id++ {
 		go func(id int) {
@@ -44,7 +44,7 @@ func getTbz(url string) (doc *html.Node, err error) {
 	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
 	req.Header.Set("Cache-Control", "no-cache")
 	req.Header.Set("Connection", "keep-alive")
-	req.Header.Set("Cookie", "__51cke__=; _gid=GA1.3.657608059.1670484462; ASP.NET_SessionId=3prbrx4xve3rhlmvwbexp3v5; _gat=1; __tins__18926186=%7B%22sid%22%3A%201670489509957%2C%20%22vd%22%3A%2038%2C%20%22expires%22%3A%201670492030618%7D; __51laig__=68; _ga_34B604LFFQ=GS1.1.1670484461.1.1.1670490233.31.0.0; _ga=GA1.1.711340106.1670484462")
+	req.Header.Set("Cookie", "__51cke__=; ASP.NET_SessionId=53jwt0vjbjz2norxu0pk23mq; __tins__18926186=%7B%22sid%22%3A%201693922913345%2C%20%22vd%22%3A%203%2C%20%22expires%22%3A%201693924812409%7D; __51laig__=375")
 	req.Header.Set("Host", "www.ttbz.org.cn")
 	req.Header.Set("Pragma", "no-cache")
 	req.Header.Set("Upgrade-Insecure-Requests", "1")
@@ -113,7 +113,7 @@ func downloadPdf(pdfUrl string, filePath string) error {
 }
 
 func tbzSpider(id int) error {
-	detailUrl := fmt.Sprintf("http://www.ttbz.org.cn/StandardManage/Detail/%d", id)
+	detailUrl := fmt.Sprintf("https://www.ttbz.org.cn/StandardManage/Detail/%d", id)
 	detailDoc, err := getTbz(detailUrl)
 	if err != nil {
 		return err
@@ -163,7 +163,7 @@ func tbzSpider(id int) error {
 					chineseTitle = strings.ReplaceAll(chineseTitle, " ", "")
 					fmt.Println(chineseTitle)
 
-					pdfsUrl := fmt.Sprintf("http://www.ttbz.org.cn/Pdfs/Index/?ftype=st&pms=%d", id)
+					pdfsUrl := fmt.Sprintf("https://www.ttbz.org.cn/Pdfs/Index/?ftype=st&pms=%d", id)
 					pdfsDoc, err := getTbz(pdfsUrl)
 					if err != nil {
 						return err
@@ -173,7 +173,7 @@ func tbzSpider(id int) error {
 					fmt.Println(iframeSrc)
 
 					// 下载pdf文件
-					pdfUrl := strings.ReplaceAll(iframeSrc, "/Home/PdfView?file=", "http://www.ttbz.org.cn")
+					pdfUrl := strings.ReplaceAll(iframeSrc, "/Home/PdfView?file=", "https://www.ttbz.org.cn")
 					fmt.Println(pdfUrl)
 
 					filePath := "../www.ttbz.org.cn/" + strconv.Itoa(id) + "-" + chineseTitle + "(" + strings.ReplaceAll(standardNo, "T/", "T") + ")" + ".pdf"
