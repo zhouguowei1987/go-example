@@ -35,8 +35,8 @@ var downPrice = 5
 // @Title 编辑豆丁文档
 // @Description https://www.docin.com/，编辑豆丁文档
 func main() {
-	currentPage := 151
-	beginId := 4493031855
+	currentPage := 1
+	beginId := 0
 	for {
 		pageListUrl := "https://www.docin.com/my/upload/myUpload.do?onlypPublic=1&totalpublicnum=0"
 		referer := "https://www.docin.com/my/upload/myUpload.do?onlypPublic=1&totalpublicnum=0"
