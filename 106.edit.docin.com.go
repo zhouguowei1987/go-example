@@ -35,8 +35,8 @@ var downPrice = 5
 // @Title 编辑豆丁文档
 // @Description https://www.docin.com/，编辑豆丁文档
 func main() {
-	currentPage := 1
-	beginId := 0
+	currentPage := 151
+	beginId := 4493031855
 	for {
 		pageListUrl := "https://www.docin.com/my/upload/myUpload.do?onlypPublic=1&totalpublicnum=0"
 		referer := "https://www.docin.com/my/upload/myUpload.do?onlypPublic=1&totalpublicnum=0"
@@ -48,7 +48,7 @@ func main() {
 		}
 
 		fmt.Println(pageListUrl)
-		pageListDoc, err := QueryEditDocInList(pageListUrl, referer)
+		pageListDoc, err := QueryDocInDoc(pageListUrl, referer)
 		if err != nil {
 			fmt.Println(err)
 			break
@@ -68,7 +68,7 @@ func main() {
 		// 开始设置价格
 		ids := strings.Join(idsArr, ",")
 		editUrl := fmt.Sprintf("https://www.docin.com/app/my/docin/batchModifyPrice.do?ids=%s&down_price=%d&price_flag=1", ids, downPrice)
-		editDoc, err := EditDocInDetail(editUrl, referer)
+		editDoc, err := QueryDocInDoc(editUrl, referer)
 		if err != nil {
 			fmt.Println(err)
 			break
@@ -85,12 +85,12 @@ func main() {
 	}
 }
 
-func QueryEditDocInList(requestUrl string, referer string) (doc *html.Node, err error) {
+func QueryDocInDoc(requestUrl string, referer string) (doc *html.Node, err error) {
 	// 初始化客户端
 	var client *http.Client = &http.Client{
 		Transport: &http.Transport{
 			Dial: func(netw, addr string) (net.Conn, error) {
-				c, err := net.DialTimeout(netw, addr, time.Second*3)
+				c, err := net.DialTimeout(netw, addr, time.Second*20)
 				if err != nil {
 					fmt.Println("dail timeout", err)
 					return nil, err
@@ -99,7 +99,7 @@ func QueryEditDocInList(requestUrl string, referer string) (doc *html.Node, err 
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 20,
 		},
 	}
 	if EditDocInEnableHttpProxy {
@@ -112,65 +112,6 @@ func QueryEditDocInList(requestUrl string, referer string) (doc *html.Node, err 
 	}
 
 	req.Header.Set("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7")
-	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
-	req.Header.Set("Connection", "keep-alive")
-	req.Header.Set("Cookie", DocInCookie)
-	req.Header.Set("Host", "www.docin.com")
-	req.Header.Set("Origin", "https://www.docin.com")
-	req.Header.Set("Referer", referer)
-	req.Header.Set("sec-ch-ua", "\"Chromium\";v=\"110\", \"Not A(Brand\";v=\"24\", \"Google Chrome\";v=\"110\"")
-	req.Header.Set("sec-ch-ua-mobile", "?0")
-	req.Header.Set("sec-ch-ua-platform", "\"macOS\"")
-	req.Header.Set("Sec-Fetch-Dest", "empty")
-	req.Header.Set("Sec-Fetch-Mode", "cors")
-	req.Header.Set("Sec-Fetch-Site", "same-origin")
-	req.Header.Set("Sec-Fetch-User", "?1")
-	req.Header.Set("Upgrade-Insecure-Requests", "1")
-	req.Header.Set("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36")
-	req.Header.Set("X-Requested-With", "XMLHttpRequest")
-	resp, err := client.Do(req) //拿到返回的内容
-	if err != nil {
-		return doc, err
-	}
-	defer resp.Body.Close()
-	// 如果访问失败，就打印当前状态码
-	if resp.StatusCode != http.StatusOK {
-		return doc, errors.New("http status :" + strconv.Itoa(resp.StatusCode))
-	}
-	doc, err = htmlquery.Parse(resp.Body)
-	if err != nil {
-		return doc, err
-	}
-	return doc, nil
-}
-
-func EditDocInDetail(requestUrl string, referer string) (doc *html.Node, err error) {
-	// 初始化客户端
-	var client *http.Client = &http.Client{
-		Transport: &http.Transport{
-			Dial: func(netw, addr string) (net.Conn, error) {
-				c, err := net.DialTimeout(netw, addr, time.Second*15)
-				if err != nil {
-					fmt.Println("dail timeout", err)
-					return nil, err
-				}
-				return c, nil
-
-			},
-			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 15,
-		},
-	}
-	if EditDocInEnableHttpProxy {
-		client = EditDocInSetHttpProxy()
-	}
-	req, err := http.NewRequest("GET", requestUrl, nil) //建立连接
-
-	if err != nil {
-		return doc, err
-	}
-
-	req.Header.Set("Accept", "ext/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7")
 	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
 	req.Header.Set("Connection", "keep-alive")
 	req.Header.Set("Cookie", DocInCookie)
