@@ -86,14 +86,21 @@ func main() {
 					downPrice = 8
 				}
 			}
+			fmt.Println("-----------------开始设置价格--------------------")
+
+			fileTitleNode := htmlquery.FindOne(tbodyNode, `./tr/td[2]/a`)
+			fileTitle := htmlquery.SelectAttr(fileTitleNode, "title")
+			fmt.Println(fileTitle)
+
 			// 开始设置价格
 			editUrl := fmt.Sprintf("https://www.docin.com/app/my/docin/batchModifyPrice.do?ids=%s&down_price=%d&price_flag=1", trId, downPrice)
-			editDoc, err := QueryDocInDoc(editUrl, referer)
+			_, err := QueryDocInDoc(editUrl, referer)
 			if err != nil {
 				fmt.Println(err)
 				continue
 			}
-			fmt.Println(editDoc)
+			fmt.Println("-----------------开始设置价格完结--------------------")
+			time.Sleep(time.Microsecond * 100)
 		}
 		beginId, _ = strconv.Atoi(idsArr[len(idsArr)-1])
 		currentPage++
