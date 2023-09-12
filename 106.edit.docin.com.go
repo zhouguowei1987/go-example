@@ -63,18 +63,38 @@ func main() {
 			trId := strings.ReplaceAll(htmlquery.SelectAttr(trNode, "id"), "tr", "")
 			idsArr = append(idsArr, trId)
 
+			filePageNode := htmlquery.FindOne(tbodyNode, `./tr/td[4]`)
+			filePage := htmlquery.InnerText(filePageNode)
+			filePage = strings.TrimSpace(filePage)
+			filePage = strings.ReplaceAll(filePage, "页", "")
+			// 根据页数设置价格
+			filePageNum, _ := strconv.Atoi(filePage)
+			if filePageNum > 0 {
+				if filePageNum > 0 && filePageNum <= 8 {
+					downPrice = 2
+				} else if filePageNum > 8 && filePageNum <= 18 {
+					downPrice = 3
+				} else if filePageNum > 18 && filePageNum <= 28 {
+					downPrice = 4
+				} else if filePageNum > 28 && filePageNum <= 38 {
+					downPrice = 5
+				} else if filePageNum > 38 && filePageNum <= 48 {
+					downPrice = 6
+				} else if filePageNum > 48 && filePageNum <= 58 {
+					downPrice = 7
+				} else {
+					downPrice = 8
+				}
+			}
+			// 开始设置价格
+			editUrl := fmt.Sprintf("https://www.docin.com/app/my/docin/batchModifyPrice.do?ids=%s&down_price=%d&price_flag=1", trId, downPrice)
+			editDoc, err := QueryDocInDoc(editUrl, referer)
+			if err != nil {
+				fmt.Println(err)
+				continue
+			}
+			fmt.Println(editDoc)
 		}
-
-		// 开始设置价格
-		ids := strings.Join(idsArr, ",")
-		editUrl := fmt.Sprintf("https://www.docin.com/app/my/docin/batchModifyPrice.do?ids=%s&down_price=%d&price_flag=1", ids, downPrice)
-		editDoc, err := QueryDocInDoc(editUrl, referer)
-		if err != nil {
-			fmt.Println(err)
-			break
-		}
-		fmt.Println(editDoc)
-
 		beginId, _ = strconv.Atoi(idsArr[len(idsArr)-1])
 		currentPage++
 		fmt.Println(currentPage)
