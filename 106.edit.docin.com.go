@@ -95,16 +95,15 @@ func main() {
 			filePriceNode := htmlquery.FindOne(tbodyNode, `./tr/td[5]`)
 			filePrice := htmlquery.InnerText(filePriceNode)
 			filePrice = strings.TrimSpace(filePrice)
-			if filePrice == "免费" {
-				continue
-			}
-			floatFilePrice, err := strconv.ParseFloat(filePrice, 64)
-			if err != nil {
-				continue
-			}
-			originalPrice := int(floatFilePrice)
-			if downPrice == originalPrice {
-				continue
+			if filePrice != "免费" {
+				floatFilePrice, err := strconv.ParseFloat(filePrice, 64)
+				if err != nil {
+					continue
+				}
+				originalPrice := int(floatFilePrice)
+				if downPrice == originalPrice {
+					continue
+				}
 			}
 
 			// 开始设置价格
