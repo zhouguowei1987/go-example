@@ -109,7 +109,7 @@ func main() {
 
 			// 开始设置价格
 			fmt.Println("-----------------开始设置价格--------------------")
-			editUrl := fmt.Sprintf("https://www.docin.com/app/my/docin/batchModifyPrice.do?ids=%s&down_price=%d&price_flag=1", trId, downPrice)
+			editUrl := fmt.Sprintf("https://www.docin.com/app/my/docin/batchModifyPrice.do?ids=%s&down_price=%d&price_flag=0", trId, downPrice)
 			_, err = QueryDocInDoc(editUrl, referer)
 			if err != nil {
 				fmt.Println(err)
