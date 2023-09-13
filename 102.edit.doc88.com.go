@@ -116,20 +116,28 @@ func main() {
 			filePageNum, _ := strconv.Atoi(PPageCount)
 			PPriceNew := ""
 			// 根据页数设置价格
-			if filePageNum > 0 && filePageNum <= 8 {
+			if filePageNum > 0 && filePageNum <= 5 {
 				PPriceNew = "288"
-			} else if filePageNum > 8 && filePageNum <= 18 {
+			} else if filePageNum > 5 && filePageNum <= 10 {
 				PPriceNew = "388"
-			} else if filePageNum > 18 && filePageNum <= 28 {
+			} else if filePageNum > 10 && filePageNum <= 15 {
 				PPriceNew = "488"
-			} else if filePageNum > 28 && filePageNum <= 38 {
+			} else if filePageNum > 15 && filePageNum <= 20 {
 				PPriceNew = "588"
-			} else if filePageNum > 38 && filePageNum <= 48 {
+			} else if filePageNum > 20 && filePageNum <= 25 {
 				PPriceNew = "688"
-			} else if filePageNum > 48 && filePageNum <= 58 {
+			} else if filePageNum > 25 && filePageNum <= 30 {
 				PPriceNew = "788"
-			} else {
+			} else if filePageNum > 30 && filePageNum <= 35 {
 				PPriceNew = "888"
+			} else if filePageNum > 35 && filePageNum <= 40 {
+				PPriceNew = "988"
+			} else if filePageNum > 40 && filePageNum <= 45 {
+				PPriceNew = "1088"
+			} else if filePageNum > 45 && filePageNum <= 50 {
+				PPriceNew = "1188"
+			} else {
+				PPriceNew = "1288"
 			}
 
 			// 新旧价格一样，则跳过
