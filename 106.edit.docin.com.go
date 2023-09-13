@@ -74,20 +74,28 @@ func main() {
 			// 根据页数设置价格
 			filePageNum, _ := strconv.Atoi(filePage)
 			if filePageNum > 0 {
-				if filePageNum > 0 && filePageNum <= 8 {
+				if filePageNum > 0 && filePageNum <= 5 {
 					downPrice = 2
-				} else if filePageNum > 8 && filePageNum <= 18 {
+				} else if filePageNum > 5 && filePageNum <= 10 {
 					downPrice = 3
-				} else if filePageNum > 18 && filePageNum <= 28 {
+				} else if filePageNum > 10 && filePageNum <= 15 {
 					downPrice = 4
-				} else if filePageNum > 28 && filePageNum <= 38 {
+				} else if filePageNum > 15 && filePageNum <= 20 {
 					downPrice = 5
-				} else if filePageNum > 38 && filePageNum <= 48 {
+				} else if filePageNum > 20 && filePageNum <= 25 {
 					downPrice = 6
-				} else if filePageNum > 48 && filePageNum <= 58 {
+				} else if filePageNum > 25 && filePageNum <= 30 {
 					downPrice = 7
-				} else {
+				} else if filePageNum > 30 && filePageNum <= 35 {
 					downPrice = 8
+				} else if filePageNum > 35 && filePageNum <= 40 {
+					downPrice = 9
+				} else if filePageNum > 40 && filePageNum <= 45 {
+					downPrice = 10
+				} else if filePageNum > 45 && filePageNum <= 50 {
+					downPrice = 11
+				} else {
+					downPrice = 12
 				}
 			}
 

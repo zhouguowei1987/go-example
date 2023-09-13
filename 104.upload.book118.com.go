@@ -669,20 +669,28 @@ func main() {
 			}
 			// 根据页数设置价格
 			if filePageNum > 0 {
-				if filePageNum > 0 && filePageNum <= 8 {
+				if filePageNum > 0 && filePageNum <= 5 {
 					price = "28"
-				} else if filePageNum > 8 && filePageNum <= 18 {
+				} else if filePageNum > 5 && filePageNum <= 10 {
 					price = "38"
-				} else if filePageNum > 18 && filePageNum <= 28 {
+				} else if filePageNum > 10 && filePageNum <= 15 {
 					price = "48"
-				} else if filePageNum > 28 && filePageNum <= 38 {
+				} else if filePageNum > 15 && filePageNum <= 20 {
 					price = "58"
-				} else if filePageNum > 38 && filePageNum <= 48 {
+				} else if filePageNum > 20 && filePageNum <= 25 {
 					price = "68"
-				} else if filePageNum > 48 && filePageNum <= 58 {
+				} else if filePageNum > 25 && filePageNum <= 30 {
 					price = "78"
-				} else {
+				} else if filePageNum > 30 && filePageNum <= 35 {
 					price = "88"
+				} else if filePageNum > 35 && filePageNum <= 40 {
+					price = "98"
+				} else if filePageNum > 40 && filePageNum <= 45 {
+					price = "108"
+				} else if filePageNum > 45 && filePageNum <= 50 {
+					price = "118"
+				} else {
+					price = "128"
 				}
 			}
 
