@@ -154,9 +154,9 @@ func main() {
 			PId := htmlquery.SelectAttr(liNode, "id")
 			PId = PId[5:]
 
-			for i := 1; i <= 45; i++ {
+			for i := 1; i <= 60; i++ {
 				time.Sleep(time.Second)
-				fmt.Println("===========获取", Title, "详情暂停45秒，倒计时", i, "秒===========")
+				fmt.Println("===========获取", Title, "详情暂停60秒，倒计时", i, "秒===========")
 			}
 
 			detailUrl := "https://www.doc88.com/uc/usr_doc_manager.php?act=getDocInfo"
