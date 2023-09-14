@@ -76,7 +76,7 @@ var EditCount = 1
 // @Title 编辑道客巴巴文档
 // @Description https://www.doc88.com/，编辑道客巴巴文档
 func main() {
-	curPage := 210
+	curPage := 351
 	for {
 		pageListUrl := fmt.Sprintf("https://www.doc88.com/uc/doc_manager.php?act=ajax_doc_list&curpage=%d", curPage)
 		fmt.Println(pageListUrl)
@@ -156,6 +156,8 @@ func main() {
 			PId := htmlquery.SelectAttr(liNode, "id")
 			PId = PId[5:]
 
+			fmt.Println("===========获取文档详情，暂停10秒===========")
+			time.Sleep(time.Second * 10)
 			detailUrl := "https://www.doc88.com/uc/usr_doc_manager.php?act=getDocInfo"
 			detailDoc, err := QueryEditDoc88Detail(detailUrl, PId)
 			if err != nil {
@@ -202,16 +204,16 @@ func main() {
 			fmt.Println(editDoc88ResponseData)
 			if EditCount > 3 {
 				EditCount = 1
-				fmt.Println("===========更新数量超过3，暂停120秒===========")
-				time.Sleep(time.Second * 120)
+				fmt.Println("===========更新数量超过3，暂停80秒===========")
+				time.Sleep(time.Second * 80)
 			} else {
-				fmt.Println("===========更新成功，暂停30秒===========")
-				time.Sleep(time.Second * 30)
+				fmt.Println("===========更新成功，暂停10秒===========")
+				time.Sleep(time.Second * 10)
 			}
 		}
 		curPage++
-		fmt.Println("===========翻", curPage, "页，暂停25秒===========")
-		time.Sleep(time.Second * 25)
+		fmt.Println("===========翻", curPage, "页，暂停20秒===========")
+		time.Sleep(time.Second * 20)
 	}
 }
 
