@@ -156,8 +156,11 @@ func main() {
 			PId := htmlquery.SelectAttr(liNode, "id")
 			PId = PId[5:]
 
-			fmt.Println("===========获取文档详情，暂停10秒===========")
-			time.Sleep(time.Second * 10)
+			for i := 1; i <= 10; i++ {
+				time.Sleep(time.Second)
+				fmt.Println("===========获取", Title, "详情暂停", i, "秒===========")
+			}
+
 			detailUrl := "https://www.doc88.com/uc/usr_doc_manager.php?act=getDocInfo"
 			detailDoc, err := QueryEditDoc88Detail(detailUrl, PId)
 			if err != nil {
@@ -195,25 +198,30 @@ func main() {
 				GroupList:      "",
 				GroupFreeList:  "",
 			}
-			editDoc88ResponseData, err := EditDoc88(editUrl, editDoc88FormData)
+			_, err = EditDoc88(editUrl, editDoc88FormData)
 			if err != nil {
 				fmt.Println(err)
 				break
 			}
 			EditCount++
-			fmt.Println(editDoc88ResponseData)
 			if EditCount > 3 {
 				EditCount = 1
-				fmt.Println("===========更新数量超过3，暂停80秒===========")
-				time.Sleep(time.Second * 80)
+				for i := 1; i <= 80; i++ {
+					time.Sleep(time.Second)
+					fmt.Println("===========更新数量超过3，暂停", i, "秒===========")
+				}
 			} else {
-				fmt.Println("===========更新成功，暂停10秒===========")
-				time.Sleep(time.Second * 10)
+				for i := 1; i <= 10; i++ {
+					time.Sleep(time.Second)
+					fmt.Println("===========更新", Title, "成功，暂停", i, "秒===========")
+				}
 			}
 		}
 		curPage++
-		fmt.Println("===========翻", curPage, "页，暂停20秒===========")
-		time.Sleep(time.Second * 20)
+		for i := 1; i <= 20; i++ {
+			time.Sleep(time.Second)
+			fmt.Println("===========翻", curPage, "页，暂停", i, "秒===========")
+		}
 	}
 }
 
