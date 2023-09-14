@@ -156,9 +156,9 @@ func main() {
 			PId := htmlquery.SelectAttr(liNode, "id")
 			PId = PId[5:]
 
-			for i := 1; i <= 10; i++ {
+			for i := 1; i <= 15; i++ {
 				time.Sleep(time.Second)
-				fmt.Println("===========获取", Title, "详情暂停10秒，倒计时", i, "秒===========")
+				fmt.Println("===========获取", Title, "详情暂停15秒，倒计时", i, "秒===========")
 			}
 
 			detailUrl := "https://www.doc88.com/uc/usr_doc_manager.php?act=getDocInfo"
@@ -211,9 +211,9 @@ func main() {
 					fmt.Println("===========更新数量超过3，暂停80秒，倒计时", i, "秒===========")
 				}
 			} else {
-				for i := 1; i <= 10; i++ {
+				for i := 1; i <= 15; i++ {
 					time.Sleep(time.Second)
-					fmt.Println("===========更新", Title, "成功，暂停10秒，倒计时", i, "秒===========")
+					fmt.Println("===========更新", Title, "成功，暂停15秒，倒计时", i, "秒===========")
 				}
 			}
 		}
