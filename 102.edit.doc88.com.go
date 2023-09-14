@@ -158,7 +158,7 @@ func main() {
 
 			for i := 1; i <= 10; i++ {
 				time.Sleep(time.Second)
-				fmt.Println("===========获取", Title, "详情暂停", i, "秒===========")
+				fmt.Println("===========获取", Title, "详情暂停10秒，倒计时", i, "秒===========")
 			}
 
 			detailUrl := "https://www.doc88.com/uc/usr_doc_manager.php?act=getDocInfo"
@@ -208,19 +208,19 @@ func main() {
 				EditCount = 1
 				for i := 1; i <= 80; i++ {
 					time.Sleep(time.Second)
-					fmt.Println("===========更新数量超过3，暂停", i, "秒===========")
+					fmt.Println("===========更新数量超过3，暂停80秒，倒计时", i, "秒===========")
 				}
 			} else {
 				for i := 1; i <= 10; i++ {
 					time.Sleep(time.Second)
-					fmt.Println("===========更新", Title, "成功，暂停", i, "秒===========")
+					fmt.Println("===========更新", Title, "成功，暂停10秒，倒计时", i, "秒===========")
 				}
 			}
 		}
 		curPage++
 		for i := 1; i <= 20; i++ {
 			time.Sleep(time.Second)
-			fmt.Println("===========翻", curPage, "页，暂停", i, "秒===========")
+			fmt.Println("===========翻", curPage, "页，暂停20秒，倒计时", i, "秒===========")
 		}
 	}
 }
