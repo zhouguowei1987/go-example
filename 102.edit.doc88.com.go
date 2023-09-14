@@ -206,14 +206,14 @@ func main() {
 			EditCount++
 			if EditCount > 3 {
 				EditCount = 1
-				for i := 1; i <= 80; i++ {
+				for i := 1; i <= 120; i++ {
 					time.Sleep(time.Second)
-					fmt.Println("===========更新数量超过3，暂停80秒，倒计时", i, "秒===========")
+					fmt.Println("===========更新数量超过3，暂停120秒，倒计时", i, "秒===========")
 				}
 			} else {
-				for i := 1; i <= 15; i++ {
+				for i := 1; i <= 45; i++ {
 					time.Sleep(time.Second)
-					fmt.Println("===========更新", Title, "成功，暂停15秒，倒计时", i, "秒===========")
+					fmt.Println("===========更新", Title, "成功，暂停45秒，倒计时", i, "秒===========")
 				}
 			}
 		}
