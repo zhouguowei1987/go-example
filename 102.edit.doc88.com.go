@@ -74,7 +74,7 @@ var EditCookie = "__root_domain_v=.doc88.com; _qddaz=QD.155181178889683; _qddab=
 // @Title 编辑道客巴巴文档
 // @Description https://www.doc88.com/，编辑道客巴巴文档
 func main() {
-	curPage := 351
+	curPage := 354
 	for {
 		pageListUrl := fmt.Sprintf("https://www.doc88.com/uc/doc_manager.php?act=ajax_doc_list&curpage=%d", curPage)
 		fmt.Println(pageListUrl)
@@ -207,9 +207,9 @@ func main() {
 			}
 		}
 		curPage++
-		for i := 1; i <= 20; i++ {
+		for i := 1; i <= 60; i++ {
 			time.Sleep(time.Second)
-			fmt.Println("===========翻", curPage, "页，暂停20秒，倒计时", i, "秒===========")
+			fmt.Println("===========翻", curPage, "页，暂停60秒，倒计时", i, "秒===========")
 		}
 	}
 }
