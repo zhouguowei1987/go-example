@@ -76,7 +76,7 @@ var EditCount = 1
 // @Title 编辑道客巴巴文档
 // @Description https://www.doc88.com/，编辑道客巴巴文档
 func main() {
-	curPage := 100
+	curPage := 1
 	for {
 		pageListUrl := fmt.Sprintf("https://www.doc88.com/uc/doc_manager.php?act=ajax_doc_list&curpage=%d", curPage)
 		fmt.Println(pageListUrl)
@@ -145,7 +145,6 @@ func main() {
 			if PPrice == PPriceNew {
 				continue
 			}
-			fmt.Println("===========开始修改价格=============", EditCount)
 
 			PId := htmlquery.SelectAttr(liNode, "id")
 			PId = PId[5:]
@@ -169,6 +168,7 @@ func main() {
 			PDocFormatNode := htmlquery.FindOne(detailDoc, `//dl[@class="editlayout"]/form/dd[2]/div[@class="booksedit booksedit-bdr"]/table[@class="edit-table"]/tbody/tr[3]/td[2]/input[3]`)
 			PDocFormat := htmlquery.SelectAttr(PDocFormatNode, "value")
 
+			fmt.Println("===========开始修改价格=============", EditCount)
 			editUrl := "https://www.doc88.com/uc/index.php"
 			editDoc88FormData := EditDoc88FormData{
 				DocCode:        DocCode,
