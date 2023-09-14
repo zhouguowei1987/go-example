@@ -106,6 +106,14 @@ func main() {
 			IntroNode := htmlquery.FindOne(liNode, `./div[@class="bookdoc"]/p`)
 			Intro := htmlquery.InnerText(IntroNode)
 
+			CatalogNameNode := htmlquery.FindOne(liNode, `./div[@class="bookdoc"]/div[@class="posttime"]/span/span[@class="catelog_name"]`)
+			CatalogName := htmlquery.InnerText(CatalogNameNode)
+			fmt.Println(CatalogName)
+			if !strings.Contains(CatalogName, "标准规范") {
+				fmt.Println("不是团体标准，跳过")
+				continue
+			}
+
 			PPageCountNode := htmlquery.FindOne(liNode, `./div[@class="bookimg"]/em`)
 			PPageCount := htmlquery.InnerText(PPageCountNode)
 			PPageCount = PPageCount[2:]
