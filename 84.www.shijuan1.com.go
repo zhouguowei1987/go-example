@@ -173,9 +173,11 @@ var AllTestCategory = []TestCategory{
 	},
 }
 
+var shiJuan1SaveYear = []string{"2023", "2022", "2021", "2020"}
+
 // ychEduSpider 获取第一试卷网文档
 // @Title 获取第一试卷网文档
-// @Description https://www.shijian1.com/，获取第一试卷网文档
+// @Description https://www.shijuan1.com/，获取第一试卷网文档
 func main() {
 	for _, testCategory := range AllTestCategory {
 		page := 1
@@ -214,12 +216,18 @@ func main() {
 						title = strings.ReplaceAll(title, " ", "")
 						fmt.Println(title)
 
-						updateDate := htmlquery.InnerText(htmlquery.FindOne(detailDoc, `//div[@class="pleft"]/div[@class="viewbox"]/div[@class="infolist"]/span[6]`))
-						yearMonthDay := strings.Split(updateDate, "-")
-						if year, _ := strconv.Atoi(yearMonthDay[0]); year < 2020 {
-							isPageListGo = false
-							page = 1
-							break
+						ifSave := false
+						for _, year := range shiJuan1SaveYear {
+							if strings.Contains(title, year) {
+								ifSave = true
+								break
+							}
+							if ifSave {
+								break
+							}
+						}
+						if !ifSave {
+							continue
 						}
 
 						downloadUrl := "https://www.shijuan1.com" + htmlquery.InnerText(htmlquery.FindOne(detailDoc, `//ul[@class="downurllist"]/li/a/@href`))
