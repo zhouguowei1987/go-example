@@ -30,157 +30,52 @@ func ShiJuan1SetHttpProxy() (httpclient *http.Client) {
 	return httpclient
 }
 
-type Grade struct {
-	name string
-	url  string
-}
-
 type TestCategory struct {
-	name     string
-	category []Grade
+	name string
+	link []string
 }
 
 var AllTestCategory = []TestCategory{
 	{
-		name: "语文试卷",
-		category: []Grade{
-			{name: "一年级", url: "https://www.shijuan1.com/a/sjyw1/"},
-			{name: "二年级", url: "https://www.shijuan1.com/a/sjyw2/"},
-			{name: "三年级", url: "https://www.shijuan1.com/a/sjyw3/"},
-			{name: "四年级", url: "https://www.shijuan1.com/a/sjyw4/"},
-			{name: "五年级", url: "https://www.shijuan1.com/a/sjyw5/"},
-			{name: "六年级", url: "https://www.shijuan1.com/a/sjyw6/"},
-			{name: "七年级", url: "https://www.shijuan1.com/a/sjyw7/"},
-			{name: "八年级", url: "https://www.shijuan1.com/a/sjyw8/"},
-			{name: "九年级", url: "https://www.shijuan1.com/a/sjyw9/"},
-			{name: "中考试卷", url: "https://www.shijuan1.com/a/sjywzk/"},
-			{name: "高一", url: "https://www.shijuan1.com/a/sjywg1/"},
-			{name: "高二", url: "https://www.shijuan1.com/a/sjywg2/"},
-			{name: "高三", url: "https://www.shijuan1.com/a/sjywg3/"},
-			{name: "高考试卷", url: "https://www.shijuan1.com/a/sjywgk/"},
+		name: "中考试卷",
+		link: []string{
+			"https://www.shijuan1.com/a/sjywzk/",
+			"https://www.shijuan1.com/a/sjsxzk/",
+			"https://www.shijuan1.com/a/sjyyzk/",
+			"https://www.shijuan1.com/a/sjwlzk/",
+			"https://www.shijuan1.com/a/sjhxzk/",
+			"https://www.shijuan1.com/a/sjzzzk/",
+			"https://www.shijuan1.com/a/sjlszk/",
+			"https://www.shijuan1.com/a/sjdlzk/",
+			"https://www.shijuan1.com/a/sjswzk/",
 		},
 	},
 	{
-		name: "数学试卷",
-		category: []Grade{
-			{name: "一年级", url: "https://www.shijuan1.com/a/sjsx1/"},
-			{name: "二年级", url: "https://www.shijuan1.com/a/sjsx2/"},
-			{name: "三年级", url: "https://www.shijuan1.com/a/sjsx3/"},
-			{name: "四年级", url: "https://www.shijuan1.com/a/sjsx4/"},
-			{name: "五年级", url: "https://www.shijuan1.com/a/sjsx5/"},
-			{name: "六年级", url: "https://www.shijuan1.com/a/sjsx6/"},
-			{name: "七年级", url: "https://www.shijuan1.com/a/sjsx7/"},
-			{name: "八年级", url: "https://www.shijuan1.com/a/sjsx8/"},
-			{name: "九年级", url: "https://www.shijuan1.com/a/sjsx9/"},
-			{name: "中考试卷", url: "https://www.shijuan1.com/a/sjsxzk/"},
-			{name: "高一", url: "https://www.shijuan1.com/a/sjsxg1/"},
-			{name: "高二", url: "https://www.shijuan1.com/a/sjsxg2/"},
-			{name: "高三", url: "https://www.shijuan1.com/a/sjsxg3/"},
-			{name: "高考试卷", url: "https://www.shijuan1.com/a/sjsxgk/"},
-		},
-	},
-	{
-		name: "英语试卷",
-		category: []Grade{
-			{name: "一年级", url: "https://www.shijuan1.com/a/sjyy1/"},
-			{name: "二年级", url: "https://www.shijuan1.com/a/sjyy2/"},
-			{name: "三年级", url: "https://www.shijuan1.com/a/sjyy3/"},
-			{name: "四年级", url: "https://www.shijuan1.com/a/sjyy4/"},
-			{name: "五年级", url: "https://www.shijuan1.com/a/sjyy5/"},
-			{name: "六年级", url: "https://www.shijuan1.com/a/sjyy6/"},
-			{name: "七年级", url: "https://www.shijuan1.com/a/sjyy7/"},
-			{name: "八年级", url: "https://www.shijuan1.com/a/sjyy8/"},
-			{name: "九年级", url: "https://www.shijuan1.com/a/sjyy9/"},
-			{name: "中考试卷", url: "https://www.shijuan1.com/a/sjyyzk/"},
-			{name: "高一", url: "https://www.shijuan1.com/a/sjyyg1/"},
-			{name: "高二", url: "https://www.shijuan1.com/a/sjyyg2/"},
-			{name: "高三", url: "https://www.shijuan1.com/a/sjyyg3/"},
-			{name: "高考试卷", url: "https://www.shijuan1.com/a/sjyygk/"},
-		},
-	},
-	{
-		name: "物理试卷",
-		category: []Grade{
-			{name: "八年级", url: "https://www.shijuan1.com/a/sjwl8/"},
-			{name: "九年级", url: "https://www.shijuan1.com/a/sjwl9/"},
-			{name: "中考试卷", url: "https://www.shijuan1.com/a/sjwlzk/"},
-			{name: "高一", url: "https://www.shijuan1.com/a/sjwlg1/"},
-			{name: "高二", url: "https://www.shijuan1.com/a/sjwlg2/"},
-			{name: "高三", url: "https://www.shijuan1.com/a/sjwlg3/"},
-			{name: "高考试卷", url: "https://www.shijuan1.com/a/sjwlgk/"},
-		},
-	},
-	{
-		name: "化学试卷",
-		category: []Grade{
-			{name: "九年级", url: "https://www.shijuan1.com/a/sjhx9/"},
-			{name: "中考试卷", url: "https://www.shijuan1.com/a/sjhxzk/"},
-			{name: "高一", url: "https://www.shijuan1.com/a/sjhxg1/"},
-			{name: "高二", url: "https://www.shijuan1.com/a/sjhxg2/"},
-			{name: "高三", url: "https://www.shijuan1.com/a/sjhxg3/"},
-			{name: "高考试卷", url: "https://www.shijuan1.com/a/sjhxgk/"},
-		},
-	},
-	{
-		name: "政治试卷",
-		category: []Grade{
-			{name: "七年级", url: "https://www.shijuan1.com/a/sjzz7/"},
-			{name: "八年级", url: "https://www.shijuan1.com/a/sjzz8/"},
-			{name: "九年级", url: "https://www.shijuan1.com/a/sjzz9/"},
-			{name: "中考试卷", url: "https://www.shijuan1.com/a/sjzzzk/"},
-			{name: "高一", url: "https://www.shijuan1.com/a/sjzzg1/"},
-			{name: "高二", url: "https://www.shijuan1.com/a/sjzzg2/"},
-			{name: "高三", url: "https://www.shijuan1.com/a/sjzzg3/"},
-			{name: "高考试卷", url: "https://www.shijuan1.com/a/sjzzgk/"},
-		},
-	},
-	{
-		name: "历史试卷",
-		category: []Grade{
-			{name: "七年级", url: "https://www.shijuan1.com/a/sjls7/"},
-			{name: "八年级", url: "https://www.shijuan1.com/a/sjls8/"},
-			{name: "九年级", url: "https://www.shijuan1.com/a/sjls9/"},
-			{name: "中考试卷", url: "https://www.shijuan1.com/a/sjlszk/"},
-			{name: "高一", url: "https://www.shijuan1.com/a/sjlsg1/"},
-			{name: "高二", url: "https://www.shijuan1.com/a/sjlsg2/"},
-			{name: "高三", url: "https://www.shijuan1.com/a/sjlsg3/"},
-			{name: "高考试卷", url: "https://www.shijuan1.com/a/sjlsgk/"},
-		},
-	},
-	{
-		name: "地理试卷",
-		category: []Grade{
-			{name: "七年级", url: "https://www.shijuan1.com/a/sjdl7/"},
-			{name: "八年级", url: "https://www.shijuan1.com/a/sjdl8/"},
-			{name: "中考试卷", url: "https://www.shijuan1.com/a/sjdlzk/"},
-			{name: "高一", url: "https://www.shijuan1.com/a/sjdlg1/"},
-			{name: "高二", url: "https://www.shijuan1.com/a/sjdlg2/"},
-			{name: "高三", url: "https://www.shijuan1.com/a/sjdlg3/"},
-			{name: "高考试卷", url: "https://www.shijuan1.com/a/sjdlgk/"},
-		},
-	},
-	{
-		name: "生物试卷",
-		category: []Grade{
-			{name: "七年级", url: "https://www.shijuan1.com/a/sjsw7/"},
-			{name: "八年级", url: "https://www.shijuan1.com/a/sjsw8/"},
-			{name: "中考试卷", url: "https://www.shijuan1.com/a/sjswzk/"},
-			{name: "高一", url: "https://www.shijuan1.com/a/sjswg1/"},
-			{name: "高二", url: "https://www.shijuan1.com/a/sjswg2/"},
-			{name: "高三", url: "https://www.shijuan1.com/a/sjswg3/"},
-			{name: "高考试卷", url: "https://www.shijuan1.com/a/sjswgk/"},
+		name: "高考试卷",
+		link: []string{
+			"https://www.shijuan1.com/a/sjywgk/",
+			"https://www.shijuan1.com/a/sjsxgk/",
+			"https://www.shijuan1.com/a/sjyygk/",
+			"https://www.shijuan1.com/a/sjwlgk/",
+			"https://www.shijuan1.com/a/sjhxgk/",
+			"https://www.shijuan1.com/a/sjzzgk/",
+			"https://www.shijuan1.com/a/sjlsgk/",
+			"https://www.shijuan1.com/a/sjdlgk/",
+			"https://www.shijuan1.com/a/sjswgk/",
 		},
 	},
 }
 
+var shiJuan1SaveYear = []string{"2023", "2022", "2021", "2020"}
+
 // ychEduSpider 获取第一试卷网文档
 // @Title 获取第一试卷网文档
-// @Description https://www.shijian1.com/，获取第一试卷网文档
+// @Description https://www.shijuan1.com/，获取第一试卷网文档
 func main() {
 	for _, testCategory := range AllTestCategory {
 		page := 1
-		for _, grade := range testCategory.category {
-			firstPaperDoc, _ := htmlquery.LoadURL(grade.url)
+		for _, link := range testCategory.link {
+			firstPaperDoc, _ := htmlquery.LoadURL(link)
 			firstPaperPagesNodes := htmlquery.Find(firstPaperDoc, `//div[@class="dede_pages"]/ul[@class="pagelist"][1]/li`)
 
 			var gradeId = 0
@@ -191,9 +86,9 @@ func main() {
 
 			isPageListGo := true
 			for isPageListGo {
-				pageListUrl := fmt.Sprintf(grade.url)
+				pageListUrl := fmt.Sprintf(link)
 				if gradeId > 0 {
-					pageListUrl = fmt.Sprintf(grade.url+"list_"+strconv.Itoa(gradeId)+"_%d.html", page)
+					pageListUrl = fmt.Sprintf(link+"list_"+strconv.Itoa(gradeId)+"_%d.html", page)
 				}
 				pageListDoc, _ := htmlquery.LoadURL(pageListUrl)
 				tableTrNodes := htmlquery.Find(pageListDoc, `//div[@class="pleft"]/div[@class="listbox"]/ul[@class="c1"]/table/tbody/tr`)
@@ -214,18 +109,24 @@ func main() {
 						title = strings.ReplaceAll(title, " ", "")
 						fmt.Println(title)
 
-						updateDate := htmlquery.InnerText(htmlquery.FindOne(detailDoc, `//div[@class="pleft"]/div[@class="viewbox"]/div[@class="infolist"]/span[6]`))
-						yearMonthDay := strings.Split(updateDate, "-")
-						if year, _ := strconv.Atoi(yearMonthDay[0]); year < 2020 {
-							isPageListGo = false
-							page = 1
-							break
+						ifSave := false
+						for _, year := range shiJuan1SaveYear {
+							if strings.Contains(title, year) {
+								ifSave = true
+								break
+							}
+							if ifSave {
+								break
+							}
+						}
+						if !ifSave {
+							continue
 						}
 
 						downloadUrl := "https://www.shijuan1.com" + htmlquery.InnerText(htmlquery.FindOne(detailDoc, `//ul[@class="downurllist"]/li/a/@href`))
 						fmt.Println(downloadUrl)
 
-						filePath := "../www.shijuan1.com/" + testCategory.name + "/" + grade.name + "/"
+						filePath := "../www.shijuan1.com/" + testCategory.name + "/"
 
 						err := downloadShiJuan1(downloadUrl, detailUrl, filePath, title)
 						if err != nil {
