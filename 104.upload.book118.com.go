@@ -635,6 +635,16 @@ func main() {
 			format:  "pdf",
 			price:   "2000",
 		},
+		{
+			dirName: "finish.www.shijuan1.com/中考试卷",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "finish.www.shijuan1.com/高考试卷",
+			format:  "pdf",
+			price:   "2000",
+		},
 	}
 	rootPath := "../upload.book118.com/"
 	for _, childDir := range uploadChildDirArr {

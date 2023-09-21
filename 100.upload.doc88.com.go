@@ -643,6 +643,20 @@ func main() {
 			Price:      468,
 			pDocFormat: "PDF",
 		},
+		{
+			dirName:    "finish.www.shijuan1.com/中考试卷",
+			fileExt:    ".pdf",
+			pCid:       8243,
+			Price:      468,
+			pDocFormat: "PDF",
+		},
+		{
+			dirName:    "finish.www.shijuan1.com/高考试卷",
+			fileExt:    ".pdf",
+			pCid:       8244,
+			Price:      468,
+			pDocFormat: "PDF",
+		},
 	}
 	rootPath := "../upload.doc88.com/"
 	for _, childDir := range uploadChildDirArr {
