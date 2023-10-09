@@ -53,6 +53,7 @@ type LawContractListResponseDataContractList struct {
 func main() {
 	pn := 1
 	rn := 50
+	//精选合同：1 企业合同：3
 	lawContractType := 1
 	isPageListGo := true
 	for isPageListGo {
