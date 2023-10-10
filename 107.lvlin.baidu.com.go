@@ -54,7 +54,7 @@ func main() {
 	pn := 1
 	rn := 50
 	//精选合同：1 企业合同：3
-	lawContractType := 3
+	lawContractType := 1
 	isPageListGo := true
 	for isPageListGo {
 		requestUrl := fmt.Sprintf("https://lvlin.baidu.com/pc/zdQuestionApi/question/api/lawcontractlist?clientType=pc&law_category1=&law_category2=&type=%d&pn=%d&rn=%d", lawContractType, pn, rn)
@@ -69,41 +69,42 @@ func main() {
 				title := contract.Title
 				fmt.Println(title)
 
-				detailUrl := contract.Cmd
-				fmt.Println(detailUrl)
-
-				detailDoc, err := htmlquery.LoadURL(detailUrl)
-				if err != nil {
-					fmt.Println(err)
-					break
-				}
-
-				downloadButton := htmlquery.Find(detailDoc, `//div[@class="content-box"]/div[@class="content-left"]/div[@class="bottom"]/div[@class="btn-box"]/a`)
-				if downloadButton == nil {
-					fmt.Println("没有任何按钮")
-					continue
-				}
-				downloadButtonCount := len(downloadButton)
-				downloadButtonNode := htmlquery.FindOne(detailDoc, `//div[@class="content-box"]/div[@class="content-left"]/div[@class="bottom"]/div[@class="btn-box"]/a[2]/@href`)
-				switch downloadButtonCount {
-				case 1:
-					downloadButtonNode = htmlquery.FindOne(detailDoc, `//div[@class="content-box"]/div[@class="content-left"]/div[@class="bottom"]/div[@class="btn-box"]/a[1]/@href`)
-					break
-				case 2:
-					downloadButtonNode = htmlquery.FindOne(detailDoc, `//div[@class="content-box"]/div[@class="content-left"]/div[@class="bottom"]/div[@class="btn-box"]/a[2]/@href`)
-					break
-				}
-				if downloadButtonNode == nil {
-					fmt.Println("没有下载按钮")
-					continue
-				}
-
-				downLoadUrl := htmlquery.InnerText(downloadButtonNode)
-				fmt.Println(downLoadUrl)
-
 				filePath := "../lvlin.baidu.com/" + title + ".docx"
 				if _, err := os.Stat(filePath); err != nil {
 					fmt.Println("=======开始下载" + strconv.Itoa(pn) + "========")
+
+					detailUrl := contract.Cmd
+					fmt.Println(detailUrl)
+
+					detailDoc, err := htmlquery.LoadURL(detailUrl)
+					if err != nil {
+						fmt.Println(err)
+						break
+					}
+
+					downloadButton := htmlquery.Find(detailDoc, `//div[@class="content-box"]/div[@class="content-left"]/div[@class="bottom"]/div[@class="btn-box"]/a`)
+					if downloadButton == nil {
+						fmt.Println("没有任何按钮")
+						continue
+					}
+					downloadButtonCount := len(downloadButton)
+					downloadButtonNode := htmlquery.FindOne(detailDoc, `//div[@class="content-box"]/div[@class="content-left"]/div[@class="bottom"]/div[@class="btn-box"]/a[2]/@href`)
+					switch downloadButtonCount {
+					case 1:
+						downloadButtonNode = htmlquery.FindOne(detailDoc, `//div[@class="content-box"]/div[@class="content-left"]/div[@class="bottom"]/div[@class="btn-box"]/a[1]/@href`)
+						break
+					case 2:
+						downloadButtonNode = htmlquery.FindOne(detailDoc, `//div[@class="content-box"]/div[@class="content-left"]/div[@class="bottom"]/div[@class="btn-box"]/a[2]/@href`)
+						break
+					}
+					if downloadButtonNode == nil {
+						fmt.Println("没有下载按钮")
+						continue
+					}
+
+					downLoadUrl := htmlquery.InnerText(downloadButtonNode)
+					fmt.Println(downLoadUrl)
+
 					err = downloadLvLin(downLoadUrl, detailUrl, filePath)
 					if err != nil {
 						fmt.Println(err)
