@@ -54,7 +54,7 @@ func main() {
 	pn := 1
 	rn := 50
 	//精选合同：1 企业合同：3
-	lawContractType := 1
+	lawContractType := 3
 	isPageListGo := true
 	for isPageListGo {
 		requestUrl := fmt.Sprintf("https://lvlin.baidu.com/pc/zdQuestionApi/question/api/lawcontractlist?clientType=pc&law_category1=&law_category2=&type=%d&pn=%d&rn=%d", lawContractType, pn, rn)
@@ -63,7 +63,7 @@ func main() {
 			fmt.Println(err)
 			break
 		}
-		if lawContractListResponse.ErrNo == 0 {
+		if lawContractListResponse.ErrNo == 0 && len(lawContractListResponse.Data.ContractList) > 0 {
 			for _, contract := range lawContractListResponse.Data.ContractList {
 				fmt.Println("=======当前页为：" + strconv.Itoa(pn) + "========")
 				title := contract.Title
@@ -78,7 +78,21 @@ func main() {
 					break
 				}
 
+				downloadButton := htmlquery.Find(detailDoc, `//div[@class="content-box"]/div[@class="content-left"]/div[@class="bottom"]/div[@class="btn-box"]/a`)
+				if downloadButton == nil {
+					fmt.Println("没有任何按钮")
+					continue
+				}
+				downloadButtonCount := len(downloadButton)
 				downloadButtonNode := htmlquery.FindOne(detailDoc, `//div[@class="content-box"]/div[@class="content-left"]/div[@class="bottom"]/div[@class="btn-box"]/a[2]/@href`)
+				switch downloadButtonCount {
+				case 1:
+					downloadButtonNode = htmlquery.FindOne(detailDoc, `//div[@class="content-box"]/div[@class="content-left"]/div[@class="bottom"]/div[@class="btn-box"]/a[1]/@href`)
+					break
+				case 2:
+					downloadButtonNode = htmlquery.FindOne(detailDoc, `//div[@class="content-box"]/div[@class="content-left"]/div[@class="bottom"]/div[@class="btn-box"]/a[2]/@href`)
+					break
+				}
 				if downloadButtonNode == nil {
 					fmt.Println("没有下载按钮")
 					continue
@@ -109,14 +123,7 @@ func main() {
 
 				time.Sleep(time.Millisecond * 100)
 			}
-
-			if pn < lawContractListResponse.Data.Total/rn {
-				pn++
-			} else {
-				isPageListGo = false
-				pn = 1
-				break
-			}
+			pn++
 		} else {
 			isPageListGo = false
 			pn = 1
