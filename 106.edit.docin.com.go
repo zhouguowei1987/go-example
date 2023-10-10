@@ -28,7 +28,7 @@ func EditDocInSetHttpProxy() (httpclient *http.Client) {
 	return httpclient
 }
 
-var DocInCookie = "docin_session_id=fd912190-3bfb-46b6-874e-e80e03a13e6a; cookie_id=CA075B2FFC700001BB661788D6701A55; time_id=2022102510372; partner_tips=1; last_upload_public243402665=yes; __bid_n=18504630ab46cccb5c4207; FEID=v10-b58297500cfb5dd9acd684d3a79fe0046c214fae; __xaf_fpstarttimer__=1672884568247; __xaf_thstime__=1672884568292; __xaf_fptokentimer__=1672884568303; page_length=100; visitTopicIds=285258; FPTOKEN=kvb7/hh60j7cFgDOQawZiYvvkPY/qB48fxed8C/fl+P2R42S57Os2TYTN+VR6NmHcA1nWF/Zzlu+7TY7/HtU73imcFBpnSP39G/w34CSqNw2RManN9ZWM8Rd53fSy4NLTbovm4+LUM81V3W7SHzatAkSv+h00+noHqnIfLZikrRsHYCNvzkQCjEQ/dCCZbYyRhByiFLA/Z8H5yonq8PxCwHsklqAaHvp6Qpf2rRUMG+XO/yBsrGI/S35CJvnLiqAwS7rmeC81UJCMTKO8QV55/E7b3uTfd3ag7iJetYaONGBKi1RHyqebvtjkchSNruW7MYQ/XA9CYUKNQoU1w4YRgjvCWsaLWYjgjQKwEb8kOGIkQOv0tIJlrNL4gB7tc2+FNjHOlN4Bv4Psr3hA+gnLA==|WAHGPrsYPHcHXFUCs4FqFpoq7UHi1svYa41yPZFyRyw=|10|72d0d163d5eb20094432489b1e57cea9; aliyungf_tc=b81c45404af697ae66c345ab4e4631abd0abfb134ababa4519e41f5fd12fb63d; login_email=15238369929; user_password=bGKLZV42BM55cslJQjQYVqpq7lLi5mzCsPdXYATSgeY%3DH_TQFZ9qedzOno0nj9FG3FRIEIH8Vz6PIWcAGFbDGqSIhC5uhBCK3LyhR7xS2mggnjj; tipMaxId=0; ifShowMsg=true; jumpIn=401; isbaiduspider=false; recharge_from_type=nav-sub1; netfunction=\"/my/upload/myUpload.do\"; mobilefirsttip=tip; today_first_in=1; _gid=GA1.2.1089910833.1694394686; s_from=direct; uaType=chrome; JSESSIONID=BBA18BAF2FE03930D8AD3C4E0349F2F5-n1; remindClickId=-1; _gat_gtag_UA_3158355_1=1; _gat=1; _ga_34B604LFFQ=GS1.1.1694397751.127.1.1694399062.57.0.0; _ga=GA1.1.1839309374.1666665423; _ga_ZYR13KTSXC=GS1.1.1694397751.66.1.1694399086.33.0.0"
+var DocInCookie = "docin_session_id=b686d233-9d6a-4d19-bdbd-55ba049ac297; cookie_id=CA1BC7B9D32000011AEA1CB081C0DA70; time_id=20221227213222; partner_tips=1; __bid_n=18553c8c217b5d5e2e4207; FEID=v10-9bb248a4c21a53f72760ecda6234cbecf70a7381; __xaf_fpstarttimer__=1672147945190; __xaf_thstime__=1672147945346; __xaf_fptokentimer__=1672147945861; last_upload_public243402665=yes; indexnoticeupdatetag31526379=unshow; __root_domain_v=.docin.com; _qddaz=QD.151176617720177; aliyungf_tc=bd3e315da1d7ce31af3fca4a3a2cdd702d14a676aaad8720b6105200a0e499e0; ifShowMsg=true; jumpIn=400; search_option_show=0; _ga_ZYR13KTSXC=deleted; _ga_ZYR13KTSXC=deleted; FPTOKEN=yJ0+QSXweZ4Cqq0iuE4OoxgWMakB+ymq7HPZB8+AFbd3gLJfGXg+uhwC0PoTY2vuB9fF5/2qsuUHnMT2yBvsmKwBeb2Es9MY/cERDMA9Eo0Q4NnpM+qitBzZ5FgbqMdP5jaPkSY3peXMVlupZpjbAVsSoBjCQ5h+OaSsGsZHh5XMvNOM2sUd+BUqUvfHYTZcEf1zoMXQMbPlOFUOa1qcC5h6YlPH6Q3uN6f67bocIhZijom17xgVRl5ISjwvfhBdEIDZWVbcvcDY6+VU8WZfDOkd/p66Bm9Sz/OeodH8SiuMetE/mcgTgF5KiLFLh3yS8JVVgndmKGV3Yppl9eVrOxYrlQPZjf0rOfxGNdetjSbCEVs+HX/Usks8sfKMRey9ZSjQ0XKZdAhRoUoQwCk4BA==|FOHf58AIodtuneILuIhr9eSK/3MZMJ4ih8ikwzMvr5Y=|10|f132030d89062ab6a03a37cb0d2b63f1; visitTopicIds=\"279237,285253,285264\"; _qddab=3-722psv.ll31zmje; pbyCookieKey=1692338365244; userChoose=usertags104_174_171_102_175_176_169_177_178_179_180_181_998_000_; lastLoginType=weixin; firstTimeComDoc=1; recharge_from_type=nav-sub1; refererfunction=https%3A%2F%2Fwww.baidu.com%2Flink%3Furl%3Dnwb1nAPJ_i_UD2MO7P3U9Z4-K83LNkrqRXW0vE_zGygvqUPm9OMkjP6rnpT1UJBW%26wd%3D%26eqid%3Dca9b81b10000dab7000000046508091a; isbaiduspider=false; buy_type_4357253219=0; _gid=GA1.2.1484009812.1695543436; mobilefirsttip=tip; today_first_in=1; login_email=phone_25957a50cb; user_password=BnKagWbX8Rc9bU093Rt8k1B1HNSQ7XM%2F33Je3YytS4WYZIxiWbPS%2FYbpBL6ZHAF2H_T1JcST9ZQ6cBZHY6cnK%2Bh1bZX%2FSqMZlbEvCy2w%2FisUofQHFGYX%2F5M2re3LyoROQsXpn%2BcgL6ijLEs%0ANml31NYNlOZ2J2YdK5%2Bg; s_from=direct; uaType=chrome; netfunction=\"/my/upload/myUpload.do\"; JSESSIONID=C8EFBA239F060E8A99F8477A4A23780D-n2; remindClickId=-1; _gat_gtag_UA_3158355_1=1; _ga=GA1.2.43085923.1672147943; _ga_ZYR13KTSXC=GS1.1.1695714096.177.1.1695714745.13.0.0"
 var downPrice = 5
 
 // ychEduSpider 编辑豆丁文档
@@ -38,13 +38,14 @@ func main() {
 	currentPage := 1
 	beginId := 0
 	for {
-		pageListUrl := "https://www.docin.com/my/upload/myUpload.do?onlypPublic=1&totalpublicnum=0"
-		referer := "https://www.docin.com/my/upload/myUpload.do?onlypPublic=1&totalpublicnum=0"
+		pageListUrl := "https://www.docin.com/my/upload/myUpload.do?styleList=1&orderName=0&orderDate=0&orderVisit=0&orderStatus=0&folderId=-1"
+		referer := "https://www.docin.com/my/upload/myUpload.do?styleList=1&orderName=0&orderDate=0&orderVisit=0&orderStatus=0&folderId=-1"
 		if currentPage > 1 {
 			pageListUrl = fmt.Sprintf("https://www.docin.com/my/upload/myUpload.do?styleList=1"+
-				"&orderName=0&orderDate=0&orderVisit=0&orderStatus=0&orderFolder=0&folderId=0"+
-				"&myKeyword=&publishCount=&onlypPrivate=&totalprivatenum=0&onlypPublic=1"+
-				"&totalpublicnum=0&currentPage=%d&pageType=n&beginId=%d", currentPage, beginId)
+				"&orderName=0&orderDate=0&orderVisit=0&orderStatus=0"+
+				"&orderFolder=0&folderId=-1&myKeyword=&publishCount=&onlypPrivate="+
+				"&totalprivatenum=0&onlypPublic=&totalpublicnum=0"+
+				"&currentPage=%d&pageType=n&beginId=%d", currentPage, beginId)
 		}
 
 		fmt.Println(pageListUrl)
