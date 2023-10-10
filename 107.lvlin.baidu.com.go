@@ -51,13 +51,14 @@ type LawContractListResponseDataContractList struct {
 // @Title 获取律临合同文书
 // @Description https://lvlin.baidu.com/，获取律临合同文书
 func main() {
-	pn := 1
+	pn := 53
 	rn := 50
 	//精选合同：1 企业合同：3
 	lawContractType := 1
 	isPageListGo := true
 	for isPageListGo {
 		requestUrl := fmt.Sprintf("https://lvlin.baidu.com/pc/zdQuestionApi/question/api/lawcontractlist?clientType=pc&law_category1=&law_category2=&type=%d&pn=%d&rn=%d", lawContractType, pn, rn)
+		fmt.Println(requestUrl)
 		lawContractListResponse, err := GetLawContractList(requestUrl)
 		if err != nil {
 			fmt.Println(err)
@@ -69,17 +70,17 @@ func main() {
 				title := contract.Title
 				fmt.Println(title)
 
+				detailUrl := contract.Cmd
+				fmt.Println(detailUrl)
+
 				filePath := "../lvlin.baidu.com/" + title + ".docx"
 				if _, err := os.Stat(filePath); err != nil {
 					fmt.Println("=======开始下载" + strconv.Itoa(pn) + "========")
 
-					detailUrl := contract.Cmd
-					fmt.Println(detailUrl)
-
 					detailDoc, err := htmlquery.LoadURL(detailUrl)
 					if err != nil {
 						fmt.Println(err)
-						break
+						continue
 					}
 
 					downloadButton := htmlquery.Find(detailDoc, `//div[@class="content-box"]/div[@class="content-left"]/div[@class="bottom"]/div[@class="btn-box"]/a`)
@@ -112,24 +113,17 @@ func main() {
 					}
 					fmt.Println("=======开始完成========")
 				}
-
-				// 查看文件大小，如果是空文件，则删除
-				fi, err := os.Stat(filePath)
-				if err == nil && fi.Size() == 0 {
-					err := os.Remove(filePath)
-					if err != nil {
-						continue
-					}
-				}
-
 				time.Sleep(time.Millisecond * 100)
 			}
-			pn++
-		} else {
+		}
+		pn++
+		if pn > (lawContractListResponse.Data.Total/rn)+1 {
+			fmt.Println("没有更多分页了")
 			isPageListGo = false
 			pn = 1
 			break
 		}
+		time.Sleep(time.Second)
 	}
 }
 
