@@ -51,7 +51,7 @@ type LawContractListResponseDataContractList struct {
 // @Title 获取律临合同文书
 // @Description https://lvlin.baidu.com/，获取律临合同文书
 func main() {
-	pn := 53
+	pn := 1
 	rn := 50
 	//精选合同：1 企业合同：3
 	lawContractType := 1
