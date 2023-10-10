@@ -73,7 +73,7 @@ func main() {
 				detailUrl := contract.Cmd
 				fmt.Println(detailUrl)
 
-				filePath := "../lvlin.baidu.com/" + title + ".docx"
+				filePath := "../lvlin.baidu.com/lvlin.baidu.com/" + title + ".docx"
 				if _, err := os.Stat(filePath); err != nil {
 					fmt.Println("=======开始下载" + strconv.Itoa(pn) + "========")
 
