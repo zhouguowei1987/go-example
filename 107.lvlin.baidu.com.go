@@ -51,7 +51,7 @@ type LawContractListResponseDataContractList struct {
 // @Title 获取律临合同文书
 // @Description https://lvlin.baidu.com/，获取律临合同文书
 func main() {
-	pn := 53
+	pn := 1
 	rn := 50
 	//精选合同：1 企业合同：3
 	lawContractType := 1
@@ -73,7 +73,7 @@ func main() {
 				detailUrl := contract.Cmd
 				fmt.Println(detailUrl)
 
-				filePath := "../lvlin.baidu.com/" + title + ".docx"
+				filePath := "../lvlin.baidu.com/lvlin.baidu.com/" + title + ".docx"
 				if _, err := os.Stat(filePath); err != nil {
 					fmt.Println("=======开始下载" + strconv.Itoa(pn) + "========")
 
