@@ -74,9 +74,9 @@ func main() {
 
 				// 文档状态为4可以删除
 				if doc.DocStatus == 4 {
-					doc_id_str := doc.DocId
+					docIdStr := doc.DocId
 					fmt.Println("=======开始删除" + strconv.Itoa(pn) + "========")
-					docDeleteUrl := fmt.Sprintf("https://cuttlefish.baidu.com/user/submit/newdocdelete?token=%s&new_token=%s&fold_id_str=0&doc_id_str=%s&skip_fold_validate=1", token, token, doc_id_str)
+					docDeleteUrl := fmt.Sprintf("https://cuttlefish.baidu.com/user/submit/newdocdelete?token=%s&new_token=%s&fold_id_str=0&doc_id_str=%s&skip_fold_validate=1", token, token, docIdStr)
 					newDocDeleteResponse, err := NewDocDelete(docDeleteUrl)
 					if err != nil {
 						fmt.Println(err)
@@ -87,7 +87,7 @@ func main() {
 					} else {
 						fmt.Println("=======删除失败========")
 					}
-					time.Sleep(time.Millisecond * 100)
+					time.Sleep(time.Second * 2)
 				}
 			}
 		}
