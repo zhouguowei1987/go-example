@@ -79,11 +79,7 @@ func main() {
 					fmt.Println("=======开始删除" + strconv.Itoa(pn) + "========")
 					docDeleteUrl := fmt.Sprintf("https://cuttlefish.baidu.com/user/submit/newdocdelete?token=%s&new_token=%s&fold_id_str=0&doc_id_str=%s&skip_fold_validate=1", token, token, docIdStr)
 					newDocDeleteResponse, err := NewDocDelete(docDeleteUrl)
-					if err != nil {
-						fmt.Println(err)
-						continue
-					}
-					if newDocDeleteResponse.ErrorNo == "0" {
+					if err == nil && newDocDeleteResponse.ErrorNo == "0" {
 						hasDeleteFlag = true
 						fmt.Println("=======删除成功========")
 					} else {
