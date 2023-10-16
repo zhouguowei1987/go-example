@@ -89,7 +89,7 @@ func main() {
 					} else {
 						fmt.Println("=======删除失败========")
 					}
-					time.Sleep(time.Second * 2)
+					time.Sleep(time.Second * 10)
 				}
 			}
 		}
