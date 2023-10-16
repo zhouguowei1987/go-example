@@ -57,6 +57,7 @@ func main() {
 	rn := 10
 	isPageListGo := true
 	for isPageListGo {
+		hasDeleteFlag := false
 		requestUrl := fmt.Sprintf("https://cuttlefish.baidu.com/nshop/doc/getlist?sub_tab=1&pn=%d&rn=%d&query=&doc_id_str=&time_range=&buyout_show_type=1&needDayUploadUserCount=1", pn, rn)
 		fmt.Println(requestUrl)
 		getListResponse, err := GetList(requestUrl)
@@ -83,6 +84,7 @@ func main() {
 						continue
 					}
 					if newDocDeleteResponse.ErrorNo == "0" {
+						hasDeleteFlag = true
 						fmt.Println("=======删除成功========")
 					} else {
 						fmt.Println("=======删除失败========")
@@ -91,12 +93,15 @@ func main() {
 				}
 			}
 		}
-		pn++
-		if pn > (getListResponse.Data.TotalCount/rn)+1 {
-			fmt.Println("没有更多分页了")
-			isPageListGo = false
-			pn = 1
-			break
+		// 如果当前页没有任何文档删除，则请求下一页
+		if hasDeleteFlag == false {
+			pn++
+			if pn > (getListResponse.Data.TotalCount/rn)+1 {
+				fmt.Println("没有更多分页了")
+				isPageListGo = false
+				pn = 1
+				break
+			}
 		}
 		time.Sleep(time.Second)
 	}
