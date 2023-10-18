@@ -60,6 +60,7 @@ func main() {
 				chineseTitleTdNode := htmlquery.FindOne(trNode, `./td[2]`)
 				chineseTitle := htmlquery.InnerText(chineseTitleTdNode)
 				chineseTitle = strings.ReplaceAll(chineseTitle, "/", "-")
+				chineseTitle = strings.ReplaceAll(chineseTitle, "/", "-")
 				chineseTitle = strings.ReplaceAll(chineseTitle, " ", "")
 				chineseTitle = strings.ReplaceAll(chineseTitle, "　", "")
 				chineseTitle = strings.ReplaceAll(chineseTitle, "：", ":")
