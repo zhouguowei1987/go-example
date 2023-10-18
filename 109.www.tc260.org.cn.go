@@ -61,6 +61,8 @@ func main() {
 				chineseTitle := htmlquery.InnerText(chineseTitleTdNode)
 				chineseTitle = strings.ReplaceAll(chineseTitle, "/", "-")
 				chineseTitle = strings.ReplaceAll(chineseTitle, " ", "")
+				chineseTitle = strings.ReplaceAll(chineseTitle, "　", "")
+				chineseTitle = strings.ReplaceAll(chineseTitle, "：", ":")
 				fmt.Println(chineseTitle)
 
 				// 下载文档URL
