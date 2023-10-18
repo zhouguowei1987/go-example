@@ -82,7 +82,7 @@ func main() {
 					}
 					fmt.Println("=======开始完成========")
 				}
-				time.Sleep(time.Millisecond * 100)
+				time.Sleep(time.Second * 1)
 			}
 			page++
 		} else {
@@ -90,7 +90,7 @@ func main() {
 			isPageListGo = false
 			break
 		}
-		time.Sleep(time.Millisecond * 100)
+		time.Sleep(time.Second * 1)
 	}
 }
 
