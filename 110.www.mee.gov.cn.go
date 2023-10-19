@@ -170,6 +170,7 @@ func main() {
 						}
 					}
 				}
+				smallCategoryPage++
 			}
 		}
 	}
