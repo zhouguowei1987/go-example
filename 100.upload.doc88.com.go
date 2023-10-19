@@ -657,6 +657,13 @@ func main() {
 			Price:      468,
 			pDocFormat: "PDF",
 		},
+		{
+			dirName:    "finish.www.tc260.org.cn",
+			fileExt:    ".pdf",
+			pCid:       8368,
+			Price:      468,
+			pDocFormat: "PDF",
+		},
 	}
 	rootPath := "../upload.doc88.com/"
 	for _, childDir := range uploadChildDirArr {
