@@ -60,9 +60,7 @@ func main() {
 				chineseTitleTdNode := htmlquery.FindOne(trNode, `./td[2]`)
 				chineseTitle := htmlquery.InnerText(chineseTitleTdNode)
 				chineseTitle = strings.ReplaceAll(chineseTitle, "/", "-")
-				chineseTitle = strings.ReplaceAll(chineseTitle, "/", "-")
 				chineseTitle = strings.ReplaceAll(chineseTitle, " ", "")
-				chineseTitle = strings.ReplaceAll(chineseTitle, "　", "")
 				chineseTitle = strings.ReplaceAll(chineseTitle, "：", ":")
 				fmt.Println(chineseTitle)
 
@@ -74,7 +72,7 @@ func main() {
 
 				// 文件格式
 				attachmentFormat := strings.Split(downLoadUrl, ".")
-				filePath := "../www.tc260.org.cn/" + chineseTitle + "(" + standardNo + ")" + "." + attachmentFormat[len(attachmentFormat)-1]
+				filePath := "../www.tc260.org.cn/www.tc260.org.cn/" + chineseTitle + "(" + standardNo + ")" + "." + attachmentFormat[len(attachmentFormat)-1]
 				if _, err := os.Stat(filePath); err != nil {
 					fmt.Println("=======开始下载========")
 					err = downloadTc260(downLoadUrl, requestUrl, filePath)
@@ -92,7 +90,7 @@ func main() {
 			isPageListGo = false
 			break
 		}
-		time.Sleep(time.Second)
+		time.Sleep(time.Second * 1)
 	}
 }
 
