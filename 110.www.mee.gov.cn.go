@@ -140,6 +140,7 @@ func main() {
 									chineseTitle := htmlquery.InnerText(bzDetailANode)
 									chineseTitle = strings.TrimSpace(chineseTitle)
 									chineseTitle = strings.ReplaceAll(chineseTitle, "/", "-")
+									chineseTitle = strings.ReplaceAll(chineseTitle, "　", "")
 									chineseTitle = strings.ReplaceAll(chineseTitle, " ", "")
 									chineseTitle = strings.ReplaceAll(chineseTitle, "：", ":")
 									chineseTitle = strings.ReplaceAll(chineseTitle, "—", "-")
