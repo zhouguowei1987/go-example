@@ -38,7 +38,6 @@ func MeeSetHttpProxy() (httpclient *http.Client) {
 func main() {
 	// 第一步获取所有大分类
 	categoryIndexRequestUrl := "https://www.mee.gov.cn/ywgz/fgbz/bz/bzwb/"
-	fmt.Println(categoryIndexRequestUrl)
 	categoryIndexDoc, err := htmlquery.LoadURL(categoryIndexRequestUrl)
 	if err != nil {
 		fmt.Println(err)
@@ -56,7 +55,6 @@ func main() {
 		categoryRequestUrl = strings.ReplaceAll(categoryRequestUrl, ".", "")
 		categoryRequestUrl = strings.ReplaceAll(categoryRequestUrl, "/", "")
 		categoryRequestUrl = "https://www.mee.gov.cn/ywgz/fgbz/bz/bzwb/" + categoryRequestUrl + "/"
-		fmt.Println(categoryRequestUrl)
 		categoryEachDoc, err := htmlquery.LoadURL(categoryRequestUrl)
 		if err != nil {
 			fmt.Println(err)
@@ -72,8 +70,6 @@ func main() {
 			// 有二级分类
 			preRequestUrl := categoryRequestUrl
 			categoryRequestUrl = categoryRequestUrl + string(regWindowLocationHrefMatch[0][1]) + "/"
-			fmt.Println(categoryRequestUrl)
-			// 获取二级分类
 			categoryEachDoc, err := htmlquery.LoadURL(categoryRequestUrl)
 			if err != nil {
 				fmt.Println(err)
@@ -116,11 +112,13 @@ func main() {
 				bgtListLiNodes := htmlquery.Find(smallCategoryDoc, `//div[@class="bgtList"]/ul[@class="zzjgGrzyCUl"]/li`)
 				if len(bgtListLiNodes) > 0 {
 					for _, bgtListLiNode := range bgtListLiNodes {
+						fmt.Println("=======================================================")
 						liANode := htmlquery.FindOne(bgtListLiNode, `./a/@href`)
 						liAHref := htmlquery.InnerText(liANode)
 						liAHref = strings.Replace(liAHref, ".", "", 1)
 						smallCategoryRequestUrlIndexShtmlIndex := strings.LastIndex(smallCategoryRequestUrl, "/index")
 						bzDetailRequestUrl := smallCategoryRequestUrl[:smallCategoryRequestUrlIndexShtmlIndex] + liAHref
+						fmt.Println(smallCategoryRequestUrl)
 						fmt.Println(bzDetailRequestUrl)
 
 						bzDetailDoc, err := htmlquery.LoadURL(bzDetailRequestUrl)
