@@ -11,6 +11,7 @@ import (
 	"net/url"
 	"os"
 	"path/filepath"
+	"regexp"
 	"strconv"
 	"strings"
 	"time"
@@ -35,68 +36,145 @@ func MeeSetHttpProxy() (httpclient *http.Client) {
 // @Title 获取生态环境标准文档
 // @Description https://www.mee.gov.cn/，获取生态环境标准文档
 func main() {
-	page := 1
-	length := 10
-	isPageListGo := true
-	for isPageListGo {
-		requestUrl := "https://www.mee.gov.cn/front/bzcx/yfgbcx.html"
-		fmt.Println(requestUrl)
-		start := (page - 1) * length
-		YfGbCxDoc, err := MeeBzList(requestUrl, start, length)
+	// 第一步获取所有大分类
+	categoryIndexRequestUrl := "https://www.mee.gov.cn/ywgz/fgbz/bz/bzwb/"
+	fmt.Println(categoryIndexRequestUrl)
+	categoryIndexDoc, err := htmlquery.LoadURL(categoryIndexRequestUrl)
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+	stBzCBaseTabUlLiNodes := htmlquery.Find(categoryIndexDoc, `//ul[@class="stbzCBaseTabUl"]/li`)
+	if len(stBzCBaseTabUlLiNodes) <= 0 {
+		fmt.Println("没有大分类")
+		os.Exit(1)
+	}
+	for _, liNode := range stBzCBaseTabUlLiNodes {
+		smallCategoryRequestUrls := make([]string, 0)
+		categoryRequestUrlNode := htmlquery.FindOne(liNode, `./a/@href`)
+		categoryRequestUrl := htmlquery.InnerText(categoryRequestUrlNode)
+		categoryRequestUrl = strings.ReplaceAll(categoryRequestUrl, ".", "")
+		categoryRequestUrl = strings.ReplaceAll(categoryRequestUrl, "/", "")
+		categoryRequestUrl = "https://www.mee.gov.cn/ywgz/fgbz/bz/bzwb/" + categoryRequestUrl + "/"
+		fmt.Println(categoryRequestUrl)
+		categoryEachDoc, err := htmlquery.LoadURL(categoryRequestUrl)
 		if err != nil {
 			fmt.Println(err)
-			break
+			continue
 		}
-		YfGbCxTableTrNodes := htmlquery.Find(YfGbCxDoc, `//div[@class="search_res_tab"]/table/tbody/tr`)
-		if len(YfGbCxTableTrNodes) > 0 {
-			for _, trNode := range YfGbCxTableTrNodes {
-				// 标准编号
-				standardNoTdNode := htmlquery.FindOne(trNode, `./td[1]`)
-				standardNo := htmlquery.InnerText(standardNoTdNode)
-				standardNo = strings.ReplaceAll(standardNo, "/", "-")
-				fmt.Println(standardNo)
-
-				// 中文标题
-				chineseTitleTdNode := htmlquery.FindOne(trNode, `./td[2]`)
-				chineseTitle := htmlquery.InnerText(chineseTitleTdNode)
-				chineseTitle = strings.ReplaceAll(chineseTitle, "/", "-")
-				chineseTitle = strings.ReplaceAll(chineseTitle, "/", "-")
-				chineseTitle = strings.ReplaceAll(chineseTitle, " ", "")
-				chineseTitle = strings.ReplaceAll(chineseTitle, "　", "")
-				chineseTitle = strings.ReplaceAll(chineseTitle, "：", ":")
-				fmt.Println(chineseTitle)
-
-				// 下载文档URL
-				downLoadTdNode := htmlquery.FindOne(trNode, `./td[9]/a/@href`)
-				downLoadUrl := htmlquery.InnerText(downLoadTdNode)
-				downLoadUrl = "https://www.mee.gov.cn" + downLoadUrl
-				fmt.Println(downLoadUrl)
-
-				// 文件格式
-				attachmentFormat := strings.Split(downLoadUrl, ".")
-				filePath := "../www.mee.gov.cn/" + chineseTitle + "(" + standardNo + ")" + "." + attachmentFormat[len(attachmentFormat)-1]
-				if _, err := os.Stat(filePath); err != nil {
-					fmt.Println("=======开始下载========")
-					err = downloadMee(downLoadUrl, requestUrl, filePath)
-					if err != nil {
-						fmt.Println(err)
-						continue
-					}
-					fmt.Println("=======开始完成========")
-				}
-				time.Sleep(time.Second * 1)
-			}
-			page++
+		// 第二步查看是否有二级分类，如果有二级分类的话页面会跳转
+		regWindowLocationHref := regexp.MustCompile(`window.location.href = "./(.*?)/"`)
+		regWindowLocationHrefMatch := regWindowLocationHref.FindAllSubmatch([]byte(htmlquery.InnerText(categoryEachDoc)), -1)
+		if len(regWindowLocationHrefMatch) == 0 {
+			// 没有二级分类
+			smallCategoryRequestUrls = append(smallCategoryRequestUrls, categoryRequestUrl)
 		} else {
-			fmt.Println("没有更多分页了")
-			isPageListGo = false
-			break
+			// 有二级分类
+			preRequestUrl := categoryRequestUrl
+			categoryRequestUrl = categoryRequestUrl + string(regWindowLocationHrefMatch[0][1]) + "/"
+			fmt.Println(categoryRequestUrl)
+			// 获取二级分类
+			categoryEachDoc, err := htmlquery.LoadURL(categoryRequestUrl)
+			if err != nil {
+				fmt.Println(err)
+				continue
+			}
+			stBzInnerNavLiNodes := htmlquery.Find(categoryEachDoc, `//div[@class="bgtList"]/ul[@class="stBzinnerNav"]/li`)
+			if len(stBzInnerNavLiNodes) <= 0 {
+				fmt.Println("没有二级分类")
+				continue
+			}
+			for _, liNode := range stBzInnerNavLiNodes {
+				liANode := htmlquery.FindOne(liNode, `./a/@href`)
+				liAHref := htmlquery.InnerText(liANode)
+				liAHref = strings.ReplaceAll(liAHref, ".", "")
+				liAHref = strings.ReplaceAll(liAHref, "/", "")
+				if len(liAHref) == 0 {
+					smallCategoryRequestUrls = append(smallCategoryRequestUrls, categoryRequestUrl)
+				} else {
+					smallCategoryRequestUrls = append(smallCategoryRequestUrls, preRequestUrl+liAHref+"/")
+				}
+			}
 		}
-		time.Sleep(time.Second)
+		if len(smallCategoryRequestUrls) > 0 {
+			smallCategoryPage := 0
+			for _, smallCategoryUrl := range smallCategoryRequestUrls {
+				smallCategoryPageText := ""
+				referer := smallCategoryUrl
+				if smallCategoryPage > 0 {
+					smallCategoryPageText = "_" + strconv.Itoa(smallCategoryPage)
+					referer = smallCategoryPageText
+				}
+				smallCategoryRequestUrl := fmt.Sprintf(smallCategoryUrl+"index%s.shtml", smallCategoryPageText)
+				fmt.Println(smallCategoryRequestUrl)
+				smallCategoryDoc, err := MeeBzList(smallCategoryRequestUrl, referer)
+				if err != nil {
+					fmt.Println(err)
+					smallCategoryPage = 0
+					continue
+				}
+				bgtListLiNodes := htmlquery.Find(smallCategoryDoc, `//div[@class="bgtList"]/ul[@class="zzjgGrzyCUl"]/li`)
+				if len(bgtListLiNodes) > 0 {
+					for _, bgtListLiNode := range bgtListLiNodes {
+						liANode := htmlquery.FindOne(bgtListLiNode, `./a/@href`)
+						liAHref := htmlquery.InnerText(liANode)
+						liAHref = strings.Replace(liAHref, ".", "", 1)
+						smallCategoryRequestUrlIndexShtmlIndex := strings.LastIndex(smallCategoryRequestUrl, "/index")
+						fmt.Println(smallCategoryRequestUrlIndexShtmlIndex)
+
+						bzDetailRequestUrl := smallCategoryRequestUrl[:smallCategoryRequestUrlIndexShtmlIndex] + liAHref
+						fmt.Println(bzDetailRequestUrl)
+
+						bzDetailDoc, err := htmlquery.LoadURL(bzDetailRequestUrl)
+						if err != nil {
+							fmt.Println(err)
+							continue
+						}
+						bzDetailANodes := htmlquery.Find(bzDetailDoc, `//div[@class="neiright_Content"]/div[@class="neiright_JPZ_GK_CP"]//a`)
+						if len(bzDetailANodes) > 0 {
+							for _, bzDetailANode := range bzDetailANodes {
+								bzDownloadHrefNode := htmlquery.FindOne(bzDetailANode, `./@href`)
+								bzDownloadHref := htmlquery.InnerText(bzDownloadHrefNode)
+								fmt.Println(bzDownloadHref)
+								if strings.Contains(bzDownloadHref, ".pdf") {
+									// 开始下载
+									// 中文标题
+									chineseTitle := htmlquery.InnerText(bzDetailANode)
+									chineseTitle = strings.ReplaceAll(chineseTitle, "/", "-")
+									chineseTitle = strings.ReplaceAll(chineseTitle, " ", "")
+									chineseTitle = strings.ReplaceAll(chineseTitle, "：", ":")
+									fmt.Println(chineseTitle)
+
+									// 下载文档URL
+									bzDetailRequestUrlBiasTIndex := strings.LastIndex(bzDetailRequestUrl, "/t")
+									fmt.Println(bzDetailRequestUrlBiasTIndex)
+
+									bzDownloadHref = strings.Replace(bzDownloadHref, ".", "", 1)
+									downLoadUrl := bzDetailRequestUrl[:bzDetailRequestUrlBiasTIndex] + bzDownloadHref
+									fmt.Println(downLoadUrl)
+
+									filePath := "../www.mee.gov.cn/www.mee.gov.cn/" + chineseTitle + ".pdf"
+									if _, err := os.Stat(filePath); err != nil {
+										fmt.Println("=======开始下载========")
+										err = downloadMee(downLoadUrl, bzDetailRequestUrl, filePath)
+										if err != nil {
+											fmt.Println(err)
+											continue
+										}
+										fmt.Println("=======开始完成========")
+									}
+									time.Sleep(time.Second * 1)
+								}
+							}
+						}
+					}
+				}
+			}
+		}
 	}
 }
 
-func MeeBzList(requestUrl string, start int, length int) (doc *html.Node, err error) {
+func MeeBzList(requestUrl string, referer string) (doc *html.Node, err error) {
 	// 初始化客户端
 	var client *http.Client = &http.Client{
 		Transport: &http.Transport{
@@ -116,11 +194,7 @@ func MeeBzList(requestUrl string, start int, length int) (doc *html.Node, err er
 	if MeeEnableHttpProxy {
 		client = MeeSetHttpProxy()
 	}
-
-	postData := url.Values{}
-	postData.Add("start", strconv.Itoa(start))
-	postData.Add("length", strconv.Itoa(length))
-	req, err := http.NewRequest("POST", requestUrl, strings.NewReader(postData.Encode())) //建立连接
+	req, err := http.NewRequest("GET", requestUrl, nil) //建立连接
 	if err != nil {
 		return doc, err
 	}
@@ -130,11 +204,9 @@ func MeeBzList(requestUrl string, start int, length int) (doc *html.Node, err er
 	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
 	req.Header.Set("Cache-Control", "max-age=0")
 	req.Header.Set("Connection", "keep-alive")
-	req.Header.Set("Content-Length", "213")
-	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 	req.Header.Set("Host", "www.mee.gov.cn")
 	req.Header.Set("Origin", "https://www.mee.gov.cn/")
-	req.Header.Set("Referer", "https://www.mee.gov.cn/front/bzcx/yfgbcx.html")
+	req.Header.Set("Referer", referer)
 	req.Header.Set("sec-ch-ua", "\"Chromium\";v=\"118\", \"Google Chrome\";v=\"118\", \"Not=A?Brand\";v=\"99\"")
 	req.Header.Set("sec-ch-ua-mobile", "?0")
 	req.Header.Set("sec-ch-ua-platform", "\"macOS\"")
