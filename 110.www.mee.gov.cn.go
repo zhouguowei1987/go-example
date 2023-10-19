@@ -172,6 +172,8 @@ func main() {
 										chineseTitle = strings.ReplaceAll(chineseTitle, "－", "-")
 										chineseTitle = strings.ReplaceAll(chineseTitle, "（", "(")
 										chineseTitle = strings.ReplaceAll(chineseTitle, "）", ")")
+										chineseTitle = strings.ReplaceAll(chineseTitle, "《", "")
+										chineseTitle = strings.ReplaceAll(chineseTitle, "》", "")
 										fmt.Println(chineseTitle)
 
 										// 下载文档URL
