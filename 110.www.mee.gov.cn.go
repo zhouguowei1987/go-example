@@ -92,88 +92,117 @@ func main() {
 				}
 			}
 		}
+
 		if len(smallCategoryRequestUrls) > 0 {
-			smallCategoryPage := 0
 			for _, smallCategoryUrl := range smallCategoryRequestUrls {
-				smallCategoryPageText := ""
-				referer := smallCategoryUrl
-				if smallCategoryPage > 0 {
-					smallCategoryPageText = "_" + strconv.Itoa(smallCategoryPage)
-					referer = smallCategoryPageText
-				}
-				smallCategoryRequestUrl := fmt.Sprintf(smallCategoryUrl+"index%s.shtml", smallCategoryPageText)
-				fmt.Println(smallCategoryRequestUrl)
-				smallCategoryDoc, err := MeeBzList(smallCategoryRequestUrl, referer)
+				smallCategoryIndexPageUrl := smallCategoryUrl
+				smallCategoryIndexPageDoc, err := htmlquery.LoadURL(smallCategoryIndexPageUrl)
 				if err != nil {
 					fmt.Println(err)
-					smallCategoryPage = 0
 					continue
 				}
-				bgtListLiNodes := htmlquery.Find(smallCategoryDoc, `//div[@class="bgtList"]/ul[@class="zzjgGrzyCUl"]/li`)
-				if len(bgtListLiNodes) > 0 {
-					for _, bgtListLiNode := range bgtListLiNodes {
-						fmt.Println("=======================================================")
-						liANode := htmlquery.FindOne(bgtListLiNode, `./a/@href`)
-						liAHref := htmlquery.InnerText(liANode)
-						liAHref = strings.Replace(liAHref, ".", "", 1)
-						smallCategoryRequestUrlIndexShtmlIndex := strings.LastIndex(smallCategoryRequestUrl, "/index")
-						bzDetailRequestUrl := smallCategoryRequestUrl[:smallCategoryRequestUrlIndexShtmlIndex] + liAHref
-						fmt.Println(smallCategoryRequestUrl)
-						fmt.Println(bzDetailRequestUrl)
+				// 获取最大分页
+				smallCategoryMaxPage := 0
+				regCountPage := regexp.MustCompile(`var countPage = ([0-9]*)//共多少页`)
+				regCountPageMatch := regCountPage.FindAllSubmatch([]byte(htmlquery.InnerText(smallCategoryIndexPageDoc)), -1)
+				if len(regCountPageMatch) > 0 {
+					smallCategoryMaxPageStr := string(regCountPageMatch[0][1])
+					smallCategoryMaxPage, _ = strconv.Atoi(smallCategoryMaxPageStr)
+				}
+				for smallCategoryPage := 0; smallCategoryPage < smallCategoryMaxPage; smallCategoryPage++ {
+					smallCategoryPageText := ""
+					referer := smallCategoryUrl
+					if smallCategoryPage > 0 {
+						smallCategoryPageText = "_" + strconv.Itoa(smallCategoryPage)
+						referer = smallCategoryPageText
+					}
+					smallCategoryRequestUrl := fmt.Sprintf(smallCategoryUrl+"index%s.shtml", smallCategoryPageText)
+					smallCategoryDoc, err := MeeBzList(smallCategoryRequestUrl, referer)
+					if err != nil {
+						fmt.Println(err)
+						continue
+					}
 
-						bzDetailDoc, err := htmlquery.LoadURL(bzDetailRequestUrl)
-						if err != nil {
-							fmt.Println(err)
-							continue
-						}
-						bzDetailANodes := htmlquery.Find(bzDetailDoc, `//div[@class="neiright_Content"]/div[@class="neiright_JPZ_GK_CP"]//a`)
-						if len(bzDetailANodes) > 0 {
-							for _, bzDetailANode := range bzDetailANodes {
-								bzDownloadHrefNode := htmlquery.FindOne(bzDetailANode, `./@href`)
-								bzDownloadHref := htmlquery.InnerText(bzDownloadHrefNode)
-								fmt.Println(bzDownloadHref)
-								if strings.Contains(bzDownloadHref, ".pdf") {
-									// 开始下载
-									// 中文标题
-									chineseTitle := htmlquery.InnerText(bzDetailANode)
-									chineseTitle = strings.TrimSpace(chineseTitle)
-									chineseTitle = strings.ReplaceAll(chineseTitle, "/", "-")
-									chineseTitle = strings.ReplaceAll(chineseTitle, "　", "")
-									chineseTitle = strings.ReplaceAll(chineseTitle, " ", "")
-									chineseTitle = strings.ReplaceAll(chineseTitle, "：", ":")
-									chineseTitle = strings.ReplaceAll(chineseTitle, "—", "-")
-									chineseTitle = strings.ReplaceAll(chineseTitle, "（", "(")
-									chineseTitle = strings.ReplaceAll(chineseTitle, "）", ")")
-									fmt.Println(chineseTitle)
+					bgtListLiNodes := htmlquery.Find(smallCategoryDoc, `//div[@class="bgtList"]/ul[@class="zzjgGrzyCUl"]/li`)
+					if len(bgtListLiNodes) > 0 {
+						for _, bgtListLiNode := range bgtListLiNodes {
+							fmt.Println("=======================================================")
+							liANode := htmlquery.FindOne(bgtListLiNode, `./a/@href`)
+							liAHref := htmlquery.InnerText(liANode)
+							bzDetailRequestUrl := ""
+							if strings.Contains(liAHref, "../") {
+								smallCategoryRequestUrlBiasIndex := strings.LastIndex(smallCategoryRequestUrl, "/index")
+								smallCategoryRequestUrlTemp := smallCategoryRequestUrl[:smallCategoryRequestUrlBiasIndex]
 
-									// 下载文档URL
-									downLoadUrl := bzDownloadHref
-									// 查看bzDownloadHref是否含有www.mee.gov.cn
-									if !strings.Contains(bzDownloadHref, "www.mee.gov.cn") {
-										// 不含有www.mee.gov.cn，下载连接需要处理
-										bzDetailRequestUrlBiasTIndex := strings.LastIndex(bzDetailRequestUrl, "/t")
-										bzDownloadHref = strings.Replace(bzDownloadHref, ".", "", 1)
-										downLoadUrl = bzDetailRequestUrl[:bzDetailRequestUrlBiasTIndex] + bzDownloadHref
-									}
-									fmt.Println(downLoadUrl)
+								biasCount := strings.Count(liAHref, "../")
+								smallCategoryRequestUrlTempArr := strings.Split(smallCategoryRequestUrlTemp, "/")
+								smallCategoryRequestUrlTempArr = smallCategoryRequestUrlTempArr[:len(smallCategoryRequestUrlTempArr)-biasCount]
+								smallCategoryRequestUrlTemp = strings.Join(smallCategoryRequestUrlTempArr, "/") + "/"
 
-									filePath := "../www.mee.gov.cn/www.mee.gov.cn/" + chineseTitle + ".pdf"
-									if _, err := os.Stat(filePath); err != nil {
-										fmt.Println("=======开始下载========")
-										err = downloadMee(downLoadUrl, bzDetailRequestUrl, filePath)
-										if err != nil {
-											fmt.Println(err)
-											continue
+								bzDetailRequestUrl = smallCategoryRequestUrlTemp + strings.ReplaceAll(liAHref, "../", "")
+							} else {
+								liAHref = strings.Replace(liAHref, ".", "", 1)
+								smallCategoryRequestUrlIndexShtmlIndex := strings.LastIndex(smallCategoryRequestUrl, "/index")
+								bzDetailRequestUrl = smallCategoryRequestUrl[:smallCategoryRequestUrlIndexShtmlIndex] + liAHref
+							}
+
+							fmt.Println(smallCategoryRequestUrl)
+							fmt.Println(bzDetailRequestUrl)
+
+							bzDetailDoc, err := htmlquery.LoadURL(bzDetailRequestUrl)
+							if err != nil {
+								fmt.Println(err)
+								continue
+							}
+							bzDetailANodes := htmlquery.Find(bzDetailDoc, `//div[@class="neiright_Content"]/div[@class="neiright_JPZ_GK_CP"]//a`)
+							if len(bzDetailANodes) > 0 {
+								for _, bzDetailANode := range bzDetailANodes {
+									bzDownloadHrefNode := htmlquery.FindOne(bzDetailANode, `./@href`)
+									bzDownloadHref := htmlquery.InnerText(bzDownloadHrefNode)
+									fmt.Println(bzDownloadHref)
+									if strings.Contains(bzDownloadHref, ".pdf") {
+										// 中文标题
+										chineseTitle := htmlquery.InnerText(bzDetailANode)
+										chineseTitle = strings.TrimSpace(chineseTitle)
+										chineseTitle = strings.ReplaceAll(chineseTitle, "/", "-")
+										chineseTitle = strings.ReplaceAll(chineseTitle, "　", "")
+										chineseTitle = strings.ReplaceAll(chineseTitle, " ", "")
+										chineseTitle = strings.ReplaceAll(chineseTitle, "：", ":")
+										chineseTitle = strings.ReplaceAll(chineseTitle, "—", "-")
+										chineseTitle = strings.ReplaceAll(chineseTitle, "（", "(")
+										chineseTitle = strings.ReplaceAll(chineseTitle, "）", ")")
+										fmt.Println(chineseTitle)
+
+										// 下载文档URL
+										downLoadUrl := bzDownloadHref
+										// 查看bzDownloadHref是否含有www.mee.gov.cn
+										if !strings.Contains(bzDownloadHref, "www.mee.gov.cn") {
+											// 不含有www.mee.gov.cn，下载连接需要处理
+											bzDetailRequestUrlBiasTIndex := strings.LastIndex(bzDetailRequestUrl, "/t")
+											bzDownloadHref = strings.Replace(bzDownloadHref, ".", "", 1)
+											downLoadUrl = bzDetailRequestUrl[:bzDetailRequestUrlBiasTIndex] + bzDownloadHref
 										}
-										fmt.Println("=======开始完成========")
+										fmt.Println(downLoadUrl)
+
+										filePath := "../www.mee.gov.cn/www.mee.gov.cn/" + chineseTitle + ".pdf"
+										if _, err := os.Stat(filePath); err != nil {
+											// 开始下载
+											fmt.Println("=======开始下载========")
+											err = downloadMee(downLoadUrl, bzDetailRequestUrl, filePath)
+											if err != nil {
+												fmt.Println(err)
+												continue
+											}
+											fmt.Println("=======开始完成========")
+										}
+										time.Sleep(time.Second * 1)
 									}
-									time.Sleep(time.Second * 1)
 								}
 							}
+							fmt.Println("=======================================================")
 						}
 					}
 				}
-				smallCategoryPage++
 			}
 		}
 	}
