@@ -149,9 +149,14 @@ func main() {
 									fmt.Println(chineseTitle)
 
 									// 下载文档URL
-									bzDetailRequestUrlBiasTIndex := strings.LastIndex(bzDetailRequestUrl, "/t")
-									bzDownloadHref = strings.Replace(bzDownloadHref, ".", "", 1)
-									downLoadUrl := bzDetailRequestUrl[:bzDetailRequestUrlBiasTIndex] + bzDownloadHref
+									downLoadUrl := bzDownloadHref
+									// 查看bzDownloadHref是否含有https://www.mee.gov.cn
+									if !strings.Contains(bzDownloadHref, "https://www.mee.gov.cn") {
+										// 不含有https://www.mee.gov.cn，下载连接需要处理
+										bzDetailRequestUrlBiasTIndex := strings.LastIndex(bzDetailRequestUrl, "/t")
+										bzDownloadHref = strings.Replace(bzDownloadHref, ".", "", 1)
+										downLoadUrl = bzDetailRequestUrl[:bzDetailRequestUrlBiasTIndex] + bzDownloadHref
+									}
 									fmt.Println(downLoadUrl)
 
 									filePath := "../www.mee.gov.cn/www.mee.gov.cn/" + chineseTitle + ".pdf"
