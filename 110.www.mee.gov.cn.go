@@ -138,6 +138,7 @@ func main() {
 									// 开始下载
 									// 中文标题
 									chineseTitle := htmlquery.InnerText(bzDetailANode)
+									chineseTitle = strings.TrimSpace(chineseTitle)
 									chineseTitle = strings.ReplaceAll(chineseTitle, "/", "-")
 									chineseTitle = strings.ReplaceAll(chineseTitle, " ", "")
 									chineseTitle = strings.ReplaceAll(chineseTitle, "：", ":")
