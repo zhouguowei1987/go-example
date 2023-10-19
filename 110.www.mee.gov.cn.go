@@ -120,8 +120,6 @@ func main() {
 						liAHref := htmlquery.InnerText(liANode)
 						liAHref = strings.Replace(liAHref, ".", "", 1)
 						smallCategoryRequestUrlIndexShtmlIndex := strings.LastIndex(smallCategoryRequestUrl, "/index")
-						fmt.Println(smallCategoryRequestUrlIndexShtmlIndex)
-
 						bzDetailRequestUrl := smallCategoryRequestUrl[:smallCategoryRequestUrlIndexShtmlIndex] + liAHref
 						fmt.Println(bzDetailRequestUrl)
 
@@ -147,8 +145,6 @@ func main() {
 
 									// 下载文档URL
 									bzDetailRequestUrlBiasTIndex := strings.LastIndex(bzDetailRequestUrl, "/t")
-									fmt.Println(bzDetailRequestUrlBiasTIndex)
-
 									bzDownloadHref = strings.Replace(bzDownloadHref, ".", "", 1)
 									downLoadUrl := bzDetailRequestUrl[:bzDetailRequestUrlBiasTIndex] + bzDownloadHref
 									fmt.Println(downLoadUrl)
