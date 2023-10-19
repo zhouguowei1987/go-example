@@ -150,9 +150,9 @@ func main() {
 
 									// 下载文档URL
 									downLoadUrl := bzDownloadHref
-									// 查看bzDownloadHref是否含有https://www.mee.gov.cn
-									if !strings.Contains(bzDownloadHref, "https://www.mee.gov.cn") {
-										// 不含有https://www.mee.gov.cn，下载连接需要处理
+									// 查看bzDownloadHref是否含有www.mee.gov.cn
+									if !strings.Contains(bzDownloadHref, "www.mee.gov.cn") {
+										// 不含有www.mee.gov.cn，下载连接需要处理
 										bzDetailRequestUrlBiasTIndex := strings.LastIndex(bzDetailRequestUrl, "/t")
 										bzDownloadHref = strings.Replace(bzDownloadHref, ".", "", 1)
 										downLoadUrl = bzDetailRequestUrl[:bzDetailRequestUrlBiasTIndex] + bzDownloadHref
