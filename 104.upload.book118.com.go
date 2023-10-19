@@ -670,6 +670,11 @@ func main() {
 			format:  "pdf",
 			price:   "2000",
 		},
+		{
+			dirName: "docx.lvlin.baidu.com",
+			format:  "docx",
+			price:   "2000",
+		},
 	}
 	rootPath := "../upload.book118.com/"
 	for _, childDir := range uploadChildDirArr {

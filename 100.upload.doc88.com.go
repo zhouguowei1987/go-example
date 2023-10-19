@@ -664,6 +664,13 @@ func main() {
 			Price:      468,
 			pDocFormat: "PDF",
 		},
+		{
+			dirName:    "docx.lvlin.baidu.com",
+			fileExt:    ".docx",
+			pCid:       8131,
+			Price:      468,
+			pDocFormat: "DOCX",
+		},
 	}
 	rootPath := "../upload.doc88.com/"
 	for _, childDir := range uploadChildDirArr {
