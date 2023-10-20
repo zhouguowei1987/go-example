@@ -56,7 +56,8 @@ type GetListResponseStatus struct {
 // @Title 删除未通过审核的文档
 // @Description https://cuttlefish.baidu.com/，删除未通过审核的文档
 func main() {
-	pn := 0
+	NextDocDeleteSleep := 6
+	pn := 90
 	rn := 10
 	isPageListGo := true
 	for isPageListGo {
@@ -92,7 +93,10 @@ func main() {
 					} else {
 						fmt.Println("=======删除失败========")
 					}
-					time.Sleep(time.Second * 10)
+					for i := 1; i <= NextDocDeleteSleep; i++ {
+						time.Sleep(time.Second)
+						fmt.Println("===========操作结束，当前是", pn, "页，暂停", NextPageSleep, "秒，倒计时", i, "秒===========")
+					}
 				}
 			}
 		}
