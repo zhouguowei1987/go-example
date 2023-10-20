@@ -9,7 +9,6 @@ import (
 	"net"
 	"net/http"
 	"net/url"
-	"os"
 	"strconv"
 	"time"
 )
@@ -42,9 +41,10 @@ type GetListResponseData struct {
 }
 
 type GetListResponseDataDocList struct {
-	DocId     string `json:"doc_id"`
-	DocStatus int    `json:"doc_status"`
-	Title     string `json:"title"`
+	DocId      string `json:"doc_id"`
+	CreateTime string `json:"create_time"`
+	DocStatus  int    `json:"doc_status"`
+	Title      string `json:"title"`
 }
 
 type GetListResponseStatus struct {
@@ -76,14 +76,16 @@ func main() {
 				title := doc.Title
 				fmt.Println(title)
 
+				currentTime := time.Now()
+				oldTime := currentTime.AddDate(0, 0, -20)
+				oldTimeStr := oldTime.Format("2006-01-02")
+
 				// 文档状态为4可以删除
-				if doc.DocStatus == 4 {
+				if doc.DocStatus == 4 || (doc.DocStatus == 1 && doc.CreateTime <= oldTimeStr) {
 					docIdStr := doc.DocId
 					fmt.Println("=======开始删除" + strconv.Itoa(pn) + "========")
 					docDeleteUrl := fmt.Sprintf("https://cuttlefish.baidu.com/user/submit/newdocdelete?token=%s&new_token=%s&fold_id_str=0&doc_id_str=%s&skip_fold_validate=1", token, token, docIdStr)
 					newDocDeleteResponse, err := NewDocDelete(docDeleteUrl)
-					fmt.Println(err)
-					os.Exit(1)
 					if err == nil && newDocDeleteResponse.ErrorNo == "0" {
 						hasDeleteFlag = true
 						fmt.Println("=======删除成功========")
