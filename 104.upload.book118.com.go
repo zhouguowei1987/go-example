@@ -675,6 +675,305 @@ func main() {
 			format:  "docx",
 			price:   "2000",
 		},
+		{
+			dirName: "finish.tikuvip-certification（2010-2011）.51test.net/二级建造师考试",
+			format:  "pdf", price: "2000",
+		},
+		{
+			dirName: "finish.tikuvip-certification（2010-2011）.51test.net/公务员考试",
+			format:  "pdf", price: "2000",
+		},
+		{
+			dirName: "finish.tikuvip-certification（2010-2011）.51test.net/教师招聘",
+			format:  "pdf", price: "2000",
+		},
+		{
+			dirName: "finish.tikuvip-certification（2010-2011）.51test.net/教师资格考试",
+			format:  "pdf", price: "2000",
+		},
+		{
+			dirName: "finish.tikuvip-certification（2010-2011）.51test.net/事业单位招聘",
+			format:  "pdf", price: "2000",
+		},
+		{
+			dirName: "finish.tikuvip-certification（2010-2011）.51test.net/一级建造师考试",
+			format:  "pdf", price: "2000",
+		},
+		{
+			dirName: "finish.tikuvip-certification（2010-2011）.51test.net/造价工程师考试",
+			format:  "pdf", price: "2000",
+		},
+		{
+			dirName: "finish.tikuvip-certification（2010-2011）.51test.net/证券从业资格考试",
+			format:  "pdf", price: "2000",
+		},
+		{
+			dirName: "finish.tikuvip-certification（2010-2011）.51test.net/注册安全工程师考试",
+			format:  "pdf", price: "2000",
+		},
+		{
+			dirName: "finish.tikuvip-certification（2012-2013）.51test.net/二级建造师考试",
+			format:  "pdf", price: "2000",
+		},
+		{
+			dirName: "finish.tikuvip-certification（2012-2013）.51test.net/公务员考试",
+			format:  "pdf", price: "2000",
+		},
+		{
+			dirName: "finish.tikuvip-certification（2012-2013）.51test.net/教师招聘",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "finish.tikuvip-certification（2012-2013）.51test.net/教师资格考试",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "finish.tikuvip-certification（2012-2013）.51test.net/事业单位招聘",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "finish.tikuvip-certification（2012-2013）.51test.net/一级建造师考试",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "finish.tikuvip-certification（2012-2013）.51test.net/造价工程师考试",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "finish.tikuvip-certification（2012-2013）.51test.net/证券从业资格考试",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "finish.tikuvip-certification（2012-2013）.51test.net/注册安全工程师考试",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "finish.tikuvip-certification（2014-2015）.51test.net/二级建造师考试",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "finish.tikuvip-certification（2014-2015）.51test.net/公务员考试",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "finish.tikuvip-certification（2014-2015）.51test.net/教师招聘",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "finish.tikuvip-certification（2014-2015）.51test.net/教师资格考试",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "finish.tikuvip-certification（2014-2015）.51test.net/事业单位招聘",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "finish.tikuvip-certification（2014-2015）.51test.net/消防工程师",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "finish.tikuvip-certification（2014-2015）.51test.net/一级建造师考试",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "finish.tikuvip-certification（2014-2015）.51test.net/造价工程师考试",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "finish.tikuvip-certification（2014-2015）.51test.net/证券从业资格考试",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "finish.tikuvip-certification（2014-2015）.51test.net/注册安全工程师考试",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "finish.tikuvip-certification（2016-2017）.51test.net/二级建造师考试",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "finish.tikuvip-certification（2016-2017）.51test.net/公务员考试",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "finish.tikuvip-certification（2016-2017）.51test.net/教师招聘",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "finish.tikuvip-certification（2016-2017）.51test.net/教师资格考试",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "finish.tikuvip-certification（2016-2017）.51test.net/事业单位招聘",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "finish.tikuvip-certification（2016-2017）.51test.net/消防工程师",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "finish.tikuvip-certification（2016-2017）.51test.net/一级建造师考试",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "finish.tikuvip-certification（2016-2017）.51test.net/造价工程师考试",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "finish.tikuvip-certification（2016-2017）.51test.net/证券从业资格考试",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "finish.tikuvip-certification（2016-2017）.51test.net/注册安全工程师考试",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "finish.tikuvip-certification（2018-2019）.51test.net/二级建造师考试",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "finish.tikuvip-certification（2018-2019）.51test.net/公务员考试",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "finish.tikuvip-certification（2018-2019）.51test.net/教师招聘",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "finish.tikuvip-certification（2018-2019）.51test.net/教师资格考试",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "finish.tikuvip-certification（2018-2019）.51test.net/事业单位招聘",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "finish.tikuvip-certification（2018-2019）.51test.net/消防工程师",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "finish.tikuvip-certification（2018-2019）.51test.net/一级建造师考试",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "finish.tikuvip-certification（2018-2019）.51test.net/造价工程师考试",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "finish.tikuvip-certification（2018-2019）.51test.net/证券从业资格考试",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "finish.tikuvip-certification（2018-2019）.51test.net/注册安全工程师考试",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "finish.tikuvip-certification（2020-2022）.51test.net/二级建造师考试",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "finish.tikuvip-certification（2020-2022）.51test.net/公务员考试",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "finish.tikuvip-certification（2020-2022）.51test.net/教师招聘",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "finish.tikuvip-certification（2020-2022）.51test.net/教师资格考试",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "finish.tikuvip-certification（2020-2022）.51test.net/事业单位招聘",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "finish.tikuvip-certification（2020-2022）.51test.net/消防工程师",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "finish.tikuvip-certification（2020-2022）.51test.net/一级建造师考试",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "finish.tikuvip-certification（2020-2022）.51test.net/造价工程师考试",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "finish.tikuvip-certification（2020-2022）.51test.net/证券从业资格考试",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "finish.tikuvip-certification（2020-2022）.51test.net/注册安全工程师考试",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "finish.tikuvip-certification（2023）.51test.net/二级建造师考试",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "finish.tikuvip-certification（2023）.51test.net/公务员考试",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "finish.tikuvip-certification（2023）.51test.net/教师招聘",
+			format:  "pdf",
+			price:   "2000",
+		},
+		{
+			dirName: "finish.tikuvip-certification（2023）.51test.net/教师资格考试",
+			format:  "pdf",
+			price:   "2000",
+		},
 	}
 	rootPath := "../upload.book118.com/"
 	for _, childDir := range uploadChildDirArr {
