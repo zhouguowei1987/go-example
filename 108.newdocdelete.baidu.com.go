@@ -1,12 +1,15 @@
 package main
 
 import (
+	"compress/gzip"
 	"encoding/json"
 	"fmt"
+	"io"
 	"io/ioutil"
 	"net"
 	"net/http"
 	"net/url"
+	"os"
 	"strconv"
 	"time"
 )
@@ -79,6 +82,8 @@ func main() {
 					fmt.Println("=======开始删除" + strconv.Itoa(pn) + "========")
 					docDeleteUrl := fmt.Sprintf("https://cuttlefish.baidu.com/user/submit/newdocdelete?token=%s&new_token=%s&fold_id_str=0&doc_id_str=%s&skip_fold_validate=1", token, token, docIdStr)
 					newDocDeleteResponse, err := NewDocDelete(docDeleteUrl)
+					fmt.Println(err)
+					os.Exit(1)
 					if err == nil && newDocDeleteResponse.ErrorNo == "0" {
 						hasDeleteFlag = true
 						fmt.Println("=======删除成功========")
@@ -216,7 +221,16 @@ func NewDocDelete(docDeleteUrl string) (newDocDeleteResponse NewDocDeleteRespons
 	}
 	defer resp.Body.Close()
 
-	respBytes, err := ioutil.ReadAll(resp.Body)
+	var reader io.ReadCloser
+	if resp.Header.Get("Content-Encoding") == "gzip" {
+		reader, err = gzip.NewReader(resp.Body)
+		if err != nil {
+			return
+		}
+	} else {
+		reader = resp.Body
+	}
+	respBytes, err := ioutil.ReadAll(reader)
 	if err != nil {
 		return newDocDeleteResponse, err
 	}

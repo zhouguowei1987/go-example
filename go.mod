@@ -12,6 +12,7 @@ require (
 
 require (
 	github.com/antchfx/xpath v1.2.1 // indirect
+	github.com/axgle/mahonia v0.0.0-20180208002826-3358181d7394 // indirect
 	github.com/golang/groupcache v0.0.0-20200121045136-8c9f03a8e57e // indirect
 	github.com/mohae/deepcopy v0.0.0-20170929034955-c48cc78d4826 // indirect
 	golang.org/x/text v0.10.0 // indirect
