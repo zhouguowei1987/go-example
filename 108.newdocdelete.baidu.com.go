@@ -95,7 +95,7 @@ func main() {
 					}
 					for i := 1; i <= NextDocDeleteSleep; i++ {
 						time.Sleep(time.Second)
-						fmt.Println("===========操作结束，当前是", pn, "页，暂停", NextPageSleep, "秒，倒计时", i, "秒===========")
+						fmt.Println("===========操作结束，当前是", pn, "页，暂停", NextDocDeleteSleep, "秒，倒计时", i, "秒===========")
 					}
 				}
 			}
