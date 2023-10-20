@@ -54,13 +54,17 @@ func main() {
 				standardNoTdNode := htmlquery.FindOne(trNode, `./td[1]`)
 				standardNo := htmlquery.InnerText(standardNoTdNode)
 				standardNo = strings.ReplaceAll(standardNo, "/", "-")
+				standardNo = strings.ReplaceAll(standardNo, "—", "-")
 				fmt.Println(standardNo)
 
 				// 中文标题
 				chineseTitleTdNode := htmlquery.FindOne(trNode, `./td[2]`)
 				chineseTitle := htmlquery.InnerText(chineseTitleTdNode)
+				chineseTitle = strings.TrimSpace(chineseTitle)
 				chineseTitle = strings.ReplaceAll(chineseTitle, "/", "-")
 				chineseTitle = strings.ReplaceAll(chineseTitle, " ", "")
+				chineseTitle = strings.ReplaceAll(chineseTitle, "	", "")
+				chineseTitle = strings.ReplaceAll(chineseTitle, "　", "")
 				chineseTitle = strings.ReplaceAll(chineseTitle, "：", ":")
 				fmt.Println(chineseTitle)
 
@@ -82,7 +86,7 @@ func main() {
 					}
 					fmt.Println("=======开始完成========")
 				}
-				time.Sleep(time.Second * 1)
+				time.Sleep(time.Millisecond * 100)
 			}
 			page++
 		} else {
@@ -90,7 +94,7 @@ func main() {
 			isPageListGo = false
 			break
 		}
-		time.Sleep(time.Second * 1)
+		time.Sleep(time.Millisecond * 100)
 	}
 }
 
