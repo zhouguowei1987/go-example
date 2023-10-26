@@ -40,14 +40,14 @@ var AllPpt818Subject = []Ppt818Subject{
 	//	name: "excel模板",
 	//	url:  "http://www.ppt818.com/list_1_quanbu/",
 	//},
-	{
-		name: "ppt模板",
-		url:  "http://www.ppt818.com/list_2_quanbu/",
-	},
 	//{
-	//	name: "word模板",
-	//	url:  "http://www.ppt818.com/list_3_quanbu/",
+	//	name: "ppt模板",
+	//	url:  "http://www.ppt818.com/list_2_quanbu/",
 	//},
+	{
+		name: "word模板",
+		url:  "http://www.ppt818.com/list_3_quanbu/",
+	},
 }
 
 // ychEduSpider 获取pc6文档
@@ -105,7 +105,7 @@ func main() {
 								attachmentFormat := strings.Split(downLoadUrl, ".")
 
 								filePath := "../www.ppt818.com/" + subject.name + "/"
-								fileName = "【" + categoryName + "】" + fileName + "." + attachmentFormat[len(attachmentFormat)-1]
+								fileName = fileName + "." + attachmentFormat[len(attachmentFormat)-1]
 								if _, err = os.Stat(filePath + fileName); err != nil {
 									err = downloadPpt818(downLoadUrl, detailUrl, filePath, fileName)
 									if err != nil {
