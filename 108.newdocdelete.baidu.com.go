@@ -78,7 +78,7 @@ func main() {
 				fmt.Println(title)
 
 				currentTime := time.Now()
-				oldTime := currentTime.AddDate(0, 0, -20)
+				oldTime := currentTime.AddDate(0, 0, -40)
 				oldTimeStr := oldTime.Format("2006-01-02")
 
 				// 文档状态为4可以删除
