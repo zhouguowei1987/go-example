@@ -330,7 +330,7 @@ func Book18Upload(filePath string, id string, md5 string, title string, systemCa
 		}
 	}(resp.Body)
 	respBytes, err := ioutil.ReadAll(resp.Body)
-	//fmt.Println(string(respBytes))
+	fmt.Println(string(respBytes))
 	//os.Exit(1)
 	err = json.Unmarshal(respBytes, &uploadResponse)
 	if err != nil {
@@ -1061,7 +1061,12 @@ func main() {
 			uploadResponseData, err := Book18Upload(filePath, strconv.Itoa(id), fileMD5, title, systemCategory.CateId, price)
 			if err != nil {
 				fmt.Println(err)
-				break
+				// 删除源文件，继续
+				err := os.Remove(filePath)
+				if err != nil {
+					return
+				}
+				continue
 			}
 			fmt.Println(uploadResponseData)
 			fmt.Println("==========将已上传的文件转移到指定文件夹==============")

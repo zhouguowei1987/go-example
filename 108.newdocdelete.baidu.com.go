@@ -57,7 +57,7 @@ type GetListResponseStatus struct {
 // @Description https://cuttlefish.baidu.com/，删除未通过审核的文档
 func main() {
 	NextDocDeleteSleep := 6
-	pn := 90
+	pn := 0
 	rn := 10
 	isPageListGo := true
 	for isPageListGo {
