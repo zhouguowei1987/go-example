@@ -104,7 +104,7 @@ func main() {
 								// 文件格式
 								attachmentFormat := strings.Split(downLoadUrl, ".")
 
-								filePath := "../www.ppt818.com/" + subject.name + "/"
+								filePath := "../www.ppt818.com/" + categoryName + "/" + subject.name + "/"
 								fileName = fileName + "." + attachmentFormat[len(attachmentFormat)-1]
 								if _, err = os.Stat(filePath + fileName); err != nil {
 									err = downloadPpt818(downLoadUrl, detailUrl, filePath, fileName)
