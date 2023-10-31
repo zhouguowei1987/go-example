@@ -144,7 +144,10 @@ func main() {
 				fmt.Println(downLoadUrl)
 
 				filePath := "../www.51zjedu.com/www.51zjedu.com/" + grade.name + "/" + fileName
-				if _, err := os.Stat(filePath); err != nil {
+				_, errDoc := os.Stat(filePath + ".doc")
+				_, errDocx := os.Stat(filePath + ".docx")
+				_, errPdf := os.Stat(filePath + ".pdf")
+				if errDoc != nil && errDocx != nil && errPdf != nil {
 					fmt.Println("=======开始下载" + strconv.Itoa(current) + "========")
 					err = downloadZJEdu(downLoadUrl, downloadViewUrl, filePath)
 					if err != nil {
@@ -208,7 +211,11 @@ func downloadZJEdu(attachmentUrl string, referer string, filePath string) error 
 	// 检查HTTP响应头中的Content-Disposition字段获取文件名和后缀
 	fileName := getZJEduFileNameFromHeader(resp)
 	fileExtension := filepath.Ext(fileName) // 获取文件后缀
+	fileExtArr := []string{".doc", ".docx", ".pdf"}
 	fmt.Println("文件后缀:", fileExtension)
+	if !StrInArrayZJEdu(fileExtension, fileExtArr) {
+		return errors.New("文件后缀" + fileExtension)
+	}
 	filePath += fileExtension
 
 	defer resp.Body.Close()
@@ -236,6 +243,18 @@ func downloadZJEdu(attachmentUrl string, referer string, filePath string) error 
 		return err
 	}
 	return nil
+}
+
+// StrInArrayZJEdu str in string list
+func StrInArrayZJEdu(str string, data []string) bool {
+	if len(data) > 0 {
+		for _, row := range data {
+			if str == row {
+				return true
+			}
+		}
+	}
+	return false
 }
 
 // 从HTTP响应头中获取文件名
