@@ -183,8 +183,8 @@ func downloadZJEduView(requestUrl string, referer string) (doc *html.Node, err e
 			ResponseHeaderTimeout: time.Second * 3,
 		},
 	}
-	if Tc260EnableHttpProxy {
-		client = Tc260SetHttpProxy()
+	if ZJEduEnableHttpProxy {
+		client = ZJEduSetHttpProxy()
 	}
 	req, err := http.NewRequest("GET", requestUrl, nil) //建立连接
 	if err != nil {
