@@ -98,6 +98,8 @@ func main() {
 				fileName = strings.ReplaceAll(fileName, "/", "-")
 				fileName = strings.ReplaceAll(fileName, ":", "-")
 				fileName = strings.ReplaceAll(fileName, "：", "-")
+				fileName = strings.ReplaceAll(fileName, "（", "(")
+				fileName = strings.ReplaceAll(fileName, "）", ")")
 				fmt.Println(fileName)
 
 				viewUrl := "http://www.51zjedu.com" + htmlquery.InnerText(htmlquery.FindOne(liNode, `./div[@class="doc-list-title"]/h3/a/@href`))
