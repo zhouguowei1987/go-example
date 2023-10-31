@@ -95,7 +95,7 @@ func main() {
 				fmt.Println("=======当前页为：" + strconv.Itoa(current) + "========")
 
 				fileName := htmlquery.InnerText(htmlquery.FindOne(liNode, `./div[@class="doc-list-title"]/h3/a/@title`))
-				fileName = strings.TrimSpace(fileName)
+				fileName = strings.ReplaceAll(fileName, " ", "")
 				fileName = strings.ReplaceAll(fileName, "/", "-")
 				fileName = strings.ReplaceAll(fileName, ":", "-")
 				fileName = strings.ReplaceAll(fileName, "：", "-")
