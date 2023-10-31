@@ -1105,6 +1105,56 @@ func main() {
 			Price:      468,
 			pDocFormat: "PDF",
 		},
+
+		{
+			dirName:    "docx.www.ppt818.com/个人简历",
+			fileExt:    ".docx",
+			pCid:       8121,
+			Price:      468,
+			pDocFormat: "DOCX",
+		},
+		{
+			dirName:    "docx.www.ppt818.com/工作总结",
+			fileExt:    ".docx",
+			pCid:       8033,
+			Price:      468,
+			pDocFormat: "DOCX",
+		},
+		{
+			dirName:    "docx.www.ppt818.com/公文通知",
+			fileExt:    ".docx",
+			pCid:       7972,
+			Price:      468,
+			pDocFormat: "DOCX",
+		},
+		{
+			dirName:    "docx.www.ppt818.com/合同范本",
+			fileExt:    ".docx",
+			pCid:       8131,
+			Price:      468,
+			pDocFormat: "DOCX",
+		},
+		{
+			dirName:    "docx.www.ppt818.com/行政管理",
+			fileExt:    ".docx",
+			pCid:       8095,
+			Price:      468,
+			pDocFormat: "DOCX",
+		},
+		{
+			dirName:    "docx.www.ppt818.com/演讲稿",
+			fileExt:    ".docx",
+			pCid:       55814,
+			Price:      468,
+			pDocFormat: "DOCX",
+		},
+		{
+			dirName:    "docx.www.ppt818.com/营销策划",
+			fileExt:    ".docx",
+			pCid:       8117,
+			Price:      468,
+			pDocFormat: "DOCX",
+		},
 	}
 	rootPath := "../upload.doc88.com/"
 	for _, childDir := range uploadChildDirArr {
