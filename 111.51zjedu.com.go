@@ -90,6 +90,7 @@ func main() {
 				continue
 			}
 			for _, liNode := range liNodes {
+				fmt.Println("============================================================================")
 				fmt.Println("年级：", grade.name)
 				fmt.Println("=======当前页为：" + strconv.Itoa(current) + "========")
 
@@ -102,52 +103,53 @@ func main() {
 				fileName = strings.ReplaceAll(fileName, "）", ")")
 				fmt.Println(fileName)
 
-				viewUrl := "http://www.51zjedu.com" + htmlquery.InnerText(htmlquery.FindOne(liNode, `./div[@class="doc-list-title"]/h3/a/@href`))
-				fmt.Println(viewUrl)
-
-				viewDoc, err := htmlquery.LoadURL(viewUrl)
-				if err != nil {
-					fmt.Println(err)
-					continue
-				}
-				// 所需点数
-				regPoints := regexp.MustCompile(`所需点数：([0-9]*)`)
-				regPointsMatch := regPoints.FindAllSubmatch([]byte(htmlquery.InnerText(viewDoc)), -1)
-				points, err := strconv.Atoi(string(regPointsMatch[0][1]))
-				if err != nil {
-					fmt.Println(err)
-					continue
-				}
-				if points > 0 {
-					fmt.Println("需要积分下载", points)
-					continue
-				}
-
-				regDownloadViewUrl := regexp.MustCompile(`<a href="#ecms" onclick="window.open\('(.*?)','','width=500,height=300,resizable=yes'\);"`)
-				regDownloadViewUrlMatch := regDownloadViewUrl.FindAllSubmatch([]byte(htmlquery.InnerText(viewDoc)), -1)
-				downloadViewUrl := "http://www.51zjedu.com" + string(regDownloadViewUrlMatch[0][1])
-				fmt.Println(downloadViewUrl)
-
-				downloadViewDoc, err := htmlquery.LoadURL(downloadViewUrl)
-				if err != nil {
-					fmt.Println(err)
-					continue
-				}
-
-				downloadUrlNode := htmlquery.FindOne(downloadViewDoc, `//a/@href`)
-				if downloadUrlNode == nil {
-					fmt.Println("没有下载链接")
-					continue
-				}
-				downLoadUrl := strings.ReplaceAll(htmlquery.InnerText(downloadUrlNode), "../", "/")
-				downLoadUrl = "http://www.51zjedu.com/e/DownSys" + downLoadUrl
-				fmt.Println(downLoadUrl)
-
 				filePath := "../www.51zjedu.com/www.51zjedu.com/" + grade.name + "/" + fileName
 				_, errDoc := os.Stat(filePath + ".doc")
 				_, errDocx := os.Stat(filePath + ".docx")
 				_, errPdf := os.Stat(filePath + ".pdf")
 				if errDoc != nil && errDocx != nil && errPdf != nil {
+
+					viewUrl := "http://www.51zjedu.com" + htmlquery.InnerText(htmlquery.FindOne(liNode, `./div[@class="doc-list-title"]/h3/a/@href`))
+					fmt.Println(viewUrl)
+
+					viewDoc, err := htmlquery.LoadURL(viewUrl)
+					if err != nil {
+						fmt.Println(err)
+						continue
+					}
+					// 所需点数
+					regPoints := regexp.MustCompile(`所需点数：([0-9]*)`)
+					regPointsMatch := regPoints.FindAllSubmatch([]byte(htmlquery.InnerText(viewDoc)), -1)
+					points, err := strconv.Atoi(string(regPointsMatch[0][1]))
+					if err != nil {
+						fmt.Println(err)
+						continue
+					}
+					if points > 0 {
+						fmt.Println("需要积分下载", points)
+						continue
+					}
+
+					regDownloadViewUrl := regexp.MustCompile(`<a href="#ecms" onclick="window.open\('(.*?)','','width=500,height=300,resizable=yes'\);"`)
+					regDownloadViewUrlMatch := regDownloadViewUrl.FindAllSubmatch([]byte(htmlquery.InnerText(viewDoc)), -1)
+					downloadViewUrl := "http://www.51zjedu.com" + string(regDownloadViewUrlMatch[0][1])
+					fmt.Println(downloadViewUrl)
+
+					downloadViewDoc, err := htmlquery.LoadURL(downloadViewUrl)
+					if err != nil {
+						fmt.Println(err)
+						continue
+					}
+
+					downloadUrlNode := htmlquery.FindOne(downloadViewDoc, `//a/@href`)
+					if downloadUrlNode == nil {
+						fmt.Println("没有下载链接")
+						continue
+					}
+					downLoadUrl := strings.ReplaceAll(htmlquery.InnerText(downloadUrlNode), "../", "/")
+					downLoadUrl = "http://www.51zjedu.com/e/DownSys" + downLoadUrl
+					fmt.Println(downLoadUrl)
+
 					fmt.Println("=======开始下载" + strconv.Itoa(current) + "========")
 					err = downloadZJEdu(downLoadUrl, downloadViewUrl, filePath)
 					if err != nil {
@@ -214,7 +216,7 @@ func downloadZJEdu(attachmentUrl string, referer string, filePath string) error 
 	fileExtArr := []string{".doc", ".docx", ".pdf"}
 	fmt.Println("文件后缀:", fileExtension)
 	if !StrInArrayZJEdu(fileExtension, fileExtArr) {
-		return errors.New("文件后缀" + fileExtension)
+		return errors.New("文件后缀：" + fileExtension + "不在下载后缀列表")
 	}
 	filePath += fileExtension
 
