@@ -833,6 +833,9 @@ func main() {
 				continue
 			}
 			fileName := file.Name()
+			if fileName == ".DS_Store" {
+				continue
+			}
 			fileExt := path.Ext(fileName)
 			fileExt = strings.ReplaceAll(fileExt, ".", "")
 

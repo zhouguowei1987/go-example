@@ -894,6 +894,9 @@ func main() {
 				continue
 			}
 			fileName := file.Name()
+			if fileName == ".DS_Store" {
+				continue
+			}
 			fileExt := path.Ext(fileName)
 
 			fmt.Println("==========开始上传==============")
