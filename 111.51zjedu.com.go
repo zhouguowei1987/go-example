@@ -138,6 +138,10 @@ func main() {
 
 					regDownloadViewUrl := regexp.MustCompile(`<a href="#ecms" onclick="window.open\('(.*?)','','width=500,height=300,resizable=yes'\);"`)
 					regDownloadViewUrlMatch := regDownloadViewUrl.FindAllSubmatch([]byte(htmlquery.InnerText(viewDoc)), -1)
+					if len(regDownloadViewUrlMatch) <= 0 {
+						fmt.Println("未找到下载页面链接，跳过")
+						continue
+					}
 					downloadViewUrl := "http://www.51zjedu.com" + string(regDownloadViewUrlMatch[0][1])
 					fmt.Println(downloadViewUrl)
 
