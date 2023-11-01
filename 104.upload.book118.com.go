@@ -409,130 +409,172 @@ func main() {
 			price:   "2000",
 		},
 		{
-			dirName: "finish.tikuvip（2012-2013）.51test.net/中考", price: "2000",
+			dirName: "finish.tikuvip（2012-2013）.51test.net/中考",
+			price:   "2000",
 		},
 		{
-			dirName: "finish.tikuvip（2012-2013）.51test.net/小升初", price: "2000",
+			dirName: "finish.tikuvip（2012-2013）.51test.net/小升初",
+			price:   "2000",
 		},
 		{
-			dirName: "finish.tikuvip（2012-2013）.51test.net/成人高考", price: "2000",
+			dirName: "finish.tikuvip（2012-2013）.51test.net/成人高考",
+			price:   "2000",
 		},
 		{
-			dirName: "finish.tikuvip（2012-2013）.51test.net/考研", price: "2000",
+			dirName: "finish.tikuvip（2012-2013）.51test.net/考研",
+			price:   "2000",
 		},
 		{
-			dirName: "finish.tikuvip（2012-2013）.51test.net/高中会考", price: "2000",
+			dirName: "finish.tikuvip（2012-2013）.51test.net/高中会考",
+			price:   "2000",
 		},
 		{
-			dirName: "finish.tikuvip（2012-2013）.51test.net/高考", price: "2000",
+			dirName: "finish.tikuvip（2012-2013）.51test.net/高考",
+			price:   "2000",
 		},
 		{
-			dirName: "finish.tikuvip（2014-2015）.51test.net/专升本考试", price: "2000",
+			dirName: "finish.tikuvip（2014-2015）.51test.net/专升本考试",
+			price:   "2000",
 		},
 		{
-			dirName: "finish.tikuvip（2014-2015）.51test.net/中考", price: "2000",
+			dirName: "finish.tikuvip（2014-2015）.51test.net/中考",
+			price:   "2000",
 		},
 		{
-			dirName: "finish.tikuvip（2014-2015）.51test.net/小升初", price: "2000",
+			dirName: "finish.tikuvip（2014-2015）.51test.net/小升初",
+			price:   "2000",
 		},
 		{
-			dirName: "finish.tikuvip（2014-2015）.51test.net/成人高考", price: "2000",
+			dirName: "finish.tikuvip（2014-2015）.51test.net/成人高考",
+			price:   "2000",
 		},
 		{
-			dirName: "finish.tikuvip（2014-2015）.51test.net/考研", price: "2000",
+			dirName: "finish.tikuvip（2014-2015）.51test.net/考研",
+			price:   "2000",
 		},
 		{
-			dirName: "finish.tikuvip（2014-2015）.51test.net/自考", price: "2000",
+			dirName: "finish.tikuvip（2014-2015）.51test.net/自考",
+			price:   "2000",
 		},
 		{
-			dirName: "finish.tikuvip（2014-2015）.51test.net/高中会考", price: "2000",
+			dirName: "finish.tikuvip（2014-2015）.51test.net/高中会考",
+			price:   "2000",
 		},
 		{
-			dirName: "finish.tikuvip（2014-2015）.51test.net/高考", price: "2000",
+			dirName: "finish.tikuvip（2014-2015）.51test.net/高考",
+			price:   "2000",
 		},
 		{
-			dirName: "finish.tikuvip（2016-2017）.51test.net/专升本考试", price: "2000",
+			dirName: "finish.tikuvip（2016-2017）.51test.net/专升本考试",
+			price:   "2000",
 		},
 		{
-			dirName: "finish.tikuvip（2016-2017）.51test.net/中考", price: "2000",
+			dirName: "finish.tikuvip（2016-2017）.51test.net/中考",
+			price:   "2000",
 		},
 		{
-			dirName: "finish.tikuvip（2016-2017）.51test.net/小升初", price: "2000",
+			dirName: "finish.tikuvip（2016-2017）.51test.net/小升初",
+			price:   "2000",
 		},
 		{
-			dirName: "finish.tikuvip（2016-2017）.51test.net/成人高考", price: "2000",
+			dirName: "finish.tikuvip（2016-2017）.51test.net/成人高考",
+			price:   "2000",
 		},
 		{
-			dirName: "finish.tikuvip（2016-2017）.51test.net/考研", price: "2000",
+			dirName: "finish.tikuvip（2016-2017）.51test.net/考研",
+			price:   "2000",
 		},
 		{
-			dirName: "finish.tikuvip（2016-2017）.51test.net/自考", price: "2000",
+			dirName: "finish.tikuvip（2016-2017）.51test.net/自考",
+			price:   "2000",
 		},
 		{
-			dirName: "finish.tikuvip（2016-2017）.51test.net/高中会考", price: "2000",
+			dirName: "finish.tikuvip（2016-2017）.51test.net/高中会考",
+			price:   "2000",
 		},
 		{
-			dirName: "finish.tikuvip（2016-2017）.51test.net/高考", price: "2000",
+			dirName: "finish.tikuvip（2016-2017）.51test.net/高考",
+			price:   "2000",
 		},
 		{
-			dirName: "finish.tikuvip（2018-2019）.51test.net/专升本考试", price: "2000",
+			dirName: "finish.tikuvip（2018-2019）.51test.net/专升本考试",
+			price:   "2000",
 		},
 		{
-			dirName: "finish.tikuvip（2018-2019）.51test.net/中考", price: "2000",
+			dirName: "finish.tikuvip（2018-2019）.51test.net/中考",
+			price:   "2000",
 		},
 		{
-			dirName: "finish.tikuvip（2018-2019）.51test.net/小升初", price: "2000",
+			dirName: "finish.tikuvip（2018-2019）.51test.net/小升初",
+			price:   "2000",
 		},
 		{
-			dirName: "finish.tikuvip（2018-2019）.51test.net/成人高考", price: "2000",
+			dirName: "finish.tikuvip（2018-2019）.51test.net/成人高考",
+			price:   "2000",
 		},
 		{
-			dirName: "finish.tikuvip（2018-2019）.51test.net/考研", price: "2000",
+			dirName: "finish.tikuvip（2018-2019）.51test.net/考研",
+			price:   "2000",
 		},
 		{
-			dirName: "finish.tikuvip（2018-2019）.51test.net/自考", price: "2000",
+			dirName: "finish.tikuvip（2018-2019）.51test.net/自考",
+			price:   "2000",
 		},
 		{
-			dirName: "finish.tikuvip（2018-2019）.51test.net/高中会考", price: "2000",
+			dirName: "finish.tikuvip（2018-2019）.51test.net/高中会考",
+			price:   "2000",
 		},
 		{
-			dirName: "finish.tikuvip（2018-2019）.51test.net/高考", price: "2000",
+			dirName: "finish.tikuvip（2018-2019）.51test.net/高考",
+			price:   "2000",
 		},
 		{
-			dirName: "finish.tikuvip（2020-2022）.51test.net/专升本考试", price: "2000",
+			dirName: "finish.tikuvip（2020-2022）.51test.net/专升本考试",
+			price:   "2000",
 		},
 		{
-			dirName: "finish.tikuvip（2020-2022）.51test.net/中考", price: "2000",
+			dirName: "finish.tikuvip（2020-2022）.51test.net/中考",
+			price:   "2000",
 		},
 		{
-			dirName: "finish.tikuvip（2020-2022）.51test.net/小升初", price: "2000",
+			dirName: "finish.tikuvip（2020-2022）.51test.net/小升初",
+			price:   "2000",
 		},
 		{
-			dirName: "finish.tikuvip（2020-2022）.51test.net/成人高考", price: "2000",
+			dirName: "finish.tikuvip（2020-2022）.51test.net/成人高考",
+			price:   "2000",
 		},
 		{
-			dirName: "finish.tikuvip（2020-2022）.51test.net/考研", price: "2000",
+			dirName: "finish.tikuvip（2020-2022）.51test.net/考研",
+			price:   "2000",
 		},
 		{
-			dirName: "finish.tikuvip（2020-2022）.51test.net/自考", price: "2000",
+			dirName: "finish.tikuvip（2020-2022）.51test.net/自考",
+			price:   "2000",
 		},
 		{
-			dirName: "finish.tikuvip（2020-2022）.51test.net/高中会考", price: "2000",
+			dirName: "finish.tikuvip（2020-2022）.51test.net/高中会考",
+			price:   "2000",
 		},
 		{
-			dirName: "finish.tikuvip（2020-2022）.51test.net/高考", price: "2000",
+			dirName: "finish.tikuvip（2020-2022）.51test.net/高考",
+			price:   "2000",
 		},
 		{
-			dirName: "finish.tikuvip（2023）.51test.net/专升本考试", price: "2000",
+			dirName: "finish.tikuvip（2023）.51test.net/专升本考试",
+			price:   "2000",
 		},
 		{
-			dirName: "finish.tikuvip（2023）.51test.net/中考", price: "2000",
+			dirName: "finish.tikuvip（2023）.51test.net/中考",
+			price:   "2000",
 		},
 		{
-			dirName: "finish.tikuvip（2023）.51test.net/小升初", price: "2000",
+			dirName: "finish.tikuvip（2023）.51test.net/小升初",
+			price:   "2000",
 		},
 		{
-			dirName: "finish.tikuvip（2023）.51test.net/成人高考", price: "2000",
+			dirName: "finish.tikuvip（2023）.51test.net/成人高考",
+			price:   "2000",
 		},
 		{
 			dirName: "finish.tikuvip（2023）.51test.net/考研",
@@ -816,6 +858,30 @@ func main() {
 		},
 		{
 			dirName: "finish.tikuvip-certification（2023）.51test.net/教师资格考试",
+			price:   "2000",
+		},
+		{
+			dirName: "www.51zjedu.com/一年级",
+			price:   "2000",
+		},
+		{
+			dirName: "www.51zjedu.com/二年级",
+			price:   "2000",
+		},
+		{
+			dirName: "www.51zjedu.com/三年级",
+			price:   "2000",
+		},
+		{
+			dirName: "www.51zjedu.com/四年级",
+			price:   "2000",
+		},
+		{
+			dirName: "www.51zjedu.com/五年级",
+			price:   "2000",
+		},
+		{
+			dirName: "www.51zjedu.com/六年级",
 			price:   "2000",
 		},
 	}

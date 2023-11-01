@@ -68,7 +68,7 @@ var grades = []Grade{
 // @Description http://www.51zjedu.com/，获取帝源教育文档
 func main() {
 	for _, grade := range grades {
-		current := 147
+		current := 1
 		isPageListGo := true
 		for isPageListGo {
 			gradeIndexUrl := grade.url

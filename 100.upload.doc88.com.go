@@ -880,6 +880,36 @@ func main() {
 			pCid:    8117,
 			Price:   468,
 		},
+		{
+			dirName: "www.51zjedu.com/一年级",
+			pCid:    8251,
+			Price:   468,
+		},
+		{
+			dirName: "www.51zjedu.com/二年级",
+			pCid:    8251,
+			Price:   468,
+		},
+		{
+			dirName: "www.51zjedu.com/三年级",
+			pCid:    8251,
+			Price:   468,
+		},
+		{
+			dirName: "www.51zjedu.com/四年级",
+			pCid:    8251,
+			Price:   468,
+		},
+		{
+			dirName: "www.51zjedu.com/五年级",
+			pCid:    8251,
+			Price:   468,
+		},
+		{
+			dirName: "www.51zjedu.com/六年级",
+			pCid:    8251,
+			Price:   468,
+		},
 	}
 	rootPath := "../upload.doc88.com/"
 	for _, childDir := range uploadChildDirArr {
