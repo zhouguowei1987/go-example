@@ -68,7 +68,7 @@ var grades = []Grade{
 // @Description http://www.51zjedu.com/，获取帝源教育文档
 func main() {
 	for _, grade := range grades {
-		current := 1
+		current := 147
 		isPageListGo := true
 		for isPageListGo {
 			gradeIndexUrl := grade.url
@@ -122,6 +122,10 @@ func main() {
 					// 所需点数
 					regPoints := regexp.MustCompile(`所需点数：([0-9]*)`)
 					regPointsMatch := regPoints.FindAllSubmatch([]byte(htmlquery.InnerText(viewDoc)), -1)
+					if len(regPointsMatch) <= 0 {
+						fmt.Println("不是标准通用页面，跳过")
+						continue
+					}
 					points, err := strconv.Atoi(string(regPointsMatch[0][1]))
 					if err != nil {
 						fmt.Println(err)
@@ -134,6 +138,10 @@ func main() {
 
 					regDownloadViewUrl := regexp.MustCompile(`<a href="#ecms" onclick="window.open\('(.*?)','','width=500,height=300,resizable=yes'\);"`)
 					regDownloadViewUrlMatch := regDownloadViewUrl.FindAllSubmatch([]byte(htmlquery.InnerText(viewDoc)), -1)
+					if len(regDownloadViewUrlMatch) <= 0 {
+						fmt.Println("未找到下载页面链接，跳过")
+						continue
+					}
 					downloadViewUrl := "http://www.51zjedu.com" + string(regDownloadViewUrlMatch[0][1])
 					fmt.Println(downloadViewUrl)
 
