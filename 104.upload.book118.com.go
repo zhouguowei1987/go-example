@@ -860,30 +860,6 @@ func main() {
 			dirName: "finish.tikuvip-certification（2023）.51test.net/教师资格考试",
 			price:   "2000",
 		},
-		{
-			dirName: "www.51zjedu.com/一年级",
-			price:   "2000",
-		},
-		{
-			dirName: "www.51zjedu.com/二年级",
-			price:   "2000",
-		},
-		{
-			dirName: "www.51zjedu.com/三年级",
-			price:   "2000",
-		},
-		{
-			dirName: "www.51zjedu.com/四年级",
-			price:   "2000",
-		},
-		{
-			dirName: "www.51zjedu.com/五年级",
-			price:   "2000",
-		},
-		{
-			dirName: "www.51zjedu.com/六年级",
-			price:   "2000",
-		},
 	}
 	rootPath := "../upload.book118.com/"
 	for _, childDir := range uploadChildDirArr {
