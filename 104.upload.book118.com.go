@@ -359,7 +359,6 @@ func getFileMD5(filePath string) (string, error) {
 
 type Book118UploadChildDir struct {
 	dirName string
-	format  string
 	price   string
 }
 
@@ -367,611 +366,456 @@ func main() {
 	var uploadChildDirArr = []Book118UploadChildDir{
 		{
 			dirName: "finish.tikuvip（2023）.51test.net",
-			format:  "pdf",
 			price:   "2000",
 		},
 		{
 			dirName: "finish.tikuvip（2010-2011）.51test.net/专升本考试",
-			format:  "pdf",
 			price:   "2000",
 		},
 		{
 			dirName: "finish.tikuvip（2010-2011）.51test.net/初中一年级",
-			format:  "pdf",
 			price:   "2000",
 		},
 		{
 			dirName: "finish.tikuvip（2010-2011）.51test.net/中考",
-			format:  "pdf",
 			price:   "2000",
 		},
 		{
 			dirName: "finish.tikuvip（2010-2011）.51test.net/小升初",
-			format:  "pdf",
 			price:   "2000",
 		},
 		{
 			dirName: "finish.tikuvip（2010-2011）.51test.net/成人高考",
-			format:  "pdf",
 			price:   "2000",
 		},
 		{
 			dirName: "finish.tikuvip（2010-2011）.51test.net/考研",
-			format:  "pdf",
 			price:   "2000",
 		},
 		{
 			dirName: "finish.tikuvip（2010-2011）.51test.net/自考",
-			format:  "pdf",
 			price:   "2000",
 		},
 		{
 			dirName: "finish.tikuvip（2010-2011）.51test.net/高中会考",
-			format:  "pdf",
 			price:   "2000",
 		},
 		{
 			dirName: "finish.tikuvip（2010-2011）.51test.net/高考",
-			format:  "pdf",
 			price:   "2000",
 		},
 		{
 			dirName: "finish.tikuvip（2012-2013）.51test.net/初中一年级",
-			format:  "pdf",
 			price:   "2000",
 		},
 		{
-			dirName: "finish.tikuvip（2012-2013）.51test.net/中考",
-			format:  "pdf",
-			price:   "2000",
+			dirName: "finish.tikuvip（2012-2013）.51test.net/中考", price: "2000",
 		},
 		{
-			dirName: "finish.tikuvip（2012-2013）.51test.net/小升初",
-			format:  "pdf",
-			price:   "2000",
+			dirName: "finish.tikuvip（2012-2013）.51test.net/小升初", price: "2000",
 		},
 		{
-			dirName: "finish.tikuvip（2012-2013）.51test.net/成人高考",
-			format:  "pdf",
-			price:   "2000",
+			dirName: "finish.tikuvip（2012-2013）.51test.net/成人高考", price: "2000",
 		},
 		{
-			dirName: "finish.tikuvip（2012-2013）.51test.net/考研",
-			format:  "pdf",
-			price:   "2000",
+			dirName: "finish.tikuvip（2012-2013）.51test.net/考研", price: "2000",
 		},
 		{
-			dirName: "finish.tikuvip（2012-2013）.51test.net/高中会考",
-			format:  "pdf",
-			price:   "2000",
+			dirName: "finish.tikuvip（2012-2013）.51test.net/高中会考", price: "2000",
 		},
 		{
-			dirName: "finish.tikuvip（2012-2013）.51test.net/高考",
-			format:  "pdf",
-			price:   "2000",
+			dirName: "finish.tikuvip（2012-2013）.51test.net/高考", price: "2000",
 		},
 		{
-			dirName: "finish.tikuvip（2014-2015）.51test.net/专升本考试",
-			format:  "pdf",
-			price:   "2000",
+			dirName: "finish.tikuvip（2014-2015）.51test.net/专升本考试", price: "2000",
 		},
 		{
-			dirName: "finish.tikuvip（2014-2015）.51test.net/中考",
-			format:  "pdf",
-			price:   "2000",
+			dirName: "finish.tikuvip（2014-2015）.51test.net/中考", price: "2000",
 		},
 		{
-			dirName: "finish.tikuvip（2014-2015）.51test.net/小升初",
-			format:  "pdf",
-			price:   "2000",
+			dirName: "finish.tikuvip（2014-2015）.51test.net/小升初", price: "2000",
 		},
 		{
-			dirName: "finish.tikuvip（2014-2015）.51test.net/成人高考",
-			format:  "pdf",
-			price:   "2000",
+			dirName: "finish.tikuvip（2014-2015）.51test.net/成人高考", price: "2000",
 		},
 		{
-			dirName: "finish.tikuvip（2014-2015）.51test.net/考研",
-			format:  "pdf",
-			price:   "2000",
+			dirName: "finish.tikuvip（2014-2015）.51test.net/考研", price: "2000",
 		},
 		{
-			dirName: "finish.tikuvip（2014-2015）.51test.net/自考",
-			format:  "pdf",
-			price:   "2000",
+			dirName: "finish.tikuvip（2014-2015）.51test.net/自考", price: "2000",
 		},
 		{
-			dirName: "finish.tikuvip（2014-2015）.51test.net/高中会考",
-			format:  "pdf",
-			price:   "2000",
+			dirName: "finish.tikuvip（2014-2015）.51test.net/高中会考", price: "2000",
 		},
 		{
-			dirName: "finish.tikuvip（2014-2015）.51test.net/高考",
-			format:  "pdf",
-			price:   "2000",
+			dirName: "finish.tikuvip（2014-2015）.51test.net/高考", price: "2000",
 		},
 		{
-			dirName: "finish.tikuvip（2016-2017）.51test.net/专升本考试",
-			format:  "pdf",
-			price:   "2000",
+			dirName: "finish.tikuvip（2016-2017）.51test.net/专升本考试", price: "2000",
 		},
 		{
-			dirName: "finish.tikuvip（2016-2017）.51test.net/中考",
-			format:  "pdf",
-			price:   "2000",
+			dirName: "finish.tikuvip（2016-2017）.51test.net/中考", price: "2000",
 		},
 		{
-			dirName: "finish.tikuvip（2016-2017）.51test.net/小升初",
-			format:  "pdf",
-			price:   "2000",
+			dirName: "finish.tikuvip（2016-2017）.51test.net/小升初", price: "2000",
 		},
 		{
-			dirName: "finish.tikuvip（2016-2017）.51test.net/成人高考",
-			format:  "pdf",
-			price:   "2000",
+			dirName: "finish.tikuvip（2016-2017）.51test.net/成人高考", price: "2000",
 		},
 		{
-			dirName: "finish.tikuvip（2016-2017）.51test.net/考研",
-			format:  "pdf",
-			price:   "2000",
+			dirName: "finish.tikuvip（2016-2017）.51test.net/考研", price: "2000",
 		},
 		{
-			dirName: "finish.tikuvip（2016-2017）.51test.net/自考",
-			format:  "pdf",
-			price:   "2000",
+			dirName: "finish.tikuvip（2016-2017）.51test.net/自考", price: "2000",
 		},
 		{
-			dirName: "finish.tikuvip（2016-2017）.51test.net/高中会考",
-			format:  "pdf",
-			price:   "2000",
+			dirName: "finish.tikuvip（2016-2017）.51test.net/高中会考", price: "2000",
 		},
 		{
-			dirName: "finish.tikuvip（2016-2017）.51test.net/高考",
-			format:  "pdf",
-			price:   "2000",
+			dirName: "finish.tikuvip（2016-2017）.51test.net/高考", price: "2000",
 		},
 		{
-			dirName: "finish.tikuvip（2018-2019）.51test.net/专升本考试",
-			format:  "pdf",
-			price:   "2000",
+			dirName: "finish.tikuvip（2018-2019）.51test.net/专升本考试", price: "2000",
 		},
 		{
-			dirName: "finish.tikuvip（2018-2019）.51test.net/中考",
-			format:  "pdf",
-			price:   "2000",
+			dirName: "finish.tikuvip（2018-2019）.51test.net/中考", price: "2000",
 		},
 		{
-			dirName: "finish.tikuvip（2018-2019）.51test.net/小升初",
-			format:  "pdf",
-			price:   "2000",
+			dirName: "finish.tikuvip（2018-2019）.51test.net/小升初", price: "2000",
 		},
 		{
-			dirName: "finish.tikuvip（2018-2019）.51test.net/成人高考",
-			format:  "pdf",
-			price:   "2000",
+			dirName: "finish.tikuvip（2018-2019）.51test.net/成人高考", price: "2000",
 		},
 		{
-			dirName: "finish.tikuvip（2018-2019）.51test.net/考研",
-			format:  "pdf",
-			price:   "2000",
+			dirName: "finish.tikuvip（2018-2019）.51test.net/考研", price: "2000",
 		},
 		{
-			dirName: "finish.tikuvip（2018-2019）.51test.net/自考",
-			format:  "pdf",
-			price:   "2000",
+			dirName: "finish.tikuvip（2018-2019）.51test.net/自考", price: "2000",
 		},
 		{
-			dirName: "finish.tikuvip（2018-2019）.51test.net/高中会考",
-			format:  "pdf",
-			price:   "2000",
+			dirName: "finish.tikuvip（2018-2019）.51test.net/高中会考", price: "2000",
 		},
 		{
-			dirName: "finish.tikuvip（2018-2019）.51test.net/高考",
-			format:  "pdf",
-			price:   "2000",
+			dirName: "finish.tikuvip（2018-2019）.51test.net/高考", price: "2000",
 		},
 		{
-			dirName: "finish.tikuvip（2020-2022）.51test.net/专升本考试",
-			format:  "pdf",
-			price:   "2000",
+			dirName: "finish.tikuvip（2020-2022）.51test.net/专升本考试", price: "2000",
 		},
 		{
-			dirName: "finish.tikuvip（2020-2022）.51test.net/中考",
-			format:  "pdf",
-			price:   "2000",
+			dirName: "finish.tikuvip（2020-2022）.51test.net/中考", price: "2000",
 		},
 		{
-			dirName: "finish.tikuvip（2020-2022）.51test.net/小升初",
-			format:  "pdf",
-			price:   "2000",
+			dirName: "finish.tikuvip（2020-2022）.51test.net/小升初", price: "2000",
 		},
 		{
-			dirName: "finish.tikuvip（2020-2022）.51test.net/成人高考",
-			format:  "pdf",
-			price:   "2000",
+			dirName: "finish.tikuvip（2020-2022）.51test.net/成人高考", price: "2000",
 		},
 		{
-			dirName: "finish.tikuvip（2020-2022）.51test.net/考研",
-			format:  "pdf",
-			price:   "2000",
+			dirName: "finish.tikuvip（2020-2022）.51test.net/考研", price: "2000",
 		},
 		{
-			dirName: "finish.tikuvip（2020-2022）.51test.net/自考",
-			format:  "pdf",
-			price:   "2000",
+			dirName: "finish.tikuvip（2020-2022）.51test.net/自考", price: "2000",
 		},
 		{
-			dirName: "finish.tikuvip（2020-2022）.51test.net/高中会考",
-			format:  "pdf",
-			price:   "2000",
+			dirName: "finish.tikuvip（2020-2022）.51test.net/高中会考", price: "2000",
 		},
 		{
-			dirName: "finish.tikuvip（2020-2022）.51test.net/高考",
-			format:  "pdf",
-			price:   "2000",
+			dirName: "finish.tikuvip（2020-2022）.51test.net/高考", price: "2000",
 		},
 		{
-			dirName: "finish.tikuvip（2023）.51test.net/专升本考试",
-			format:  "pdf",
-			price:   "2000",
+			dirName: "finish.tikuvip（2023）.51test.net/专升本考试", price: "2000",
 		},
 		{
-			dirName: "finish.tikuvip（2023）.51test.net/中考",
-			format:  "pdf",
-			price:   "2000",
+			dirName: "finish.tikuvip（2023）.51test.net/中考", price: "2000",
 		},
 		{
-			dirName: "finish.tikuvip（2023）.51test.net/小升初",
-			format:  "pdf",
-			price:   "2000",
+			dirName: "finish.tikuvip（2023）.51test.net/小升初", price: "2000",
 		},
 		{
-			dirName: "finish.tikuvip（2023）.51test.net/成人高考",
-			format:  "pdf",
-			price:   "2000",
+			dirName: "finish.tikuvip（2023）.51test.net/成人高考", price: "2000",
 		},
 		{
 			dirName: "finish.tikuvip（2023）.51test.net/考研",
-			format:  "pdf",
 			price:   "2000",
 		},
 		{
 			dirName: "finish.tikuvip（2023）.51test.net/自考",
-			format:  "pdf",
 			price:   "2000",
 		},
 		{
 			dirName: "finish.tikuvip（2023）.51test.net/高中会考",
-			format:  "pdf",
 			price:   "2000",
 		},
 		{
 			dirName: "finish.tikuvip（2023）.51test.net/高考",
-			format:  "pdf",
 			price:   "2000",
 		},
 		{
 			dirName: "finish.topedu.ybep.com.cn/中考真题",
-			format:  "pdf",
 			price:   "2000",
 		},
 		{
 			dirName: "finish.topedu.ybep.com.cn/高考真题",
-			format:  "pdf",
 			price:   "2000",
 		},
 		{
 			dirName: "finish.www.shijuan1.com/中考试卷",
-			format:  "pdf",
 			price:   "2000",
 		},
 		{
 			dirName: "finish.www.shijuan1.com/高考试卷",
-			format:  "pdf",
 			price:   "2000",
 		},
 		{
 			dirName: "docx.lvlin.baidu.com",
-			format:  "docx",
 			price:   "2000",
 		},
 		{
 			dirName: "finish.tikuvip-certification（2010-2011）.51test.net/二级建造师考试",
-			format:  "pdf", price: "2000",
+			price:   "2000",
 		},
 		{
 			dirName: "finish.tikuvip-certification（2010-2011）.51test.net/公务员考试",
-			format:  "pdf", price: "2000",
+			price:   "2000",
 		},
 		{
 			dirName: "finish.tikuvip-certification（2010-2011）.51test.net/教师招聘",
-			format:  "pdf", price: "2000",
+			price:   "2000",
 		},
 		{
 			dirName: "finish.tikuvip-certification（2010-2011）.51test.net/教师资格考试",
-			format:  "pdf", price: "2000",
+			price:   "2000",
 		},
 		{
 			dirName: "finish.tikuvip-certification（2010-2011）.51test.net/事业单位招聘",
-			format:  "pdf", price: "2000",
+			price:   "2000",
 		},
 		{
 			dirName: "finish.tikuvip-certification（2010-2011）.51test.net/一级建造师考试",
-			format:  "pdf", price: "2000",
+			price:   "2000",
 		},
 		{
 			dirName: "finish.tikuvip-certification（2010-2011）.51test.net/造价工程师考试",
-			format:  "pdf", price: "2000",
+			price:   "2000",
 		},
 		{
 			dirName: "finish.tikuvip-certification（2010-2011）.51test.net/证券从业资格考试",
-			format:  "pdf", price: "2000",
+			price:   "2000",
 		},
 		{
 			dirName: "finish.tikuvip-certification（2010-2011）.51test.net/注册安全工程师考试",
-			format:  "pdf", price: "2000",
+			price:   "2000",
 		},
 		{
 			dirName: "finish.tikuvip-certification（2012-2013）.51test.net/二级建造师考试",
-			format:  "pdf", price: "2000",
+			price:   "2000",
 		},
 		{
 			dirName: "finish.tikuvip-certification（2012-2013）.51test.net/公务员考试",
-			format:  "pdf", price: "2000",
+			price:   "2000",
 		},
 		{
 			dirName: "finish.tikuvip-certification（2012-2013）.51test.net/教师招聘",
-			format:  "pdf",
 			price:   "2000",
 		},
 		{
 			dirName: "finish.tikuvip-certification（2012-2013）.51test.net/教师资格考试",
-			format:  "pdf",
 			price:   "2000",
 		},
 		{
 			dirName: "finish.tikuvip-certification（2012-2013）.51test.net/事业单位招聘",
-			format:  "pdf",
 			price:   "2000",
 		},
 		{
 			dirName: "finish.tikuvip-certification（2012-2013）.51test.net/一级建造师考试",
-			format:  "pdf",
 			price:   "2000",
 		},
 		{
 			dirName: "finish.tikuvip-certification（2012-2013）.51test.net/造价工程师考试",
-			format:  "pdf",
 			price:   "2000",
 		},
 		{
 			dirName: "finish.tikuvip-certification（2012-2013）.51test.net/证券从业资格考试",
-			format:  "pdf",
 			price:   "2000",
 		},
 		{
 			dirName: "finish.tikuvip-certification（2012-2013）.51test.net/注册安全工程师考试",
-			format:  "pdf",
 			price:   "2000",
 		},
 		{
 			dirName: "finish.tikuvip-certification（2014-2015）.51test.net/二级建造师考试",
-			format:  "pdf",
 			price:   "2000",
 		},
 		{
 			dirName: "finish.tikuvip-certification（2014-2015）.51test.net/公务员考试",
-			format:  "pdf",
 			price:   "2000",
 		},
 		{
 			dirName: "finish.tikuvip-certification（2014-2015）.51test.net/教师招聘",
-			format:  "pdf",
 			price:   "2000",
 		},
 		{
 			dirName: "finish.tikuvip-certification（2014-2015）.51test.net/教师资格考试",
-			format:  "pdf",
 			price:   "2000",
 		},
 		{
 			dirName: "finish.tikuvip-certification（2014-2015）.51test.net/事业单位招聘",
-			format:  "pdf",
 			price:   "2000",
 		},
 		{
 			dirName: "finish.tikuvip-certification（2014-2015）.51test.net/消防工程师",
-			format:  "pdf",
 			price:   "2000",
 		},
 		{
 			dirName: "finish.tikuvip-certification（2014-2015）.51test.net/一级建造师考试",
-			format:  "pdf",
 			price:   "2000",
 		},
 		{
 			dirName: "finish.tikuvip-certification（2014-2015）.51test.net/造价工程师考试",
-			format:  "pdf",
 			price:   "2000",
 		},
 		{
 			dirName: "finish.tikuvip-certification（2014-2015）.51test.net/证券从业资格考试",
-			format:  "pdf",
 			price:   "2000",
 		},
 		{
 			dirName: "finish.tikuvip-certification（2014-2015）.51test.net/注册安全工程师考试",
-			format:  "pdf",
 			price:   "2000",
 		},
 		{
 			dirName: "finish.tikuvip-certification（2016-2017）.51test.net/二级建造师考试",
-			format:  "pdf",
 			price:   "2000",
 		},
 		{
 			dirName: "finish.tikuvip-certification（2016-2017）.51test.net/公务员考试",
-			format:  "pdf",
 			price:   "2000",
 		},
 		{
 			dirName: "finish.tikuvip-certification（2016-2017）.51test.net/教师招聘",
-			format:  "pdf",
 			price:   "2000",
 		},
 		{
 			dirName: "finish.tikuvip-certification（2016-2017）.51test.net/教师资格考试",
-			format:  "pdf",
 			price:   "2000",
 		},
 		{
 			dirName: "finish.tikuvip-certification（2016-2017）.51test.net/事业单位招聘",
-			format:  "pdf",
 			price:   "2000",
 		},
 		{
 			dirName: "finish.tikuvip-certification（2016-2017）.51test.net/消防工程师",
-			format:  "pdf",
 			price:   "2000",
 		},
 		{
 			dirName: "finish.tikuvip-certification（2016-2017）.51test.net/一级建造师考试",
-			format:  "pdf",
 			price:   "2000",
 		},
 		{
 			dirName: "finish.tikuvip-certification（2016-2017）.51test.net/造价工程师考试",
-			format:  "pdf",
 			price:   "2000",
 		},
 		{
 			dirName: "finish.tikuvip-certification（2016-2017）.51test.net/证券从业资格考试",
-			format:  "pdf",
 			price:   "2000",
 		},
 		{
 			dirName: "finish.tikuvip-certification（2016-2017）.51test.net/注册安全工程师考试",
-			format:  "pdf",
 			price:   "2000",
 		},
 		{
 			dirName: "finish.tikuvip-certification（2018-2019）.51test.net/二级建造师考试",
-			format:  "pdf",
 			price:   "2000",
 		},
 		{
 			dirName: "finish.tikuvip-certification（2018-2019）.51test.net/公务员考试",
-			format:  "pdf",
 			price:   "2000",
 		},
 		{
 			dirName: "finish.tikuvip-certification（2018-2019）.51test.net/教师招聘",
-			format:  "pdf",
 			price:   "2000",
 		},
 		{
 			dirName: "finish.tikuvip-certification（2018-2019）.51test.net/教师资格考试",
-			format:  "pdf",
 			price:   "2000",
 		},
 		{
 			dirName: "finish.tikuvip-certification（2018-2019）.51test.net/事业单位招聘",
-			format:  "pdf",
 			price:   "2000",
 		},
 		{
 			dirName: "finish.tikuvip-certification（2018-2019）.51test.net/消防工程师",
-			format:  "pdf",
 			price:   "2000",
 		},
 		{
 			dirName: "finish.tikuvip-certification（2018-2019）.51test.net/一级建造师考试",
-			format:  "pdf",
 			price:   "2000",
 		},
 		{
 			dirName: "finish.tikuvip-certification（2018-2019）.51test.net/造价工程师考试",
-			format:  "pdf",
 			price:   "2000",
 		},
 		{
 			dirName: "finish.tikuvip-certification（2018-2019）.51test.net/证券从业资格考试",
-			format:  "pdf",
 			price:   "2000",
 		},
 		{
 			dirName: "finish.tikuvip-certification（2018-2019）.51test.net/注册安全工程师考试",
-			format:  "pdf",
 			price:   "2000",
 		},
 		{
 			dirName: "finish.tikuvip-certification（2020-2022）.51test.net/二级建造师考试",
-			format:  "pdf",
 			price:   "2000",
 		},
 		{
 			dirName: "finish.tikuvip-certification（2020-2022）.51test.net/公务员考试",
-			format:  "pdf",
 			price:   "2000",
 		},
 		{
 			dirName: "finish.tikuvip-certification（2020-2022）.51test.net/教师招聘",
-			format:  "pdf",
 			price:   "2000",
 		},
 		{
 			dirName: "finish.tikuvip-certification（2020-2022）.51test.net/教师资格考试",
-			format:  "pdf",
 			price:   "2000",
 		},
 		{
 			dirName: "finish.tikuvip-certification（2020-2022）.51test.net/事业单位招聘",
-			format:  "pdf",
 			price:   "2000",
 		},
 		{
 			dirName: "finish.tikuvip-certification（2020-2022）.51test.net/消防工程师",
-			format:  "pdf",
 			price:   "2000",
 		},
 		{
 			dirName: "finish.tikuvip-certification（2020-2022）.51test.net/一级建造师考试",
-			format:  "pdf",
 			price:   "2000",
 		},
 		{
 			dirName: "finish.tikuvip-certification（2020-2022）.51test.net/造价工程师考试",
-			format:  "pdf",
 			price:   "2000",
 		},
 		{
 			dirName: "finish.tikuvip-certification（2020-2022）.51test.net/证券从业资格考试",
-			format:  "pdf",
 			price:   "2000",
 		},
 		{
 			dirName: "finish.tikuvip-certification（2020-2022）.51test.net/注册安全工程师考试",
-			format:  "pdf",
 			price:   "2000",
 		},
 		{
 			dirName: "finish.tikuvip-certification（2023）.51test.net/二级建造师考试",
-			format:  "pdf",
 			price:   "2000",
 		},
 		{
 			dirName: "finish.tikuvip-certification（2023）.51test.net/公务员考试",
-			format:  "pdf",
 			price:   "2000",
 		},
 		{
 			dirName: "finish.tikuvip-certification（2023）.51test.net/教师招聘",
-			format:  "pdf",
 			price:   "2000",
 		},
 		{
 			dirName: "finish.tikuvip-certification（2023）.51test.net/教师资格考试",
-			format:  "pdf",
 			price:   "2000",
 		},
 	}
@@ -991,9 +835,6 @@ func main() {
 			fileName := file.Name()
 			fileExt := path.Ext(fileName)
 			fileExt = strings.ReplaceAll(fileExt, ".", "")
-			if fileExt != childDir.format {
-				continue
-			}
 
 			filePath := childDirPath + fileName
 			fmt.Println(filePath)
@@ -1043,14 +884,14 @@ func main() {
 			fmt.Println(fileMD5)
 			fmt.Println(fileName)
 			// 验证是否可以上传
-			isAllowUpload, err := VerifyUploadDocument(fileName, childDir.format, price, fileMD5)
+			isAllowUpload, err := VerifyUploadDocument(fileName, fileExt, price, fileMD5)
 			if err != nil || isAllowUpload == false {
 				fmt.Printf("isAllowUpload = %t, err = %s", isAllowUpload, err)
 				break
 			}
 			fmt.Printf("isAllowUpload = %t\n", isAllowUpload)
 
-			title := strings.ReplaceAll(fileName, "."+childDir.format, "")
+			title := strings.ReplaceAll(fileName, "."+fileExt, "")
 			// 获取文档所属分类
 			systemCategory, err := GetDocCate(title)
 			if err != nil {
