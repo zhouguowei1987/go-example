@@ -126,7 +126,7 @@ func main() {
 						continue
 					}
 					fmt.Println("=======开始完成========")
-					time.Sleep(time.Millisecond * 200)
+					time.Sleep(time.Second * 2)
 				}
 			}
 			current++
