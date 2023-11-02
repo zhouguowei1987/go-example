@@ -46,6 +46,8 @@ var subjects = []ZZStepSubject{
 	},
 }
 
+var NextDownloadSleep = 60
+
 // ychEduSpider 获取中国教育出版网文档
 // @Title 获取中国教育出版网文档
 // @Description http://www2.zzstep.com/，获取中国教育出版网文档
@@ -126,7 +128,10 @@ func main() {
 						continue
 					}
 					fmt.Println("=======开始完成========")
-					time.Sleep(time.Second * 2)
+					for i := 1; i <= NextDownloadSleep; i++ {
+						time.Sleep(time.Second)
+						fmt.Println("===========操作结束，暂停", NextDownloadSleep, "秒，倒计时", i, "秒===========")
+					}
 				}
 			}
 			current++
