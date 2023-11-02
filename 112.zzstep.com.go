@@ -77,6 +77,26 @@ func main() {
 				fmt.Println("主题：", subject.name)
 				fmt.Println("=======当前页为：" + strconv.Itoa(current) + "========")
 
+				// 所需智币
+				pointsNode := htmlquery.FindOne(liNode, `./div[@class="btn-item fn-left"]/div[@class="money fn-pt10"]`)
+				if pointsNode == nil {
+					fmt.Println("没有智币div")
+					continue
+				}
+				pointsText := htmlquery.InnerText(pointsNode)
+				fmt.Println(pointsText)
+				pointsText = strings.ReplaceAll(pointsText, "智币", "")
+
+				points, err := strconv.Atoi(pointsText)
+				if err != nil {
+					fmt.Println(err)
+					continue
+				}
+				if points > 0 {
+					fmt.Println("需要智币下载", points)
+					continue
+				}
+
 				fileName := htmlquery.InnerText(htmlquery.FindOne(liNode, `./div[@class="zy-box fn-left"]/div[@class="subject-t"]/a`))
 				fileName = strings.TrimSpace(fileName)
 				fileName = strings.ReplaceAll(fileName, "/", "-")
@@ -86,33 +106,26 @@ func main() {
 				fileName = strings.ReplaceAll(fileName, "）", ")")
 				fmt.Println(fileName)
 
-				filePath := "../www2.zzstep.com/www2.zzstep.com/" + subject.name + "/" + fileName
-				_, errDoc := os.Stat(filePath + ".doc")
-				_, errDocx := os.Stat(filePath + ".docx")
-				_, errPdf := os.Stat(filePath + ".pdf")
-				_, errPpt := os.Stat(filePath + ".ppt")
-				_, errPptx := os.Stat(filePath + ".pptx")
-				if errDoc != nil && errDocx != nil && errPdf != nil && errPpt != nil && errPptx != nil {
+				// 文件类型
+				fileExtTextNode := htmlquery.FindOne(liNode, `./div[@class="filetype fn-pl10 fn-left"]/img/@src`)
+				if fileExtTextNode == nil {
+					fmt.Println("未知文件类型")
+					continue
+				}
+				fileExtText := htmlquery.InnerText(fileExtTextNode)
+				fileExtText = strings.ReplaceAll(fileExtText, "/public/front/images/", "")
+				fileExt := ""
+				switch fileExtText {
+				case "typeicon-pptx.png":
+					fileExt = ".pptx"
+				case "typeicon-word.png":
+					fileExt = ".doc"
+				case "typeicon-pdf.png":
+					fileExt = ".pdf"
+				}
 
-					// 所需智币
-					pointsNode := htmlquery.FindOne(liNode, `./div[@class="btn-item fn-left"]/div[@class="money fn-pt10"]`)
-					if pointsNode == nil {
-						fmt.Println("没有智币div")
-						continue
-					}
-					pointsText := htmlquery.InnerText(pointsNode)
-					fmt.Println(pointsText)
-					pointsText = strings.ReplaceAll(pointsText, "智币", "")
-
-					points, err := strconv.Atoi(pointsText)
-					if err != nil {
-						fmt.Println(err)
-						continue
-					}
-					if points > 0 {
-						fmt.Println("需要智币下载", points)
-						continue
-					}
+				filePath := "../www2.zzstep.com/www2.zzstep.com/" + subject.name + "/" + fileName + fileExt
+				if _, err := os.Stat(filePath); err != nil {
 
 					viewUrl := "http://www2.zzstep.com" + htmlquery.InnerText(htmlquery.FindOne(liNode, `./div[@class="zy-box fn-left"]/div[@class="subject-t"]/a/@href`))
 					fmt.Println(viewUrl)
@@ -180,16 +193,6 @@ func downloadZZStep(attachmentUrl string, referer string, filePath string) error
 	if err != nil {
 		return err
 	}
-	// 检查HTTP响应头中的Content-Disposition字段获取文件名和后缀
-	fileName := getZZStepFileNameFromHeader(resp)
-	fileExtension := filepath.Ext(fileName) // 获取文件后缀
-	fileExtArr := []string{".doc", ".docx", ".pdf", ".ppt", ".pptx"}
-	fmt.Println("文件后缀:", fileExtension)
-	if !StrInArrayZZStep(fileExtension, fileExtArr) {
-		return errors.New("文件后缀：" + fileExtension + "不在下载后缀列表")
-	}
-	filePath += fileExtension
-
 	defer resp.Body.Close()
 	// 如果访问失败，就打印当前状态码
 	if resp.StatusCode != http.StatusOK {
@@ -215,38 +218,4 @@ func downloadZZStep(attachmentUrl string, referer string, filePath string) error
 		return err
 	}
 	return nil
-}
-
-// StrInArrayZZStep str in string list
-func StrInArrayZZStep(str string, data []string) bool {
-	if len(data) > 0 {
-		for _, row := range data {
-			if str == row {
-				return true
-			}
-		}
-	}
-	return false
-}
-
-// 从HTTP响应头中获取文件名
-func getZZStepFileNameFromHeader(resp *http.Response) string {
-	contentDisposition := resp.Header.Get("Content-Disposition")
-	fileName := ""
-	if contentDisposition != "" {
-		fileName = parseZZStepFileNameFromContentDisposition(contentDisposition)
-	} else {
-		fileName = filepath.Base(resp.Request.URL.Path) // 默认使用URL中的文件名作为本地文件名
-	}
-	return fileName
-}
-
-// 从Content-Disposition字段中解析文件名
-func parseZZStepFileNameFromContentDisposition(contentDisposition string) string {
-	// 参考：https://tools.ietf.org/html/rfc6266#section-4.3
-	// 示例：attachment; filename="example.txt" -> example.txt
-	fileNameStart := len("attachment; ") + len("filename=") + 2 // 2为引号的长度
-	fileNameEnd := len(contentDisposition) - 1 - len("\"")      // 最后一个双引号的位置
-	fileName := contentDisposition[fileNameStart:fileNameEnd]   // 提取文件名字符串
-	return fileName[1:]                                         // 去掉字符串开头的引号（如果存在）并返回结果
 }
