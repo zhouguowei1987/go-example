@@ -106,27 +106,13 @@ func main() {
 				fileName = strings.ReplaceAll(fileName, "）", ")")
 				fmt.Println(fileName)
 
-				// 文件类型
-				fileExtTextNode := htmlquery.FindOne(liNode, `./div[@class="filetype fn-pl10 fn-left"]/img/@src`)
-				if fileExtTextNode == nil {
-					fmt.Println("未知文件类型")
-					continue
-				}
-				fileExtText := htmlquery.InnerText(fileExtTextNode)
-				fileExtText = strings.ReplaceAll(fileExtText, "/public/front/images/", "")
-				fileExt := ""
-				switch fileExtText {
-				case "typeicon-pptx.png":
-					fileExt = ".pptx"
-				case "typeicon-word.png":
-					fileExt = ".doc"
-				case "typeicon-pdf.png":
-					fileExt = ".pdf"
-				}
-
-				filePath := "../www2.zzstep.com/www2.zzstep.com/" + subject.name + "/" + fileName + fileExt
-				if _, err := os.Stat(filePath); err != nil {
-
+				filePath := "../www2.zzstep.com/www2.zzstep.com/" + subject.name + "/" + fileName
+				_, errDoc := os.Stat(filePath + ".doc")
+				_, errDocx := os.Stat(filePath + ".docx")
+				_, errPdf := os.Stat(filePath + ".pdf")
+				_, errPpt := os.Stat(filePath + ".ppt")
+				_, errPptx := os.Stat(filePath + ".pptx")
+				if errDoc != nil && errDocx != nil && errPdf != nil && errPpt != nil && errPptx != nil {
 					viewUrl := "http://www2.zzstep.com" + htmlquery.InnerText(htmlquery.FindOne(liNode, `./div[@class="zy-box fn-left"]/div[@class="subject-t"]/a/@href`))
 					fmt.Println(viewUrl)
 
@@ -175,7 +161,7 @@ func downloadZZStep(attachmentUrl string, referer string, filePath string) error
 	}
 
 	req.Header.Set("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7")
-	req.Header.Set("Accept-Encoding", "gzip, deflate, br")
+	//req.Header.Set("Accept-Encoding", "gzip, deflate, br")
 	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
 	req.Header.Set("Connection", "keep-alive")
 	req.Header.Set("Cookie", "Hm_lvt_5d656a0b54535a39b1d88c84eff1725b=1698895516; Hm_lvt_9ae1d642b9883edd826f2ab064acca42=1698895516; Hm_lpvt_9ae1d642b9883edd826f2ab064acca42=1698895516; _gid=GA1.2.984765213.1698895517; PHPSESSID=vi3fonoud5hfs64uhfl14igbe6; looyu_id=b5bb11a3b0417fef9dd5f810fbf2490a_20002564%3A1; Hm_lvt_e22ffa3ceb40ebd886ecaaa1c24eb75d=1698895608; zzstep_front_user=%00l%0BoWfTd%5CcWl%07a%073_lR0%060%5C%3AV2R%3C%07%7BRs%03eW0%01%3A%04%26%0CvQ3Qc%0D%2B%05%3DWl%04i%01iQ1%04bQfR4%00m%0BoWmT%27%5CiWd%07k%07%21_2Ri%062%5CkVhRg%07mRe%03%7DW8%01s%04%3E%0C4Q%60Q%25%0D~%05iW%7C%04%3C%01%3EQd%04%3FQtR%3B%00%2F%0BeWnTn%5CqW%29%07%22%07f_.Rn%060%5CmVcR%24%07%3BRs%03eW4%01%3A%04%26%0CtQ5Q~%0Df%05eW%60%04%3C%01%7FQ%3A%04%23QlR1%00l%0BeWtT8%5C%3CW%3B%078%07m_%3ERy%06%3F%5CeVqR%24%07%3BRs%03eW0%01%3A%04%26%0CzQ%3FQt%0D%2B%05%3DWx; zzstep_front_user=%00l%0BoWfTd%5CcWl%07a%073_lR0%060%5C%3AV2R%3C%07%7BRs%03eW0%01%3A%04%26%0CvQ3Qc%0D%2B%05%3DWl%04i%01iQ1%04bQfR4%00m%0BoWmT%27%5CiWd%07k%07%21_2Ri%062%5CkVhRg%07mRe%03%7DW8%01s%04%3E%0C4Q%60Q%25%0D~%05iW%7C%04%3C%01%3EQd%04%3FQtR%3B%00%2F%0BeWnTn%5CqW%29%07%22%07f_.Rn%060%5CmVcR%24%07%3BRs%03eW4%01%3A%04%26%0CtQ5Q~%0Df%05eW%60%04%3C%01%7FQ%3A%04%23QlR1%00l%0BeWtT8%5C%3CW%3B%078%07m_%3ERy%06%3F%5CeVqR%24%07%3BRs%03eW0%01%3A%04%26%0CzQ%3FQt%0D%2B%05%3DWx; cdb_cookietime=2592000; cdb_compound=125fKNxjJ0Yu7P0bWizIi6gsjxCykiPLWjj92G%2B5gdnsfpjVmHeUzzU90KiqA6twi6gWTHPVh0KEiyq6q9VXnxJ8Yl%2BPtNpoiXMsLP4; cdb_auth=WD9oxt44J7UbP6XkHjVrUtYFMB%2BIc16P1UGtNnbgyYUtf2aSNdXIXh7SbN8hxh2Hww; _99_mon=%5B0%2C0%2C0%5D; zzstep_front_select=%7B%22studysection%22%3A204%2C%22subject%22%3A29%7D; Hm_lpvt_5d656a0b54535a39b1d88c84eff1725b=1698904799; Hm_lpvt_e22ffa3ceb40ebd886ecaaa1c24eb75d=1698904799; _ga=GA1.1.467709127.1698895517; looyu_20002564=v%3Ab5bb11a3b0417fef9dd5f810fbf2490a%2Cref%3A%2Cr%3A%2Cmon%3A//m6816.talk99.cn/monitor%2Cp0%3Ahttp%253A//www.zzstep.com/; _ga_34B604LFFQ=GS1.1.1698901583.2.1.1698905996.60.0.0")
@@ -194,6 +180,15 @@ func downloadZZStep(attachmentUrl string, referer string, filePath string) error
 	if err != nil {
 		return err
 	}
+	// 检查HTTP响应头中的Content-Disposition字段获取文件名和后缀
+	fileName := getZZStepFileNameFromHeader(resp)
+	fileExtension := filepath.Ext(fileName) // 获取文件后缀
+	fileExtArr := []string{".doc", ".docx", ".pdf", ".ppt", ".pptx"}
+	fmt.Println("文件后缀:", fileExtension)
+	if !StrInArrayZZStep(fileExtension, fileExtArr) {
+		return errors.New("文件后缀：" + fileExtension + "不在下载后缀列表")
+	}
+	filePath += fileExtension
 	defer resp.Body.Close()
 	// 如果访问失败，就打印当前状态码
 	if resp.StatusCode != http.StatusOK {
@@ -219,4 +214,38 @@ func downloadZZStep(attachmentUrl string, referer string, filePath string) error
 		return err
 	}
 	return nil
+}
+
+// StrInArrayZZStep str in string list
+func StrInArrayZZStep(str string, data []string) bool {
+	if len(data) > 0 {
+		for _, row := range data {
+			if str == row {
+				return true
+			}
+		}
+	}
+	return false
+}
+
+// 从HTTP响应头中获取文件名
+func getZZStepFileNameFromHeader(resp *http.Response) string {
+	contentDisposition := resp.Header.Get("Content-Disposition")
+	fileName := ""
+	if contentDisposition != "" {
+		fileName = parseZZStepFileNameFromContentDisposition(contentDisposition)
+	} else {
+		fileName = filepath.Base(resp.Request.URL.Path) // 默认使用URL中的文件名作为本地文件名
+	}
+	return fileName
+}
+
+// 从Content-Disposition字段中解析文件名
+func parseZZStepFileNameFromContentDisposition(contentDisposition string) string {
+	// 参考：https://tools.ietf.org/html/rfc6266#section-4.3
+	// 示例：attachment; filename="example.txt" -> example.txt
+	fileNameStart := len("attachment; ") + len("filename=") + 1
+	fileNameEnd := len(contentDisposition) - 1
+	fileName := contentDisposition[fileNameStart:fileNameEnd] // 提取文件名字符串
+	return fileName[:]                                        // 去掉字符串开头的引号（如果存在）并返回结果
 }
