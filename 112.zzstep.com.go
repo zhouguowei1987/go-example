@@ -19,6 +19,7 @@ import (
 )
 
 var ZZStepEnableHttpProxy = true
+var ZZStepHttpProxyUrl = ""
 var ZZStepHttpProxyUrlArr = make([]string, 0)
 
 func ZZStepHttpProxy() error {
@@ -60,14 +61,22 @@ func ZZStepHttpProxy() error {
 }
 
 func ZZStepSetHttpProxy() (httpclient *http.Client) {
-	if len(ZZStepHttpProxyUrlArr) <= 0 {
-		err := ZZStepHttpProxy()
-		if err != nil {
-			ZZStepSetHttpProxy()
+	if ZZStepHttpProxyUrl == "" {
+		if len(ZZStepHttpProxyUrlArr) <= 0 {
+			err := ZZStepHttpProxy()
+			if err != nil {
+				ZZStepSetHttpProxy()
+			}
+		}
+		ZZStepHttpProxyUrl = ZZStepHttpProxyUrlArr[0]
+		if len(ZZStepHttpProxyUrlArr) >= 2 {
+			ZZStepHttpProxyUrlArr = ZZStepHttpProxyUrlArr[1:]
+		} else {
+			ZZStepHttpProxyUrlArr = make([]string, 0)
 		}
 	}
-	ZZStepHttpProxyUrl := ZZStepHttpProxyUrlArr[0]
-	ZZStepHttpProxyUrlArr = ZZStepHttpProxyUrlArr[1:]
+
+	fmt.Println(ZZStepHttpProxyUrl)
 
 	ProxyURL, _ := url.Parse(ZZStepHttpProxyUrl)
 	httpclient = &http.Client{
@@ -479,11 +488,6 @@ var ZZStepCookie = ""
 // @Title 获取中国教育出版网文档
 // @Description http://www2.zzstep.com/，获取中国教育出版网文档
 func main() {
-	// 首先注册登陆新账号
-	err := ZZStepProxyRegisterLoginUsername()
-	if err != nil {
-		return
-	}
 	for _, studySection := range studySectionSubjectsPapers {
 		for _, subject := range studySection.subjects {
 			for _, paper := range subject.papers {
@@ -509,7 +513,7 @@ func main() {
 					for _, liNode := range liNodes {
 						fmt.Println("============================================================================")
 						fmt.Println("主题：", subject.name)
-						fmt.Println("=======当前页URL" + subjectIndexUrl + "========")
+						fmt.Println("=======当前页URL", subjectIndexUrl, "========")
 
 						// 所需智币
 						pointsNode := htmlquery.FindOne(liNode, `./div[@class="btn-item fn-left"]/div[@class="money fn-pt10"]`)
@@ -574,6 +578,8 @@ func main() {
 								//注册登陆新账号
 								err = ZZStepProxyRegisterLoginUsername()
 								if err != nil {
+									// 将代理清空，重新获取
+									ZZStepHttpProxyUrl = ""
 									fmt.Println(err)
 								}
 								eachUsernameDownloadCurrentCount = 0
@@ -588,6 +594,8 @@ func main() {
 								//注册登陆新账号
 								err = ZZStepProxyRegisterLoginUsername()
 								if err != nil {
+									// 将代理清空，重新获取
+									ZZStepHttpProxyUrl = ""
 									fmt.Println(err)
 								}
 								eachUsernameDownloadCurrentCount = 0
