@@ -19,8 +19,8 @@ import (
 )
 
 const (
-	ZZStepEnableHttpProxy = false
-	ZZStepHttpProxyUrl    = "111.225.152.186:8089"
+	ZZStepEnableHttpProxy = true
+	ZZStepHttpProxyUrl    = "http://115.29.148.215:8999"
 )
 
 func ZZStepSetHttpProxy() (httpclient *http.Client) {
