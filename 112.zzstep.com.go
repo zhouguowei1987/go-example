@@ -109,7 +109,7 @@ func main() {
 				}
 				fileExtText := htmlquery.InnerText(fileExtTextNode)
 				fileExtText = strings.ReplaceAll(fileExtText, "/public/front/images/", "")
-				if fileExtText != "typeicon-word.png" && fileExtText != "typeicon-pdf.png" {
+				if fileExtText != "typeicon-word.png" {
 					fmt.Println(fileExtText, "不在下载后缀列表")
 					continue
 				}
@@ -126,8 +126,7 @@ func main() {
 				filePath := "../www2.zzstep.com/www2.zzstep.com/" + subject.name + "/" + fileName
 				_, errDoc := os.Stat(filePath + ".doc")
 				_, errDocx := os.Stat(filePath + ".docx")
-				_, errPdf := os.Stat(filePath + ".pdf")
-				if errDoc != nil && errDocx != nil && errPdf != nil {
+				if errDoc != nil && errDocx != nil {
 					viewUrl := "http://www2.zzstep.com" + htmlquery.InnerText(htmlquery.FindOne(liNode, `./div[@class="zy-box fn-left"]/div[@class="subject-t"]/a/@href`))
 					fmt.Println(viewUrl)
 
@@ -201,7 +200,7 @@ func downloadZZStep(attachmentUrl string, referer string, filePath string) error
 	// 检查HTTP响应头中的Content-Disposition字段获取文件名和后缀
 	fileName := getZZStepFileNameFromHeader(resp)
 	fileExtension := filepath.Ext(fileName) // 获取文件后缀
-	fileExtArr := []string{".doc", ".docx", ".pdf"}
+	fileExtArr := []string{".doc", ".docx"}
 	fmt.Println("文件后缀:", fileExtension)
 	if !StrInArrayZZStep(fileExtension, fileExtArr) {
 		return errors.New("文件后缀：" + fileExtension + "不在下载后缀列表")
