@@ -101,6 +101,19 @@ func main() {
 					continue
 				}
 
+				// 当前文件类型
+				fileExtTextNode := htmlquery.FindOne(liNode, `./div[@class="filetype fn-pl10 fn-left"]/img/@src`)
+				if fileExtTextNode == nil {
+					fmt.Println("没有文件类型div")
+					continue
+				}
+				fileExtText := htmlquery.InnerText(fileExtTextNode)
+				fileExtText = strings.ReplaceAll(fileExtText, "/public/front/images/", "")
+				if fileExtText != "typeicon-word.png" && fileExtText != "typeicon-pdf.png" {
+					fmt.Println(fileExtText, "不在下载后缀列表")
+					continue
+				}
+
 				fileName := htmlquery.InnerText(htmlquery.FindOne(liNode, `./div[@class="zy-box fn-left"]/div[@class="subject-t"]/a`))
 				fileName = strings.TrimSpace(fileName)
 				fileName = strings.ReplaceAll(fileName, "/", "-")
