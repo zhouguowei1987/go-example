@@ -20,7 +20,7 @@ import (
 
 const (
 	ZZStepEnableHttpProxy = true
-	ZZStepHttpProxyUrl    = "http://120.197.219.82:9091"
+	ZZStepHttpProxyUrl    = "http://182.106.220.252:9091"
 )
 
 func ZZStepSetHttpProxy() (httpclient *http.Client) {
@@ -41,11 +41,15 @@ type ZZStepSubject struct {
 var subjects = []ZZStepSubject{
 	{
 		name: "试卷",
-		url:  "http://www2.zzstep.com/front/paper/index.html",
+		url:  "http://www2.zzstep.com/front/paper/index.html?studysection=204&subject=29&page=1",
 	},
 	{
 		name: "中考",
-		url:  "http://www2.zzstep.com/front/beikao/index.html",
+		url:  "http://www2.zzstep.com/front/beikao/index.html?studysection=204&subject=29&page=1",
+	},
+	{
+		name: "高考",
+		url:  "http://www2.zzstep.com/front/beikao/index.html?studysection=205&subject=29&page=1",
 	},
 }
 
@@ -78,9 +82,7 @@ func main() {
 		isPageListGo := true
 		for isPageListGo {
 			subjectIndexUrl := subject.url
-			if current > 1 {
-				subjectIndexUrl += fmt.Sprintf("?studysection=204&subject=29&page=%d", current)
-			}
+			subjectIndexUrl = strings.ReplaceAll(subjectIndexUrl, "page=1", "page="+strconv.Itoa(current))
 			subjectIndexDoc, err := htmlquery.LoadURL(subjectIndexUrl)
 			if err != nil {
 				fmt.Println(err)
@@ -98,7 +100,7 @@ func main() {
 			for _, liNode := range liNodes {
 				fmt.Println("============================================================================")
 				fmt.Println("主题：", subject.name)
-				fmt.Println("=======当前页为：" + strconv.Itoa(current) + "========")
+				fmt.Println("=======当前页URL" + subjectIndexUrl + "========")
 
 				// 所需智币
 				pointsNode := htmlquery.FindOne(liNode, `./div[@class="btn-item fn-left"]/div[@class="money fn-pt10"]`)
