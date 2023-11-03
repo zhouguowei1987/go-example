@@ -20,7 +20,7 @@ import (
 
 const (
 	ZZStepEnableHttpProxy = true
-	ZZStepHttpProxyUrl    = "http://182.106.220.252:9091"
+	ZZStepHttpProxyUrl    = "http://101.35.85.240:8080"
 )
 
 func ZZStepSetHttpProxy() (httpclient *http.Client) {
@@ -33,27 +33,389 @@ func ZZStepSetHttpProxy() (httpclient *http.Client) {
 	return httpclient
 }
 
-type ZZStepSubject struct {
+type ZZStepPaper struct {
 	name string
 	url  string
 }
 
-var subjects = []ZZStepSubject{
+type ZZStepSubject struct {
+	name   string
+	id     int
+	papers []ZZStepPaper
+}
+
+type ZZStepStudySectionSubjectsPapers struct {
+	name     string
+	id       int
+	subjects []ZZStepSubject
+}
+
+var studySectionSubjectsPapers = []ZZStepStudySectionSubjectsPapers{
 	{
-		name: "试卷",
-		url:  "http://www2.zzstep.com/front/paper/index.html?studysection=204&subject=29&page=1",
+		name: "小学",
+		subjects: []ZZStepSubject{
+			{
+				name: "语文",
+				papers: []ZZStepPaper{
+					{
+						name: "试卷",
+						url:  "http://www2.zzstep.com/front/paper/index.html?studysection=203&subject=29&page=1",
+					},
+				},
+			},
+			{
+				name: "数学",
+				papers: []ZZStepPaper{
+					{
+						name: "试卷",
+						url:  "http://www2.zzstep.com/front/paper/index.html?studysection=203&subject=30&page=1",
+					},
+				},
+			},
+			{
+				name: "英语",
+				papers: []ZZStepPaper{
+					{
+						name: "试卷",
+						url:  "http://www2.zzstep.com/front/paper/index.html?studysection=203&subject=31&page=1",
+					},
+				},
+			},
+			{
+				name: "道德与法治",
+				papers: []ZZStepPaper{
+					{
+						name: "试卷",
+						url:  "http://www2.zzstep.com/front/paper/index.html?studysection=203&subject=34&page=1",
+					},
+				},
+			},
+			{
+				name: "道德与法治",
+				papers: []ZZStepPaper{
+					{
+						name: "试卷",
+						url:  "http://www2.zzstep.com/front/paper/index.html?studysection=203&subject=34&page=1",
+					},
+				},
+			},
+			{
+				name: "音乐",
+				papers: []ZZStepPaper{
+					{
+						name: "试卷",
+						url:  "http://www2.zzstep.com/front/paper/index.html?studysection=203&subject=41&page=1",
+					},
+				},
+			},
+			{
+				name: "美术",
+				papers: []ZZStepPaper{
+					{
+						name: "试卷",
+						url:  "http://www2.zzstep.com/front/paper/index.html?studysection=203&subject=42&page=1",
+					},
+				},
+			},
+			{
+				name: "信息技术",
+				papers: []ZZStepPaper{
+					{
+						name: "试卷",
+						url:  "http://www2.zzstep.com/front/paper/index.html?studysection=203&subject=43&page=1",
+					},
+				},
+			},
+		},
 	},
+
 	{
-		name: "中考",
-		url:  "http://www2.zzstep.com/front/beikao/index.html?studysection=204&subject=29&page=1",
+		name: "初中",
+		subjects: []ZZStepSubject{
+			{
+				name: "语文",
+				papers: []ZZStepPaper{
+					{
+						name: "试卷",
+						url:  "http://www2.zzstep.com/front/paper/index.html?studysection=204&subject=29&page=1",
+					},
+					{
+						name: "中考",
+						url:  "http://www2.zzstep.com/front/beikao/index.html?studysection=204&subject=29&page=1",
+					},
+				},
+			},
+			{
+				name: "数学",
+				papers: []ZZStepPaper{
+					{
+						name: "试卷",
+						url:  "http://www2.zzstep.com/front/paper/index.html?studysection=204&subject=30&page=1",
+					},
+					{
+						name: "中考",
+						url:  "http://www2.zzstep.com/front/beikao/index.html?studysection=204&subject=30&page=1",
+					},
+				},
+			},
+			{
+				name: "英语",
+				papers: []ZZStepPaper{
+					{
+						name: "试卷",
+						url:  "http://www2.zzstep.com/front/paper/index.html?studysection=204&subject=31&page=1",
+					},
+					{
+						name: "中考",
+						url:  "http://www2.zzstep.com/front/beikao/index.html?studysection=204&subject=31&page=1",
+					},
+				},
+			},
+			{
+				name: "物理",
+				papers: []ZZStepPaper{
+					{
+						name: "试卷",
+						url:  "http://www2.zzstep.com/front/paper/index.html?studysection=204&subject=32&page=1",
+					},
+					{
+						name: "中考",
+						url:  "http://www2.zzstep.com/front/beikao/index.html?studysection=204&subject=32&page=1",
+					},
+				},
+			},
+			{
+				name: "化学",
+				papers: []ZZStepPaper{
+					{
+						name: "试卷",
+						url:  "http://www2.zzstep.com/front/paper/index.html?studysection=204&subject=33&page=1",
+					},
+					{
+						name: "中考",
+						url:  "http://www2.zzstep.com/front/beikao/index.html?studysection=204&subject=33&page=1",
+					},
+				},
+			},
+			{
+				name: "生物",
+				papers: []ZZStepPaper{
+					{
+						name: "试卷",
+						url:  "http://www2.zzstep.com/front/paper/index.html?studysection=204&subject=37&page=1",
+					},
+					{
+						name: "中考",
+						url:  "http://www2.zzstep.com/front/beikao/index.html?studysection=204&subject=37&page=1",
+					},
+				},
+			},
+			{
+				name: "道德与法治",
+				papers: []ZZStepPaper{
+					{
+						name: "试卷",
+						url:  "http://www2.zzstep.com/front/paper/index.html?studysection=204&subject=34&page=1",
+					},
+					{
+						name: "中考",
+						url:  "http://www2.zzstep.com/front/beikao/index.html?studysection=204&subject=34&page=1",
+					},
+				},
+			},
+			{
+				name: "历史",
+				papers: []ZZStepPaper{
+					{
+						name: "试卷",
+						url:  "http://www2.zzstep.com/front/paper/index.html?studysection=204&subject=35&page=1",
+					},
+					{
+						name: "中考",
+						url:  "http://www2.zzstep.com/front/beikao/index.html?studysection=204&subject=35&page=1",
+					},
+				},
+			},
+			{
+				name: "地理",
+				papers: []ZZStepPaper{
+					{
+						name: "试卷",
+						url:  "http://www2.zzstep.com/front/paper/index.html?studysection=204&subject=36&page=1",
+					},
+					{
+						name: "中考",
+						url:  "http://www2.zzstep.com/front/beikao/index.html?studysection=204&subject=36&page=1",
+					},
+				},
+			},
+			{
+				name: "音乐",
+				papers: []ZZStepPaper{
+					{
+						name: "试卷",
+						url:  "http://www2.zzstep.com/front/paper/index.html?studysection=204&subject=41&page=1",
+					},
+					{
+						name: "中考",
+						url:  "http://www2.zzstep.com/front/beikao/index.html?studysection=204&subject=41&page=1",
+					},
+				},
+			},
+			{
+				name: "美术",
+				papers: []ZZStepPaper{
+					{
+						name: "试卷",
+						url:  "http://www2.zzstep.com/front/paper/index.html?studysection=204&subject=42&page=1",
+					},
+					{
+						name: "中考",
+						url:  "http://www2.zzstep.com/front/beikao/index.html?studysection=204&subject=42&page=1",
+					},
+				},
+			},
+			{
+				name: "信息技术",
+				papers: []ZZStepPaper{
+					{
+						name: "试卷",
+						url:  "http://www2.zzstep.com/front/paper/index.html?studysection=204&subject=43&page=1",
+					},
+					{
+						name: "中考",
+						url:  "http://www2.zzstep.com/front/beikao/index.html?studysection=204&subject=43&page=1",
+					},
+				},
+			},
+		},
 	},
+
 	{
-		name: "高考",
-		url:  "http://www2.zzstep.com/front/beikao/index.html?studysection=205&subject=29&page=1",
+		name: "高中",
+		subjects: []ZZStepSubject{
+			{
+				name: "语文",
+				papers: []ZZStepPaper{
+					{
+						name: "试卷",
+						url:  "http://www2.zzstep.com/front/paper/index.html?studysection=205&subject=29&page=1",
+					},
+					{
+						name: "高考",
+						url:  "http://www2.zzstep.com/front/beikao/index.html?studysection=205&subject=29&page=1",
+					},
+				},
+			},
+			{
+				name: "数学",
+				papers: []ZZStepPaper{
+					{
+						name: "试卷",
+						url:  "http://www2.zzstep.com/front/paper/index.html?studysection=205&subject=30&page=1",
+					},
+					{
+						name: "高考",
+						url:  "http://www2.zzstep.com/front/beikao/index.html?studysection=205&subject=30&page=1",
+					},
+				},
+			},
+			{
+				name: "英语",
+				papers: []ZZStepPaper{
+					{
+						name: "试卷",
+						url:  "http://www2.zzstep.com/front/paper/index.html?studysection=205&subject=31&page=1",
+					},
+					{
+						name: "高考",
+						url:  "http://www2.zzstep.com/front/beikao/index.html?studysection=205&subject=31&page=1",
+					},
+				},
+			},
+			{
+				name: "物理",
+				papers: []ZZStepPaper{
+					{
+						name: "试卷",
+						url:  "http://www2.zzstep.com/front/paper/index.html?studysection=205&subject=32&page=1",
+					},
+					{
+						name: "高考",
+						url:  "http://www2.zzstep.com/front/beikao/index.html?studysection=205&subject=32&page=1",
+					},
+				},
+			},
+			{
+				name: "化学",
+				papers: []ZZStepPaper{
+					{
+						name: "试卷",
+						url:  "http://www2.zzstep.com/front/paper/index.html?studysection=205&subject=33&page=1",
+					},
+					{
+						name: "高考",
+						url:  "http://www2.zzstep.com/front/beikao/index.html?studysection=205&subject=33&page=1",
+					},
+				},
+			},
+			{
+				name: "生物",
+				papers: []ZZStepPaper{
+					{
+						name: "试卷",
+						url:  "http://www2.zzstep.com/front/paper/index.html?studysection=205&subject=37&page=1",
+					},
+					{
+						name: "高考",
+						url:  "http://www2.zzstep.com/front/beikao/index.html?studysection=205&subject=37&page=1",
+					},
+				},
+			},
+			{
+				name: "政治",
+				papers: []ZZStepPaper{
+					{
+						name: "试卷",
+						url:  "http://www2.zzstep.com/front/paper/index.html?studysection=205&subject=34&page=1",
+					},
+					{
+						name: "高考",
+						url:  "http://www2.zzstep.com/front/beikao/index.html?studysection=205&subject=34&page=1",
+					},
+				},
+			},
+			{
+				name: "历史",
+				papers: []ZZStepPaper{
+					{
+						name: "试卷",
+						url:  "http://www2.zzstep.com/front/paper/index.html?studysection=205&subject=35&page=1",
+					},
+					{
+						name: "高考",
+						url:  "http://www2.zzstep.com/front/beikao/index.html?studysection=205&subject=35&page=1",
+					},
+				},
+			},
+			{
+				name: "地理",
+				papers: []ZZStepPaper{
+					{
+						name: "试卷",
+						url:  "http://www2.zzstep.com/front/paper/index.html?studysection=205&subject=36&page=1",
+					},
+					{
+						name: "高考",
+						url:  "http://www2.zzstep.com/front/beikao/index.html?studysection=205&subject=36&page=1",
+					},
+				},
+			},
+		},
 	},
 }
 
-var NextDownloadSleep = 60
+var NextDownloadSleep = 10
 
 var randStringLength = 8
 
@@ -63,7 +425,7 @@ const letterBytes = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456
 var eachUsernameDownloadCurrentCount = 0
 
 // 每个账号最大下载数量
-var eachUsernameDownloadMaxCount = 80
+var eachUsernameDownloadMaxCount = 200
 var password = "123456"
 var refer = "http://www.zzstep.com/"
 var ZZStepCookie = ""
@@ -77,115 +439,121 @@ func main() {
 	if err != nil {
 		return
 	}
-	for _, subject := range subjects {
-		current := 1
-		isPageListGo := true
-		for isPageListGo {
-			subjectIndexUrl := subject.url
-			subjectIndexUrl = strings.ReplaceAll(subjectIndexUrl, "page=1", "page="+strconv.Itoa(current))
-			subjectIndexDoc, err := htmlquery.LoadURL(subjectIndexUrl)
-			if err != nil {
-				fmt.Println(err)
-				current = 1
-				isPageListGo = false
-				continue
-			}
-			liNodes := htmlquery.Find(subjectIndexDoc, `//div[@class="zy-list fn-mt20"]/ul[@class="reslist"]/li[@class="fn-pt20 fn-pb20"]`)
-			if len(liNodes) <= 0 {
-				fmt.Println(err)
-				current = 1
-				isPageListGo = false
-				continue
-			}
-			for _, liNode := range liNodes {
-				fmt.Println("============================================================================")
-				fmt.Println("主题：", subject.name)
-				fmt.Println("=======当前页URL" + subjectIndexUrl + "========")
-
-				// 所需智币
-				pointsNode := htmlquery.FindOne(liNode, `./div[@class="btn-item fn-left"]/div[@class="money fn-pt10"]`)
-				if pointsNode == nil {
-					fmt.Println("没有智币div")
-					continue
-				}
-				pointsText := htmlquery.InnerText(pointsNode)
-				fmt.Println(pointsText)
-				pointsText = strings.ReplaceAll(pointsText, "智币", "")
-
-				points, err := strconv.Atoi(pointsText)
-				if err != nil {
-					fmt.Println(err)
-					continue
-				}
-				if points > 0 {
-					fmt.Println("需要智币下载", points)
-					continue
-				}
-
-				// 当前文件类型
-				fileExtTextNode := htmlquery.FindOne(liNode, `./div[@class="filetype fn-pl10 fn-left"]/img/@src`)
-				if fileExtTextNode == nil {
-					fmt.Println("没有文件类型div")
-					continue
-				}
-				fileExtText := htmlquery.InnerText(fileExtTextNode)
-				fileExtText = strings.ReplaceAll(fileExtText, "/public/front/images/", "")
-				if fileExtText != "typeicon-word.png" {
-					fmt.Println(fileExtText, "不在下载后缀列表")
-					continue
-				}
-
-				fileName := htmlquery.InnerText(htmlquery.FindOne(liNode, `./div[@class="zy-box fn-left"]/div[@class="subject-t"]/a`))
-				fileName = strings.TrimSpace(fileName)
-				fileName = strings.ReplaceAll(fileName, "/", "-")
-				fileName = strings.ReplaceAll(fileName, ":", "-")
-				fileName = strings.ReplaceAll(fileName, "：", "-")
-				fileName = strings.ReplaceAll(fileName, "（", "(")
-				fileName = strings.ReplaceAll(fileName, "）", ")")
-				fmt.Println(fileName)
-				if strings.Contains(fileName, "图片") {
-					fmt.Println("图片版，跳过")
-					continue
-				}
-
-				filePath := "../www2.zzstep.com/www2.zzstep.com/" + subject.name + "/" + fileName
-				_, errDoc := os.Stat(filePath + ".doc")
-				_, errDocx := os.Stat(filePath + ".docx")
-				if errDoc != nil && errDocx != nil {
-					viewUrl := "http://www2.zzstep.com" + htmlquery.InnerText(htmlquery.FindOne(liNode, `./div[@class="zy-box fn-left"]/div[@class="subject-t"]/a/@href`))
-					fmt.Println(viewUrl)
-
-					downLoadUrl := strings.ReplaceAll(viewUrl, "index", "download")
-					fmt.Println(downLoadUrl)
-
-					fmt.Println("=======开始下载" + strconv.Itoa(current) + "========")
-					err = downloadZZStep(downLoadUrl, viewUrl, filePath)
+	for _, studySection := range studySectionSubjectsPapers {
+		for _, subject := range studySection.subjects {
+			for _, paper := range subject.papers {
+				current := 1
+				isPageListGo := true
+				for isPageListGo {
+					subjectIndexUrl := paper.url
+					subjectIndexUrl = strings.ReplaceAll(subjectIndexUrl, "page=1", "page="+strconv.Itoa(current))
+					subjectIndexDoc, err := htmlquery.LoadURL(subjectIndexUrl)
 					if err != nil {
 						fmt.Println(err)
-						//注册登陆新账号
-						err = ZZStepProxyRegisterLoginUsername()
-						if err != nil {
-							fmt.Println(err)
-						}
+						current = 1
+						isPageListGo = false
 						continue
 					}
-					fmt.Println("=======下载完成========")
-					for i := 1; i <= NextDownloadSleep; i++ {
-						time.Sleep(time.Second)
-						fmt.Println("===========操作结束，暂停", NextDownloadSleep, "秒，倒计时", i, "秒===========")
-					}
-					if eachUsernameDownloadCurrentCount++; eachUsernameDownloadCurrentCount >= eachUsernameDownloadMaxCount {
-						//注册登陆新账号
-						err = ZZStepProxyRegisterLoginUsername()
-						if err != nil {
-							fmt.Println(err)
-						}
+					liNodes := htmlquery.Find(subjectIndexDoc, `//div[@class="zy-list fn-mt20"]/ul[@class="reslist"]/li[@class="fn-pt20 fn-pb20"]`)
+					if len(liNodes) <= 0 {
+						fmt.Println(err)
+						current = 1
+						isPageListGo = false
 						continue
 					}
+					for _, liNode := range liNodes {
+						fmt.Println("============================================================================")
+						fmt.Println("主题：", subject.name)
+						fmt.Println("=======当前页URL" + subjectIndexUrl + "========")
+
+						// 所需智币
+						pointsNode := htmlquery.FindOne(liNode, `./div[@class="btn-item fn-left"]/div[@class="money fn-pt10"]`)
+						if pointsNode == nil {
+							fmt.Println("没有智币div")
+							continue
+						}
+						pointsText := htmlquery.InnerText(pointsNode)
+						fmt.Println(pointsText)
+						pointsText = strings.ReplaceAll(pointsText, "智币", "")
+
+						points, err := strconv.Atoi(pointsText)
+						if err != nil {
+							fmt.Println(err)
+							continue
+						}
+						if points > 0 {
+							fmt.Println("需要智币下载", points)
+							continue
+						}
+
+						// 当前文件类型
+						fileExtTextNode := htmlquery.FindOne(liNode, `./div[@class="filetype fn-pl10 fn-left"]/img/@src`)
+						if fileExtTextNode == nil {
+							fmt.Println("没有文件类型div")
+							continue
+						}
+						fileExtText := htmlquery.InnerText(fileExtTextNode)
+						fileExtText = strings.ReplaceAll(fileExtText, "/public/front/images/", "")
+						if fileExtText != "typeicon-word.png" {
+							fmt.Println(fileExtText, "不在下载后缀列表")
+							continue
+						}
+
+						fileName := htmlquery.InnerText(htmlquery.FindOne(liNode, `./div[@class="zy-box fn-left"]/div[@class="subject-t"]/a`))
+						fileName = strings.TrimSpace(fileName)
+						fileName = strings.ReplaceAll(fileName, "/", "-")
+						fileName = strings.ReplaceAll(fileName, ":", "-")
+						fileName = strings.ReplaceAll(fileName, "：", "-")
+						fileName = strings.ReplaceAll(fileName, "（", "(")
+						fileName = strings.ReplaceAll(fileName, "）", ")")
+						fmt.Println(fileName)
+						if strings.Contains(fileName, "图片") {
+							fmt.Println("图片版，跳过")
+							continue
+						}
+
+						filePath := "../www2.zzstep.com/www2.zzstep.com/" + studySection.name + "/" + subject.name + "/" + paper.name + "/" + fileName
+						_, errDoc := os.Stat(filePath + ".doc")
+						_, errDocx := os.Stat(filePath + ".docx")
+						if errDoc != nil && errDocx != nil {
+							viewUrl := "http://www2.zzstep.com" + htmlquery.InnerText(htmlquery.FindOne(liNode, `./div[@class="zy-box fn-left"]/div[@class="subject-t"]/a/@href`))
+							fmt.Println(viewUrl)
+
+							downLoadUrl := strings.ReplaceAll(viewUrl, "index", "download")
+							fmt.Println(downLoadUrl)
+
+							fmt.Println("=======开始下载" + strconv.Itoa(current) + "========")
+							err = downloadZZStep(downLoadUrl, viewUrl, filePath)
+							if err != nil {
+								fmt.Println(err)
+								//注册登陆新账号
+								err = ZZStepProxyRegisterLoginUsername()
+								if err != nil {
+									fmt.Println(err)
+								}
+								eachUsernameDownloadCurrentCount = 0
+								continue
+							}
+							fmt.Println("=======下载完成========")
+							for i := 1; i <= NextDownloadSleep; i++ {
+								time.Sleep(time.Second)
+								fmt.Println("===========操作结束，暂停", NextDownloadSleep, "秒，倒计时", i, "秒===========")
+							}
+							if eachUsernameDownloadCurrentCount++; eachUsernameDownloadCurrentCount >= eachUsernameDownloadMaxCount {
+								//注册登陆新账号
+								err = ZZStepProxyRegisterLoginUsername()
+								if err != nil {
+									fmt.Println(err)
+								}
+								eachUsernameDownloadCurrentCount = 0
+								continue
+							}
+						}
+					}
+					current++
+					isPageListGo = true
 				}
 			}
-			current++
-			isPageListGo = true
 		}
 	}
 }
