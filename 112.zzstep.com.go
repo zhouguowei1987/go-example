@@ -118,15 +118,15 @@ var studySectionSubjectsPapers = []ZZStepStudySectionSubjectsPapers{
 	{
 		name: "小学",
 		subjects: []ZZStepSubject{
-			//{
-			//	name: "语文",
-			//	papers: []ZZStepPaper{
-			//		{
-			//			name: "试卷",
-			//			url:  "http://www2.zzstep.com/front/paper/index.html?studysection=203&subject=29&page=1",
-			//		},
-			//	},
-			//},
+			{
+				name: "语文",
+				papers: []ZZStepPaper{
+					{
+						name: "试卷",
+						url:  "http://www2.zzstep.com/front/paper/index.html?studysection=203&subject=29&page=1",
+					},
+				},
+			},
 			{
 				name: "数学",
 				papers: []ZZStepPaper{
@@ -501,7 +501,7 @@ func main() {
 	for _, studySection := range studySectionSubjectsPapers {
 		for _, subject := range studySection.subjects {
 			for _, paper := range subject.papers {
-				current := 191
+				current := 1
 				isPageListGo := true
 				for isPageListGo {
 					subjectIndexUrl := paper.url
