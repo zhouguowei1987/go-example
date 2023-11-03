@@ -18,12 +18,61 @@ import (
 	"time"
 )
 
-const (
-	ZZStepEnableHttpProxy = true
-	ZZStepHttpProxyUrl    = "http://101.35.85.240:8080"
-)
+var ZZStepEnableHttpProxy = true
+var ZZStepHttpProxyUrlArr = make([]string, 0)
+
+func ZZStepHttpProxy() error {
+	freeProxyUrl := "https://www.beesproxy.com/free"
+	beesProxyDoc, err := htmlquery.LoadURL(freeProxyUrl)
+	if err != nil {
+		return err
+	}
+	trNodes := htmlquery.Find(beesProxyDoc, `//figure[@class="wp-block-table"]/table[@class="table table-bordered bg--secondary"]/tbody/tr`)
+	if len(trNodes) > 0 {
+		for _, trNode := range trNodes {
+			ipNode := htmlquery.FindOne(trNode, "./td[1]")
+			if ipNode == nil {
+				continue
+			}
+			ip := htmlquery.InnerText(ipNode)
+
+			portNode := htmlquery.FindOne(trNode, "./td[2]")
+			if portNode == nil {
+				continue
+			}
+			port := htmlquery.InnerText(portNode)
+
+			protocolNode := htmlquery.FindOne(trNode, "./td[5]")
+			if protocolNode == nil {
+				continue
+			}
+			protocol := htmlquery.InnerText(protocolNode)
+
+			switch protocol {
+			case "HTTP":
+				ZZStepHttpProxyUrlArr = append(ZZStepHttpProxyUrlArr, "http://"+ip+":"+port)
+			case "HTTPS":
+				ZZStepHttpProxyUrlArr = append(ZZStepHttpProxyUrlArr, "https://"+ip+":"+port)
+			}
+		}
+	}
+	return nil
+}
 
 func ZZStepSetHttpProxy() (httpclient *http.Client) {
+	if len(ZZStepHttpProxyUrlArr) <= 0 {
+		err := ZZStepHttpProxy()
+		if err != nil {
+			ZZStepSetHttpProxy()
+		}
+	}
+	fmt.Println(ZZStepHttpProxyUrlArr)
+	ZZStepHttpProxyUrl := ZZStepHttpProxyUrlArr[0]
+	fmt.Println(ZZStepHttpProxyUrl)
+	ZZStepHttpProxyUrlArr = ZZStepHttpProxyUrlArr[1:]
+	fmt.Println(ZZStepHttpProxyUrlArr)
+	os.Exit(1)
+
 	ProxyURL, _ := url.Parse(ZZStepHttpProxyUrl)
 	httpclient = &http.Client{
 		Transport: &http.Transport{
@@ -415,7 +464,7 @@ var studySectionSubjectsPapers = []ZZStepStudySectionSubjectsPapers{
 	},
 }
 
-var NextDownloadSleep = 10
+var NextDownloadSleep = 2
 
 var randStringLength = 8
 
@@ -425,7 +474,7 @@ const letterBytes = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456
 var eachUsernameDownloadCurrentCount = 0
 
 // 每个账号最大下载数量
-var eachUsernameDownloadMaxCount = 200
+var eachUsernameDownloadMaxCount = 80
 var password = "123456"
 var refer = "http://www.zzstep.com/"
 var ZZStepCookie = ""
@@ -494,7 +543,7 @@ func main() {
 						}
 						fileExtText := htmlquery.InnerText(fileExtTextNode)
 						fileExtText = strings.ReplaceAll(fileExtText, "/public/front/images/", "")
-						if fileExtText != "typeicon-word.png" {
+						if !strings.Contains(fileExtText, "typeicon-word.png") {
 							fmt.Println(fileExtText, "不在下载后缀列表")
 							continue
 						}
