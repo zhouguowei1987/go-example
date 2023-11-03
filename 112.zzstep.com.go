@@ -66,12 +66,8 @@ func ZZStepSetHttpProxy() (httpclient *http.Client) {
 			ZZStepSetHttpProxy()
 		}
 	}
-	fmt.Println(ZZStepHttpProxyUrlArr)
 	ZZStepHttpProxyUrl := ZZStepHttpProxyUrlArr[0]
-	fmt.Println(ZZStepHttpProxyUrl)
 	ZZStepHttpProxyUrlArr = ZZStepHttpProxyUrlArr[1:]
-	fmt.Println(ZZStepHttpProxyUrlArr)
-	os.Exit(1)
 
 	ProxyURL, _ := url.Parse(ZZStepHttpProxyUrl)
 	httpclient = &http.Client{
