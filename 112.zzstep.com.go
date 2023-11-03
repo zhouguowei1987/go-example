@@ -155,15 +155,6 @@ var studySectionSubjectsPapers = []ZZStepStudySectionSubjectsPapers{
 				},
 			},
 			{
-				name: "道德与法治",
-				papers: []ZZStepPaper{
-					{
-						name: "试卷",
-						url:  "http://www2.zzstep.com/front/paper/index.html?studysection=203&subject=34&page=1",
-					},
-				},
-			},
-			{
 				name: "音乐",
 				papers: []ZZStepPaper{
 					{
@@ -522,7 +513,7 @@ func main() {
 					}
 					for _, liNode := range liNodes {
 						fmt.Println("============================================================================")
-						fmt.Println("主题：", subject.name)
+						fmt.Println("主题：", studySection.name, subject.name, paper.name)
 						fmt.Println("=======当前页URL", subjectIndexUrl, "========")
 
 						// 所需智币
@@ -912,6 +903,9 @@ func parseZZStepFileNameFromContentDisposition(contentDisposition string) string
 	// 示例：attachment; filename="example.txt" -> example.txt
 	fileNameStart := len("attachment; ") + len("filename=") + 1
 	fileNameEnd := len(contentDisposition) - 1
-	fileName := contentDisposition[fileNameStart:fileNameEnd] // 提取文件名字符串
-	return fileName[:]                                        // 去掉字符串开头的引号（如果存在）并返回结果
+	fileName := ""
+	if fileNameStart <= fileNameEnd {
+		fileName = contentDisposition[fileNameStart:fileNameEnd] // 提取文件名字符串
+	}
+	return fileName[:] // 去掉字符串开头的引号（如果存在）并返回结果
 }
