@@ -62,17 +62,17 @@ var eachUsernameDownloadCurrentCount = 0
 var eachUsernameDownloadMaxCount = 80
 var password = "123456"
 var refer = "http://www.zzstep.com/"
-var ZZStepCookie = ""
+var ZZStepCookie = "looyu_id=a8650c60217050342a55f236559725ac_20002564%3A9; _99_mon=%5B0%2C0%2C0%5D; PHPSESSID=0fsf2nbmid269b03lvhl9btp63; Hm_lvt_e22ffa3ceb40ebd886ecaaa1c24eb75d=1698997450; Hm_lvt_5d656a0b54535a39b1d88c84eff1725b=1698997450; looyu_20002564=v%3A17c0cfff633630c6ec83f487d6852626%2Cref%3A%2Cr%3A%2Cmon%3A//m6817.talk99.cn/monitor%2Cp0%3Ahttp%253A//www2.zzstep.com/; zzstep_front_user=%00l%0BoWfTd%5CcWl%07a%073_lR0%060%5C%3AV2R%3C%07%7BRs%03eW0%01%3A%04%26%0CvQ3Qc%0D%2B%05%3DWl%04i%01iQ1%04bQoR8%00j%0BoWmT%27%5CiWd%07k%07%21_2Ri%062%5CkVhRg%07mRe%03%7DW8%01s%04%3E%0C%3BQ%60Q%25%0Dn%05hWw%042%01%1FQb%04%12Q%3BR%22%00g%0B%2CWlTl%5CiW~%07%24%07p_9Rr%06%3F%5CaVkRc%07%22R%3B%03%2CW9%018%04%3E%0C%21Q%3DQi%0D%7B%05gWG%040%01%1FQl%04rQmRs%00f%0BnWfTn%5CqW0%07%3E%07d_5Rn%063%5CyVhRc%07wR%22%03dWp%01%3A%047%0C9QxQ~%0Dl%05uW%27%04h%01%20; zzstep_front_user=%00l%0BoWfTd%5CcWl%07a%073_lR0%060%5C%3AV2R%3C%07%7BRs%03eW0%01%3A%04%26%0CvQ3Qc%0D%2B%05%3DWl%04i%01iQ1%04bQoR8%00j%0BoWmT%27%5CiWd%07k%07%21_2Ri%062%5CkVhRg%07mRe%03%7DW8%01s%04%3E%0C%3BQ%60Q%25%0Dn%05hWw%042%01%1FQb%04%12Q%3BR%22%00g%0B%2CWlTl%5CiW~%07%24%07p_9Rr%06%3F%5CaVkRc%07%22R%3B%03%2CW9%018%04%3E%0C%21Q%3DQi%0D%7B%05gWG%040%01%1FQl%04rQmRs%00f%0BnWfTn%5CqW0%07%3E%07d_5Rn%063%5CyVhRc%07wR%22%03dWp%01%3A%047%0C9QxQ~%0Dl%05uW%27%04h%01%20; cdb_cookietime=2592000; cdb_compound=e198GOozSUa22Tp2vut%2Bv%2Fjhe9JBqI%2FoaeOHl7SbE32on%2BK%2F4pb3x2cSgFq0z8QGKyCmWSjrLsZ4mz4%2BquyPvEVBRYJb2pNXKpVsjO3S; cdb_auth=geE%2BCuBgAdjMwSwW1uW12KzHCtilCj46KpazC%2FFEzWwC5AI5nt%2FruO556%2FvzOHW6HA; Hm_lpvt_5d656a0b54535a39b1d88c84eff1725b=1698998778; Hm_lpvt_e22ffa3ceb40ebd886ecaaa1c24eb75d=1698998778"
 
 // ychEduSpider 获取中国教育出版网文档
 // @Title 获取中国教育出版网文档
 // @Description http://www2.zzstep.com/，获取中国教育出版网文档
 func main() {
-	// 首先注册登陆新账号
-	err := ZZStepRegisterLoginUsername()
-	if err != nil {
-		return
-	}
+	//// 首先注册登陆新账号
+	//err := ZZStepRegisterLoginUsername()
+	//if err != nil {
+	//	return
+	//}
 	for _, subject := range subjects {
 		current := 30
 		isPageListGo := true
@@ -265,7 +265,7 @@ func ZZStepRegisterRandUsername(username string, password string, password2 stri
 		return err
 	}
 
-	if zZStepRegisterRandAccountResp.Code != 0 {
+	if zZStepRegisterRandAccountResp.Code != 1 {
 		return errors.New(zZStepRegisterRandAccountResp.Msg)
 	}
 	return nil
