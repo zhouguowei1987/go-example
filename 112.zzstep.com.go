@@ -1,10 +1,13 @@
 package main
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"github.com/antchfx/htmlquery"
 	"io"
+	"io/ioutil"
+	"math/rand"
 	"net"
 	"net/http"
 	"net/url"
@@ -48,14 +51,30 @@ var subjects = []ZZStepSubject{
 
 var NextDownloadSleep = 60
 
-var ZZStepCookie = "PHPSESSID=jlmfj833gqoq7i5pk19e05ueqf; Hm_lvt_e22ffa3ceb40ebd886ecaaa1c24eb75d=1698910075; Hm_lvt_5d656a0b54535a39b1d88c84eff1725b=1698910075; Hm_lvt_9ae1d642b9883edd826f2ab064acca42=1698910204; Hm_lpvt_9ae1d642b9883edd826f2ab064acca42=1698910209; cdb_cookietime=2592000; looyu_id=a8650c60217050342a55f236559725ac_20002564%3A7; looyu_20002564=v%3A4981b6ce9a1dc2ff094dd205d7536b49%2Cref%3A%2Cr%3A%2Cmon%3A//m6817.talk99.cn/monitor%2Cp0%3Ahttp%253A//www.zzstep.com/; zzstep_front_user=%00l%0BoWfTd%5CcWl%07a%073_lR0%060%5C%3AV2R%3C%07%7BRs%03eW0%01%3A%04%26%0CvQ3Qc%0D%2B%05%3DWl%04i%01iQ1%04bQfR4%00m%0BoWmT%27%5CiWd%07k%07%21_2Ri%062%5CkVhRg%07mRe%03%7DW8%01s%04%3E%0C4Q%60Q%25%0D~%05iW%7C%04%3C%01%3EQd%04%3FQtR%3B%00%2F%0BeWnTn%5CqW%29%07%22%07f_.Rn%060%5CmVcR%24%07%3BRs%03eW4%01%3A%04%26%0CtQ5Q~%0Df%05eW%60%04%3C%01%7FQ%3A%04%23QlR1%00l%0BeWtT8%5C%3CW%3B%078%07m_%3ERy%06%3F%5CeVqR%24%07%3BRs%03eW0%01%3A%04%26%0CzQ%3FQt%0D%2B%05%3DWx; zzstep_front_user=%00l%0BoWfTd%5CcWl%07a%073_lR0%060%5C%3AV2R%3C%07%7BRs%03eW0%01%3A%04%26%0CvQ3Qc%0D%2B%05%3DWl%04i%01iQ1%04bQfR4%00m%0BoWmT%27%5CiWd%07k%07%21_2Ri%062%5CkVhRg%07mRe%03%7DW8%01s%04%3E%0C4Q%60Q%25%0D~%05iW%7C%04%3C%01%3EQd%04%3FQtR%3B%00%2F%0BeWnTn%5CqW%29%07%22%07f_.Rn%060%5CmVcR%24%07%3BRs%03eW4%01%3A%04%26%0CtQ5Q~%0Df%05eW%60%04%3C%01%7FQ%3A%04%23QlR1%00l%0BeWtT8%5C%3CW%3B%078%07m_%3ERy%06%3F%5CeVqR%24%07%3BRs%03eW0%01%3A%04%26%0CzQ%3FQt%0D%2B%05%3DWx; cdb_compound=03bdt3Ct3PksRWe1llCDuhSB2pjc5KaWZ3rbajUw3jh0HXSCVQVTiHEwVevc%2FdDrqTJwkHMplXPOVLnwRqeOjD%2BnMqIq4vPr2sNjcWw; cdb_auth=SyBXxo3iKdI0fe0gqoMHtVkLwdlrSl8N8lXLKx5tqEwOIENsn3dWsdhIovglDVz51Q; zzstep_front_select=%7B%22studysection%22%3A204%7D; Hm_lpvt_e22ffa3ceb40ebd886ecaaa1c24eb75d=1698942578; Hm_lpvt_5d656a0b54535a39b1d88c84eff1725b=1698942578"
+var randStringLength = 8
+
+const letterBytes = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+
+// 当前账号已下载文档数量
+var eachUsernameDownloadCurrentCount = 0
+
+// 每个账号最大下载数量
+var eachUsernameDownloadMaxCount = 80
+var password = "123456"
+var refer = "http://www.zzstep.com/"
+var ZZStepCookie = ""
 
 // ychEduSpider 获取中国教育出版网文档
 // @Title 获取中国教育出版网文档
 // @Description http://www2.zzstep.com/，获取中国教育出版网文档
 func main() {
+	// 首先注册登陆新账号
+	err := ZZStepRegisterLoginUsername()
+	if err != nil {
+		return
+	}
 	for _, subject := range subjects {
-		current := 1
+		current := 30
 		isPageListGo := true
 		for isPageListGo {
 			subjectIndexUrl := subject.url
@@ -144,12 +163,189 @@ func main() {
 						time.Sleep(time.Second)
 						fmt.Println("===========操作结束，暂停", NextDownloadSleep, "秒，倒计时", i, "秒===========")
 					}
+					if eachUsernameDownloadCurrentCount++; eachUsernameDownloadCurrentCount >= eachUsernameDownloadMaxCount {
+						//注册登陆新账号
+						err = ZZStepRegisterLoginUsername()
+						if err != nil {
+							return
+						}
+					}
 				}
 			}
 			current++
 			isPageListGo = true
 		}
 	}
+}
+
+func ZZStepRegisterLoginUsername() error {
+	// 注册新账号
+	rand.Seed(time.Now().UnixNano()) // 设置随机种子
+	// 生成长度为randStringLength的随机字符串
+	username := randStringBytes(randStringLength)
+	fmt.Println(username)
+	err := ZZStepRegisterRandUsername(username, password, password, refer)
+	if err != nil {
+		fmt.Println(err)
+		return err
+	}
+	// 登陆
+	err = ZZStepLoginUsername(username, password, refer)
+	if err != nil {
+		fmt.Println(err)
+		return err
+	}
+	return nil
+}
+
+type ZZStepRegisterRandUsernameResp struct {
+	Code int    `json:"code"`
+	Msg  string `json:"msg"`
+}
+
+func ZZStepRegisterRandUsername(username string, password string, password2 string, refer string) error {
+	// 初始化客户端
+	var client *http.Client = &http.Client{
+		Transport: &http.Transport{
+			Dial: func(netw, addr string) (net.Conn, error) {
+				c, err := net.DialTimeout(netw, addr, time.Second*3)
+				if err != nil {
+					fmt.Println("dail timeout", err)
+					return nil, err
+				}
+				return c, nil
+
+			},
+			MaxIdleConnsPerHost:   10,
+			ResponseHeaderTimeout: time.Second * 3,
+		},
+	}
+	if ZZStepEnableHttpProxy {
+		client = ZZStepSetHttpProxy()
+	}
+	postData := url.Values{}
+	postData.Add("username", username)
+	postData.Add("password", password)
+	postData.Add("password2", password2)
+	postData.Add("refer", refer)
+	requestUrl := "http://www2.zzstep.com/front/regist/registbyusername.html"
+	req, err := http.NewRequest("POST", requestUrl, strings.NewReader(postData.Encode())) //建立连接
+	if err != nil {
+		return err
+	}
+
+	req.Header.Set("Accept", "application/json, text/javascript, */*; q=0.01")
+	//req.Header.Set("Accept-Encoding", "gzip, deflate, br")
+	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
+	req.Header.Set("Connection", "keep-alive")
+	req.Header.Set("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")
+	req.Header.Set("Host", "www2.zzstep.com")
+	req.Header.Set("Origin", "http://www2.zzstep.com")
+	req.Header.Set("Referer", "http://www2.zzstep.com/front/regist/index.html?refer=http://www.zzstep.com/")
+	req.Header.Set("Upgrade-Insecure-Requests", "1")
+	req.Header.Set("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36")
+	resp, err := client.Do(req) //拿到返回的内容
+	if err != nil {
+		return err
+	}
+	defer resp.Body.Close()
+	// 如果访问失败，就打印当前状态码
+	if resp.StatusCode != http.StatusOK {
+		return errors.New("http status :" + strconv.Itoa(resp.StatusCode))
+	}
+
+	respBytes, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return err
+	}
+
+	zZStepRegisterRandAccountResp := ZZStepRegisterRandUsernameResp{}
+	err = json.Unmarshal(respBytes, &zZStepRegisterRandAccountResp)
+	if err != nil {
+		return err
+	}
+
+	if zZStepRegisterRandAccountResp.Code != 0 {
+		return errors.New(zZStepRegisterRandAccountResp.Msg)
+	}
+	return nil
+}
+
+type ZZStepLoginUsernameResp struct {
+	Code int    `json:"code"`
+	Msg  string `json:"msg"`
+}
+
+func ZZStepLoginUsername(username string, passwordu string, refer string) error {
+	// 初始化客户端
+	var client *http.Client = &http.Client{
+		Transport: &http.Transport{
+			Dial: func(netw, addr string) (net.Conn, error) {
+				c, err := net.DialTimeout(netw, addr, time.Second*3)
+				if err != nil {
+					fmt.Println("dail timeout", err)
+					return nil, err
+				}
+				return c, nil
+
+			},
+			MaxIdleConnsPerHost:   10,
+			ResponseHeaderTimeout: time.Second * 3,
+		},
+	}
+	if ZZStepEnableHttpProxy {
+		client = ZZStepSetHttpProxy()
+	}
+	postData := url.Values{}
+	postData.Add("username", username)
+	postData.Add("passwordu", passwordu)
+	postData.Add("type", "username")
+	postData.Add("refer", refer)
+	requestUrl := "http://www2.zzstep.com/front/login/dologin.html"
+	req, err := http.NewRequest("POST", requestUrl, strings.NewReader(postData.Encode())) //建立连接
+	if err != nil {
+		return err
+	}
+
+	req.Header.Set("Accept", "application/json, text/javascript, */*; q=0.01")
+	//req.Header.Set("Accept-Encoding", "gzip, deflate, br")
+	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
+	req.Header.Set("Connection", "keep-alive")
+	req.Header.Set("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")
+	req.Header.Set("Host", "www2.zzstep.com")
+	req.Header.Set("Origin", "http://www2.zzstep.com")
+	req.Header.Set("Referer", "http://www2.zzstep.com/front/login/index.html?refer=http://www2.zzstep.com/")
+	req.Header.Set("Upgrade-Insecure-Requests", "1")
+	req.Header.Set("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36")
+	resp, err := client.Do(req) //拿到返回的内容
+	if err != nil {
+		return err
+	}
+	defer resp.Body.Close()
+	// 如果访问失败，就打印当前状态码
+	if resp.StatusCode != http.StatusOK {
+		return errors.New("http status :" + strconv.Itoa(resp.StatusCode))
+	}
+
+	respBytes, err := ioutil.ReadAll(resp.Body)
+	fmt.Println(string(respBytes))
+	if err != nil {
+		return err
+	}
+
+	zZStepLoginUsernameResp := ZZStepLoginUsernameResp{}
+	err = json.Unmarshal(respBytes, &zZStepLoginUsernameResp)
+	if err != nil {
+		return err
+	}
+
+	if zZStepLoginUsernameResp.Code != 1 {
+		return errors.New(zZStepLoginUsernameResp.Msg)
+	}
+
+	// 重新设置cookie
+	ZZStepCookie = resp.Header.Get("Set-Cookie")
+	return nil
 }
 
 func downloadZZStep(attachmentUrl string, referer string, filePath string) error {
@@ -231,6 +427,15 @@ func downloadZZStep(attachmentUrl string, referer string, filePath string) error
 		return err
 	}
 	return nil
+}
+
+// 生成随机字符串
+func randStringBytes(n int) string {
+	b := make([]byte, n)
+	for i := range b {
+		b[i] = letterBytes[rand.Intn(len(letterBytes))]
+	}
+	return string(b)
 }
 
 // StrInArrayZZStep str in string list
