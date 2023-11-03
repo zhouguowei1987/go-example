@@ -20,7 +20,7 @@ import (
 
 const (
 	ZZStepEnableHttpProxy = true
-	ZZStepHttpProxyUrl    = "http://112.194.142.135:9091"
+	ZZStepHttpProxyUrl    = "http://117.158.146.215:9091"
 )
 
 func ZZStepSetHttpProxy() (httpclient *http.Client) {
