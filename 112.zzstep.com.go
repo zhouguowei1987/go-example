@@ -77,11 +77,21 @@ func ZZStepSetHttpProxy() (httpclient *http.Client) {
 	}
 
 	fmt.Println(ZZStepHttpProxyUrl)
-
 	ProxyURL, _ := url.Parse(ZZStepHttpProxyUrl)
 	httpclient = &http.Client{
 		Transport: &http.Transport{
 			Proxy: http.ProxyURL(ProxyURL),
+			Dial: func(netw, addr string) (net.Conn, error) {
+				c, err := net.DialTimeout(netw, addr, time.Second*3)
+				if err != nil {
+					fmt.Println("dail timeout", err)
+					return nil, err
+				}
+				return c, nil
+
+			},
+			MaxIdleConnsPerHost:   10,
+			ResponseHeaderTimeout: time.Second * 3,
 		},
 	}
 	return httpclient
@@ -108,15 +118,15 @@ var studySectionSubjectsPapers = []ZZStepStudySectionSubjectsPapers{
 	{
 		name: "小学",
 		subjects: []ZZStepSubject{
-			{
-				name: "语文",
-				papers: []ZZStepPaper{
-					{
-						name: "试卷",
-						url:  "http://www2.zzstep.com/front/paper/index.html?studysection=203&subject=29&page=1",
-					},
-				},
-			},
+			//{
+			//	name: "语文",
+			//	papers: []ZZStepPaper{
+			//		{
+			//			name: "试卷",
+			//			url:  "http://www2.zzstep.com/front/paper/index.html?studysection=203&subject=29&page=1",
+			//		},
+			//	},
+			//},
 			{
 				name: "数学",
 				papers: []ZZStepPaper{
@@ -491,7 +501,7 @@ func main() {
 	for _, studySection := range studySectionSubjectsPapers {
 		for _, subject := range studySection.subjects {
 			for _, paper := range subject.papers {
-				current := 1
+				current := 191
 				isPageListGo := true
 				for isPageListGo {
 					subjectIndexUrl := paper.url
