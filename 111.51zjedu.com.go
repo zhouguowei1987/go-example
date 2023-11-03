@@ -107,9 +107,7 @@ func main() {
 				_, errDoc := os.Stat(filePath + ".doc")
 				_, errDocx := os.Stat(filePath + ".docx")
 				_, errPdf := os.Stat(filePath + ".pdf")
-				_, errPpt := os.Stat(filePath + ".ppt")
-				_, errPptx := os.Stat(filePath + ".pptx")
-				if errDoc != nil && errDocx != nil && errPdf != nil && errPpt != nil && errPptx != nil {
+				if errDoc != nil && errDocx != nil && errPdf != nil {
 
 					viewUrl := "http://www.51zjedu.com" + htmlquery.InnerText(htmlquery.FindOne(liNode, `./div[@class="doc-list-title"]/h3/a/@href`))
 					fmt.Println(viewUrl)
@@ -223,7 +221,7 @@ func downloadZJEdu(attachmentUrl string, referer string, filePath string) error 
 	// 检查HTTP响应头中的Content-Disposition字段获取文件名和后缀
 	fileName := getZJEduFileNameFromHeader(resp)
 	fileExtension := filepath.Ext(fileName) // 获取文件后缀
-	fileExtArr := []string{".doc", ".docx", ".pdf", ".ppt", ".pptx"}
+	fileExtArr := []string{".doc", ".docx", ".pdf"}
 	fmt.Println("文件后缀:", fileExtension)
 	if !StrInArrayZJEdu(fileExtension, fileExtArr) {
 		return errors.New("文件后缀：" + fileExtension + "不在下载后缀列表")
