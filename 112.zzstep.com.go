@@ -115,74 +115,74 @@ type ZZStepStudySectionSubjectsPapers struct {
 }
 
 var studySectionSubjectsPapers = []ZZStepStudySectionSubjectsPapers{
-	{
-		name: "小学",
-		subjects: []ZZStepSubject{
-			{
-				name: "语文",
-				papers: []ZZStepPaper{
-					{
-						name: "试卷",
-						url:  "http://www2.zzstep.com/front/paper/index.html?studysection=203&subject=29&page=1",
-					},
-				},
-			},
-			{
-				name: "数学",
-				papers: []ZZStepPaper{
-					{
-						name: "试卷",
-						url:  "http://www2.zzstep.com/front/paper/index.html?studysection=203&subject=30&page=1",
-					},
-				},
-			},
-			{
-				name: "英语",
-				papers: []ZZStepPaper{
-					{
-						name: "试卷",
-						url:  "http://www2.zzstep.com/front/paper/index.html?studysection=203&subject=31&page=1",
-					},
-				},
-			},
-			{
-				name: "道德与法治",
-				papers: []ZZStepPaper{
-					{
-						name: "试卷",
-						url:  "http://www2.zzstep.com/front/paper/index.html?studysection=203&subject=34&page=1",
-					},
-				},
-			},
-			{
-				name: "音乐",
-				papers: []ZZStepPaper{
-					{
-						name: "试卷",
-						url:  "http://www2.zzstep.com/front/paper/index.html?studysection=203&subject=41&page=1",
-					},
-				},
-			},
-			{
-				name: "美术",
-				papers: []ZZStepPaper{
-					{
-						name: "试卷",
-						url:  "http://www2.zzstep.com/front/paper/index.html?studysection=203&subject=42&page=1",
-					},
-				},
-			},
-			{
-				name: "信息技术",
-				papers: []ZZStepPaper{
-					{
-						name: "试卷",
-						url:  "http://www2.zzstep.com/front/paper/index.html?studysection=203&subject=43&page=1",
-					},
-				},
-			},
-		},
-	},
+	//{
+	//	name: "小学",
+	//	subjects: []ZZStepSubject{
+	//		{
+	//			name: "语文",
+	//			papers: []ZZStepPaper{
+	//				{
+	//					name: "试卷",
+	//					url:  "http://www2.zzstep.com/front/paper/index.html?studysection=203&subject=29&page=1",
+	//				},
+	//			},
+	//		},
+	//		{
+	//			name: "数学",
+	//			papers: []ZZStepPaper{
+	//				{
+	//					name: "试卷",
+	//					url:  "http://www2.zzstep.com/front/paper/index.html?studysection=203&subject=30&page=1",
+	//				},
+	//			},
+	//		},
+	//		{
+	//			name: "英语",
+	//			papers: []ZZStepPaper{
+	//				{
+	//					name: "试卷",
+	//					url:  "http://www2.zzstep.com/front/paper/index.html?studysection=203&subject=31&page=1",
+	//				},
+	//			},
+	//		},
+	//		{
+	//			name: "道德与法治",
+	//			papers: []ZZStepPaper{
+	//				{
+	//					name: "试卷",
+	//					url:  "http://www2.zzstep.com/front/paper/index.html?studysection=203&subject=34&page=1",
+	//				},
+	//			},
+	//		},
+	//		{
+	//			name: "音乐",
+	//			papers: []ZZStepPaper{
+	//				{
+	//					name: "试卷",
+	//					url:  "http://www2.zzstep.com/front/paper/index.html?studysection=203&subject=41&page=1",
+	//				},
+	//			},
+	//		},
+	//		{
+	//			name: "美术",
+	//			papers: []ZZStepPaper{
+	//				{
+	//					name: "试卷",
+	//					url:  "http://www2.zzstep.com/front/paper/index.html?studysection=203&subject=42&page=1",
+	//				},
+	//			},
+	//		},
+	//		{
+	//			name: "信息技术",
+	//			papers: []ZZStepPaper{
+	//				{
+	//					name: "试卷",
+	//					url:  "http://www2.zzstep.com/front/paper/index.html?studysection=203&subject=43&page=1",
+	//				},
+	//			},
+	//		},
+	//	},
+	//},
 
 	{
 		name: "初中",
