@@ -23,37 +23,43 @@ var ZZStepHttpProxyUrl = ""
 var ZZStepHttpProxyUrlArr = make([]string, 0)
 
 func ZZStepHttpProxy() error {
-	freeProxyUrl := "https://www.beesproxy.com/free"
-	beesProxyDoc, err := htmlquery.LoadURL(freeProxyUrl)
-	if err != nil {
-		return err
-	}
-	trNodes := htmlquery.Find(beesProxyDoc, `//figure[@class="wp-block-table"]/table[@class="table table-bordered bg--secondary"]/tbody/tr`)
-	if len(trNodes) > 0 {
-		for _, trNode := range trNodes {
-			ipNode := htmlquery.FindOne(trNode, "./td[1]")
-			if ipNode == nil {
-				continue
-			}
-			ip := htmlquery.InnerText(ipNode)
+	pageMax := []int{1, 2, 3, 4, 5}
+	for _, page := range pageMax {
+		freeProxyUrl := "https://www.beesproxy.com/free"
+		if page > 1 {
+			freeProxyUrl = fmt.Sprintf("https://www.beesproxy.com/free/page/%d", page)
+		}
+		beesProxyDoc, err := htmlquery.LoadURL(freeProxyUrl)
+		if err != nil {
+			return err
+		}
+		trNodes := htmlquery.Find(beesProxyDoc, `//figure[@class="wp-block-table"]/table[@class="table table-bordered bg--secondary"]/tbody/tr`)
+		if len(trNodes) > 0 {
+			for _, trNode := range trNodes {
+				ipNode := htmlquery.FindOne(trNode, "./td[1]")
+				if ipNode == nil {
+					continue
+				}
+				ip := htmlquery.InnerText(ipNode)
 
-			portNode := htmlquery.FindOne(trNode, "./td[2]")
-			if portNode == nil {
-				continue
-			}
-			port := htmlquery.InnerText(portNode)
+				portNode := htmlquery.FindOne(trNode, "./td[2]")
+				if portNode == nil {
+					continue
+				}
+				port := htmlquery.InnerText(portNode)
 
-			protocolNode := htmlquery.FindOne(trNode, "./td[5]")
-			if protocolNode == nil {
-				continue
-			}
-			protocol := htmlquery.InnerText(protocolNode)
+				protocolNode := htmlquery.FindOne(trNode, "./td[5]")
+				if protocolNode == nil {
+					continue
+				}
+				protocol := htmlquery.InnerText(protocolNode)
 
-			switch protocol {
-			case "HTTP":
-				ZZStepHttpProxyUrlArr = append(ZZStepHttpProxyUrlArr, "http://"+ip+":"+port)
-			case "HTTPS":
-				ZZStepHttpProxyUrlArr = append(ZZStepHttpProxyUrlArr, "https://"+ip+":"+port)
+				switch protocol {
+				case "HTTP":
+					ZZStepHttpProxyUrlArr = append(ZZStepHttpProxyUrlArr, "http://"+ip+":"+port)
+				case "HTTPS":
+					ZZStepHttpProxyUrlArr = append(ZZStepHttpProxyUrlArr, "https://"+ip+":"+port)
+				}
 			}
 		}
 	}
