@@ -15,16 +15,86 @@ import (
 	"time"
 )
 
-const (
-	EditDoc88EnableHttpProxy = false
-	EditDoc88HttpProxyUrl    = "111.225.152.186:8089"
-)
+var EditDoc88EnableHttpProxy = true
+var EditDoc88HttpProxyUrl = "111.225.152.186:8089"
+var EditDoc88HttpProxyUrlArr = make([]string, 0)
+
+func EditDoc88HttpProxy() error {
+	pageMax := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+	for _, page := range pageMax {
+		freeProxyUrl := "https://www.beesproxy.com/free"
+		if page > 1 {
+			freeProxyUrl = fmt.Sprintf("https://www.beesproxy.com/free/page/%d", page)
+		}
+		beesProxyDoc, err := htmlquery.LoadURL(freeProxyUrl)
+		if err != nil {
+			return err
+		}
+		trNodes := htmlquery.Find(beesProxyDoc, `//figure[@class="wp-block-table"]/table[@class="table table-bordered bg--secondary"]/tbody/tr`)
+		if len(trNodes) > 0 {
+			for _, trNode := range trNodes {
+				ipNode := htmlquery.FindOne(trNode, "./td[1]")
+				if ipNode == nil {
+					continue
+				}
+				ip := htmlquery.InnerText(ipNode)
+
+				portNode := htmlquery.FindOne(trNode, "./td[2]")
+				if portNode == nil {
+					continue
+				}
+				port := htmlquery.InnerText(portNode)
+
+				protocolNode := htmlquery.FindOne(trNode, "./td[5]")
+				if protocolNode == nil {
+					continue
+				}
+				protocol := htmlquery.InnerText(protocolNode)
+
+				switch protocol {
+				case "HTTP":
+					EditDoc88HttpProxyUrlArr = append(EditDoc88HttpProxyUrlArr, "http://"+ip+":"+port)
+				case "HTTPS":
+					EditDoc88HttpProxyUrlArr = append(EditDoc88HttpProxyUrlArr, "https://"+ip+":"+port)
+				}
+			}
+		}
+	}
+	return nil
+}
 
 func EditDoc88SetHttpProxy() (httpclient *http.Client) {
+	if EditDoc88HttpProxyUrl == "" {
+		if len(EditDoc88HttpProxyUrlArr) <= 0 {
+			err := EditDoc88HttpProxy()
+			if err != nil {
+				EditDoc88SetHttpProxy()
+			}
+		}
+		EditDoc88HttpProxyUrl = EditDoc88HttpProxyUrlArr[0]
+		if len(EditDoc88HttpProxyUrlArr) >= 2 {
+			EditDoc88HttpProxyUrlArr = EditDoc88HttpProxyUrlArr[1:]
+		} else {
+			EditDoc88HttpProxyUrlArr = make([]string, 0)
+		}
+	}
+
+	fmt.Println(EditDoc88HttpProxyUrl)
 	ProxyURL, _ := url.Parse(EditDoc88HttpProxyUrl)
 	httpclient = &http.Client{
 		Transport: &http.Transport{
 			Proxy: http.ProxyURL(ProxyURL),
+			Dial: func(netw, addr string) (net.Conn, error) {
+				c, err := net.DialTimeout(netw, addr, time.Second*3)
+				if err != nil {
+					fmt.Println("dail timeout", err)
+					return nil, err
+				}
+				return c, nil
+
+			},
+			MaxIdleConnsPerHost:   10,
+			ResponseHeaderTimeout: time.Second * 3,
 		},
 	}
 	return httpclient
@@ -92,6 +162,7 @@ func main() {
 		}
 		pageListDoc, err := QueryEditDoc88List(pageListUrl, queryEditDoc88ListFormData)
 		if err != nil {
+			EditDoc88HttpProxyUrl = ""
 			fmt.Println(err)
 			continue
 		}
@@ -159,6 +230,7 @@ func main() {
 			detailUrl := "https://www.doc88.com/uc/usr_doc_manager.php?act=getDocInfo"
 			detailDoc, err := QueryEditDoc88Detail(detailUrl, PId)
 			if err != nil {
+				EditDoc88HttpProxyUrl = ""
 				fmt.Println(err)
 				continue
 			}
@@ -191,6 +263,7 @@ func main() {
 			}
 			_, err = EditDoc88(editUrl, editDoc88FormData)
 			if err != nil {
+				EditDoc88HttpProxyUrl = ""
 				fmt.Println(err)
 				continue
 			}
