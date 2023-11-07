@@ -861,6 +861,34 @@ func main() {
 			dirName: "finish.tikuvip-certification（2023）.51test.net/教师资格考试",
 			price:   "2000",
 		},
+		{
+			dirName: "docx.zzstep.com/小学/道德与法治",
+			price:   "2000",
+		},
+		{
+			dirName: "docx.zzstep.com/小学/美术",
+			price:   "2000",
+		},
+		{
+			dirName: "docx.zzstep.com/小学/数学",
+			price:   "2000",
+		},
+		{
+			dirName: "docx.zzstep.com/小学/信息技术",
+			price:   "2000",
+		},
+		{
+			dirName: "docx.zzstep.com/小学/音乐",
+			price:   "2000",
+		},
+		{
+			dirName: "docx.zzstep.com/小学/英语",
+			price:   "2000",
+		},
+		{
+			dirName: "docx.zzstep.com/小学/语文",
+			price:   "2000",
+		},
 	}
 	rootPath := "../upload.book118.com/"
 	for _, childDir := range uploadChildDirArr {

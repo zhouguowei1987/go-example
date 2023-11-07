@@ -245,32 +245,32 @@ var studySectionSubjectsPapers = []ZZStepStudySectionSubjectsPapers{
 			//		},
 			//	},
 			//},
-			{
-				name: "化学",
-				papers: []ZZStepPaper{
-					{
-						name: "试卷",
-						url:  "http://www2.zzstep.com/front/paper/index.html?studysection=204&subject=33&page=1",
-					},
-					{
-						name: "中考",
-						url:  "http://www2.zzstep.com/front/beikao/index.html?studysection=204&subject=33&page=1",
-					},
-				},
-			},
 			//{
-			//	name: "生物",
+			//	name: "化学",
 			//	papers: []ZZStepPaper{
 			//		{
 			//			name: "试卷",
-			//			url:  "http://www2.zzstep.com/front/paper/index.html?studysection=204&subject=37&page=1",
+			//			url:  "http://www2.zzstep.com/front/paper/index.html?studysection=204&subject=33&page=1",
 			//		},
 			//		{
 			//			name: "中考",
-			//			url:  "http://www2.zzstep.com/front/beikao/index.html?studysection=204&subject=37&page=1",
+			//			url:  "http://www2.zzstep.com/front/beikao/index.html?studysection=204&subject=33&page=1",
 			//		},
 			//	},
 			//},
+			{
+				name: "生物",
+				papers: []ZZStepPaper{
+					{
+						name: "试卷",
+						url:  "http://www2.zzstep.com/front/paper/index.html?studysection=204&subject=37&page=1",
+					},
+					{
+						name: "中考",
+						url:  "http://www2.zzstep.com/front/beikao/index.html?studysection=204&subject=37&page=1",
+					},
+				},
+			},
 			//{
 			//	name: "道德与法治",
 			//	papers: []ZZStepPaper{
