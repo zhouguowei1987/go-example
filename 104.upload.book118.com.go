@@ -889,6 +889,10 @@ func main() {
 			dirName: "docx.zzstep.com/小学/语文",
 			price:   "2000",
 		},
+		{
+			dirName: "docx.zzstep.com/初中/数学",
+			price:   "2000",
+		},
 	}
 	rootPath := "../upload.book118.com/"
 	for _, childDir := range uploadChildDirArr {

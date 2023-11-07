@@ -881,6 +881,11 @@ func main() {
 			pCid:    8246,
 			Price:   468,
 		},
+		{
+			dirName: "docx.zzstep.com/初中/数学",
+			pCid:    8156,
+			Price:   468,
+		},
 	}
 	rootPath := "../upload.doc88.com/"
 	for _, childDir := range uploadChildDirArr {
