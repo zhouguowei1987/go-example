@@ -15,7 +15,7 @@ import (
 	"time"
 )
 
-var EditDoc88EnableHttpProxy = true
+var EditDoc88EnableHttpProxy = false
 var EditDoc88HttpProxyUrl = "111.225.152.186:8089"
 var EditDoc88HttpProxyUrlArr = make([]string, 0)
 

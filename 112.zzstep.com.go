@@ -271,84 +271,84 @@ var studySectionSubjectsPapers = []ZZStepStudySectionSubjectsPapers{
 					},
 				},
 			},
-			//{
-			//	name: "道德与法治",
-			//	papers: []ZZStepPaper{
-			//		{
-			//			name: "试卷",
-			//			url:  "http://www2.zzstep.com/front/paper/index.html?studysection=204&subject=34&page=1",
-			//		},
-			//		{
-			//			name: "中考",
-			//			url:  "http://www2.zzstep.com/front/beikao/index.html?studysection=204&subject=34&page=1",
-			//		},
-			//	},
-			//},
-			//{
-			//	name: "历史",
-			//	papers: []ZZStepPaper{
-			//		{
-			//			name: "试卷",
-			//			url:  "http://www2.zzstep.com/front/paper/index.html?studysection=204&subject=35&page=1",
-			//		},
-			//		{
-			//			name: "中考",
-			//			url:  "http://www2.zzstep.com/front/beikao/index.html?studysection=204&subject=35&page=1",
-			//		},
-			//	},
-			//},
-			//{
-			//	name: "地理",
-			//	papers: []ZZStepPaper{
-			//		{
-			//			name: "试卷",
-			//			url:  "http://www2.zzstep.com/front/paper/index.html?studysection=204&subject=36&page=1",
-			//		},
-			//		{
-			//			name: "中考",
-			//			url:  "http://www2.zzstep.com/front/beikao/index.html?studysection=204&subject=36&page=1",
-			//		},
-			//	},
-			//},
-			//{
-			//	name: "音乐",
-			//	papers: []ZZStepPaper{
-			//		{
-			//			name: "试卷",
-			//			url:  "http://www2.zzstep.com/front/paper/index.html?studysection=204&subject=41&page=1",
-			//		},
-			//		{
-			//			name: "中考",
-			//			url:  "http://www2.zzstep.com/front/beikao/index.html?studysection=204&subject=41&page=1",
-			//		},
-			//	},
-			//},
-			//{
-			//	name: "美术",
-			//	papers: []ZZStepPaper{
-			//		{
-			//			name: "试卷",
-			//			url:  "http://www2.zzstep.com/front/paper/index.html?studysection=204&subject=42&page=1",
-			//		},
-			//		{
-			//			name: "中考",
-			//			url:  "http://www2.zzstep.com/front/beikao/index.html?studysection=204&subject=42&page=1",
-			//		},
-			//	},
-			//},
-			//{
-			//	name: "信息技术",
-			//	papers: []ZZStepPaper{
-			//		{
-			//			name: "试卷",
-			//			url:  "http://www2.zzstep.com/front/paper/index.html?studysection=204&subject=43&page=1",
-			//		},
-			//		{
-			//			name: "中考",
-			//			url:  "http://www2.zzstep.com/front/beikao/index.html?studysection=204&subject=43&page=1",
-			//		},
-			//	},
-			//},
+			{
+				name: "道德与法治",
+				papers: []ZZStepPaper{
+					{
+						name: "试卷",
+						url:  "http://www2.zzstep.com/front/paper/index.html?studysection=204&subject=34&page=1",
+					},
+					{
+						name: "中考",
+						url:  "http://www2.zzstep.com/front/beikao/index.html?studysection=204&subject=34&page=1",
+					},
+				},
+			},
+			{
+				name: "历史",
+				papers: []ZZStepPaper{
+					{
+						name: "试卷",
+						url:  "http://www2.zzstep.com/front/paper/index.html?studysection=204&subject=35&page=1",
+					},
+					{
+						name: "中考",
+						url:  "http://www2.zzstep.com/front/beikao/index.html?studysection=204&subject=35&page=1",
+					},
+				},
+			},
+			{
+				name: "地理",
+				papers: []ZZStepPaper{
+					{
+						name: "试卷",
+						url:  "http://www2.zzstep.com/front/paper/index.html?studysection=204&subject=36&page=1",
+					},
+					{
+						name: "中考",
+						url:  "http://www2.zzstep.com/front/beikao/index.html?studysection=204&subject=36&page=1",
+					},
+				},
+			},
+			{
+				name: "音乐",
+				papers: []ZZStepPaper{
+					{
+						name: "试卷",
+						url:  "http://www2.zzstep.com/front/paper/index.html?studysection=204&subject=41&page=1",
+					},
+					{
+						name: "中考",
+						url:  "http://www2.zzstep.com/front/beikao/index.html?studysection=204&subject=41&page=1",
+					},
+				},
+			},
+			{
+				name: "美术",
+				papers: []ZZStepPaper{
+					{
+						name: "试卷",
+						url:  "http://www2.zzstep.com/front/paper/index.html?studysection=204&subject=42&page=1",
+					},
+					{
+						name: "中考",
+						url:  "http://www2.zzstep.com/front/beikao/index.html?studysection=204&subject=42&page=1",
+					},
+				},
+			},
+			{
+				name: "信息技术",
+				papers: []ZZStepPaper{
+					{
+						name: "试卷",
+						url:  "http://www2.zzstep.com/front/paper/index.html?studysection=204&subject=43&page=1",
+					},
+					{
+						name: "中考",
+						url:  "http://www2.zzstep.com/front/beikao/index.html?studysection=204&subject=43&page=1",
+					},
+				},
+			},
 		},
 	},
 
@@ -565,6 +565,11 @@ func main() {
 						fmt.Println(fileName)
 						if strings.Contains(fileName, "图片") {
 							fmt.Println("图片版，跳过")
+							continue
+						}
+
+						if strings.Contains(fileName, "扫描") {
+							fmt.Println("扫描版，跳过")
 							continue
 						}
 
