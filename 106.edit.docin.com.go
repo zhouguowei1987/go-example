@@ -52,7 +52,7 @@ func main() {
 		pageListDoc, err := QueryDocInDoc(pageListUrl, referer)
 		if err != nil {
 			fmt.Println(err)
-			break
+			continue
 		}
 		tbodyNodes := htmlquery.Find(pageListDoc, `//div[@class="tableWarp"]/table[@class="my-data"]/tbody`)
 		if len(tbodyNodes) <= 0 {
