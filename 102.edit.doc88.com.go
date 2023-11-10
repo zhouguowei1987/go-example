@@ -142,7 +142,7 @@ var EditCookie = "__root_domain_v=.doc88.com; _qddaz=QD.155181178889683; _qddab=
 
 var DetailTimeSleep = 25
 var SaveTimeSleep = 5
-var NextPageSleep = 10
+var NextPageSleep = 15
 
 // ychEduSpider 编辑道客巴巴文档
 // @Title 编辑道客巴巴文档
