@@ -906,6 +906,36 @@ func main() {
 			pCid:    8160,
 			Price:   288,
 		},
+		{
+			dirName: "docx.zzstep.com/初中/音乐",
+			pCid:    55918,
+			Price:   288,
+		},
+		{
+			dirName: "docx.zzstep.com/初中/道德与法治",
+			pCid:    8163,
+			Price:   288,
+		},
+		{
+			dirName: "docx.zzstep.com/初中/美术",
+			pCid:    55918,
+			Price:   288,
+		},
+		{
+			dirName: "docx.zzstep.com/初中/生物",
+			pCid:    8162,
+			Price:   288,
+		},
+		{
+			dirName: "docx.zzstep.com/初中/地理",
+			pCid:    8159,
+			Price:   288,
+		},
+		{
+			dirName: "docx.zzstep.com/初中/历史",
+			pCid:    8161,
+			Price:   288,
+		},
 	}
 	rootPath := "../upload.doc88.com/"
 	for _, childDir := range uploadChildDirArr {

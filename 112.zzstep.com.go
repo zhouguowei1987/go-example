@@ -369,45 +369,45 @@ var studySectionSubjectsPapers = []ZZStepStudySectionSubjectsPapers{
 			//		},
 			//	},
 			//},
-			{
-				name: "数学",
-				papers: []ZZStepPaper{
-					{
-						name: "试卷",
-						url:  "http://www2.zzstep.com/front/paper/index.html?studysection=205&subject=30&page=1",
-					},
-					{
-						name: "高考",
-						url:  "http://www2.zzstep.com/front/beikao/index.html?studysection=205&subject=30&page=1",
-					},
-				},
-			},
-			{
-				name: "英语",
-				papers: []ZZStepPaper{
-					{
-						name: "试卷",
-						url:  "http://www2.zzstep.com/front/paper/index.html?studysection=205&subject=31&page=1",
-					},
-					{
-						name: "高考",
-						url:  "http://www2.zzstep.com/front/beikao/index.html?studysection=205&subject=31&page=1",
-					},
-				},
-			},
-			{
-				name: "物理",
-				papers: []ZZStepPaper{
-					{
-						name: "试卷",
-						url:  "http://www2.zzstep.com/front/paper/index.html?studysection=205&subject=32&page=1",
-					},
-					{
-						name: "高考",
-						url:  "http://www2.zzstep.com/front/beikao/index.html?studysection=205&subject=32&page=1",
-					},
-				},
-			},
+			//{
+			//	name: "数学",
+			//	papers: []ZZStepPaper{
+			//		{
+			//			name: "试卷",
+			//			url:  "http://www2.zzstep.com/front/paper/index.html?studysection=205&subject=30&page=1",
+			//		},
+			//		{
+			//			name: "高考",
+			//			url:  "http://www2.zzstep.com/front/beikao/index.html?studysection=205&subject=30&page=1",
+			//		},
+			//	},
+			//},
+			//{
+			//	name: "英语",
+			//	papers: []ZZStepPaper{
+			//		{
+			//			name: "试卷",
+			//			url:  "http://www2.zzstep.com/front/paper/index.html?studysection=205&subject=31&page=1",
+			//		},
+			//		{
+			//			name: "高考",
+			//			url:  "http://www2.zzstep.com/front/beikao/index.html?studysection=205&subject=31&page=1",
+			//		},
+			//	},
+			//},
+			//{
+			//	name: "物理",
+			//	papers: []ZZStepPaper{
+			//		{
+			//			name: "试卷",
+			//			url:  "http://www2.zzstep.com/front/paper/index.html?studysection=205&subject=32&page=1",
+			//		},
+			//		{
+			//			name: "高考",
+			//			url:  "http://www2.zzstep.com/front/beikao/index.html?studysection=205&subject=32&page=1",
+			//		},
+			//	},
+			//},
 			{
 				name: "化学",
 				papers: []ZZStepPaper{
@@ -434,19 +434,19 @@ var studySectionSubjectsPapers = []ZZStepStudySectionSubjectsPapers{
 					},
 				},
 			},
-			{
-				name: "政治",
-				papers: []ZZStepPaper{
-					{
-						name: "试卷",
-						url:  "http://www2.zzstep.com/front/paper/index.html?studysection=205&subject=34&page=1",
-					},
-					{
-						name: "高考",
-						url:  "http://www2.zzstep.com/front/beikao/index.html?studysection=205&subject=34&page=1",
-					},
-				},
-			},
+			//{
+			//	name: "政治",
+			//	papers: []ZZStepPaper{
+			//		{
+			//			name: "试卷",
+			//			url:  "http://www2.zzstep.com/front/paper/index.html?studysection=205&subject=34&page=1",
+			//		},
+			//		{
+			//			name: "高考",
+			//			url:  "http://www2.zzstep.com/front/beikao/index.html?studysection=205&subject=34&page=1",
+			//		},
+			//	},
+			//},
 			{
 				name: "历史",
 				papers: []ZZStepPaper{
@@ -460,19 +460,19 @@ var studySectionSubjectsPapers = []ZZStepStudySectionSubjectsPapers{
 					},
 				},
 			},
-			{
-				name: "地理",
-				papers: []ZZStepPaper{
-					{
-						name: "试卷",
-						url:  "http://www2.zzstep.com/front/paper/index.html?studysection=205&subject=36&page=1",
-					},
-					{
-						name: "高考",
-						url:  "http://www2.zzstep.com/front/beikao/index.html?studysection=205&subject=36&page=1",
-					},
-				},
-			},
+			//{
+			//	name: "地理",
+			//	papers: []ZZStepPaper{
+			//		{
+			//			name: "试卷",
+			//			url:  "http://www2.zzstep.com/front/paper/index.html?studysection=205&subject=36&page=1",
+			//		},
+			//		{
+			//			name: "高考",
+			//			url:  "http://www2.zzstep.com/front/beikao/index.html?studysection=205&subject=36&page=1",
+			//		},
+			//	},
+			//},
 		},
 	},
 }

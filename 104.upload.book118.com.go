@@ -909,6 +909,30 @@ func main() {
 			dirName: "docx.zzstep.com/初中/化学",
 			price:   "2000",
 		},
+		{
+			dirName: "docx.zzstep.com/初中/音乐",
+			price:   "2000",
+		},
+		{
+			dirName: "docx.zzstep.com/初中/道德与法治",
+			price:   "2000",
+		},
+		{
+			dirName: "docx.zzstep.com/初中/美术",
+			price:   "2000",
+		},
+		{
+			dirName: "docx.zzstep.com/初中/生物",
+			price:   "2000",
+		},
+		{
+			dirName: "docx.zzstep.com/初中/地理",
+			price:   "2000",
+		},
+		{
+			dirName: "docx.zzstep.com/初中/历史",
+			price:   "2000",
+		},
 	}
 	rootPath := "../upload.book118.com/"
 	for _, childDir := range uploadChildDirArr {
