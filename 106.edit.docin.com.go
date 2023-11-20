@@ -62,6 +62,14 @@ func main() {
 		for _, tbodyNode := range tbodyNodes {
 			trNode := htmlquery.FindOne(tbodyNode, `./tr`)
 			trId := strings.ReplaceAll(htmlquery.SelectAttr(trNode, "id"), "tr", "")
+
+			//viewUrl := fmt.Sprintf("https://www.docin.com/p-%s.html", trId)
+			//fmt.Println("访问文档详情")
+			//_, err := htmlquery.LoadURL(viewUrl)
+			//if err != nil {
+			//	continue
+			//}
+
 			idsArr = append(idsArr, trId)
 
 			fileTitleNode := htmlquery.FindOne(tbodyNode, `./tr/td[2]/a`)
