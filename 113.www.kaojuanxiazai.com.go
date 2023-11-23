@@ -15,7 +15,7 @@ import (
 	"time"
 )
 
-var KaoJuanXiaZaiEnableHttpProxy = true
+var KaoJuanXiaZaiEnableHttpProxy = false
 var KaoJuanXiaZaiHttpProxyUrl = ""
 var KaoJuanXiaZaiHttpProxyUrlArr = make([]string, 0)
 
@@ -265,10 +265,9 @@ func main() {
 					fileName = strings.ReplaceAll(fileName, "）", ")")
 					fmt.Println(fileName)
 
-					filePath := "../www.kaojuanxiazai.com/www.kaojuanxiazai.com/" + subjectsPapers.name + "/" + paper.name + "/" + fileName
+					filePath := "../www.kaojuanxiazai.com/www.kaojuanxiazai.com/" + subjectsPapers.name + "/" + paper.name + "/" + fileName + ".doc"
 					_, errDoc := os.Stat(filePath + ".doc")
-					_, errDocx := os.Stat(filePath + ".docx")
-					if errDoc != nil && errDocx != nil {
+					if errDoc != nil {
 						downLoadUrl := strings.ReplaceAll(viewUrl, "exam-", "exam/downloads/")
 						fmt.Println(downLoadUrl)
 
@@ -335,15 +334,6 @@ func downloadKaoJuanXiaZai(attachmentUrl string, referer string, filePath string
 	if err != nil {
 		return err
 	}
-	// 检查HTTP响应头中的Content-Disposition字段获取文件名和后缀
-	fileName := getKaoJuanXiaZaiFileNameFromHeader(resp)
-	fileExtension := filepath.Ext(fileName) // 获取文件后缀
-	fileExtArr := []string{".doc", ".docx"}
-	fmt.Println("文件后缀:", fileExtension)
-	if !StrInArrayKaoJuanXiaZai(fileExtension, fileExtArr) {
-		return errors.New("文件后缀：" + fileExtension + "不在下载后缀列表")
-	}
-	filePath += fileExtension
 	defer resp.Body.Close()
 	// 如果访问失败，就打印当前状态码
 	if resp.StatusCode != http.StatusOK {
@@ -369,41 +359,4 @@ func downloadKaoJuanXiaZai(attachmentUrl string, referer string, filePath string
 		return err
 	}
 	return nil
-}
-
-// StrInArrayKaoJuanXiaZai str in string list
-func StrInArrayKaoJuanXiaZai(str string, data []string) bool {
-	if len(data) > 0 {
-		for _, row := range data {
-			if str == row {
-				return true
-			}
-		}
-	}
-	return false
-}
-
-// 从HTTP响应头中获取文件名
-func getKaoJuanXiaZaiFileNameFromHeader(resp *http.Response) string {
-	contentDisposition := resp.Header.Get("Content-Disposition")
-	fileName := ""
-	if contentDisposition != "" {
-		fileName = parseKaoJuanXiaZaiFileNameFromContentDisposition(contentDisposition)
-	} else {
-		fileName = filepath.Base(resp.Request.URL.Path) // 默认使用URL中的文件名作为本地文件名
-	}
-	return fileName
-}
-
-// 从Content-Disposition字段中解析文件名
-func parseKaoJuanXiaZaiFileNameFromContentDisposition(contentDisposition string) string {
-	// 参考：https://tools.ietf.org/html/rfc6266#section-4.3
-	// 示例：attachment; filename="example.txt" -> example.txt
-	fileNameStart := len("attachment; ") + len("filename=") + 1
-	fileNameEnd := len(contentDisposition) - 1
-	fileName := ""
-	if fileNameStart <= fileNameEnd {
-		fileName = contentDisposition[fileNameStart:fileNameEnd] // 提取文件名字符串
-	}
-	return fileName[:] // 去掉字符串开头的引号（如果存在）并返回结果
 }
