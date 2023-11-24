@@ -214,7 +214,7 @@ var kaoJuanXiaZaiSubjectsPapers = []KaoJuanXiaZaiSubjectsPapers{
 	},
 }
 
-const KaoJuanXiaZaiNextDownloadSleep = 2
+const KaoJuanXiaZaiNextDownloadSleep = 1
 
 // ychEduSpider 获取考卷下载试卷
 // @Title 获取考卷下载试卷
@@ -254,7 +254,12 @@ func main() {
 						continue
 					}
 
-					fileName := htmlquery.InnerText(htmlquery.FindOne(viewDoc, `//div[@class="article_title"]/div[@class="container"]/div[@class="title"]`))
+					fileNameNode := htmlquery.FindOne(viewDoc, `//div[@class="article_title"]/div[@class="container"]/div[@class="title"]`)
+					if fileNameNode == nil {
+						fmt.Println("未能获取标题DIV")
+						continue
+					}
+					fileName := htmlquery.InnerText(fileNameNode)
 					fileName = strings.TrimSpace(fileName)
 					fileName = strings.ReplaceAll(fileName, "<b>", "")
 					fileName = strings.ReplaceAll(fileName, "</b>", "")
@@ -263,11 +268,14 @@ func main() {
 					fileName = strings.ReplaceAll(fileName, "：", "-")
 					fileName = strings.ReplaceAll(fileName, "（", "(")
 					fileName = strings.ReplaceAll(fileName, "）", ")")
+					fileName = strings.ReplaceAll(fileName, "~", "")
+					fileName = strings.ReplaceAll(fileName, ".", "")
+					fileName = strings.ReplaceAll(fileName, ". ", "")
+					fileName = strings.ReplaceAll(fileName, ".. ", "")
 					fmt.Println(fileName)
 
 					filePath := "../www.kaojuanxiazai.com/www.kaojuanxiazai.com/" + subjectsPapers.name + "/" + paper.name + "/" + fileName + ".doc"
-					_, errDoc := os.Stat(filePath + ".doc")
-					if errDoc != nil {
+					if _, err := os.Stat(filePath); err != nil {
 						downLoadUrl := strings.ReplaceAll(viewUrl, "exam-", "exam/downloads/")
 						fmt.Println(downLoadUrl)
 
