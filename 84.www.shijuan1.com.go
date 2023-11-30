@@ -171,8 +171,9 @@ func main() {
 						fmt.Println(pageListUrl)
 
 						title := htmlquery.InnerText(htmlquery.FindOne(trNode, `./td[1]`))
+						title = strings.TrimSpace(title)
 						title = strings.ReplaceAll(title, "/", "-")
-						title = strings.ReplaceAll(title, " ", "")
+
 						fmt.Println(title)
 
 						uploadDate := htmlquery.InnerText(htmlquery.FindOne(trNode, `./td[6]`))
