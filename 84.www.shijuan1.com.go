@@ -199,7 +199,7 @@ func main() {
 						downloadUrl := "https://www.shijuan1.com" + htmlquery.InnerText(htmlquery.FindOne(detailDoc, `//ul[@class="downurllist"]/li/a/@href`))
 						fmt.Println(downloadUrl)
 
-						filePath := "../www.shijuan1.com/" + testCategory.name + "/"
+						filePath := "../www.rar_shijuan1.com/" + testCategory.name + "/"
 
 						err := downloadShiJuan1(downloadUrl, detailUrl, filePath, title)
 						if err != nil {
