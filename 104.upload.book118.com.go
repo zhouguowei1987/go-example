@@ -602,11 +602,11 @@ func main() {
 			price:   "2000",
 		},
 		{
-			dirName: "finish.www.shijuan1.com/中考试卷",
+			dirName: "docx.www.shijuan1.com/中考试卷",
 			price:   "2000",
 		},
 		{
-			dirName: "finish.www.shijuan1.com/高考试卷",
+			dirName: "docx.www.shijuan1.com/高考试卷",
 			price:   "2000",
 		},
 		{

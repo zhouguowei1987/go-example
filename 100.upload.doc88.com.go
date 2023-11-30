@@ -517,12 +517,12 @@ func main() {
 			Price:   288,
 		},
 		{
-			dirName: "finish.www.shijuan1.com/中考试卷",
+			dirName: "docx.www.shijuan1.com/中考试卷",
 			pCid:    8243,
 			Price:   288,
 		},
 		{
-			dirName: "finish.www.shijuan1.com/高考试卷",
+			dirName: "docx.www.shijuan1.com/高考试卷",
 			pCid:    8244,
 			Price:   288,
 		},
