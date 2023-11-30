@@ -170,11 +170,7 @@ func main() {
 						fmt.Println("=================================================================================")
 						fmt.Println(pageListUrl)
 
-						detailUrl := "https://www.shijuan1.com" + htmlquery.InnerText(htmlquery.FindOne(trNode, `./td[1]/a/@href`))
-						detailDoc, _ := htmlquery.LoadURL(detailUrl)
-						fmt.Println(detailUrl)
-
-						title := htmlquery.InnerText(htmlquery.FindOne(detailDoc, `//div[@class="pleft"]/div[@class="viewbox"]/div[@class="title"]/h2`))
+						title := htmlquery.InnerText(htmlquery.FindOne(trNode, `./td[1]`))
 						title = strings.ReplaceAll(title, "/", "-")
 						title = strings.ReplaceAll(title, " ", "")
 						fmt.Println(title)
@@ -196,15 +192,22 @@ func main() {
 							continue
 						}
 
-						downloadUrl := "https://www.shijuan1.com" + htmlquery.InnerText(htmlquery.FindOne(detailDoc, `//ul[@class="downurllist"]/li/a/@href`))
-						fmt.Println(downloadUrl)
+						detailUrl := "https://www.shijuan1.com" + htmlquery.InnerText(htmlquery.FindOne(trNode, `./td[1]/a/@href`))
+						detailDoc, _ := htmlquery.LoadURL(detailUrl)
+						fmt.Println(detailUrl)
 
-						filePath := "../www.rar_shijuan1.com/" + testCategory.name + "/"
+						filePath := "../www.rar_shijuan1.com/" + testCategory.name + "/" + title + ".rar"
+						if _, err := os.Stat(filePath); err != nil {
+							downloadUrl := "https://www.shijuan1.com" + htmlquery.InnerText(htmlquery.FindOne(detailDoc, `//ul[@class="downurllist"]/li/a/@href`))
+							fmt.Println(downloadUrl)
 
-						err := downloadShiJuan1(downloadUrl, detailUrl, filePath, title)
-						if err != nil {
-							fmt.Println(err)
-							continue
+							fmt.Println("=======开始下载" + title + "========")
+							err := downloadShiJuan1(downloadUrl, detailUrl, filePath)
+							if err != nil {
+								fmt.Println(err)
+								continue
+							}
+							fmt.Println("=======下载完成========")
 						}
 					}
 					page++
@@ -224,7 +227,7 @@ func main() {
 	}
 }
 
-func downloadShiJuan1(attachmentUrl string, referer string, filePath string, title string) error {
+func downloadShiJuan1(attachmentUrl string, referer string, filePath string) error {
 	// 初始化客户端
 	var client *http.Client = &http.Client{
 		Transport: &http.Transport{
@@ -285,21 +288,16 @@ func downloadShiJuan1(attachmentUrl string, referer string, filePath string, tit
 			return err
 		}
 	}
-	fileFullPath := filePath + title + ".rar"
-	_, err = os.Stat(fileFullPath)
+	out, err := os.Create(filePath)
 	if err != nil {
-		//文件不存在
-		out, err := os.Create(fileFullPath)
-		if err != nil {
-			return err
-		}
-		defer out.Close()
+		return err
+	}
+	defer out.Close()
 
-		// 然后将响应流和文件流对接起来
-		_, err = io.Copy(out, resp.Body)
-		if err != nil {
-			return err
-		}
+	// 然后将响应流和文件流对接起来
+	_, err = io.Copy(out, resp.Body)
+	if err != nil {
+		return err
 	}
 	return nil
 }
