@@ -39,28 +39,98 @@ var AllTestCategory = []TestCategory{
 	{
 		name: "中考试卷",
 		link: []string{
+			"https://www.shijuan1.com/a/sjyw7/",
+			"https://www.shijuan1.com/a/sjyw8/",
+			"https://www.shijuan1.com/a/sjyw9/",
 			"https://www.shijuan1.com/a/sjywzk/",
+
+			"https://www.shijuan1.com/a/sjsx7/",
+			"https://www.shijuan1.com/a/sjsx8/",
+			"https://www.shijuan1.com/a/sjsx9/",
 			"https://www.shijuan1.com/a/sjsxzk/",
+
+			"https://www.shijuan1.com/a/sjyy7/",
+			"https://www.shijuan1.com/a/sjyy8/",
+			"https://www.shijuan1.com/a/sjyy9/",
 			"https://www.shijuan1.com/a/sjyyzk/",
+
+			"https://www.shijuan1.com/a/sjwl7/",
+			"https://www.shijuan1.com/a/sjwl8/",
+			"https://www.shijuan1.com/a/sjwl9/",
 			"https://www.shijuan1.com/a/sjwlzk/",
+
+			"https://www.shijuan1.com/a/sjhx7/",
+			"https://www.shijuan1.com/a/sjhx8/",
+			"https://www.shijuan1.com/a/sjhx9/",
 			"https://www.shijuan1.com/a/sjhxzk/",
+
+			"https://www.shijuan1.com/a/sjzz7/",
+			"https://www.shijuan1.com/a/sjzz8/",
+			"https://www.shijuan1.com/a/sjzz9/",
 			"https://www.shijuan1.com/a/sjzzzk/",
+
+			"https://www.shijuan1.com/a/sjls7/",
+			"https://www.shijuan1.com/a/sjls8/",
+			"https://www.shijuan1.com/a/sjls9/",
 			"https://www.shijuan1.com/a/sjlszk/",
+
+			"https://www.shijuan1.com/a/sjdl7/",
+			"https://www.shijuan1.com/a/sjdl8/",
+			"https://www.shijuan1.com/a/sjdl9/",
 			"https://www.shijuan1.com/a/sjdlzk/",
+
+			"https://www.shijuan1.com/a/sjsw7/",
+			"https://www.shijuan1.com/a/sjsw8/",
+			"https://www.shijuan1.com/a/sjsw9/",
 			"https://www.shijuan1.com/a/sjswzk/",
 		},
 	},
 	{
 		name: "高考试卷",
 		link: []string{
+			"https://www.shijuan1.com/a/sjywg1/",
+			"https://www.shijuan1.com/a/sjywg2/",
+			"https://www.shijuan1.com/a/sjywg3/",
 			"https://www.shijuan1.com/a/sjywgk/",
+
+			"https://www.shijuan1.com/a/sjsxg1/",
+			"https://www.shijuan1.com/a/sjsxg2/",
+			"https://www.shijuan1.com/a/sjsxg3/",
 			"https://www.shijuan1.com/a/sjsxgk/",
+
+			"https://www.shijuan1.com/a/sjyyg1/",
+			"https://www.shijuan1.com/a/sjyyg2/",
+			"https://www.shijuan1.com/a/sjyyg3/",
 			"https://www.shijuan1.com/a/sjyygk/",
+
+			"https://www.shijuan1.com/a/sjwlg1/",
+			"https://www.shijuan1.com/a/sjwlg2/",
+			"https://www.shijuan1.com/a/sjwlg3/",
 			"https://www.shijuan1.com/a/sjwlgk/",
+
+			"https://www.shijuan1.com/a/sjhxg1/",
+			"https://www.shijuan1.com/a/sjhxg2/",
+			"https://www.shijuan1.com/a/sjhxg3/",
 			"https://www.shijuan1.com/a/sjhxgk/",
+
+			"https://www.shijuan1.com/a/sjzzg1/",
+			"https://www.shijuan1.com/a/sjzzg2/",
+			"https://www.shijuan1.com/a/sjzzg3/",
 			"https://www.shijuan1.com/a/sjzzgk/",
+
+			"https://www.shijuan1.com/a/sjlsg1/",
+			"https://www.shijuan1.com/a/sjlsg2/",
+			"https://www.shijuan1.com/a/sjlsg3/",
 			"https://www.shijuan1.com/a/sjlsgk/",
+
+			"https://www.shijuan1.com/a/sjdlg1/",
+			"https://www.shijuan1.com/a/sjdlg2/",
+			"https://www.shijuan1.com/a/sjdlg3/",
 			"https://www.shijuan1.com/a/sjdlgk/",
+
+			"https://www.shijuan1.com/a/sjswg1/",
+			"https://www.shijuan1.com/a/sjswg2/",
+			"https://www.shijuan1.com/a/sjswg3/",
 			"https://www.shijuan1.com/a/sjswgk/",
 		},
 	},
@@ -109,9 +179,12 @@ func main() {
 						title = strings.ReplaceAll(title, " ", "")
 						fmt.Println(title)
 
+						uploadDate := htmlquery.InnerText(htmlquery.FindOne(trNode, `./td[6]`))
+						fmt.Println(uploadDate)
+
 						ifSave := false
 						for _, year := range shiJuan1SaveYear {
-							if strings.Contains(title, year) {
+							if strings.Contains(title, year) || strings.Contains(uploadDate, year) {
 								ifSave = true
 								break
 							}
@@ -123,10 +196,10 @@ func main() {
 							continue
 						}
 
-						downloadUrl := "https://www.rar_shijuan1.com" + htmlquery.InnerText(htmlquery.FindOne(detailDoc, `//ul[@class="downurllist"]/li/a/@href`))
+						downloadUrl := "https://www.shijuan1.com" + htmlquery.InnerText(htmlquery.FindOne(detailDoc, `//ul[@class="downurllist"]/li/a/@href`))
 						fmt.Println(downloadUrl)
 
-						filePath := "../www.shijuan1.com/" + testCategory.name + "/"
+						filePath := "../www.rar_shijuan1.com/" + testCategory.name + "/"
 
 						err := downloadShiJuan1(downloadUrl, detailUrl, filePath, title)
 						if err != nil {
