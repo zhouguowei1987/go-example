@@ -222,17 +222,17 @@ func main() {
 			PId := htmlquery.SelectAttr(liNode, "id")
 			PId = PId[5:]
 
+			for i := 1; i <= DetailTimeSleep; i++ {
+				time.Sleep(time.Second)
+				fmt.Println("===========获取", Title, "详情暂停", DetailTimeSleep, "秒，倒计时", i, "秒===========")
+			}
+
 			detailUrl := "https://www.doc88.com/uc/usr_doc_manager.php?act=getDocInfo"
 			detailDoc, err := QueryEditDoc88Detail(detailUrl, PId)
 			if err != nil {
 				EditDoc88HttpProxyUrl = ""
 				fmt.Println(err)
 				continue
-			}
-
-			for i := 1; i <= DetailTimeSleep; i++ {
-				time.Sleep(time.Second)
-				fmt.Println("===========获取", Title, "详情暂停", DetailTimeSleep, "秒，倒计时", i, "秒===========")
 			}
 
 			DocCodeNode := htmlquery.FindOne(detailDoc, `//dl[@class="editlayout"]/form/dd[1]/div[@class="booksedit"]/table[@class="edit-table"]/input`)
@@ -262,15 +262,17 @@ func main() {
 				GroupList:      "",
 				GroupFreeList:  "",
 			}
+
+			for i := 1; i <= SaveTimeSleep; i++ {
+				time.Sleep(time.Second)
+				fmt.Println("===========更新", Title, "成功，暂停", SaveTimeSleep, "秒，倒计时", i, "秒===========")
+			}
+
 			_, err = EditDoc88(editUrl, editDoc88FormData)
 			if err != nil {
 				EditDoc88HttpProxyUrl = ""
 				fmt.Println(err)
 				continue
-			}
-			for i := 1; i <= SaveTimeSleep; i++ {
-				time.Sleep(time.Second)
-				fmt.Println("===========更新", Title, "成功，暂停", SaveTimeSleep, "秒，倒计时", i, "秒===========")
 			}
 		}
 		curPage++
