@@ -224,7 +224,7 @@ func main() {
 
 			for i := 1; i <= DetailTimeSleep; i++ {
 				time.Sleep(time.Second)
-				fmt.Println("===========获取", Title, "详情暂停", DetailTimeSleep, "秒，倒计时", i, "秒===========")
+				fmt.Println("page="+strconv.Itoa(curPage)+"===========获取", Title, "详情暂停", DetailTimeSleep, "秒，倒计时", i, "秒===========")
 			}
 
 			detailUrl := "https://www.doc88.com/uc/usr_doc_manager.php?act=getDocInfo"
@@ -265,7 +265,7 @@ func main() {
 
 			for i := 1; i <= SaveTimeSleep; i++ {
 				time.Sleep(time.Second)
-				fmt.Println("===========更新", Title, "成功，暂停", SaveTimeSleep, "秒，倒计时", i, "秒===========")
+				fmt.Println("page="+strconv.Itoa(curPage)+"===========更新", Title, "成功，暂停", SaveTimeSleep, "秒，倒计时", i, "秒===========")
 			}
 
 			_, err = EditDoc88(editUrl, editDoc88FormData)
