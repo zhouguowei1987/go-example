@@ -37,6 +37,31 @@ type TestCategory struct {
 
 var AllTestCategory = []TestCategory{
 	{
+		name: "小学试卷",
+		link: []string{
+			"https://www.shijuan1.com/a/sjyw1/",
+			"https://www.shijuan1.com/a/sjyw2/",
+			"https://www.shijuan1.com/a/sjyw3/",
+			"https://www.shijuan1.com/a/sjyw4/",
+			"https://www.shijuan1.com/a/sjyw5/",
+			"https://www.shijuan1.com/a/sjyw6/",
+
+			"https://www.shijuan1.com/a/sjsx1/",
+			"https://www.shijuan1.com/a/sjsx2/",
+			"https://www.shijuan1.com/a/sjsx3/",
+			"https://www.shijuan1.com/a/sjsx4/",
+			"https://www.shijuan1.com/a/sjsx5/",
+			"https://www.shijuan1.com/a/sjsx6/",
+
+			"https://www.shijuan1.com/a/sjyy1/",
+			"https://www.shijuan1.com/a/sjyy2/",
+			"https://www.shijuan1.com/a/sjyy3/",
+			"https://www.shijuan1.com/a/sjyy4/",
+			"https://www.shijuan1.com/a/sjyy5/",
+			"https://www.shijuan1.com/a/sjyy6/",
+		},
+	},
+	{
 		name: "中考试卷",
 		link: []string{
 			"https://www.shijuan1.com/a/sjyw7/",
@@ -54,13 +79,10 @@ var AllTestCategory = []TestCategory{
 			"https://www.shijuan1.com/a/sjyy9/",
 			"https://www.shijuan1.com/a/sjyyzk/",
 
-			"https://www.shijuan1.com/a/sjwl7/",
 			"https://www.shijuan1.com/a/sjwl8/",
 			"https://www.shijuan1.com/a/sjwl9/",
 			"https://www.shijuan1.com/a/sjwlzk/",
 
-			"https://www.shijuan1.com/a/sjhx7/",
-			"https://www.shijuan1.com/a/sjhx8/",
 			"https://www.shijuan1.com/a/sjhx9/",
 			"https://www.shijuan1.com/a/sjhxzk/",
 
@@ -76,12 +98,10 @@ var AllTestCategory = []TestCategory{
 
 			"https://www.shijuan1.com/a/sjdl7/",
 			"https://www.shijuan1.com/a/sjdl8/",
-			"https://www.shijuan1.com/a/sjdl9/",
 			"https://www.shijuan1.com/a/sjdlzk/",
 
 			"https://www.shijuan1.com/a/sjsw7/",
 			"https://www.shijuan1.com/a/sjsw8/",
-			"https://www.shijuan1.com/a/sjsw9/",
 			"https://www.shijuan1.com/a/sjswzk/",
 		},
 	},
