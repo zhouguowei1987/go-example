@@ -60,6 +60,10 @@ func main() {
 			fileIdStr := strings.ReplaceAll(aHrefUrl, "download.asp?id=", "")
 			fileId, _ := strconv.Atoi(fileIdStr)
 
+			if fileId <= 0 {
+				continue
+			}
+
 			title := htmlquery.InnerText(htmlquery.FindOne(tableNode, `./tbody/tr/td[1]/a/font`))
 			title = strings.TrimSpace(title)
 			title = strings.ReplaceAll(title, "/", "-")
