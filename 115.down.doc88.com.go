@@ -176,7 +176,7 @@ func main() {
 				fmt.Println(downloadUrl)
 
 				fmt.Println("=======开始下载" + Title + "========")
-				err := downloadCzSx(downloadUrl, refererUrl, filePath)
+				err := DownLoadDoc88(downloadUrl, refererUrl, filePath)
 				if err != nil {
 					fmt.Println(err)
 					continue
