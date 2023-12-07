@@ -67,6 +67,9 @@ func main() {
 			title := htmlquery.InnerText(htmlquery.FindOne(tableNode, `./tbody/tr/td[1]/a/font`))
 			title = strings.TrimSpace(title)
 			title = strings.ReplaceAll(title, "/", "-")
+			if strings.Contains(title, "实录") || strings.Contains(title, "视频") {
+				continue
+			}
 
 			filePath := "F:\\workspace\\www.rar_czsx.com.cn\\" + title + ".rar"
 			if _, err := os.Stat(filePath); err != nil {
