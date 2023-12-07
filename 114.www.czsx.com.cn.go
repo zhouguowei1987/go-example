@@ -56,6 +56,9 @@ func main() {
 				continue
 			}
 			aHrefNode := htmlquery.FindOne(tableNode, `./tbody/tr/td[1]/a/@href`)
+			if aHrefNode == nil {
+				continue
+			}
 			aHrefUrl := htmlquery.InnerText(aHrefNode)
 			fileIdStr := strings.ReplaceAll(aHrefUrl, "download.asp?id=", "")
 			fileId, _ := strconv.Atoi(fileIdStr)
@@ -67,7 +70,7 @@ func main() {
 			title := htmlquery.InnerText(htmlquery.FindOne(tableNode, `./tbody/tr/td[1]/a/font`))
 			title = strings.TrimSpace(title)
 			title = strings.ReplaceAll(title, "/", "-")
-			if strings.Contains(title, "实录") || strings.Contains(title, "视频") {
+			if strings.Contains(title, "实录") || strings.Contains(title, "视频") || strings.Contains(title, "录像") || strings.Contains(title, "讲座") || strings.Contains(title, "素材") || strings.Contains(title, "示范课") {
 				continue
 			}
 
