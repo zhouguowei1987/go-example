@@ -64,7 +64,7 @@ func main() {
 			title = strings.TrimSpace(title)
 			title = strings.ReplaceAll(title, "/", "-")
 
-			filePath := "../www.rar_czsx.com.cn/" + title + ".rar"
+			filePath := "F:\\workspace\\www.rar_czsx.com.cn\\" + title + ".rar"
 			if _, err := os.Stat(filePath); err != nil {
 				detailUrl := fmt.Sprintf("http://www.czsx.com.cn/down.asp?id=%d", fileId)
 				fmt.Println(detailUrl)
