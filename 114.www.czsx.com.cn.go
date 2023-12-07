@@ -52,7 +52,7 @@ func main() {
 		}
 
 		for i, tableNode := range tableNodes {
-			if i%2 != 0 || i == 0 {
+			if i%2 != 0 || i == 0 || i == 82 {
 				continue
 			}
 			aHrefNode := htmlquery.FindOne(tableNode, `./tbody/tr/td[1]/a/@href`)
@@ -80,7 +80,6 @@ func main() {
 				}
 				fmt.Println("=======下载完成========")
 			}
-
 		}
 		page++
 		if page > maxPage {
