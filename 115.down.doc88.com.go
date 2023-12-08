@@ -159,27 +159,38 @@ func main() {
 				continue
 			}
 
-			PidStr := htmlquery.SelectAttr(liNode, "id")
-			PidStr = strings.ReplaceAll(PidStr, "bdoc_", "")
-			Pid, _ := strconv.Atoi(PidStr)
-
-			requestQueryDownDoc88DownLoadUrl := fmt.Sprintf("https://www.doc88.com/doc.php?act=download&pid=%d", Pid)
-			QueryDownDoc88DownLoadUrlDoc, err := QueryDownDoc88DownLoadUrl(requestQueryDownDoc88DownLoadUrl)
-			if err != nil {
-				DownDoc88HttpProxyUrl = ""
-				fmt.Println(err)
+			fileDownLoadCountNode := htmlquery.FindOne(liNode, `./div[@class="bookdoc"]/ul[@class="position"]/li[8]/span[@class="red"]`)
+			if fileDownLoadCountNode == nil {
+				continue
+			}
+			fileDownLoadCountStr := htmlquery.InnerText(fileDownLoadCountNode)
+			fileDownLoadCount, _ := strconv.Atoi(fileDownLoadCountStr)
+			if fileDownLoadCount <= 0 {
 				continue
 			}
 
 			filePath := "../down.doc88.com/" + Title + ".pdf"
 			if _, err := os.Stat(filePath); err != nil {
+
+				PidStr := htmlquery.SelectAttr(liNode, "id")
+				PidStr = strings.ReplaceAll(PidStr, "bdoc_", "")
+				Pid, _ := strconv.Atoi(PidStr)
+
+				requestQueryDownDoc88DownLoadUrl := fmt.Sprintf("https://www.doc88.com/doc.php?act=download&pid=%d", Pid)
+				QueryDownDoc88DownLoadUrlDoc, err := QueryDownDoc88DownLoadUrl(requestQueryDownDoc88DownLoadUrl)
+				if err != nil {
+					DownDoc88HttpProxyUrl = ""
+					fmt.Println(err)
+					continue
+				}
+
 				refererUrl := "https://www.doc88.com/uc/doc_manager.php?act=doc_list&state=myshare"
 
 				downloadUrl := htmlquery.InnerText(QueryDownDoc88DownLoadUrlDoc)
 				fmt.Println(downloadUrl)
 
 				fmt.Println("=======开始下载" + Title + "========")
-				err := DownLoadDoc88(downloadUrl, refererUrl, filePath)
+				err = DownLoadDoc88(downloadUrl, refererUrl, filePath)
 				if err != nil {
 					fmt.Println(err)
 					continue
