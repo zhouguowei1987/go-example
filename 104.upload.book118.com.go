@@ -610,7 +610,31 @@ func main() {
 			price:   "2000",
 		},
 		{
-			dirName: "docx.lvlin.baidu.com",
+			dirName: "docx.www.shijuan1.com/小学试卷",
+			price:   "2000",
+		},
+		{
+			dirName: "docx.51zjedu.com/一年级",
+			price:   "2000",
+		},
+		{
+			dirName: "docx.51zjedu.com/二年级",
+			price:   "2000",
+		},
+		{
+			dirName: "docx.51zjedu.com/三年级",
+			price:   "2000",
+		},
+		{
+			dirName: "docx.51zjedu.com/四年级",
+			price:   "2000",
+		},
+		{
+			dirName: "docx.51zjedu.com/五年级",
+			price:   "2000",
+		},
+		{
+			dirName: "docx.51zjedu.com/六年级",
 			price:   "2000",
 		},
 		{

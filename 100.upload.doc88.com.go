@@ -527,13 +527,38 @@ func main() {
 			Price:   288,
 		},
 		{
-			dirName: "finish.www.tc260.org.cn",
-			pCid:    8368,
+			dirName: "docx.www.shijuan1.com/小学试卷",
+			pCid:    8242,
 			Price:   288,
 		},
 		{
-			dirName: "docx.lvlin.baidu.com",
-			pCid:    8131,
+			dirName: "docx.51zjedu.com/一年级",
+			pCid:    8242,
+			Price:   288,
+		},
+		{
+			dirName: "docx.51zjedu.com/二年级",
+			pCid:    8242,
+			Price:   288,
+		},
+		{
+			dirName: "docx.51zjedu.com/三年级",
+			pCid:    8242,
+			Price:   288,
+		},
+		{
+			dirName: "docx.51zjedu.com/四年级",
+			pCid:    8242,
+			Price:   288,
+		},
+		{
+			dirName: "docx.51zjedu.com/五年级",
+			pCid:    8242,
+			Price:   288,
+		},
+		{
+			dirName: "docx.51zjedu.com/六年级",
+			pCid:    8242,
 			Price:   288,
 		},
 		{
