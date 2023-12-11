@@ -115,13 +115,13 @@ var DownLoadUrlCookie = "__root_domain_v=.doc88.com; _qddaz=QD.155181178889683; 
 
 var DownNextPageSleep = 10
 var TodayCurrentDownLoadCount = 0
-var TodayMaxDownLoadCount = 50
+var TodayMaxDownLoadCount = 20
 
 // ychEduSpider 下载道客巴巴文档
 // @Title 下载道客巴巴文档
 // @Description https://www.doc88.com/，下载道客巴巴文档
 func main() {
-	curPage := 1
+	curPage := 510
 	isPageListGo := true
 	for isPageListGo {
 		pageListUrl := fmt.Sprintf("https://www.doc88.com/uc/doc_manager.php?act=ajax_doc_list&curpage=%d", curPage)
