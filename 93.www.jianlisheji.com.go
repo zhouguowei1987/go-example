@@ -58,7 +58,7 @@ var AllJianLiSheJiSubject = []JianLiSheJiSubject{
 
 const JianLiSheJiCurrentAccountDownloadCountMAx = 10
 
-var JianLiSheJiCurrentAccountId = 900000
+var JianLiSheJiCurrentAccountId = 900007
 var JianLiSheJiCurrentAccountDownloadCount = 0
 var JianLiSheJiNextDownloadSleep = 2
 
@@ -108,8 +108,6 @@ func main() {
 						JianLiSheJiCurrentAccountDownloadCount = 0
 						continue
 					}
-					fmt.Println("========当前账户ID,", JianLiSheJiCurrentAccountId, "============")
-					fmt.Println("========当前账户已下载,", JianLiSheJiCurrentAccountDownloadCount, "个文档============")
 					// 下载文档URL
 					downLoadUrl := fmt.Sprintf("https://www.jianlisheji.com/download/vip_download_word/?code=%s&keyid=%s&time=%s&encrypt=%s", vipCheckReturn.code, vipCheckReturn.keyid, vipCheckReturn.time, vipCheckReturn.encrypt)
 
@@ -137,6 +135,8 @@ func main() {
 							continue
 						}
 					}
+					fmt.Println("========当前账户ID,", JianLiSheJiCurrentAccountId, "============")
+					fmt.Println("========当前账户已下载,", JianLiSheJiCurrentAccountDownloadCount, "个文档============")
 				}
 				page++
 			} else {
