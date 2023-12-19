@@ -59,7 +59,6 @@ var AllJianLiSheJiSubject = []JianLiSheJiSubject{
 const JianLiSheJiCurrentAccountDownloadCountMAx = 10
 
 var JianLiSheJiCurrentAccountId = 900000
-var JianLiSheJiCookie = fmt.Sprintf("Hm_lvt_935dcd404e08577ddce430adb43b2cc9=1680165201; _gid=GA1.2.1939606718.1680165202; user_type=free; vip_expire_min=0; Hm_lpvt_935dcd404e08577ddce430adb43b2cc9=1680166294; JSESSIONID=598908E6CCA80F94C38EA17D7BEFF728; userid=%d; id_enpt=BiYMiYhrhb5tQJLJH8c4uQ==; avatar=https://www.jianlisheji.com/public/pc/common/default_head.png; mobile_flag=false; wechat_flag=true; login_token=dc0b2df7b35145ecea97e74c802ec4a9; _ga=GA1.1.1112728547.1680165202; _ga_34B604LFFQ=GS1.1.1680229977.2.1.1680233253.60.0.0", JianLiSheJiCurrentAccountId)
 var JianLiSheJiCurrentAccountDownloadCount = 0
 var JianLiSheJiNextDownloadSleep = 2
 
@@ -187,6 +186,8 @@ func vipCheckJianLiSheJi(vipCheckUrl string, referer string) (vipCheckReturn vip
 	if err != nil {
 		return vipCheckReturn, err
 	}
+
+	JianLiSheJiCookie := fmt.Sprintf("Hm_lvt_935dcd404e08577ddce430adb43b2cc9=1680165201; _gid=GA1.2.1939606718.1680165202; user_type=free; vip_expire_min=0; Hm_lpvt_935dcd404e08577ddce430adb43b2cc9=1680166294; JSESSIONID=598908E6CCA80F94C38EA17D7BEFF728; userid=%d; id_enpt=BiYMiYhrhb5tQJLJH8c4uQ==; avatar=https://www.jianlisheji.com/public/pc/common/default_head.png; mobile_flag=false; wechat_flag=true; login_token=dc0b2df7b35145ecea97e74c802ec4a9; _ga=GA1.1.1112728547.1680165202; _ga_34B604LFFQ=GS1.1.1680229977.2.1.1680233253.60.0.0", JianLiSheJiCurrentAccountId)
 
 	req.Header.Set("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9")
 	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
