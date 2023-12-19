@@ -121,7 +121,7 @@ var TodayMaxDownLoadCount = 20
 // @Title 下载道客巴巴文档
 // @Description https://www.doc88.com/，下载道客巴巴文档
 func main() {
-	curPage := 510
+	curPage := 580
 	isPageListGo := true
 	for isPageListGo {
 		pageListUrl := fmt.Sprintf("https://www.doc88.com/uc/doc_manager.php?act=ajax_doc_list&curpage=%d", curPage)
@@ -170,7 +170,7 @@ func main() {
 			}
 			fmt.Println("=====下载次数", fileDownLoadCount, "=====")
 
-			filePath := "../down.doc88.com/" + Title + ".pdf"
+			filePath := "../down.ttbz.org.cn/" + Title + ".pdf"
 			if _, err := os.Stat(filePath); err != nil {
 
 				PidStr := htmlquery.SelectAttr(liNode, "id")

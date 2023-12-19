@@ -229,11 +229,6 @@ func main() {
 			Price:   288,
 		},
 		{
-			dirName: "finish-dbba.sacinfo.org.cn",
-			pCid:    8371,
-			Price:   368,
-		},
-		{
 			dirName: "finish.tikuvip（2010-2011）.51test.net/专升本考试",
 			pCid:    55789,
 			Price:   288,
