@@ -58,7 +58,7 @@ var AllJianLiSheJiSubject = []JianLiSheJiSubject{
 
 const JianLiSheJiCurrentAccountDownloadCountMAx = 10
 
-var JianLiSheJiCurrentAccountId = 900007
+var JianLiSheJiCurrentAccountId = 900078
 var JianLiSheJiCurrentAccountDownloadCount = 0
 var JianLiSheJiNextDownloadSleep = 2
 
@@ -111,7 +111,7 @@ func main() {
 					// 下载文档URL
 					downLoadUrl := fmt.Sprintf("https://www.jianlisheji.com/download/vip_download_word/?code=%s&keyid=%s&time=%s&encrypt=%s", vipCheckReturn.code, vipCheckReturn.keyid, vipCheckReturn.time, vipCheckReturn.encrypt)
 
-					filePath := "F:\\workspace\\www.jianlisheji.com\\" + subject.name + "\\"
+					filePath := "F:\\workspace\\www.jianlisheji.com\\www.jianlisheji.com\\"
 					fileName = fileName + "." + fileFormat
 					if _, err := os.Stat(filePath + fileName); err != nil {
 						fmt.Println("=======开始下载========")
