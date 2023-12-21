@@ -15,7 +15,7 @@ import (
 	"time"
 )
 
-var GZenXxEnableHttpProxy = true
+var GZenXxEnableHttpProxy = false
 var GZenXxHttpProxyUrl = ""
 var GZenXxHttpProxyUrlArr = make([]string, 0)
 
@@ -481,6 +481,7 @@ func downloadGZenXx(attachmentUrl string, referer string, filePath string) error
 
 	req.Header.Set("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7")
 	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
+	req.Header.Set("Cookie", "__51cke__=; _gid=GA1.2.944241540.1703144883; PHPSESSID=22d6kpnbct0v3iopp7qctbk081; __tins__21123451=%7B%22sid%22%3A%201703148480266%2C%20%22vd%22%3A%207%2C%20%22expires%22%3A%201703151933380%7D; __51laig__=27; _gat=1; _ga_34B604LFFQ=GS1.1.1703148480.2.1.1703150135.57.0.0; _ga=GA1.1.1587097358.1703144883")
 	req.Header.Set("Connection", "keep-alive")
 	req.Header.Set("Host", "www.gzenxx.com")
 	req.Header.Set("Referer", referer)
