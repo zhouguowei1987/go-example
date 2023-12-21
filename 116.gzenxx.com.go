@@ -387,16 +387,32 @@ func main() {
 		for _, paper := range subject.papers {
 			current := 1
 			isPageListGo := true
+			// 计算最大页数
+			paperIndexUrl := paper.url
+			paperIndexDoc, err := htmlquery.LoadURL(paperIndexUrl)
+			if err != nil {
+				fmt.Println(err)
+				continue
+			}
+			paperTotalNode := htmlquery.FindOne(paperIndexDoc, `//div[@class="yzm-container"]/div[@class="yzm-content-box yzm-main-left yzm-text-list"]/div[@id="page"]/span[@class="pageinfo"]/strong`)
+			paperTotalText := htmlquery.InnerText(paperTotalNode)
+			pagerTotal, err := strconv.Atoi(paperTotalText)
+			if err != nil {
+				fmt.Println(err)
+				continue
+			}
+			paperMaxPages := (pagerTotal / 40) + 1
+
 			for isPageListGo {
-				subjectIndexUrl := paper.url + fmt.Sprintf("list_%d.html", current)
-				subjectIndexDoc, err := htmlquery.LoadURL(subjectIndexUrl)
+				paperListUrl := paper.url + fmt.Sprintf("list_%d.html", current)
+				paperListDoc, err := htmlquery.LoadURL(paperListUrl)
 				if err != nil {
 					fmt.Println(err)
 					current = 1
 					isPageListGo = false
 					continue
 				}
-				liNodes := htmlquery.Find(subjectIndexDoc, `//div[@class="yzm-container"]/div[@class="yzm-content-box yzm-main-left yzm-text-list"]/ul/li`)
+				liNodes := htmlquery.Find(paperListDoc, `//div[@class="yzm-container"]/div[@class="yzm-content-box yzm-main-left yzm-text-list"]/ul/li`)
 				if len(liNodes) <= 0 {
 					fmt.Println(err)
 					current = 1
@@ -406,7 +422,7 @@ func main() {
 				for _, liNode := range liNodes {
 					fmt.Println("============================================================================")
 					fmt.Println("科目：", subject.name, "试卷", paper.name)
-					fmt.Println("=======当前页URL", subjectIndexUrl, "========")
+					fmt.Println("=======当前页URL", paperListUrl, "========")
 
 					title := htmlquery.InnerText(htmlquery.FindOne(liNode, `./a/@title`))
 					fmt.Println(title)
@@ -448,6 +464,10 @@ func main() {
 					}
 				}
 				current++
+				if current > paperMaxPages {
+					fmt.Println("没有更多分页")
+					break
+				}
 				isPageListGo = true
 			}
 		}
