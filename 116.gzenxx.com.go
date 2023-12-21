@@ -379,9 +379,9 @@ var GZenXxSubjectsPapers = []GZenXxSubject{
 
 var GZenXxNextDownloadSleep = 2
 
-// ychEduSpider 获取中国教育出版网文档
-// @Title 获取中国教育出版网文档
-// @Description https://www.gzenxx.com/，获取中国教育出版网文档
+// ychEduSpider 获取高中学习网文档
+// @Title 获取高中学习网文档
+// @Description https://www.gzenxx.com/，获取高中学习网文档
 func main() {
 	for _, subject := range GZenXxSubjectsPapers {
 		for _, paper := range subject.papers {
