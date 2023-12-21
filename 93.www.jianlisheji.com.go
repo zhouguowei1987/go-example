@@ -42,19 +42,25 @@ var AllJianLiSheJiSubject = []JianLiSheJiSubject{
 		name: "中文简历",
 		url:  "https://www.jianlisheji.com/jianli/jianlimuban/",
 	},
-	{
-		name: "英文简历",
-		url:  "https://www.jianlisheji.com/jianli/yingwenjianli/",
-	},
-	{
-		name: "表格简历",
-		url:  "https://www.jianlisheji.com/jianli/biaogejianli/",
-	},
+	//{
+	//	name: "英文简历",
+	//	url:  "https://www.jianlisheji.com/jianli/yingwenjianli/",
+	//},
+	//{
+	//	name: "表格简历",
+	//	url:  "https://www.jianlisheji.com/jianli/biaogejianli/",
+	//},
 	{
 		name: "小升初简历",
 		url:  "https://www.jianlisheji.com/jianli/xiaoshengchu/",
 	},
 }
+
+const JianLiSheJiCurrentAccountDownloadCountMAx = 10
+
+var JianLiSheJiCurrentAccountId = 900007
+var JianLiSheJiCurrentAccountDownloadCount = 0
+var JianLiSheJiNextDownloadSleep = 2
 
 // ychEduSpider 获取简历设计文档
 // @Title 获取简历设计文档
@@ -97,23 +103,40 @@ func main() {
 					vipCheckReturn, err := vipCheckJianLiSheJi(vipCheckUrl, detailUrl)
 					if err != nil {
 						fmt.Println(err)
+						// 当前账号id加一
+						JianLiSheJiCurrentAccountId++
+						JianLiSheJiCurrentAccountDownloadCount = 0
 						continue
 					}
 					// 下载文档URL
 					downLoadUrl := fmt.Sprintf("https://www.jianlisheji.com/download/vip_download_word/?code=%s&keyid=%s&time=%s&encrypt=%s", vipCheckReturn.code, vipCheckReturn.keyid, vipCheckReturn.time, vipCheckReturn.encrypt)
 
-					filePath := "../www.jianlisheji.com/" + subject.name + "/"
+					filePath := "F:\\workspace\\www.jianlisheji.com\\" + subject.name + "\\"
 					fileName = fileName + "." + fileFormat
 					if _, err := os.Stat(filePath + fileName); err != nil {
 						fmt.Println("=======开始下载========")
 						err = downloadJianLiSheJi(downLoadUrl, detailUrl, filePath, fileName)
 						if err != nil {
 							fmt.Println(err)
+							// 当前账号id加一
+							JianLiSheJiCurrentAccountId++
+							JianLiSheJiCurrentAccountDownloadCount = 0
 							continue
 						}
-						fmt.Println("=======开始完成========")
-						time.Sleep(time.Second * 1)
+						fmt.Println("=======下载完成========")
+						for i := 1; i <= JianLiSheJiNextDownloadSleep; i++ {
+							time.Sleep(time.Second)
+							fmt.Println("===========操作结束，暂停", JianLiSheJiNextDownloadSleep, "秒，倒计时", i, "秒===========")
+						}
+						if JianLiSheJiCurrentAccountDownloadCount++; JianLiSheJiCurrentAccountDownloadCount >= JianLiSheJiCurrentAccountDownloadCountMAx {
+							// 当前账号id加一
+							JianLiSheJiCurrentAccountId++
+							JianLiSheJiCurrentAccountDownloadCount = 0
+							continue
+						}
 					}
+					fmt.Println("========当前账户ID,", JianLiSheJiCurrentAccountId, "============")
+					fmt.Println("========当前账户已下载,", JianLiSheJiCurrentAccountDownloadCount, "个文档============")
 				}
 				page++
 			} else {
@@ -164,11 +187,13 @@ func vipCheckJianLiSheJi(vipCheckUrl string, referer string) (vipCheckReturn vip
 		return vipCheckReturn, err
 	}
 
+	JianLiSheJiCookie := fmt.Sprintf("Hm_lvt_935dcd404e08577ddce430adb43b2cc9=1680165201; _gid=GA1.2.1939606718.1680165202; user_type=free; vip_expire_min=0; Hm_lpvt_935dcd404e08577ddce430adb43b2cc9=1680166294; JSESSIONID=598908E6CCA80F94C38EA17D7BEFF728; userid=%d; id_enpt=BiYMiYhrhb5tQJLJH8c4uQ==; avatar=https://www.jianlisheji.com/public/pc/common/default_head.png; mobile_flag=false; wechat_flag=true; login_token=dc0b2df7b35145ecea97e74c802ec4a9; _ga=GA1.1.1112728547.1680165202; _ga_34B604LFFQ=GS1.1.1680229977.2.1.1680233253.60.0.0", JianLiSheJiCurrentAccountId)
+
 	req.Header.Set("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9")
 	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
 	req.Header.Set("Connection", "keep-alive")
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
-	req.Header.Set("Cookie", "Hm_lvt_935dcd404e08577ddce430adb43b2cc9=1680165201; _gid=GA1.2.1939606718.1680165202; user_type=free; vip_expire_min=0; Hm_lpvt_935dcd404e08577ddce430adb43b2cc9=1680166294; JSESSIONID=598908E6CCA80F94C38EA17D7BEFF728; userid=959030; id_enpt=BiYMiYhrhb5tQJLJH8c4uQ==; avatar=https://www.jianlisheji.com/public/pc/common/default_head.png; mobile_flag=false; wechat_flag=true; login_token=dc0b2df7b35145ecea97e74c802ec4a9; _ga=GA1.1.1112728547.1680165202; _ga_34B604LFFQ=GS1.1.1680229977.2.1.1680233253.60.0.0")
+	req.Header.Set("Cookie", JianLiSheJiCookie)
 	req.Header.Set("Host", "www.jianlisheji.com")
 	req.Header.Set("Referer", referer)
 	req.Header.Set("sec-ch-ua", "\"Chromium\";v=\"110\", \"Not A(Brand\";v=\"24\", \"Google Chrome\";v=\"110\"")
