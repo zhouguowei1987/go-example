@@ -13,7 +13,7 @@ import (
 	"time"
 )
 
-var EditDocInEnableHttpProxy = true
+var EditDocInEnableHttpProxy = false
 var EditDocInHttpProxyUrl = ""
 var EditDocInHttpProxyUrlArr = make([]string, 0)
 
@@ -135,14 +135,14 @@ func main() {
 			trNode := htmlquery.FindOne(tbodyNode, `./tr`)
 			trId := strings.ReplaceAll(htmlquery.SelectAttr(trNode, "id"), "tr", "")
 
-			viewUrl := fmt.Sprintf("https://www.docin.com/p-%s.html", trId)
-			fmt.Println("访问文档详情")
-			_, err = ViewDocInDoc(viewUrl, referer)
-			if err != nil {
-				fmt.Println(err)
-				EditDocInHttpProxyUrl = ""
-				continue
-			}
+			//viewUrl := fmt.Sprintf("https://www.docin.com/p-%s.html", trId)
+			//fmt.Println("访问文档详情")
+			//_, err = ViewDocInDoc(viewUrl, referer)
+			//if err != nil {
+			//	fmt.Println(err)
+			//	EditDocInHttpProxyUrl = ""
+			//	continue
+			//}
 			//_, err := htmlquery.LoadURL(viewUrl)
 			//if err != nil {
 			//	continue
