@@ -13,16 +13,87 @@ import (
 	"time"
 )
 
-const (
-	EditDocInEnableHttpProxy = false
-	EditDocInHttpProxyUrl    = "111.225.152.186:8089"
-)
+var EditDocInEnableHttpProxy = true
+var EditDocInHttpProxyUrl = ""
+var EditDocInHttpProxyUrlArr = make([]string, 0)
+
+func EditDocInHttpProxy() error {
+	pageMax := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+	//pageMax := []int{11, 12, 13, 14, 15, 16, 17, 18, 19, 20}
+	for _, page := range pageMax {
+		freeProxyUrl := "https://www.beesproxy.com/free"
+		if page > 1 {
+			freeProxyUrl = fmt.Sprintf("https://www.beesproxy.com/free/page/%d", page)
+		}
+		beesProxyDoc, err := htmlquery.LoadURL(freeProxyUrl)
+		if err != nil {
+			return err
+		}
+		trNodes := htmlquery.Find(beesProxyDoc, `//figure[@class="wp-block-table"]/table[@class="table table-bordered bg--secondary"]/tbody/tr`)
+		if len(trNodes) > 0 {
+			for _, trNode := range trNodes {
+				ipNode := htmlquery.FindOne(trNode, "./td[1]")
+				if ipNode == nil {
+					continue
+				}
+				ip := htmlquery.InnerText(ipNode)
+
+				portNode := htmlquery.FindOne(trNode, "./td[2]")
+				if portNode == nil {
+					continue
+				}
+				port := htmlquery.InnerText(portNode)
+
+				protocolNode := htmlquery.FindOne(trNode, "./td[5]")
+				if protocolNode == nil {
+					continue
+				}
+				protocol := htmlquery.InnerText(protocolNode)
+
+				switch protocol {
+				case "HTTP":
+					EditDocInHttpProxyUrlArr = append(EditDocInHttpProxyUrlArr, "http://"+ip+":"+port)
+				case "HTTPS":
+					EditDocInHttpProxyUrlArr = append(EditDocInHttpProxyUrlArr, "https://"+ip+":"+port)
+				}
+			}
+		}
+	}
+	return nil
+}
 
 func EditDocInSetHttpProxy() (httpclient *http.Client) {
+	if EditDocInHttpProxyUrl == "" {
+		if len(EditDocInHttpProxyUrlArr) <= 0 {
+			err := EditDocInHttpProxy()
+			if err != nil {
+				EditDocInSetHttpProxy()
+			}
+		}
+		EditDocInHttpProxyUrl = EditDocInHttpProxyUrlArr[0]
+		if len(EditDocInHttpProxyUrlArr) >= 2 {
+			EditDocInHttpProxyUrlArr = EditDocInHttpProxyUrlArr[1:]
+		} else {
+			EditDocInHttpProxyUrlArr = make([]string, 0)
+		}
+	}
+
+	fmt.Println(EditDocInHttpProxyUrl)
 	ProxyURL, _ := url.Parse(EditDocInHttpProxyUrl)
 	httpclient = &http.Client{
 		Transport: &http.Transport{
 			Proxy: http.ProxyURL(ProxyURL),
+			Dial: func(netw, addr string) (net.Conn, error) {
+				c, err := net.DialTimeout(netw, addr, time.Second*3)
+				if err != nil {
+					fmt.Println("dail timeout", err)
+					return nil, err
+				}
+				return c, nil
+
+			},
+			MaxIdleConnsPerHost:   10,
+			ResponseHeaderTimeout: time.Second * 3,
 		},
 	}
 	return httpclient
@@ -52,6 +123,7 @@ func main() {
 		pageListDoc, err := QueryDocInDoc(pageListUrl, referer)
 		if err != nil {
 			fmt.Println(err)
+			EditDocInHttpProxyUrl = ""
 			continue
 		}
 		tbodyNodes := htmlquery.Find(pageListDoc, `//div[@class="tableWarp"]/table[@class="my-data"]/tbody`)
@@ -63,8 +135,14 @@ func main() {
 			trNode := htmlquery.FindOne(tbodyNode, `./tr`)
 			trId := strings.ReplaceAll(htmlquery.SelectAttr(trNode, "id"), "tr", "")
 
-			//viewUrl := fmt.Sprintf("https://www.docin.com/p-%s.html", trId)
-			//fmt.Println("访问文档详情")
+			viewUrl := fmt.Sprintf("https://www.docin.com/p-%s.html", trId)
+			fmt.Println("访问文档详情")
+			_, err = ViewDocInDoc(viewUrl, referer)
+			if err != nil {
+				fmt.Println(err)
+				EditDocInHttpProxyUrl = ""
+				continue
+			}
 			//_, err := htmlquery.LoadURL(viewUrl)
 			//if err != nil {
 			//	continue
@@ -129,6 +207,7 @@ func main() {
 			_, err = QueryDocInDoc(editUrl, referer)
 			if err != nil {
 				fmt.Println(err)
+				EditDocInHttpProxyUrl = ""
 				continue
 			}
 			fmt.Println("-----------------开始设置价格完结--------------------")
@@ -142,6 +221,64 @@ func main() {
 			"&myKeyword=&publishCount=&onlypPrivate=&totalprivatenum=0&onlypPublic=1"+
 			"&totalpublicnum=0&currentPage=%d&pageType=n&beginId=%d", currentPage, beginId)
 	}
+}
+
+func ViewDocInDoc(requestUrl string, referer string) (doc *html.Node, err error) {
+	// 初始化客户端
+	var client *http.Client = &http.Client{
+		Transport: &http.Transport{
+			Dial: func(netw, addr string) (net.Conn, error) {
+				c, err := net.DialTimeout(netw, addr, time.Second*20)
+				if err != nil {
+					fmt.Println("dail timeout", err)
+					return nil, err
+				}
+				return c, nil
+
+			},
+			MaxIdleConnsPerHost:   10,
+			ResponseHeaderTimeout: time.Second * 20,
+		},
+	}
+	if EditDocInEnableHttpProxy {
+		client = EditDocInSetHttpProxy()
+	}
+	req, err := http.NewRequest("GET", requestUrl, nil) //建立连接
+
+	if err != nil {
+		return doc, err
+	}
+
+	req.Header.Set("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7")
+	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
+	req.Header.Set("Connection", "keep-alive")
+	req.Header.Set("Host", "www.docin.com")
+	req.Header.Set("Origin", "https://www.docin.com")
+	req.Header.Set("Referer", referer)
+	req.Header.Set("sec-ch-ua", "\"Chromium\";v=\"110\", \"Not A(Brand\";v=\"24\", \"Google Chrome\";v=\"110\"")
+	req.Header.Set("sec-ch-ua-mobile", "?0")
+	req.Header.Set("sec-ch-ua-platform", "\"macOS\"")
+	req.Header.Set("Sec-Fetch-Dest", "empty")
+	req.Header.Set("Sec-Fetch-Mode", "cors")
+	req.Header.Set("Sec-Fetch-Site", "same-origin")
+	req.Header.Set("Sec-Fetch-User", "?1")
+	req.Header.Set("Upgrade-Insecure-Requests", "1")
+	req.Header.Set("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36")
+	req.Header.Set("X-Requested-With", "XMLHttpRequest")
+	resp, err := client.Do(req) //拿到返回的内容
+	if err != nil {
+		return doc, err
+	}
+	defer resp.Body.Close()
+	// 如果访问失败，就打印当前状态码
+	if resp.StatusCode != http.StatusOK {
+		return doc, errors.New("http status :" + strconv.Itoa(resp.StatusCode))
+	}
+	doc, err = htmlquery.Parse(resp.Body)
+	if err != nil {
+		return doc, err
+	}
+	return doc, nil
 }
 
 func QueryDocInDoc(requestUrl string, referer string) (doc *html.Node, err error) {
