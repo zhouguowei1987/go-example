@@ -422,7 +422,7 @@ func main() {
 					}
 
 					regAttachmentViewUrl := regexp.MustCompile(`<a href="/uploads/ueditor/file/(.*?)" title="`)
-					regAttachmentViewUrlMatch := regAttachmentViewUrl.FindAllSubmatch([]byte(htmlquery.InnerText(viewDoc)), -1)
+					regAttachmentViewUrlMatch := regAttachmentViewUrl.FindAllSubmatch([]byte(htmlquery.OutputHTML(viewDoc, true)), -1)
 					if len(regAttachmentViewUrlMatch) <= 0 {
 						fmt.Println("没有附件，跳过")
 						continue
@@ -430,7 +430,7 @@ func main() {
 					attachmentUrl := "https://www.gzenxx.com/uploads/ueditor/file/" + string(regAttachmentViewUrlMatch[0][1])
 					fmt.Println(attachmentUrl)
 
-					filePath := "../www.gzenxx.com/www.gzenxx.com/" + subject.name + "//" + title + ".rar"
+					filePath := "F:\\workspace\\www.gzenxx.com\\www.gzenxx.com\\" + subject.name + "\\" + title + ".rar"
 					_, err = os.Stat(filePath)
 					if err != nil {
 
