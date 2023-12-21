@@ -42,14 +42,14 @@ var AllJianLiSheJiSubject = []JianLiSheJiSubject{
 		name: "中文简历",
 		url:  "https://www.jianlisheji.com/jianli/jianlimuban/",
 	},
-	//{
-	//	name: "英文简历",
-	//	url:  "https://www.jianlisheji.com/jianli/yingwenjianli/",
-	//},
-	//{
-	//	name: "表格简历",
-	//	url:  "https://www.jianlisheji.com/jianli/biaogejianli/",
-	//},
+	{
+		name: "英文简历",
+		url:  "https://www.jianlisheji.com/jianli/yingwenjianli/",
+	},
+	{
+		name: "表格简历",
+		url:  "https://www.jianlisheji.com/jianli/biaogejianli/",
+	},
 	{
 		name: "小升初简历",
 		url:  "https://www.jianlisheji.com/jianli/xiaoshengchu/",
@@ -58,7 +58,7 @@ var AllJianLiSheJiSubject = []JianLiSheJiSubject{
 
 const JianLiSheJiCurrentAccountDownloadCountMAx = 10
 
-var JianLiSheJiCurrentAccountId = 900078
+var JianLiSheJiCurrentAccountId = 900180
 var JianLiSheJiCurrentAccountDownloadCount = 0
 var JianLiSheJiNextDownloadSleep = 2
 
