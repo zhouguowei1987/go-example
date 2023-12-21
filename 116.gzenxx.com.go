@@ -450,7 +450,7 @@ func main() {
 					_, err = os.Stat(filePath)
 					if err != nil {
 
-						fmt.Println("=======开始下载" + strconv.Itoa(current) + "========")
+						fmt.Println("=======开始下载"+strconv.Itoa(current)+"-", paperMaxPages, "========")
 						err = downloadGZenXx(attachmentUrl, viewHref, filePath)
 						if err != nil {
 							fmt.Println(err)
