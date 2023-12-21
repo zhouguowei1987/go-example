@@ -153,7 +153,7 @@ func main() {
 		pageListUrl := fmt.Sprintf("https://www.doc88.com/uc/doc_manager.php?act=ajax_doc_list&curpage=%d", curPage)
 		fmt.Println(pageListUrl)
 		queryEditDoc88ListFormData := QueryEditDoc88ListFormData{
-			MenuIndex:  4,
+			MenuIndex:  2,
 			ClassifyId: "all",
 			FolderId:   0,
 			Sort:       1,
