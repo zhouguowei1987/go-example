@@ -15,11 +15,11 @@ import (
 	"time"
 )
 
-var GZenXxEnableHttpProxy = false
-var GZenXxHttpProxyUrl = ""
-var GZenXxHttpProxyUrlArr = make([]string, 0)
+var TRjlSengEnableHttpProxy = false
+var TRjlSengHttpProxyUrl = ""
+var TRjlSengHttpProxyUrlArr = make([]string, 0)
 
-func GZenXxHttpProxy() error {
+func TRjlSengHttpProxy() error {
 	pageMax := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
 	//pageMax := []int{11, 12, 13, 14, 15, 16, 17, 18, 19, 20}
 	for _, page := range pageMax {
@@ -54,9 +54,9 @@ func GZenXxHttpProxy() error {
 
 				switch protocol {
 				case "HTTP":
-					GZenXxHttpProxyUrlArr = append(GZenXxHttpProxyUrlArr, "http://"+ip+":"+port)
+					TRjlSengHttpProxyUrlArr = append(TRjlSengHttpProxyUrlArr, "http://"+ip+":"+port)
 				case "HTTPS":
-					GZenXxHttpProxyUrlArr = append(GZenXxHttpProxyUrlArr, "https://"+ip+":"+port)
+					TRjlSengHttpProxyUrlArr = append(TRjlSengHttpProxyUrlArr, "https://"+ip+":"+port)
 				}
 			}
 		}
@@ -64,24 +64,24 @@ func GZenXxHttpProxy() error {
 	return nil
 }
 
-func GZenXxSetHttpProxy() (httpclient *http.Client) {
-	if GZenXxHttpProxyUrl == "" {
-		if len(GZenXxHttpProxyUrlArr) <= 0 {
-			err := GZenXxHttpProxy()
+func TRjlSengSetHttpProxy() (httpclient *http.Client) {
+	if TRjlSengHttpProxyUrl == "" {
+		if len(TRjlSengHttpProxyUrlArr) <= 0 {
+			err := TRjlSengHttpProxy()
 			if err != nil {
-				GZenXxSetHttpProxy()
+				TRjlSengSetHttpProxy()
 			}
 		}
-		GZenXxHttpProxyUrl = GZenXxHttpProxyUrlArr[0]
-		if len(GZenXxHttpProxyUrlArr) >= 2 {
-			GZenXxHttpProxyUrlArr = GZenXxHttpProxyUrlArr[1:]
+		TRjlSengHttpProxyUrl = TRjlSengHttpProxyUrlArr[0]
+		if len(TRjlSengHttpProxyUrlArr) >= 2 {
+			TRjlSengHttpProxyUrlArr = TRjlSengHttpProxyUrlArr[1:]
 		} else {
-			GZenXxHttpProxyUrlArr = make([]string, 0)
+			TRjlSengHttpProxyUrlArr = make([]string, 0)
 		}
 	}
 
-	fmt.Println(GZenXxHttpProxyUrl)
-	ProxyURL, _ := url.Parse(GZenXxHttpProxyUrl)
+	fmt.Println(TRjlSengHttpProxyUrl)
+	ProxyURL, _ := url.Parse(TRjlSengHttpProxyUrl)
 	httpclient = &http.Client{
 		Transport: &http.Transport{
 			Proxy: http.ProxyURL(ProxyURL),
@@ -101,289 +101,129 @@ func GZenXxSetHttpProxy() (httpclient *http.Client) {
 	return httpclient
 }
 
-type GZenXxSubject struct {
+type TRjlSengSubject struct {
 	name   string
-	papers []GZenXxSubjectsPaper
+	papers []TRjlSengSubjectsPaper
 }
 
-type GZenXxSubjectsPaper struct {
+type TRjlSengSubjectsPaper struct {
 	name string
 	url  string
 }
 
-var GZenXxSubjectsPapers = []GZenXxSubject{
+var TRjlSengSubjectsPapers = []TRjlSengSubject{
 	{
-		name: "语文",
-		papers: []GZenXxSubjectsPaper{
+		name: "教材",
+		papers: []TRjlSengSubjectsPaper{
 			{
-				name: "教材同步",
-				url:  "https://www.gzenxx.com/ywjc/",
+				name: "初中人教版",
+				url:  "https://www.trjlseng.com/crjb/",
 			},
 			{
-				name: "知识点",
-				url:  "https://www.gzenxx.com/ywzs/",
+				name: "初中外研版",
+				url:  "https://www.trjlseng.com/cwyb/",
 			},
 			{
-				name: "期末试题",
-				url:  "https://www.gzenxx.com/ywst/",
+				name: "初中牛津版",
+				url:  "https://www.trjlseng.com/cnjb/",
 			},
+			{
+				name: "高中人教版",
+				url:  "https://www.trjlseng.com/grjb/",
+			},
+			{
+				name: "高中外研版",
+				url:  "https://www.trjlseng.com/gwyb/",
+			},
+			{
+				name: "高中北师版",
+				url:  "https://www.trjlseng.com/gbsb/",
+			},
+		},
+	},
+
+	{
+		name: "试题",
+		papers: []TRjlSengSubjectsPaper{
+			{
+				name: "初一试题",
+				url:  "https://www.trjlseng.com/cyst/",
+			},
+			{
+				name: "初二试题",
+				url:  "https://www.trjlseng.com/cest/",
+			},
+			{
+				name: "初三试题",
+				url:  "https://www.trjlseng.com/csst/",
+			},
+			{
+				name: "高一试题",
+				url:  "https://www.trjlseng.com/gyst/",
+			},
+			{
+				name: "高二试题",
+				url:  "https://www.trjlseng.com/gest/",
+			},
+			{
+				name: "高三试题",
+				url:  "https://www.trjlseng.com/gsst/",
+			},
+		},
+	},
+
+	{
+		name: "中考",
+		papers: []TRjlSengSubjectsPaper{
+			{
+				name: "中考复习",
+				url:  "https://www.trjlseng.com/zkfx/",
+			},
+			{
+				name: "中考语法",
+				url:  "https://www.trjlseng.com/zkyf/",
+			},
+			{
+				name: "中考作文",
+				url:  "https://www.trjlseng.com/zkzw/",
+			},
+			{
+				name: "中考试题",
+				url:  "https://www.trjlseng.com/zkst/",
+			},
+		},
+	},
+
+	{
+		name: "高考",
+		papers: []TRjlSengSubjectsPaper{
 			{
 				name: "高考复习",
-				url:  "https://www.gzenxx.com/gkyw/",
+				url:  "https://www.trjlseng.com/gkfx/",
 			},
 			{
-				name: "高考试题",
-				url:  "https://www.gzenxx.com/gkywst/",
+				name: "高考语法",
+				url:  "https://www.trjlseng.com/gkyf/",
 			},
 			{
 				name: "高考作文",
-				url:  "https://www.gzenxx.com/gkzw/",
-			},
-		},
-	},
-
-	{
-		name: "数学",
-		papers: []GZenXxSubjectsPaper{
-			{
-				name: "教材同步",
-				url:  "https://www.gzenxx.com/sxjc/",
-			},
-			{
-				name: "知识点",
-				url:  "https://www.gzenxx.com/sxzs/",
-			},
-			{
-				name: "期末试题",
-				url:  "https://www.gzenxx.com/sxst/",
-			},
-			{
-				name: "高考复习",
-				url:  "https://www.gzenxx.com/gksx/",
+				url:  "https://www.trjlseng.com/gkzw/",
 			},
 			{
 				name: "高考试题",
-				url:  "https://www.gzenxx.com/gksxst/",
-			},
-		},
-	},
-
-	{
-		name: "英语",
-		papers: []GZenXxSubjectsPaper{
-			{
-				name: "教材同步",
-				url:  "https://www.gzenxx.com/yyjc/",
-			},
-			{
-				name: "知识点",
-				url:  "https://www.gzenxx.com/yyzs/",
-			},
-			{
-				name: "期末试题",
-				url:  "https://www.gzenxx.com/yyst/",
-			},
-			{
-				name: "高考复习",
-				url:  "https://www.gzenxx.com/gkyy/",
-			},
-			{
-				name: "高考试题",
-				url:  "https://www.gzenxx.com/gkyyst/",
-			},
-		},
-	},
-
-	{
-		name: "物理",
-		papers: []GZenXxSubjectsPaper{
-			{
-				name: "教材同步",
-				url:  "https://www.gzenxx.com/wljc/",
-			},
-			{
-				name: "知识点",
-				url:  "https://www.gzenxx.com/wlzs/",
-			},
-			{
-				name: "期末试题",
-				url:  "https://www.gzenxx.com/wlst/",
-			},
-			{
-				name: "高考复习",
-				url:  "https://www.gzenxx.com/gkwl/",
-			},
-			{
-				name: "高考试题",
-				url:  "https://www.gzenxx.com/gkwlst/",
-			},
-		},
-	},
-
-	{
-		name: "化学",
-		papers: []GZenXxSubjectsPaper{
-			{
-				name: "教材同步",
-				url:  "https://www.gzenxx.com/hxjc/",
-			},
-			{
-				name: "知识点",
-				url:  "https://www.gzenxx.com/hxzs/",
-			},
-			{
-				name: "期末试题",
-				url:  "https://www.gzenxx.com/hxst/",
-			},
-			{
-				name: "高考复习",
-				url:  "https://www.gzenxx.com/gkhx/",
-			},
-			{
-				name: "高考试题",
-				url:  "https://www.gzenxx.com/gkhxst/",
-			},
-		},
-	},
-
-	{
-		name: "生物",
-		papers: []GZenXxSubjectsPaper{
-			{
-				name: "教材同步",
-				url:  "https://www.gzenxx.com/swjc/",
-			},
-			{
-				name: "知识点",
-				url:  "https://www.gzenxx.com/swzs/",
-			},
-			{
-				name: "期末试题",
-				url:  "https://www.gzenxx.com/swst/",
-			},
-			{
-				name: "高考复习",
-				url:  "https://www.gzenxx.com/gksw/",
-			},
-			{
-				name: "高考试题",
-				url:  "https://www.gzenxx.com/gkswst/",
-			},
-		},
-	},
-
-	{
-		name: "政治",
-		papers: []GZenXxSubjectsPaper{
-			{
-				name: "教材同步",
-				url:  "https://www.gzenxx.com/zzjc/",
-			},
-			{
-				name: "知识点",
-				url:  "https://www.gzenxx.com/zzzs/",
-			},
-			{
-				name: "期末试题",
-				url:  "https://www.gzenxx.com/zzst/",
-			},
-			{
-				name: "高考复习",
-				url:  "https://www.gzenxx.com/gkzz/",
-			},
-			{
-				name: "高考试题",
-				url:  "https://www.gzenxx.com/gkzzst/",
-			},
-		},
-	},
-
-	{
-		name: "历史",
-		papers: []GZenXxSubjectsPaper{
-			{
-				name: "教材同步",
-				url:  "https://www.gzenxx.com/lsjc/",
-			},
-			{
-				name: "知识点",
-				url:  "https://www.gzenxx.com/lszs/",
-			},
-			{
-				name: "期末试题",
-				url:  "https://www.gzenxx.com/lsst/",
-			},
-			{
-				name: "高考复习",
-				url:  "https://www.gzenxx.com/gkls/",
-			},
-			{
-				name: "高考试题",
-				url:  "https://www.gzenxx.com/gklsst/",
-			},
-		},
-	},
-
-	{
-		name: "地理",
-		papers: []GZenXxSubjectsPaper{
-			{
-				name: "教材同步",
-				url:  "https://www.gzenxx.com/dljc/",
-			},
-			{
-				name: "知识点",
-				url:  "https://www.gzenxx.com/dlzs/",
-			},
-			{
-				name: "期末试题",
-				url:  "https://www.gzenxx.com/dlst/",
-			},
-			{
-				name: "高考复习",
-				url:  "https://www.gzenxx.com/gkdl/",
-			},
-			{
-				name: "高考试题",
-				url:  "https://www.gzenxx.com/gkdlst/",
-			},
-		},
-	},
-
-	{
-		name: "综合",
-		papers: []GZenXxSubjectsPaper{
-			{
-				name: "学习方法",
-				url:  "https://www.gzenxx.com/xxff/",
-			},
-			{
-				name: "文综",
-				url:  "https://www.gzenxx.com/wkzh/",
-			},
-			{
-				name: "理综",
-				url:  "https://www.gzenxx.com/lkzh/",
-			},
-			{
-				name: "育人教育",
-				url:  "https://www.gzenxx.com/yrjy/",
-			},
-			{
-				name: "心理健康",
-				url:  "https://www.gzenxx.com/xljk/",
+				url:  "https://www.trjlseng.com/gkst/",
 			},
 		},
 	},
 }
 
-var GZenXxNextDownloadSleep = 2
+var TRjlSengNextDownloadSleep = 2
 
-// ychEduSpider 获取高中学习网文档
-// @Title 获取高中学习网文档
-// @Description https://www.gzenxx.com/，获取高中学习网文档
+// ychEduSpider 获取中学英语网文档
+// @Title 获取中学英语网文档
+// @Description https://www.trjlseng.com/，获取中学英语网文档
 func main() {
-	for _, subject := range GZenXxSubjectsPapers {
+	for _, subject := range TRjlSengSubjectsPapers {
 		for _, paper := range subject.papers {
 			current := 1
 			isPageListGo := true
@@ -427,7 +267,7 @@ func main() {
 					title := htmlquery.InnerText(htmlquery.FindOne(liNode, `./a/@title`))
 					fmt.Println(title)
 
-					viewHref := "https://www.gzenxx.com" + htmlquery.InnerText(htmlquery.FindOne(liNode, `./a/@href`))
+					viewHref := "https://www.trjlseng.com" + htmlquery.InnerText(htmlquery.FindOne(liNode, `./a/@href`))
 					fmt.Println(viewHref)
 
 					// 查看是否有附件
@@ -443,23 +283,23 @@ func main() {
 						fmt.Println("没有附件，跳过")
 						continue
 					}
-					attachmentUrl := "https://www.gzenxx.com/uploads/ueditor/file/" + string(regAttachmentViewUrlMatch[0][1])
+					attachmentUrl := "https://www.trjlseng.com/uploads/ueditor/file/" + string(regAttachmentViewUrlMatch[0][1])
 					fmt.Println(attachmentUrl)
 
-					filePath := "F:\\workspace\\www.rar_gzenxx.com\\" + title + ".rar"
+					filePath := "F:\\workspace\\www.rar_trjlseng.com\\" + title + ".rar"
 					_, err = os.Stat(filePath)
 					if err != nil {
 
 						fmt.Println("=======开始下载"+strconv.Itoa(current)+"-", paperMaxPages, "========")
-						err = downloadGZenXx(attachmentUrl, viewHref, filePath)
+						err = downloadTRjlSeng(attachmentUrl, viewHref, filePath)
 						if err != nil {
 							fmt.Println(err)
 							continue
 						}
 						fmt.Println("=======下载完成========")
-						for i := 1; i <= GZenXxNextDownloadSleep; i++ {
+						for i := 1; i <= TRjlSengNextDownloadSleep; i++ {
 							time.Sleep(time.Second)
-							fmt.Println("===========操作结束，暂停", GZenXxNextDownloadSleep, "秒，倒计时", i, "秒===========")
+							fmt.Println("===========操作结束，暂停", TRjlSengNextDownloadSleep, "秒，倒计时", i, "秒===========")
 						}
 					}
 				}
@@ -474,7 +314,7 @@ func main() {
 	}
 }
 
-func downloadGZenXx(attachmentUrl string, referer string, filePath string) error {
+func downloadTRjlSeng(attachmentUrl string, referer string, filePath string) error {
 	// 初始化客户端
 	var client *http.Client = &http.Client{
 		Transport: &http.Transport{
@@ -491,8 +331,8 @@ func downloadGZenXx(attachmentUrl string, referer string, filePath string) error
 			ResponseHeaderTimeout: time.Second * 3,
 		},
 	}
-	if GZenXxEnableHttpProxy {
-		client = GZenXxSetHttpProxy()
+	if TRjlSengEnableHttpProxy {
+		client = TRjlSengSetHttpProxy()
 	}
 	req, err := http.NewRequest("GET", attachmentUrl, nil) //建立连接
 	if err != nil {
@@ -503,7 +343,7 @@ func downloadGZenXx(attachmentUrl string, referer string, filePath string) error
 	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
 	req.Header.Set("Cookie", "__51cke__=; _gid=GA1.2.944241540.1703144883; PHPSESSID=22d6kpnbct0v3iopp7qctbk081; __tins__21123451=%7B%22sid%22%3A%201703148480266%2C%20%22vd%22%3A%207%2C%20%22expires%22%3A%201703151933380%7D; __51laig__=27; _gat=1; _ga_34B604LFFQ=GS1.1.1703148480.2.1.1703150135.57.0.0; _ga=GA1.1.1587097358.1703144883")
 	req.Header.Set("Connection", "keep-alive")
-	req.Header.Set("Host", "www.gzenxx.com")
+	req.Header.Set("Host", "www.trjlseng.com")
 	req.Header.Set("Referer", referer)
 	req.Header.Set("sec-ch-ua", "\"Chromium\";v=\"110\", \"Not A(Brand\";v=\"24\", \"Google Chrome\";v=\"110\"")
 	req.Header.Set("sec-ch-ua-mobile", "?0")
