@@ -62,7 +62,7 @@ func main() {
 	isPageListGo := true
 	for isPageListGo {
 		hasDeleteFlag := false
-		requestUrl := fmt.Sprintf("https://cuttlefish.baidu.com/nshop/doc/getlist?sub_tab=1&pn=%d&rn=%d&query=&doc_id_str=&time_range=&buyout_show_type=1&needDayUploadUserCount=1", pn, rn)
+		requestUrl := fmt.Sprintf("https://cuttlefish.baidu.com/nshop/doc/getlist?sub_tab=2&pn=%d&rn=%d&query=&doc_id_str=&time_range=&buyout_show_type=1&needDayUploadUserCount=1", pn, rn)
 		fmt.Println(requestUrl)
 		getListResponse, err := GetList(requestUrl)
 		if err != nil {
