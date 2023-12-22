@@ -446,7 +446,7 @@ func main() {
 					attachmentUrl := "https://www.gzenxx.com/uploads/ueditor/file/" + string(regAttachmentViewUrlMatch[0][1])
 					fmt.Println(attachmentUrl)
 
-					filePath := "F:\\workspace\\www.gzenxx.com\\www.gzenxx.com\\" + subject.name + "\\" + title + ".rar"
+					filePath := "F:\\workspace\\www.gzenxx.com\\www.gzenxx.com\\" + title + ".rar"
 					_, err = os.Stat(filePath)
 					if err != nil {
 
