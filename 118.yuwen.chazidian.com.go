@@ -153,7 +153,7 @@ func main() {
 			fmt.Println(attachmentUrl)
 			fileExt := strings.Split(attachmentUrl, ".")
 
-			filePath := "F:\\workspace\\yuwen.chazidian.com\\yuwen.rar_chazidian.com\\" + title + "." + fileExt[1]
+			filePath := "F:\\workspace\\yuwen.rar_chazidian.com\\" + title + "." + fileExt[1]
 			_, err = os.Stat(filePath)
 			if err != nil {
 
