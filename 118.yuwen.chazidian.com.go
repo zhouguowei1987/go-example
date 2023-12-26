@@ -104,7 +104,7 @@ func YuWenChaZiDianSetHttpProxy() (httpclient *http.Client) {
 	return httpclient
 }
 
-var YuWenChaZiDianNextDownloadSleep = 2
+//var YuWenChaZiDianNextDownloadSleep = 2
 
 // ychEduSpider 获取查字典语文网试卷
 // @Title 获取查字典语文网试卷
@@ -135,6 +135,7 @@ func main() {
 			fmt.Println(title)
 
 			viewHref := "https://yuwen.chazidian.com/shijuan" + strconv.Itoa(data.Id)
+			fmt.Println(viewHref)
 
 			// 查看是否有附件
 			viewDoc, err := htmlquery.LoadURL(viewHref)
@@ -143,7 +144,7 @@ func main() {
 				continue
 			}
 
-			regAttachmentViewUrl := regexp.MustCompile(`<a href="//yuwen.chazidian.com/uploadfile/shijuan/(.*?)" style="color: brown">立即下载</a>`)
+			regAttachmentViewUrl := regexp.MustCompile(`<a href="//yuwen.chazidian.com/uploadfile/(.*?)" style="color: brown">立即下载</a>`)
 			regAttachmentViewUrlMatch := regAttachmentViewUrl.FindAllSubmatch([]byte(htmlquery.OutputHTML(viewDoc, true)), -1)
 			if len(regAttachmentViewUrlMatch) <= 0 {
 				fmt.Println("没有附件，跳过")
@@ -169,10 +170,10 @@ func main() {
 					continue
 				}
 				fmt.Println("=======下载完成========")
-				for i := 1; i <= YuWenChaZiDianNextDownloadSleep; i++ {
-					time.Sleep(time.Second)
-					fmt.Println("===========操作结束，暂停", YuWenChaZiDianNextDownloadSleep, "秒，倒计时", i, "秒===========")
-				}
+				//for i := 1; i <= YuWenChaZiDianNextDownloadSleep; i++ {
+				//	time.Sleep(time.Second)
+				//	fmt.Println("===========操作结束，暂停", YuWenChaZiDianNextDownloadSleep, "秒，倒计时", i, "秒===========")
+				//}
 			}
 		}
 		page++
