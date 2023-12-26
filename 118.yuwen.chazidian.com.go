@@ -149,7 +149,7 @@ func main() {
 				fmt.Println("没有附件，跳过")
 				continue
 			}
-			attachmentUrl := "//yuwen.chazidian.com/uploadfile/shijuan/" + string(regAttachmentViewUrlMatch[0][1])
+			attachmentUrl := "https://yuwen.chazidian.com/uploadfile/shijuan/" + string(regAttachmentViewUrlMatch[0][1])
 			fmt.Println(attachmentUrl)
 			fileExt := strings.Split(attachmentUrl, ".")
 
