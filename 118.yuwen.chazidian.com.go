@@ -153,6 +153,10 @@ func main() {
 			fmt.Println(attachmentUrl)
 			fileExtIndex := strings.LastIndex(attachmentUrl, ".")
 			fileExt := attachmentUrl[fileExtIndex:]
+			if !YuWenChaZiDianStrInArray(fileExt, []string{".doc", ".docx"}) {
+				fmt.Println("文件后缀：" + fileExt + "不在下载后缀列表")
+				continue
+			}
 
 			filePath := "F:\\workspace\\yuwen.rar_chazidian.com\\" + title + fileExt
 			_, err = os.Stat(filePath)
@@ -335,4 +339,16 @@ func downloadYuWenChaZiDian(attachmentUrl string, referer string, filePath strin
 		return err
 	}
 	return nil
+}
+
+// YuWenChaZiDianStrInArray str in string list
+func YuWenChaZiDianStrInArray(str string, data []string) bool {
+	if len(data) > 0 {
+		for _, row := range data {
+			if str == row {
+				return true
+			}
+		}
+	}
+	return false
 }
