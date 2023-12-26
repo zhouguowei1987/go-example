@@ -151,9 +151,10 @@ func main() {
 			}
 			attachmentUrl := "https://yuwen.chazidian.com/uploadfile/shijuan/" + string(regAttachmentViewUrlMatch[0][1])
 			fmt.Println(attachmentUrl)
-			fileExt := strings.Split(attachmentUrl, ".")
+			fileExtIndex := strings.LastIndex(attachmentUrl, ".")
+			fileExt := attachmentUrl[fileExtIndex:]
 
-			filePath := "F:\\workspace\\yuwen.rar_chazidian.com\\" + title + "." + fileExt[1]
+			filePath := "F:\\workspace\\yuwen.rar_chazidian.com\\" + title + fileExt
 			_, err = os.Stat(filePath)
 			if err != nil {
 
