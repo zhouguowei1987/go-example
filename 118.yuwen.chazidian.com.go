@@ -158,7 +158,7 @@ func main() {
 				continue
 			}
 
-			filePath := "F:\\workspace\\yuwen.rar_chazidian.com\\" + title + fileExt
+			filePath := "F:\\workspace\\yuwen.chazidian.com\\yuwen.chazidian.com\\" + title + fileExt
 			_, err = os.Stat(filePath)
 			if err != nil {
 
