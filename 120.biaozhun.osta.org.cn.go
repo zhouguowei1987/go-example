@@ -10,6 +10,7 @@ import (
 	"net/http"
 	"net/url"
 	"os"
+	"path/filepath"
 	"strconv"
 	"strings"
 	"time"
@@ -137,7 +138,7 @@ func main() {
 			code := row.Code
 			fmt.Println(code)
 
-			filePath := "F:\\workspace\\biaozhun.osta.org.cn\\" + name + "(" + code + ").pdf"
+			filePath := "F:\\workspace\\biaozhun.osta.org.cn\\" + name + "-职业标准(" + code + ").pdf"
 			_, err = os.Stat(filePath)
 			if err != nil {
 				fmt.Println("=======开始下载" + strconv.Itoa(page) + "========")
@@ -151,6 +152,14 @@ func main() {
 				if err != nil {
 					fmt.Println(err)
 					continue
+				}
+
+				fileDiv := filepath.Dir(filePath)
+				if _, err = os.Stat(fileDiv); err != nil {
+					if os.MkdirAll(fileDiv, 0777) != nil {
+						fmt.Println(err)
+						continue
+					}
 				}
 
 				err = ioutil.WriteFile(filePath, pdfBytes, 0644)
