@@ -121,7 +121,7 @@ var GoodKeJianPapers = []GoodKeJianPaper{
 	},
 }
 
-var GoodKeJianNextDownloadSleep = 2
+//var GoodKeJianNextDownloadSleep = 2
 
 // ychEduSpider 获取好课件吧试卷
 // @Title 获取好课件吧试卷
@@ -196,10 +196,10 @@ func main() {
 						continue
 					}
 					fmt.Println("=======下载完成========")
-					for i := 1; i <= GoodKeJianNextDownloadSleep; i++ {
-						time.Sleep(time.Second)
-						fmt.Println("===========操作结束，暂停", GoodKeJianNextDownloadSleep, "秒，倒计时", i, "秒===========")
-					}
+					//for i := 1; i <= GoodKeJianNextDownloadSleep; i++ {
+					//	time.Sleep(time.Second)
+					//	fmt.Println("===========操作结束，暂停", GoodKeJianNextDownloadSleep, "秒，倒计时", i, "秒===========")
+					//}
 				}
 			}
 			current++
