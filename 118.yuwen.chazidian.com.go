@@ -110,7 +110,7 @@ func YuWenChaZiDianSetHttpProxy() (httpclient *http.Client) {
 // @Title 获取查字典语文网试卷
 // @Description https://yuwen.chazidian.com/，获取查字典语文网试卷
 func main() {
-	page := 1
+	page := 946
 	isPageListGo := true
 
 	for isPageListGo {
@@ -133,6 +133,10 @@ func main() {
 
 			title := data.Title
 			fmt.Println(title)
+			if strings.Contains(title, "图片") || strings.Contains(title, "扫描") {
+				fmt.Println("标题含有图片，扫描字样")
+				continue
+			}
 
 			viewHref := "https://yuwen.chazidian.com/shijuan" + strconv.Itoa(data.Id)
 			fmt.Println(viewHref)
@@ -150,19 +154,18 @@ func main() {
 				fmt.Println("没有附件，跳过")
 				continue
 			}
-			attachmentUrl := "https://yuwen.chazidian.com/uploadfile/shijuan/" + string(regAttachmentViewUrlMatch[0][1])
+			attachmentUrl := "https://yuwen.chazidian.com/uploadfile/" + string(regAttachmentViewUrlMatch[0][1])
 			fmt.Println(attachmentUrl)
 			fileExtIndex := strings.LastIndex(attachmentUrl, ".")
 			fileExt := attachmentUrl[fileExtIndex:]
-			if !YuWenChaZiDianStrInArray(fileExt, []string{".doc", ".docx"}) {
+			if !YuWenChaZiDianStrInArray(fileExt, []string{".doc", ".docx", ".rar"}) {
 				fmt.Println("文件后缀：" + fileExt + "不在下载后缀列表")
 				continue
 			}
 
-			filePath := "F:\\workspace\\yuwen.chazidian.com\\yuwen.chazidian.com\\" + title + fileExt
+			filePath := "F:\\workspace\\yuwen.chazidian.com\\yuwen.rar_chazidian.com\\" + title + fileExt
 			_, err = os.Stat(filePath)
 			if err != nil {
-
 				fmt.Println("=======开始下载" + strconv.Itoa(page) + "========")
 				err = downloadYuWenChaZiDian(attachmentUrl, viewHref, filePath)
 				if err != nil {
@@ -259,9 +262,6 @@ func YuWenChaZiDianGetCatePageDataApi(page int) (yuWenChaZiDianResponse YuWenCha
 	respString = strings.Trim(respString, "\"")
 	respString, err = strconv.Unquote(strings.Replace(strconv.Quote(respString), `\\u`, `\u`, -1))
 	respString = strings.ReplaceAll(respString, "\\", "")
-	if err != nil {
-		return yuWenChaZiDianResponse, err
-	}
 	if err != nil {
 		return yuWenChaZiDianResponse, err
 	}
