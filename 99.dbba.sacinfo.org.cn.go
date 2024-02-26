@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/antchfx/htmlquery"
 	"io"
 	"io/ioutil"
 	"net"
@@ -83,11 +84,6 @@ func main() {
 					chName = strings.ReplaceAll(chName, ":", "-")
 					chName = strings.ReplaceAll(chName, "：", "-")
 
-					if strings.Contains(chName, "部分") {
-						fmt.Println("含有部分“字样”，跳过")
-						continue
-					}
-
 					industry := strings.TrimSpace(records.Industry)
 
 					code := strings.ReplaceAll(records.Code, "/", "-")
@@ -96,11 +92,28 @@ func main() {
 					fileName := chName + "-" + industry + "(" + code + ")"
 					fmt.Println(fileName)
 
+					if strings.Contains(fileName, "部分") {
+						fmt.Println("含有部分“字样”，跳过")
+						continue
+					}
+
 					downLoadUrl := fmt.Sprintf("https://dbba.sacinfo.org.cn/attachment/downloadStdFile?pk=%s", records.Pk)
 					fmt.Println(downLoadUrl)
 
 					detailUrl := fmt.Sprintf("https://dbba.sacinfo.org.cn/stdDetail/%s", records.Pk)
 					fmt.Println(detailUrl)
+
+					detailDoc, err := htmlquery.LoadURL(detailUrl)
+					if err != nil {
+						fmt.Println(err)
+						continue
+					}
+					// 查看是否有下载链接
+					downloadButton := htmlquery.FindOne(detailDoc, `//div[@class="container main-body"]/div[@class="row"]/div[@class="col-sm-12"]/div/div[@class="page-header"]/h4/a`)
+					if downloadButton == nil {
+						fmt.Println("没有附件下载链接")
+						continue
+					}
 
 					filePath := "../dbba.sacinfo.org.cn/" + fileName + ".pdf"
 					if _, err := os.Stat(filePath); err != nil {
@@ -110,7 +123,7 @@ func main() {
 							fmt.Println(err)
 							continue
 						}
-						fmt.Println("=======开始完成========")
+						fmt.Println("=======下载完成========")
 					}
 
 					// 查看文件大小，如果是空文件，则删除
