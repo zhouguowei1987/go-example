@@ -103,20 +103,21 @@ func main() {
 					detailUrl := fmt.Sprintf("https://dbba.sacinfo.org.cn/stdDetail/%s", records.Pk)
 					fmt.Println(detailUrl)
 
-					detailDoc, err := htmlquery.LoadURL(detailUrl)
-					if err != nil {
-						fmt.Println(err)
-						continue
-					}
-					// 查看是否有下载链接
-					downloadButton := htmlquery.FindOne(detailDoc, `//div[@class="container main-body"]/div[@class="row"]/div[@class="col-sm-12"]/div/div[@class="page-header"]/h4/a`)
-					if downloadButton == nil {
-						fmt.Println("没有附件下载链接")
-						continue
-					}
-
 					filePath := "../dbba.sacinfo.org.cn/" + fileName + ".pdf"
 					if _, err := os.Stat(filePath); err != nil {
+
+						detailDoc, err := htmlquery.LoadURL(detailUrl)
+						if err != nil {
+							fmt.Println(err)
+							continue
+						}
+						// 查看是否有下载链接
+						downloadButton := htmlquery.FindOne(detailDoc, `//div[@class="container main-body"]/div[@class="row"]/div[@class="col-sm-12"]/div/div[@class="page-header"]/h4/a`)
+						if downloadButton == nil {
+							fmt.Println("没有附件下载链接")
+							continue
+						}
+
 						fmt.Println("=======开始下载" + strconv.Itoa(current) + "========")
 						err = downloadDbBa(downLoadUrl, detailUrl, filePath)
 						if err != nil {
