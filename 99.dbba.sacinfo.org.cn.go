@@ -58,13 +58,13 @@ type ResponseDataRecords struct {
 // @Description https://dbba.sacinfo.org.cn/，获取地方标准文档
 func main() {
 	requestUrl := "https://dbba.sacinfo.org.cn/stdQueryList"
-	current := 1
-	maxCurrent := 20
-	size := 50
+	current := 4822
+	minCurrent := 1
+	size := 15
 	status := "现行"
 	isPageListGo := true
 	for isPageListGo {
-		if current > maxCurrent {
+		if current < minCurrent {
 			isPageListGo = false
 			break
 		}
@@ -83,10 +83,17 @@ func main() {
 					chName = strings.ReplaceAll(chName, ":", "-")
 					chName = strings.ReplaceAll(chName, "：", "-")
 
+					if strings.Contains(chName, "部分") {
+						fmt.Println("含有部分“字样”，跳过")
+						continue
+					}
+
+					industry := strings.TrimSpace(records.Industry)
+
 					code := strings.ReplaceAll(records.Code, "/", "-")
 					code = strings.ReplaceAll(code, "\n", "")
 
-					fileName := chName + "(" + code + ")"
+					fileName := chName + "-" + industry + "(" + code + ")"
 					fmt.Println(fileName)
 
 					downLoadUrl := fmt.Sprintf("https://dbba.sacinfo.org.cn/attachment/downloadStdFile?pk=%s", records.Pk)
@@ -119,8 +126,8 @@ func main() {
 				}
 			}
 
-			if current < responseData.Pages {
-				current++
+			if current > minCurrent {
+				current--
 			} else {
 				isPageListGo = false
 				current = 1
