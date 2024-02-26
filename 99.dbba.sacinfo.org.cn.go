@@ -84,12 +84,12 @@ func main() {
 					chName = strings.ReplaceAll(chName, ":", "-")
 					chName = strings.ReplaceAll(chName, "：", "-")
 
-					industry := strings.TrimSpace(records.Industry)
+					//industry := strings.TrimSpace(records.Industry)
 
 					code := strings.ReplaceAll(records.Code, "/", "-")
 					code = strings.ReplaceAll(code, "\n", "")
 
-					fileName := chName + "-" + industry + "(" + code + ")"
+					fileName := chName + "(" + code + ")"
 					fmt.Println(fileName)
 
 					if strings.Contains(fileName, "部分") {
