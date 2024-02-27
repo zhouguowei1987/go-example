@@ -233,6 +233,11 @@ func main() {
 			Price:   288,
 		},
 		{
+			dirName: "finish-dbba.sacinfo.org.cn",
+			pCid:    8371,
+			Price:   288,
+		},
+		{
 			dirName: "finish.tikuvip（2010-2011）.51test.net/专升本考试",
 			pCid:    55789,
 			Price:   288,
@@ -328,8 +333,9 @@ func main() {
 			Price:   288,
 		},
 		{
-			dirName: "finish.tikuvip（2014-2015）.51test.net/成人高考", pCid: 8244,
-			Price: 468,
+			dirName: "finish.tikuvip（2014-2015）.51test.net/成人高考",
+			pCid:    8244,
+			Price:   468,
 		},
 		{
 			dirName: "finish.tikuvip（2014-2015）.51test.net/考研",
@@ -342,12 +348,14 @@ func main() {
 			Price:   288,
 		},
 		{
-			dirName: "finish.tikuvip（2014-2015）.51test.net/高中会考", pCid: 8244,
-			Price: 468,
+			dirName: "finish.tikuvip（2014-2015）.51test.net/高中会考",
+			pCid:    8244,
+			Price:   468,
 		},
 		{
-			dirName: "finish.tikuvip（2014-2015）.51test.net/高考", pCid: 8244,
-			Price: 468,
+			dirName: "finish.tikuvip（2014-2015）.51test.net/高考",
+			pCid:    8244,
+			Price:   468,
 		},
 		{
 			dirName: "finish.tikuvip（2016-2017）.51test.net/专升本考试",
@@ -365,8 +373,9 @@ func main() {
 			Price:   288,
 		},
 		{
-			dirName: "finish.tikuvip（2016-2017）.51test.net/成人高考", pCid: 8244,
-			Price: 468,
+			dirName: "finish.tikuvip（2016-2017）.51test.net/成人高考",
+			pCid:    8244,
+			Price:   468,
 		},
 		{
 			dirName: "finish.tikuvip（2016-2017）.51test.net/考研",
@@ -379,12 +388,14 @@ func main() {
 			Price:   288,
 		},
 		{
-			dirName: "finish.tikuvip（2016-2017）.51test.net/高中会考", pCid: 8244,
-			Price: 468,
+			dirName: "finish.tikuvip（2016-2017）.51test.net/高中会考",
+			pCid:    8244,
+			Price:   468,
 		},
 		{
-			dirName: "finish.tikuvip（2016-2017）.51test.net/高考", pCid: 8244,
-			Price: 468,
+			dirName: "finish.tikuvip（2016-2017）.51test.net/高考",
+			pCid:    8244,
+			Price:   468,
 		},
 		{
 			dirName: "finish.tikuvip（2018-2019）.51test.net/专升本考试",
@@ -402,8 +413,9 @@ func main() {
 			Price:   288,
 		},
 		{
-			dirName: "finish.tikuvip（2018-2019）.51test.net/成人高考", pCid: 8244,
-			Price: 468,
+			dirName: "finish.tikuvip（2018-2019）.51test.net/成人高考",
+			pCid:    8244,
+			Price:   468,
 		},
 		{
 			dirName: "finish.tikuvip（2018-2019）.51test.net/考研",
