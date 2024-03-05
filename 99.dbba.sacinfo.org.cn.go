@@ -59,7 +59,7 @@ type ResponseDataRecords struct {
 // @Description https://dbba.sacinfo.org.cn/，获取地方标准文档
 func main() {
 	requestUrl := "https://dbba.sacinfo.org.cn/stdQueryList"
-	current := 1747
+	current := 20
 	minCurrent := 1
 	size := 15
 	status := "现行"
