@@ -30,6 +30,7 @@ func main() {
 		}(id)
 		fmt.Println(<-goCh)
 	}
+	//guangXiBiaoXieSpider(116)
 }
 
 func guangXiBiaoXieSpider(id int) error {
@@ -56,6 +57,10 @@ func guangXiBiaoXieSpider(id int) error {
 	title := htmlquery.InnerText(titleNode)
 	title = strings.ReplaceAll(title, "（发布稿）", "")
 	title = strings.ReplaceAll(title, "TGXAS", "T-GXAS")
+	flagIndex := strings.Index(title, "团体标准")
+	if flagIndex == -1 {
+		return errors.New("不含有团体标准字样，跳过")
+	}
 	titleSplit := strings.Split(title, "团体标准")
 	title = strings.ReplaceAll(titleSplit[1], " ", "")
 	title = strings.ReplaceAll(title, "《", "")
