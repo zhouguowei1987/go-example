@@ -62,7 +62,7 @@ func main() {
 	current := 10
 	minCurrent := 1
 	size := 15
-	status := "现行"
+	status := ""
 	isPageListGo := true
 	for isPageListGo {
 		if current < minCurrent {
