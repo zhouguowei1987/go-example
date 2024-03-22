@@ -30,7 +30,7 @@ func main() {
 		}(id)
 		fmt.Println(<-goCh)
 	}
-	//guangXiBiaoXieSpider(116)
+	//guangXiBiaoXieSpider(2548)
 }
 
 func guangXiBiaoXieSpider(id int) error {
@@ -55,8 +55,13 @@ func guangXiBiaoXieSpider(id int) error {
 	// 文档名称
 	titleNode := htmlquery.FindOne(detailDoc, `//div[@class="panel-body"]/div[@class="article-metas"]/h1[@class="metas-title"]`)
 	title := htmlquery.InnerText(titleNode)
+	releaseIndex := strings.Index(title, "发布稿")
+	if releaseIndex == -1 {
+		return errors.New("没有发布稿字样，跳过")
+	}
 	title = strings.ReplaceAll(title, "（发布稿）", "")
 	title = strings.ReplaceAll(title, "TGXAS", "T-GXAS")
+	title = strings.ReplaceAll(title, "T/GXAS", "T-GXAS")
 	flagIndex := strings.Index(title, "团体标准")
 	if flagIndex == -1 {
 		return errors.New("不含有团体标准字样，跳过")
