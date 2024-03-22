@@ -60,6 +60,7 @@ func guangXiBiaoXieSpider(id int) error {
 		return errors.New("没有发布稿字样，跳过")
 	}
 	title = strings.ReplaceAll(title, "（发布稿）", "")
+	title = strings.ReplaceAll(title, "发布稿", "")
 	title = strings.ReplaceAll(title, "TGXAS", "T-GXAS")
 	title = strings.ReplaceAll(title, "T/GXAS", "T-GXAS")
 	flagIndex := strings.Index(title, "团体标准")
@@ -70,6 +71,7 @@ func guangXiBiaoXieSpider(id int) error {
 	title = strings.ReplaceAll(titleSplit[1], " ", "")
 	title = strings.ReplaceAll(title, "《", "")
 	title = strings.ReplaceAll(title, "》", "")
+	title = strings.TrimSpace(title)
 	standardNo := strings.TrimSpace(titleSplit[0])
 	title = title + "(" + standardNo + ")"
 
