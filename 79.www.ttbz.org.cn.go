@@ -18,7 +18,7 @@ import (
 // @Description https://www.ttbz.org.cn/，将全国团体标准信息平台Pdf文档入库
 func main() {
 	var startId = 107700
-	var endId = 107770
+	var endId = 107780
 	goCh := make(chan int, endId-startId)
 	for id := startId; id <= endId; id++ {
 		go func(id int) {
