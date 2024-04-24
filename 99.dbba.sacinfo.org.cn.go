@@ -92,11 +92,6 @@ func main() {
 					fileName := chName + "(" + code + ")"
 					fmt.Println(fileName)
 
-					if strings.Contains(fileName, "部分") {
-						fmt.Println("含有部分“字样”，跳过")
-						continue
-					}
-
 					downLoadUrl := fmt.Sprintf("https://dbba.sacinfo.org.cn/attachment/downloadStdFile?pk=%s", records.Pk)
 					fmt.Println(downLoadUrl)
 
