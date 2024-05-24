@@ -37,28 +37,28 @@ var tiKuVipCookie = "__yjs_duid=1_9906f2c8d7c017db33d48b6a18ccd56b1675842585518;
 
 // ychEduSpider 获取无忧考试网真题
 // @Title 获取无忧考试网真题
-// @Description https://tikuvip.51test.net/，获取无忧考试网真题
+// @Description https://tikuview.51test.net/，获取无忧考试网真题
 func main() {
 	saveCategory := map[string]bool{
-		//"自考":        true,
-		//"专升本考试":     true,
-		//"初中一年级":     true,
-		//"初中二年级":     true,
-		//"初中三年级":     true,
-		//"小升初":       true,
-		//"小学一年级":     true,
-		//"小学二年级":     true,
-		//"小学三年级":     true,
-		//"小学四年级":     true,
-		//"小学五年级":     true,
-		//"小学六年级":     true,
-		//"考研":        true,
-		//"高中会考":      true,
-		//"高一":        true,
-		//"高二":        true,
-		//"高考":        true,
-		//"成人高考":      true,
-		//"中考":        true,
+		"自考":        true,
+		"专升本考试":     true,
+		"初中一年级":     true,
+		"初中二年级":     true,
+		"初中三年级":     true,
+		"小升初":       true,
+		"小学一年级":     true,
+		"小学二年级":     true,
+		"小学三年级":     true,
+		"小学四年级":     true,
+		"小学五年级":     true,
+		"小学六年级":     true,
+		"考研":        true,
+		"高中会考":      true,
+		"高一":        true,
+		"高二":        true,
+		"高考":        true,
+		"成人高考":      true,
+		"中考":        true,
 		"一级建造师考试":   true,
 		"二级建造师考试":   true,
 		"公务员考试":     true,
@@ -169,7 +169,7 @@ type TiKuVip51TestTreeListInitDataChildren struct {
 }
 
 func treeListInit() (tiKuVip51TestTreeListInitData []TiKuVip51TestTreeListInitData, err error) {
-	apiUrl := fmt.Sprintf("https://tikuvip.51test.net/index.php?share/treeList&app=folder&user=100&sid=BzcEWh8C&type=init")
+	apiUrl := fmt.Sprintf("https://tikuview.51test.net/index.php?share/treeList&app=folder&user=100&sid=HGNEaRDS&type=init")
 	// 初始化客户端
 	var client *http.Client = &http.Client{
 		Transport: &http.Transport{
@@ -199,7 +199,7 @@ func treeListInit() (tiKuVip51TestTreeListInitData []TiKuVip51TestTreeListInitDa
 	//req.Header.Set("accept-encoding", "gzip, deflate, br")
 	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
 	req.Header.Set("Cookie", tiKuVipCookie)
-	req.Header.Set("referer", "https://tikuvip.51test.net/?share/folder&user=100&sid=BzcEWh8C&uid=8034602&uip=222.70.7.91&downloaddate=2023-04-11&token=00fded6d31b3f0bf47f14d3251bc120c")
+	req.Header.Set("referer", "https://tikuview.51test.net/?share/folder&user=100&sid=HGNEaRDS&uid=8034602&uip=222.70.7.91&downloaddate=2023-04-11&token=00fded6d31b3f0bf47f14d3251bc120c")
 	req.Header.Set("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36")
 	resp, err := client.Do(req) //拿到返回的内容
 	if err != nil {
@@ -243,7 +243,7 @@ type TiKuVip51TestTreeListData struct {
 }
 
 func treeList(path string) (tiKuVip51TestTreeListData []TiKuVip51TestTreeListData, err error) {
-	apiUrl := fmt.Sprintf("https://tikuvip.51test.net/index.php?share/treeList&app=folder&user=100&sid=BzcEWh8C")
+	apiUrl := fmt.Sprintf("https://tikuview.51test.net/index.php?share/treeList&app=folder&user=100&sid=HGNEaRDS")
 	// 初始化客户端
 	var client *http.Client = &http.Client{
 		Transport: &http.Transport{
@@ -282,8 +282,8 @@ func treeList(path string) (tiKuVip51TestTreeListData []TiKuVip51TestTreeListDat
 	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
 	req.Header.Set("Content-Type", w.FormDataContentType())
 	req.Header.Set("Cookie", tiKuVipCookie)
-	req.Header.Set("origin", "https://tikuvip.51test.net")
-	req.Header.Set("referer", "https://tikuvip.51test.net/?share/folder&user=100&sid=BzcEWh8C&uid=8034602&uip=222.70.7.91&downloaddate=2023-04-11&token=00fded6d31b3f0bf47f14d3251bc120c")
+	req.Header.Set("origin", "https://tikuview.51test.net")
+	req.Header.Set("referer", "https://tikuview.51test.net/?share/folder&user=100&sid=HGNEaRDS&uid=8034602&uip=222.70.7.91&downloaddate=2023-04-11&token=00fded6d31b3f0bf47f14d3251bc120c")
 	req.Header.Set("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36")
 	resp, err := client.Do(req) //拿到返回的内容
 	if err != nil {
@@ -333,7 +333,7 @@ type TiKuVip51TestPathListDataFileList struct {
 }
 
 func PathList(path string) (tiKuVip51TestPathListDataFileList []TiKuVip51TestPathListDataFileList, err error) {
-	apiUrl := fmt.Sprintf("https://tikuvip.51test.net/index.php?share/pathList&user=100&sid=BzcEWh8C&path=%s", path)
+	apiUrl := fmt.Sprintf("https://tikuview.51test.net/index.php?share/pathList&user=100&sid=HGNEaRDS&path=%s", path)
 	// 初始化客户端
 	var client *http.Client = &http.Client{
 		Transport: &http.Transport{
@@ -363,7 +363,7 @@ func PathList(path string) (tiKuVip51TestPathListDataFileList []TiKuVip51TestPat
 	//req.Header.Set("accept-encoding", "gzip, deflate, br")
 	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
 	req.Header.Set("Cookie", tiKuVipCookie)
-	req.Header.Set("referer", "https://tikuvip.51test.net/?share/folder&user=100&sid=BzcEWh8C&uid=8034602&uip=222.70.7.91&downloaddate=2023-04-11&token=00fded6d31b3f0bf47f14d3251bc120c")
+	req.Header.Set("referer", "https://tikuview.51test.net/?share/folder&user=100&sid=HGNEaRDS&uid=8034602&uip=222.70.7.91&downloaddate=2023-04-11&token=00fded6d31b3f0bf47f14d3251bc120c")
 	req.Header.Set("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36")
 	resp, err := client.Do(req) //拿到返回的内容
 	if err != nil {
@@ -404,20 +404,8 @@ func tiKuVip51TestDownloadUrl(tiKuVip51TestPathListDataFileList []TiKuVip51TestP
 		filePath := ""
 		fileName := pathListDataFile.Name
 		fileName = strings.Trim(fileName, " ")
-		if strings.Contains(fileName, "2010") || strings.Contains(fileName, "2011") {
-			filePath = "../tikuvip-certification（2010-2011）.51test.net/" + handlePath[0] + "/"
-		} else if strings.Contains(fileName, "2012") || strings.Contains(fileName, "2013") {
-			filePath = "../tikuvip-certification（2012-2013）.51test.net/" + handlePath[0] + "/"
-		} else if strings.Contains(fileName, "2014") || strings.Contains(fileName, "2015") {
-			filePath = "../tikuvip-certification（2014-2015）.51test.net/" + handlePath[0] + "/"
-		} else if strings.Contains(fileName, "2016") || strings.Contains(fileName, "2017") {
-			filePath = "../tikuvip-certification（2016-2017）.51test.net/" + handlePath[0] + "/"
-		} else if strings.Contains(fileName, "2018") || strings.Contains(fileName, "2019") {
-			filePath = "../tikuvip-certification（2018-2019）.51test.net/" + handlePath[0] + "/"
-		} else if strings.Contains(fileName, "2020") || strings.Contains(fileName, "2021") || strings.Contains(fileName, "2022") {
-			filePath = "../tikuvip-certification（2020-2022）.51test.net/" + handlePath[0] + "/"
-		} else if strings.Contains(fileName, "2023") {
-			filePath = "../tikuvip-certification（2023）.51test.net/" + handlePath[0] + "/"
+		if strings.Contains(fileName, "2023") || strings.Contains(fileName, "2024") {
+			filePath = "../tikuvip.51test.net/" + handlePath[0] + "/"
 		}
 		if filePath == "" {
 			continue
@@ -428,7 +416,7 @@ func tiKuVip51TestDownloadUrl(tiKuVip51TestPathListDataFileList []TiKuVip51TestP
 			fmt.Println("=======开始下载========")
 
 			// 开始下载
-			attachmentUrl := fmt.Sprintf("https://tikuvip.51test.net/index.php?pluginApp/to/officeLive/&path={userShare}:100/真题题库%s", pathListDataFile.Path)
+			attachmentUrl := fmt.Sprintf("https://tikuview.51test.net/index.php?pluginApp/to/officeLive/&path={userShare}:100/真题题库%s", pathListDataFile.Path)
 
 			fmt.Println("=======================")
 			fmt.Println(attachmentUrl)
@@ -475,9 +463,9 @@ func downloadTiKuVip51TestUrl(attachmentUrl string) (downloadUrl string, err err
 	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
 	req.Header.Set("Connection", "keep-alive")
 	req.Header.Set("Cookie", tiKuVipCookie)
-	req.Header.Set("Host", "tikuvip.51test.net")
-	req.Header.Set("Origin", "https://tikuvip.51test.net")
-	req.Header.Set("Referer", "https://tikuvip.51test.net/")
+	req.Header.Set("Host", "tikuview.51test.net")
+	req.Header.Set("Origin", "https://tikuview.51test.net")
+	req.Header.Set("Referer", "https://tikuview.51test.net/")
 	req.Header.Set("Sec-Ch-Ua", "\"Not.A/Brand\";v=\"8\", \"Chromium\";v=\"114\", \"Google Chrome\";v=\"114\"")
 	req.Header.Set("Sec-Ch-Ua-Mobile", "?0")
 	req.Header.Set("Sec-Ch-Ua-Platform", "\"macOS\"")
@@ -532,9 +520,9 @@ func downloadTiKuVip51Test(attachmentUrl string, filePath string, fileName strin
 	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
 	req.Header.Set("Connection", "keep-alive")
 	req.Header.Set("Cookie", tiKuVipCookie)
-	req.Header.Set("Host", "tikuvip.51test.net")
-	req.Header.Set("Origin", "https://tikuvip.51test.net")
-	req.Header.Set("Referer", "https://tikuvip.51test.net/")
+	req.Header.Set("Host", "tikuview.51test.net")
+	req.Header.Set("Origin", "https://tikuview.51test.net")
+	req.Header.Set("Referer", "https://tikuview.51test.net/")
 	req.Header.Set("Sec-Ch-Ua", "\"Not.A/Brand\";v=\"8\", \"Chromium\";v=\"114\", \"Google Chrome\";v=\"114\"")
 	req.Header.Set("Sec-Ch-Ua-Mobile", "?0")
 	req.Header.Set("Sec-Ch-Ua-Platform", "\"macOS\"")
