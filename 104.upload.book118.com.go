@@ -485,6 +485,42 @@ func main() {
 			dirName: "docx.zzstep.com/初中/历史",
 			price:   "88",
 		},
+		{
+			dirName: "docx.zzstep.com/高中/地理",
+			price:   "88",
+		},
+		{
+			dirName: "docx.zzstep.com/高中/化学",
+			price:   "88",
+		},
+		{
+			dirName: "docx.zzstep.com/高中/历史",
+			price:   "88",
+		},
+		{
+			dirName: "docx.zzstep.com/高中/生物",
+			price:   "88",
+		},
+		{
+			dirName: "docx.zzstep.com/高中/数学",
+			price:   "88",
+		},
+		{
+			dirName: "docx.zzstep.com/高中/物理",
+			price:   "88",
+		},
+		{
+			dirName: "docx.zzstep.com/高中/英语",
+			price:   "88",
+		},
+		{
+			dirName: "docx.zzstep.com/高中/语文",
+			price:   "88",
+		},
+		{
+			dirName: "docx.zzstep.com/高中/政治",
+			price:   "88",
+		},
 	}
 	rootPath := "../upload.book118.com/"
 	for _, childDir := range uploadChildDirArr {
