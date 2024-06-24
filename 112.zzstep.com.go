@@ -523,6 +523,25 @@ func main() {
 						fmt.Println("主题：", studySection.name, subject.name, paper.name)
 						fmt.Println("=======当前页URL", subjectIndexUrl, "========")
 
+						// 日期
+						dateNode := htmlquery.FindOne(liNode, `./div[@class="zy-box fn-left"]/div[@class="info-3 fn-pt10"]/div[@class="date fn-left fn-pr20"]`)
+						if dateNode == nil {
+							fmt.Println("没有日期div")
+							continue
+						}
+						dateText := htmlquery.InnerText(dateNode)
+
+						datePaper, _ := time.Parse("2006-01-02", dateText)
+						fmt.Println(datePaper)
+						dateStart, _ := time.Parse("2006-01-02", "2024-03-28")
+						fmt.Println(dateStart)
+
+						// 比较日期
+						if datePaper.After(dateStart) {
+							fmt.Println("日期在2024-03-28后，跳过")
+							continue
+						}
+
 						// 所需智币
 						pointsNode := htmlquery.FindOne(liNode, `./div[@class="btn-item fn-left"]/div[@class="money fn-pt10"]`)
 						if pointsNode == nil {
