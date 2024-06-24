@@ -537,9 +537,11 @@ func main() {
 						fmt.Println(dateStart)
 
 						// 比较日期
-						if datePaper.After(dateStart) {
+						if datePaper.After(dateStart) == false {
 							fmt.Println("日期在2024-03-28后，跳过")
-							continue
+							current = 1
+							isPageListGo = true
+							break
 						}
 
 						// 所需智币
