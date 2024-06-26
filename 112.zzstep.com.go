@@ -75,7 +75,9 @@ func ZZStepSetHttpProxy() (httpclient *http.Client) {
 				ZZStepSetHttpProxy()
 			}
 		}
-		ZZStepHttpProxyUrl = ZZStepHttpProxyUrlArr[0]
+		if len(ZZStepHttpProxyUrlArr) > 1 {
+			ZZStepHttpProxyUrl = ZZStepHttpProxyUrlArr[0]
+		}
 		if len(ZZStepHttpProxyUrlArr) >= 2 {
 			ZZStepHttpProxyUrlArr = ZZStepHttpProxyUrlArr[1:]
 		} else {
@@ -593,7 +595,7 @@ func main() {
 							continue
 						}
 
-						filePath := "../www2.zzstep.com/www2.zzstep.com/" + studySection.name + "/" + subject.name + "/" + fileName
+						filePath := "../www2.zzstep.com/2024-03-28/www2.zzstep.com/" + studySection.name + "/" + subject.name + "/" + fileName
 						_, errDoc := os.Stat(filePath + ".doc")
 						_, errDocx := os.Stat(filePath + ".docx")
 						if errDoc != nil && errDocx != nil {
