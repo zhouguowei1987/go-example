@@ -75,7 +75,9 @@ func ZZStepSetHttpProxy() (httpclient *http.Client) {
 				ZZStepSetHttpProxy()
 			}
 		}
-		ZZStepHttpProxyUrl = ZZStepHttpProxyUrlArr[0]
+		if len(ZZStepHttpProxyUrlArr) > 1 {
+			ZZStepHttpProxyUrl = ZZStepHttpProxyUrlArr[0]
+		}
 		if len(ZZStepHttpProxyUrlArr) >= 2 {
 			ZZStepHttpProxyUrlArr = ZZStepHttpProxyUrlArr[1:]
 		} else {
@@ -523,6 +525,25 @@ func main() {
 						fmt.Println("主题：", studySection.name, subject.name, paper.name)
 						fmt.Println("=======当前页URL", subjectIndexUrl, "========")
 
+						// 日期
+						dateNode := htmlquery.FindOne(liNode, `./div[@class="zy-box fn-left"]/div[@class="info-3 fn-pt10"]/div[@class="date fn-left fn-pr20"]`)
+						if dateNode == nil {
+							fmt.Println("没有日期div")
+							break
+						}
+						dateText := htmlquery.InnerText(dateNode)
+
+						datePaper, _ := time.Parse("2006-01-02", dateText)
+						fmt.Println(datePaper)
+						dateStart, _ := time.Parse("2006-01-02", "2024-03-28")
+						fmt.Println(dateStart)
+
+						// 比较日期
+						if datePaper.After(dateStart) == false {
+							fmt.Println("日期在2024-03-28后，跳过")
+							break
+						}
+
 						// 所需智币
 						pointsNode := htmlquery.FindOne(liNode, `./div[@class="btn-item fn-left"]/div[@class="money fn-pt10"]`)
 						if pointsNode == nil {
@@ -574,7 +595,7 @@ func main() {
 							continue
 						}
 
-						filePath := "../www2.zzstep.com/www2.zzstep.com/" + studySection.name + "/" + subject.name + "/" + fileName
+						filePath := "../www2.zzstep.com/2024-03-28/www2.zzstep.com/" + studySection.name + "/" + subject.name + "/" + fileName
 						_, errDoc := os.Stat(filePath + ".doc")
 						_, errDocx := os.Stat(filePath + ".docx")
 						if errDoc != nil && errDocx != nil {
