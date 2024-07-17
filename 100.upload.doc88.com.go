@@ -6,7 +6,9 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"io/fs"
 	"io/ioutil"
+	"math/rand"
 	"mime/multipart"
 	"net/http"
 	"net/url"
@@ -441,6 +443,7 @@ func main() {
 		if err != nil {
 			continue
 		}
+		shuffleArray(files)
 		for _, file := range files {
 			if file.IsDir() {
 				continue
@@ -561,5 +564,13 @@ func main() {
 
 			fmt.Println("==========上传完成==============")
 		}
+	}
+}
+
+func shuffleArray(arr []fs.FileInfo) {
+	rand.Seed(time.Now().UnixNano())
+	for i := len(arr) - 1; i > 0; i-- {
+		j := rand.Intn(i + 1)
+		arr[i], arr[j] = arr[j], arr[i]
 	}
 }
