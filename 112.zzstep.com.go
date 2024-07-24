@@ -124,74 +124,74 @@ type ZZStepStudySectionSubjectsPapers struct {
 }
 
 var studySectionSubjectsPapers = []ZZStepStudySectionSubjectsPapers{
-	{
-		name: "小学",
-		subjects: []ZZStepSubject{
-			{
-				name: "语文",
-				papers: []ZZStepPaper{
-					{
-						name: "试卷",
-						url:  "http://www2.zzstep.com/front/paper/index.html?studysection=203&subject=29&page=1",
-					},
-				},
-			},
-			{
-				name: "数学",
-				papers: []ZZStepPaper{
-					{
-						name: "试卷",
-						url:  "http://www2.zzstep.com/front/paper/index.html?studysection=203&subject=30&page=1",
-					},
-				},
-			},
-			{
-				name: "英语",
-				papers: []ZZStepPaper{
-					{
-						name: "试卷",
-						url:  "http://www2.zzstep.com/front/paper/index.html?studysection=203&subject=31&page=1",
-					},
-				},
-			},
-			{
-				name: "道德与法治",
-				papers: []ZZStepPaper{
-					{
-						name: "试卷",
-						url:  "http://www2.zzstep.com/front/paper/index.html?studysection=203&subject=34&page=1",
-					},
-				},
-			},
-			{
-				name: "音乐",
-				papers: []ZZStepPaper{
-					{
-						name: "试卷",
-						url:  "http://www2.zzstep.com/front/paper/index.html?studysection=203&subject=41&page=1",
-					},
-				},
-			},
-			{
-				name: "美术",
-				papers: []ZZStepPaper{
-					{
-						name: "试卷",
-						url:  "http://www2.zzstep.com/front/paper/index.html?studysection=203&subject=42&page=1",
-					},
-				},
-			},
-			{
-				name: "信息技术",
-				papers: []ZZStepPaper{
-					{
-						name: "试卷",
-						url:  "http://www2.zzstep.com/front/paper/index.html?studysection=203&subject=43&page=1",
-					},
-				},
-			},
-		},
-	},
+	//{
+	//	name: "小学",
+	//	subjects: []ZZStepSubject{
+	//		{
+	//			name: "语文",
+	//			papers: []ZZStepPaper{
+	//				{
+	//					name: "试卷",
+	//					url:  "http://www2.zzstep.com/front/paper/index.html?studysection=203&subject=29&page=1",
+	//				},
+	//			},
+	//		},
+	//		{
+	//			name: "数学",
+	//			papers: []ZZStepPaper{
+	//				{
+	//					name: "试卷",
+	//					url:  "http://www2.zzstep.com/front/paper/index.html?studysection=203&subject=30&page=1",
+	//				},
+	//			},
+	//		},
+	//		{
+	//			name: "英语",
+	//			papers: []ZZStepPaper{
+	//				{
+	//					name: "试卷",
+	//					url:  "http://www2.zzstep.com/front/paper/index.html?studysection=203&subject=31&page=1",
+	//				},
+	//			},
+	//		},
+	//		{
+	//			name: "道德与法治",
+	//			papers: []ZZStepPaper{
+	//				{
+	//					name: "试卷",
+	//					url:  "http://www2.zzstep.com/front/paper/index.html?studysection=203&subject=34&page=1",
+	//				},
+	//			},
+	//		},
+	//		{
+	//			name: "音乐",
+	//			papers: []ZZStepPaper{
+	//				{
+	//					name: "试卷",
+	//					url:  "http://www2.zzstep.com/front/paper/index.html?studysection=203&subject=41&page=1",
+	//				},
+	//			},
+	//		},
+	//		{
+	//			name: "美术",
+	//			papers: []ZZStepPaper{
+	//				{
+	//					name: "试卷",
+	//					url:  "http://www2.zzstep.com/front/paper/index.html?studysection=203&subject=42&page=1",
+	//				},
+	//			},
+	//		},
+	//		{
+	//			name: "信息技术",
+	//			papers: []ZZStepPaper{
+	//				{
+	//					name: "试卷",
+	//					url:  "http://www2.zzstep.com/front/paper/index.html?studysection=203&subject=43&page=1",
+	//				},
+	//			},
+	//		},
+	//	},
+	//},
 
 	{
 		name: "初中",
@@ -535,12 +535,12 @@ func main() {
 
 						datePaper, _ := time.Parse("2006-01-02", dateText)
 						fmt.Println(datePaper)
-						dateStart, _ := time.Parse("2006-01-02", "2024-06-25")
+						dateStart, _ := time.Parse("2006-01-02", "2024-07-18")
 						fmt.Println(dateStart)
 
 						// 比较日期
 						if datePaper.After(dateStart) == false {
-							fmt.Println("日期在2024-06-25后，跳过")
+							fmt.Println("日期在2024-07-18后，跳过")
 							break
 						}
 
@@ -595,7 +595,7 @@ func main() {
 							continue
 						}
 
-						filePath := "../www2.zzstep.com/2024-06-25/www2.zzstep.com/" + studySection.name + "/" + subject.name + "/" + fileName
+						filePath := "../www2.zzstep.com/2024-07-18/www2.zzstep.com/" + studySection.name + "/" + subject.name + "/" + fileName
 						_, errDoc := os.Stat(filePath + ".doc")
 						_, errDocx := os.Stat(filePath + ".docx")
 						if errDoc != nil && errDocx != nil {
