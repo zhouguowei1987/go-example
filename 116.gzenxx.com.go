@@ -12,6 +12,7 @@ import (
 	"path/filepath"
 	"regexp"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -427,6 +428,28 @@ func main() {
 					title := htmlquery.InnerText(htmlquery.FindOne(liNode, `./div[@class="yzm-new-list-right"]/div[@class="yzm-new-list-title"]/a/@title`))
 					fmt.Println(title)
 
+					// 日期
+					dateNode := htmlquery.FindOne(liNode, `./div[@class="yzm-new-list-right"]/div[@class="yzm-new-list-info"]/text()[2]`)
+					if dateNode == nil {
+						fmt.Println("没有日期div")
+						break
+					}
+					dateText := htmlquery.InnerText(dateNode)
+					dateText = strings.Replace(dateText, " 更新时间：", "", -1)
+					dateText = strings.Trim(dateText, " ")
+					fmt.Println(dateText)
+
+					datePaper, _ := time.Parse("2006-01-02", dateText)
+					fmt.Println(datePaper)
+					dateStart, _ := time.Parse("2006-01-02", "2024-01-01")
+					fmt.Println(dateStart)
+
+					// 比较日期
+					if datePaper.After(dateStart) == false {
+						fmt.Println("日期在2024-01-01后，跳过")
+						break
+					}
+
 					viewHref := "https://www.gzenxx.com" + htmlquery.InnerText(htmlquery.FindOne(liNode, `./a/@href`))
 					fmt.Println(viewHref)
 
@@ -446,7 +469,7 @@ func main() {
 					attachmentUrl := "https://www.gzenxx.com/uploads/ueditor/file/" + string(regAttachmentViewUrlMatch[0][1])
 					fmt.Println(attachmentUrl)
 
-					filePath := "E:\\workspace\\www.gzenxx.com\\www.rar_gzenxx.com\\" + title + ".rar"
+					filePath := "E:\\workspace\\www.gzenxx.com\\2024-01-01\\www.rar_gzenxx.com\\" + title + ".rar"
 					_, err = os.Stat(filePath)
 					if err != nil {
 
