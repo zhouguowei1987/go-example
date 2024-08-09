@@ -412,7 +412,7 @@ func main() {
 					isPageListGo = false
 					continue
 				}
-				liNodes := htmlquery.Find(paperListDoc, `//div[@class="yzm-container"]/div[@class="yzm-content-box yzm-main-left yzm-text-list"]/ul/li`)
+				liNodes := htmlquery.Find(paperListDoc, `//div[@class="yzm-container"]/div[@class="yzm-content-box yzm-main-left yzm-text-list"]/ul/div[@class="yzm-new-list"]`)
 				if len(liNodes) <= 0 {
 					fmt.Println(err)
 					current = 1
@@ -424,7 +424,7 @@ func main() {
 					fmt.Println("科目：", subject.name, "试卷", paper.name)
 					fmt.Println("=======当前页URL", paperListUrl, "========")
 
-					title := htmlquery.InnerText(htmlquery.FindOne(liNode, `./a/@title`))
+					title := htmlquery.InnerText(htmlquery.FindOne(liNode, `./div[@class="yzm-new-list-right"]/div[@class="yzm-new-list-title"]/a/@title`))
 					fmt.Println(title)
 
 					viewHref := "https://www.gzenxx.com" + htmlquery.InnerText(htmlquery.FindOne(liNode, `./a/@href`))
@@ -446,7 +446,7 @@ func main() {
 					attachmentUrl := "https://www.gzenxx.com/uploads/ueditor/file/" + string(regAttachmentViewUrlMatch[0][1])
 					fmt.Println(attachmentUrl)
 
-					filePath := "F:\\workspace\\www.rar_gzenxx.com\\" + title + ".rar"
+					filePath := "E:\\workspace\\www.gzenxx.com\\www.rar_gzenxx.com\\" + title + ".rar"
 					_, err = os.Stat(filePath)
 					if err != nil {
 
