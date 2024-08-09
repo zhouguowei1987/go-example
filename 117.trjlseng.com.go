@@ -12,6 +12,7 @@ import (
 	"path/filepath"
 	"regexp"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -252,7 +253,7 @@ func main() {
 					isPageListGo = false
 					continue
 				}
-				liNodes := htmlquery.Find(paperListDoc, `//div[@class="yzm-container"]/div[@class="yzm-content-box yzm-main-left yzm-text-list"]/ul/li`)
+				liNodes := htmlquery.Find(paperListDoc, `//div[@class="yzm-container"]/div[@class="yzm-content-box yzm-main-left yzm-text-list"]/ul/div[@class="yzm-new-list"]`)
 				if len(liNodes) <= 0 {
 					fmt.Println(err)
 					current = 1
@@ -264,8 +265,30 @@ func main() {
 					fmt.Println("科目：", subject.name, "试卷", paper.name)
 					fmt.Println("=======当前页URL", paperListUrl, "========")
 
-					title := htmlquery.InnerText(htmlquery.FindOne(liNode, `./a/@title`))
+					title := htmlquery.InnerText(htmlquery.FindOne(liNode, `./div[@class="yzm-new-list-right"]/div[@class="yzm-new-list-title"]/a/@title`))
 					fmt.Println(title)
+
+					// 日期
+					dateNode := htmlquery.FindOne(liNode, `./div[@class="yzm-new-list-right"]/div[@class="yzm-new-list-info"]/text()[2]`)
+					if dateNode == nil {
+						fmt.Println("没有日期div")
+						break
+					}
+					dateText := htmlquery.InnerText(dateNode)
+					dateText = strings.Replace(dateText, " 更新时间：", "", -1)
+					dateText = strings.Trim(dateText, " ")
+					fmt.Println(dateText)
+
+					datePaper, _ := time.Parse("2006-01-02", dateText)
+					fmt.Println(datePaper)
+					dateStart, _ := time.Parse("2006-01-02", "2024-01-01")
+					fmt.Println(dateStart)
+
+					// 比较日期
+					if datePaper.After(dateStart) == false {
+						fmt.Println("日期在2024-01-01后，跳过")
+						break
+					}
 
 					viewHref := "https://www.trjlseng.com" + htmlquery.InnerText(htmlquery.FindOne(liNode, `./a/@href`))
 					fmt.Println(viewHref)
@@ -286,7 +309,7 @@ func main() {
 					attachmentUrl := "https://www.trjlseng.com/uploads/ueditor/file/" + string(regAttachmentViewUrlMatch[0][1])
 					fmt.Println(attachmentUrl)
 
-					filePath := "F:\\workspace\\www.rar_trjlseng.com\\" + title + ".rar"
+					filePath := "E:\\workspace\\www.trjlseng.com\\2024-01-01\\www.rar_trjlseng.com\\" + title + ".rar"
 					_, err = os.Stat(filePath)
 					if err != nil {
 
