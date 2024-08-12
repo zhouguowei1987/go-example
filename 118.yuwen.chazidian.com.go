@@ -110,7 +110,7 @@ func YuWenChaZiDianSetHttpProxy() (httpclient *http.Client) {
 // @Title 获取查字典语文网试卷
 // @Description https://yuwen.chazidian.com/，获取查字典语文网试卷
 func main() {
-	page := 946
+	page := 1
 	isPageListGo := true
 
 	for isPageListGo {
@@ -163,7 +163,7 @@ func main() {
 				continue
 			}
 
-			filePath := "F:\\workspace\\yuwen.chazidian.com\\yuwen.rar_chazidian.com\\" + title + fileExt
+			filePath := "E:\\workspace\\yuwen.chazidian.com\\yuwen.rar_chazidian.com\\" + title + fileExt
 			_, err = os.Stat(filePath)
 			if err != nil {
 				fmt.Println("=======开始下载" + strconv.Itoa(page) + "========")
@@ -232,11 +232,11 @@ func YuWenChaZiDianGetCatePageDataApi(page int) (yuWenChaZiDianResponse YuWenCha
 	}
 
 	req.Header.Set("Accept", "application/json, text/javascript, */*; q=0.01")
-	req.Header.Set("Accept-Encoding", "gzip, deflate, br")
+	//req.Header.Set("Accept-Encoding", "gzip, deflate, br, zstd")
 	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
 	req.Header.Set("Connection", "keep-alive")
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")
-	req.Header.Set("Cookie", "Hm_lvt_392e83603a0def58379f6aa1f9e6a93b=1701840244,1702603968,1703568326; Hm_lvt_1b8f22a621ad677920c7dfdb50ececf1=1701840235,1702603968,1703568326; _gid=GA1.2.525982197.1703568327; Hm_lpvt_392e83603a0def58379f6aa1f9e6a93b=1703568328; Hm_lpvt_1b8f22a621ad677920c7dfdb50ececf1=1703568328; _ga_34B604LFFQ=GS1.1.1703568327.3.1.1703568329.58.0.0; _ga=GA1.1.448243279.1701840236; PHPSESSID=d60db2d75449c259ff24a8578c472725")
+	req.Header.Set("Cookie", "Hm_lvt_392e83603a0def58379f6aa1f9e6a93b=1723435257; HMACCOUNT=2CEC63D57647BCA5; Hm_lvt_1b8f22a621ad677920c7dfdb50ececf1=1723435257; PHPSESSID=73d9a4951fdff72d542b29eb9bf473e8; Hm_lvt_9ac05ff87f40912e7310348f7565b387=1723435303; Hm_lpvt_1b8f22a621ad677920c7dfdb50ececf1=1723435659; Hm_lpvt_392e83603a0def58379f6aa1f9e6a93b=1723435659; Hm_lpvt_9ac05ff87f40912e7310348f7565b387=1723435660")
 	req.Header.Set("Host", "yuwen.chazidian.com")
 	req.Header.Set("Origin", "https://yuwen.chazidian.com")
 	req.Header.Set("Referer", "https://yuwen.chazidian.com/shijuan/")
