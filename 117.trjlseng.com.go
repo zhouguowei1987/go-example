@@ -285,8 +285,8 @@ func main() {
 					fmt.Println(dateStart)
 
 					// 比较日期
-					if datePaper.After(dateStart) == false {
-						fmt.Println("日期在2024-01-01后，跳过")
+					if datePaper.Before(dateStart) == false {
+						fmt.Println("日期在2024-01-01前，跳过")
 						break
 					}
 
@@ -309,7 +309,7 @@ func main() {
 					attachmentUrl := "https://www.trjlseng.com/uploads/ueditor/file/" + string(regAttachmentViewUrlMatch[0][1])
 					fmt.Println(attachmentUrl)
 
-					filePath := "E:\\workspace\\www.trjlseng.com\\2024-01-01\\www.rar_trjlseng.com\\" + title + ".rar"
+					filePath := "E:\\workspace\\www.trjlseng.com\\2022-01-01\\www.rar_trjlseng.com\\" + title + ".rar"
 					_, err = os.Stat(filePath)
 					if err != nil {
 
