@@ -110,7 +110,7 @@ func YuWenChaZiDianSetHttpProxy() (httpclient *http.Client) {
 // @Title 获取查字典语文网试卷
 // @Description https://yuwen.chazidian.com/，获取查字典语文网试卷
 func main() {
-	page := 1
+	page := 950
 	isPageListGo := true
 
 	for isPageListGo {
