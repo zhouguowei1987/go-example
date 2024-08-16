@@ -109,17 +109,16 @@ func main() {
 	currentPage := 1
 	beginId := 0
 	for {
-		pageListUrl := "https://www.docin.com/my/upload/myUpload.do?styleList=1&orderName=0&orderDate=0&orderVisit=0&orderStatus=0&folderId=-1"
+		pageListUrl := "https://www.docin.com/my/upload/myUpload.do?onlypPublic=1&totalpublicnum=0"
 		referer := "https://www.docin.com/my/upload/myUpload.do?styleList=1&orderName=0&orderDate=0&orderVisit=0&orderStatus=0&folderId=-1"
-		if currentPage > 1 {
+		if currentPage >= 1 {
 			pageListUrl = fmt.Sprintf("https://www.docin.com/my/upload/myUpload.do?styleList=1"+
-				"&orderName=0&orderDate=0&orderVisit=0&orderStatus=0"+
-				"&orderFolder=0&folderId=-1&myKeyword=&publishCount=&onlypPrivate="+
-				"&totalprivatenum=0&onlypPublic=&totalpublicnum=0"+
-				"&currentPage=%d&pageType=n&beginId=%d", currentPage, beginId)
+				"&orderName=0&orderDate=0&orderVisit=0&orderStatus=0&orderFolder=0"+
+				"&folderId=0&myKeyword=&publishCount=&onlypPrivate=&totalprivatenum=0"+
+				"&onlypPublic=&totalpublicnum=0&currentPage=%d"+
+				"&pageType=n&beginId=%d", currentPage, beginId)
 		}
 
-		fmt.Println(pageListUrl)
 		pageListDoc, err := QueryDocInDoc(pageListUrl, referer)
 		if err != nil {
 			fmt.Println(err)
