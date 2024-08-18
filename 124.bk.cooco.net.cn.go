@@ -273,7 +273,7 @@ func main() {
 					docNode := htmlquery.FindOne(liNode, `./div[@class="fl"]/span[@class="stlist-item-name"]/i[@class="doc"]`)
 					if docNode == nil {
 						fmt.Println("不是word文档")
-						break
+						continue
 					}
 					// 文档id
 					docId := htmlquery.InnerText(htmlquery.FindOne(liNode, `./div[@class="fr"]/a/@data-id`))
