@@ -178,45 +178,45 @@ var CooCoSubjectsPapers = []CooCoSubject{
 				name: "化学",
 				url:  "http://bk.cooco.net.cn/shiti/cz/hx",
 			},
-			//{
-			//	name: "地理",
-			//	url:  "http://bk.cooco.net.cn/shiti/cz/dl",
-			//},
-			//{
-			//	name: "历史",
-			//	url:  "http://bk.cooco.net.cn/shiti/cz/ls",
-			//},
-			//{
-			//	name: "生物",
-			//	url:  "http://bk.cooco.net.cn/shiti/cz/sw",
-			//},
-			//{
-			//	name: "政治",
-			//	url:  "http://bk.cooco.net.cn/shiti/cz/zz",
-			//},
+			{
+				name: "地理",
+				url:  "http://bk.cooco.net.cn/shiti/cz/dl",
+			},
+			{
+				name: "历史",
+				url:  "http://bk.cooco.net.cn/shiti/cz/ls",
+			},
+			{
+				name: "生物",
+				url:  "http://bk.cooco.net.cn/shiti/cz/sw",
+			},
+			{
+				name: "政治",
+				url:  "http://bk.cooco.net.cn/shiti/cz/zz",
+			},
 		},
 	},
-	//{
-	//	name: "小学",
-	//	papers: []CooCoSubjectsPaper{
-	//		{
-	//			name: "语文",
-	//			url:  "http://bk.cooco.net.cn/shiti/xx/yw",
-	//		},
-	//		{
-	//			name: "数学",
-	//			url:  "http://bk.cooco.net.cn/shiti/xx/sx",
-	//		},
-	//		{
-	//			name: "英语",
-	//			url:  "http://bk.cooco.net.cn/shiti/xx/yy1",
-	//		},
-	//		{
-	//			name: "政治",
-	//			url:  "http://bk.cooco.net.cn/shiti/xx/zz",
-	//		},
-	//	},
-	//},
+	{
+		name: "小学",
+		papers: []CooCoSubjectsPaper{
+			{
+				name: "语文",
+				url:  "http://bk.cooco.net.cn/shiti/xx/yw",
+			},
+			{
+				name: "数学",
+				url:  "http://bk.cooco.net.cn/shiti/xx/sx",
+			},
+			{
+				name: "英语",
+				url:  "http://bk.cooco.net.cn/shiti/xx/yy1",
+			},
+			{
+				name: "政治",
+				url:  "http://bk.cooco.net.cn/shiti/xx/zz",
+			},
+		},
+	},
 }
 
 var CooCoNextDownloadSleep = 2
