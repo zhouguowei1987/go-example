@@ -282,7 +282,7 @@ func main() {
 					err, downUrl := cooCoDownUrl(docId, paperIndexUrl)
 					fmt.Println(downUrl)
 
-					filePath := "E:\\workspace\\bk.cooco.net.cn\\bk.cooco.net.cn\\" + title + ".doc"
+					filePath := "E:\\workspace\\bk.cooco.net.cn\\bk.cooco.net.cn\\" + subject.name + "\\" + paper.name + "\\" + title + ".doc"
 					_, err = os.Stat(filePath)
 					if err != nil {
 
