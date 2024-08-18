@@ -114,66 +114,66 @@ type CooCoSubjectsPaper struct {
 }
 
 var CooCoSubjectsPapers = []CooCoSubject{
-	//{
-	//	name: "高中",
-	//	papers: []CooCoSubjectsPaper{
-	//		{
-	//			name: "语文",
-	//			url:  "http://bk.cooco.net.cn/shiti/gz/yw",
-	//		},
-	//		{
-	//			name: "数学",
-	//			url:  "http://bk.cooco.net.cn/shiti/gz/sx",
-	//		},
-	//		{
-	//			name: "英语",
-	//			url:  "http://bk.cooco.net.cn/shiti/gz/yy1",
-	//		},
-	//		{
-	//			name: "物理",
-	//			url:  "http://bk.cooco.net.cn/shiti/gz/wl",
-	//		},
-	//		{
-	//			name: "化学",
-	//			url:  "http://bk.cooco.net.cn/shiti/gz/hx",
-	//		},
-	//		{
-	//			name: "地理",
-	//			url:  "http://bk.cooco.net.cn/shiti/gz/dl",
-	//		},
-	//		{
-	//			name: "历史",
-	//			url:  "http://bk.cooco.net.cn/shiti/gz/ls",
-	//		},
-	//		{
-	//			name: "生物",
-	//			url:  "http://bk.cooco.net.cn/shiti/gz/sw",
-	//		},
-	//		{
-	//			name: "政治",
-	//			url:  "http://bk.cooco.net.cn/shiti/gz/zz",
-	//		},
-	//	},
-	//},
+	{
+		name: "高中",
+		papers: []CooCoSubjectsPaper{
+			{
+				name: "语文",
+				url:  "http://bk.cooco.net.cn/shiti/gz/yw",
+			},
+			{
+				name: "数学",
+				url:  "http://bk.cooco.net.cn/shiti/gz/sx",
+			},
+			{
+				name: "英语",
+				url:  "http://bk.cooco.net.cn/shiti/gz/yy1",
+			},
+			{
+				name: "物理",
+				url:  "http://bk.cooco.net.cn/shiti/gz/wl",
+			},
+			{
+				name: "化学",
+				url:  "http://bk.cooco.net.cn/shiti/gz/hx",
+			},
+			{
+				name: "地理",
+				url:  "http://bk.cooco.net.cn/shiti/gz/dl",
+			},
+			{
+				name: "历史",
+				url:  "http://bk.cooco.net.cn/shiti/gz/ls",
+			},
+			{
+				name: "生物",
+				url:  "http://bk.cooco.net.cn/shiti/gz/sw",
+			},
+			{
+				name: "政治",
+				url:  "http://bk.cooco.net.cn/shiti/gz/zz",
+			},
+		},
+	},
 	{
 		name: "初中",
 		papers: []CooCoSubjectsPaper{
-			//{
-			//	name: "语文",
-			//	url:  "http://bk.cooco.net.cn/shiti/cz/yw",
-			//},
-			//{
-			//	name: "数学",
-			//	url:  "http://bk.cooco.net.cn/shiti/cz/sx",
-			//},
-			//{
-			//	name: "英语",
-			//	url:  "http://bk.cooco.net.cn/shiti/cz/yy1",
-			//},
-			//{
-			//	name: "物理",
-			//	url:  "http://bk.cooco.net.cn/shiti/cz/wl",
-			//},
+			{
+				name: "语文",
+				url:  "http://bk.cooco.net.cn/shiti/cz/yw",
+			},
+			{
+				name: "数学",
+				url:  "http://bk.cooco.net.cn/shiti/cz/sx",
+			},
+			{
+				name: "英语",
+				url:  "http://bk.cooco.net.cn/shiti/cz/yy1",
+			},
+			{
+				name: "物理",
+				url:  "http://bk.cooco.net.cn/shiti/cz/wl",
+			},
 			{
 				name: "化学",
 				url:  "http://bk.cooco.net.cn/shiti/cz/hx",
@@ -248,13 +248,15 @@ func main() {
 				}
 			} else {
 				paperTotalNumNodes := htmlquery.Find(paperIndexDoc, `//div[@class="new-st-recommend"]/div[@class="w1200"]/div[@class="s-r-content"]/div[@class="s-r-stlist ywst"]/div[@id="pager-html"]/ul[@class="pagination"]/li[@class="num"]`)
-				paperTotalNumLastNode := paperTotalNumNodes[len(paperTotalNumNodes)-1]
-				paperTotalLastNode := htmlquery.FindOne(paperTotalNumLastNode, `./a`)
-				paperTotalLastText := htmlquery.InnerText(paperTotalLastNode)
-				paperMaxPages, err = strconv.Atoi(paperTotalLastText)
-				if err != nil {
-					fmt.Println(err)
-					continue
+				if paperTotalNumNodes != nil {
+					paperTotalNumLastNode := paperTotalNumNodes[len(paperTotalNumNodes)-1]
+					paperTotalLastNode := htmlquery.FindOne(paperTotalNumLastNode, `./a`)
+					paperTotalLastText := htmlquery.InnerText(paperTotalLastNode)
+					paperMaxPages, err = strconv.Atoi(paperTotalLastText)
+					if err != nil {
+						fmt.Println(err)
+						continue
+					}
 				}
 			}
 
