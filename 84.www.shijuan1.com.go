@@ -156,8 +156,6 @@ var AllTestCategory = []TestCategory{
 	},
 }
 
-var shiJuan1SaveYear = []string{"2024"}
-
 // ychEduSpider 获取第一试卷网文档
 // @Title 获取第一试卷网文档
 // @Description https://www.shijuan1.com/，获取第一试卷网文档
@@ -193,31 +191,26 @@ func main() {
 						title := htmlquery.InnerText(htmlquery.FindOne(trNode, `./td[1]`))
 						title = strings.TrimSpace(title)
 						title = strings.ReplaceAll(title, "/", "-")
-
 						fmt.Println(title)
 
-						uploadDate := htmlquery.InnerText(htmlquery.FindOne(trNode, `./td[6]`))
-						fmt.Println(uploadDate)
+						dateText := htmlquery.InnerText(htmlquery.FindOne(trNode, `./td[6]`))
+						fmt.Println(dateText)
 
-						ifSave := false
-						for _, year := range shiJuan1SaveYear {
-							if strings.Contains(uploadDate, year) {
-								ifSave = true
-								break
-							}
-							if ifSave {
-								break
-							}
-						}
-						if !ifSave {
-							continue
+						datePaper, _ := time.Parse("2006-01-02", dateText)
+						dateStart, _ := time.Parse("2006-01-02", "2024-01-01")
+						fmt.Println(dateStart)
+
+						// 比较日期
+						if datePaper.After(dateStart) == false {
+							fmt.Println("日期在2024-01-01后，跳过")
+							break
 						}
 
 						detailUrl := "https://www.shijuan1.com" + htmlquery.InnerText(htmlquery.FindOne(trNode, `./td[1]/a/@href`))
 						detailDoc, _ := htmlquery.LoadURL(detailUrl)
 						fmt.Println(detailUrl)
 
-						filePath := "E:\\workspace\\www.shijuan1.com\\www.rar_shijuan1.com\\" + testCategory.name + "\\" + title + ".rar"
+						filePath := "E:\\workspace\\www.shijuan1.com\\2024-01-01\\www.rar_shijuan1.com\\" + testCategory.name + "\\" + title + ".rar"
 						if _, err := os.Stat(filePath); err != nil {
 							downloadUrl := "https://www.shijuan1.com" + htmlquery.InnerText(htmlquery.FindOne(detailDoc, `//ul[@class="downurllist"]/li/a/@href`))
 							fmt.Println(downloadUrl)
