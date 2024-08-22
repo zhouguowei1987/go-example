@@ -384,15 +384,15 @@ func main() {
 			price:   "88",
 		},
 		{
-			dirName: "docx.www.shijuan1.com/中考试卷",
+			dirName: "www.docx_shijuan1.com/中考试卷",
 			price:   "88",
 		},
 		{
-			dirName: "docx.www.shijuan1.com/高考试卷",
+			dirName: "www.docx_shijuan1.com/高考试卷",
 			price:   "88",
 		},
 		{
-			dirName: "docx.www.shijuan1.com/小学试卷",
+			dirName: "www.docx_shijuan1.com/小学试卷",
 			price:   "88",
 		},
 		{
