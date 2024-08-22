@@ -440,8 +440,6 @@ func main() {
 					fmt.Println(dateText)
 
 					datePaper, _ := time.Parse("2006-01-02", dateText)
-					fmt.Println(datePaper)
-					os.Exit(1)
 					dateStart, _ := time.Parse("2006-01-02", "2024-01-01")
 					fmt.Println(dateStart)
 
