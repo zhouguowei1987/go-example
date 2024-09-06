@@ -539,6 +539,94 @@ func main() {
 			dirName: "yuwen.docx_chazidian.com",
 			price:   "88",
 		},
+		{
+			dirName: "bk.docx_cooco.net.cn/小学/政治",
+			price:   "88",
+		},
+		{
+			dirName: "bk.docx_cooco.net.cn/小学/数学",
+			price:   "88",
+		},
+		{
+			dirName: "bk.docx_cooco.net.cn/小学/英语",
+			price:   "88",
+		},
+		{
+			dirName: "bk.docx_cooco.net.cn/小学/语文",
+			price:   "88",
+		},
+		{
+			dirName: "bk.docx_cooco.net.cn/初中/数学",
+			price:   "88",
+		},
+		{
+			dirName: "bk.docx_cooco.net.cn/初中/语文",
+			price:   "88",
+		},
+		{
+			dirName: "bk.docx_cooco.net.cn/初中/英语",
+			price:   "88",
+		},
+		{
+			dirName: "bk.docx_cooco.net.cn/初中/物理",
+			price:   "88",
+		},
+		{
+			dirName: "bk.docx_cooco.net.cn/初中/化学",
+			price:   "88",
+		},
+		{
+			dirName: "bk.docx_cooco.net.cn/初中/政治",
+			price:   "88",
+		},
+		{
+			dirName: "bk.docx_cooco.net.cn/初中/生物",
+			price:   "88",
+		},
+		{
+			dirName: "bk.docx_cooco.net.cn/初中/地理",
+			price:   "88",
+		},
+		{
+			dirName: "bk.docx_cooco.net.cn/初中/历史",
+			price:   "88",
+		},
+		{
+			dirName: "bk.docx_cooco.net.cn/高中/地理",
+			price:   "88",
+		},
+		{
+			dirName: "bk.docx_cooco.net.cn/高中/化学",
+			price:   "88",
+		},
+		{
+			dirName: "bk.docx_cooco.net.cn/高中/历史",
+			price:   "88",
+		},
+		{
+			dirName: "bk.docx_cooco.net.cn/高中/生物",
+			price:   "88",
+		},
+		{
+			dirName: "bk.docx_cooco.net.cn/高中/数学",
+			price:   "88",
+		},
+		{
+			dirName: "bk.docx_cooco.net.cn/高中/物理",
+			price:   "88",
+		},
+		{
+			dirName: "bk.docx_cooco.net.cn/高中/英语",
+			price:   "88",
+		},
+		{
+			dirName: "bk.docx_cooco.net.cn/高中/语文",
+			price:   "88",
+		},
+		{
+			dirName: "bk.docx_cooco.net.cn/高中/政治",
+			price:   "88",
+		},
 	}
 	rootPath := "../upload.book118.com/"
 	for _, childDir := range uploadChildDirArr {
