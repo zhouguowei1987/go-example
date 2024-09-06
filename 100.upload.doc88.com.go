@@ -449,6 +449,116 @@ func main() {
 			pCid:    55919,
 			Price:   388,
 		},
+		{
+			dirName: "bk.docx_cooco.net.cn/小学/政治",
+			pCid:    8307,
+			Price:   388,
+		},
+		{
+			dirName: "bk.docx_cooco.net.cn/小学/数学",
+			pCid:    8247,
+			Price:   388,
+		},
+		{
+			dirName: "bk.docx_cooco.net.cn/小学/英语",
+			pCid:    8248,
+			Price:   388,
+		},
+		{
+			dirName: "bk.docx_cooco.net.cn/小学/语文",
+			pCid:    8246,
+			Price:   388,
+		},
+		{
+			dirName: "bk.docx_cooco.net.cn/初中/数学",
+			pCid:    8156,
+			Price:   388,
+		},
+		{
+			dirName: "bk.docx_cooco.net.cn/初中/英语",
+			pCid:    8157,
+			Price:   388,
+		},
+		{
+			dirName: "bk.docx_cooco.net.cn/初中/语文",
+			pCid:    8155,
+			Price:   388,
+		},
+		{
+			dirName: "bk.docx_cooco.net.cn/初中/物理",
+			pCid:    8158,
+			Price:   388,
+		},
+		{
+			dirName: "bk.docx_cooco.net.cn/初中/化学",
+			pCid:    8160,
+			Price:   388,
+		},
+		{
+			dirName: "bk.docx_cooco.net.cn/初中/政治",
+			pCid:    8163,
+			Price:   388,
+		},
+		{
+			dirName: "bk.docx_cooco.net.cn/初中/生物",
+			pCid:    8162,
+			Price:   388,
+		},
+		{
+			dirName: "bk.docx_cooco.net.cn/初中/地理",
+			pCid:    8159,
+			Price:   388,
+		},
+		{
+			dirName: "bk.docx_cooco.net.cn/初中/历史",
+			pCid:    8161,
+			Price:   388,
+		},
+		{
+			dirName: "bk.docx_cooco.net.cn/高中/地理",
+			pCid:    8256,
+			Price:   388,
+		},
+		{
+			dirName: "bk.docx_cooco.net.cn/高中/化学",
+			pCid:    8183,
+			Price:   388,
+		},
+		{
+			dirName: "bk.docx_cooco.net.cn/高中/历史",
+			pCid:    8257,
+			Price:   388,
+		},
+		{
+			dirName: "bk.docx_cooco.net.cn/高中/生物",
+			pCid:    8186,
+			Price:   388,
+		},
+		{
+			dirName: "bk.docx_cooco.net.cn/高中/数学",
+			pCid:    8180,
+			Price:   388,
+		},
+		{
+			dirName: "bk.docx_cooco.net.cn/高中/物理",
+			pCid:    8182,
+			Price:   388,
+		},
+		{
+			dirName: "bk.docx_cooco.net.cn/高中/英语",
+			pCid:    8181,
+			Price:   388,
+		},
+		{
+			dirName: "bk.docx_cooco.net.cn/高中/语文",
+			pCid:    8179,
+			Price:   388,
+		},
+		{
+			dirName: "bk.docx_cooco.net.cn/高中/政治",
+			pCid:    8158,
+			Price:   388,
+		},
 	}
 	rootPath := "../upload.doc88.com/"
 	for _, childDir := range uploadChildDirArr {
