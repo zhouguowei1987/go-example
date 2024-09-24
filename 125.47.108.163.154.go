@@ -11,6 +11,7 @@ import (
 	"os"
 	"path/filepath"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -100,7 +101,7 @@ func YjjSetHttpProxy() (httpclient *http.Client) {
 	return httpclient
 }
 
-var YjjNextDownloadSleep = 2
+var YjjNextDownloadSleep = 1
 
 // ychEduSpider 重庆市应急管理局内网标准
 // @Title 重庆市应急管理局内网标准
@@ -120,8 +121,15 @@ func main() {
 	}
 	for _, liNode := range liNodes {
 		// 文档标题
-		fmt.Println(1111)
 		title := htmlquery.InnerText(liNode)
+		title = strings.Replace(title, "《", "", -1)
+		title = strings.Replace(title, "》", "", -1)
+		pointCount := strings.Count(title, ".")
+		if pointCount >= 2 {
+			titleArr := strings.Split(title, ".")
+			titleArr = append(titleArr[:0], titleArr[1:]...)
+			title = strings.Join(titleArr, ".")
+		}
 		fmt.Println(title)
 
 		downUrl := "http://47.108.163.154" + htmlquery.InnerText(htmlquery.FindOne(liNode, `./@href`))
