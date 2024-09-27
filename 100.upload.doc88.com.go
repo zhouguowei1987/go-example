@@ -580,7 +580,7 @@ func main() {
 			Price:   388,
 		},
 	}
-	rootPath := "../upload.doc88.com/"
+	rootPath := "E:\\workspace\\upload.doc88.com\\"
 	for _, childDir := range uploadChildDirArr {
 		childDirPath := rootPath + childDir.dirName + "/"
 		fmt.Println(childDirPath)
