@@ -61,8 +61,8 @@ type DownLoadWebFreeFormData struct {
 }
 
 type DownLoadWebFreeResponse struct {
-	downloadurl string
-	success     bool
+	DownLoadUrl string `json:"downloadurl"`
+	Success     bool   `json:"success"`
 }
 
 // ychEduSpider 协筑资源标准文档
@@ -125,12 +125,12 @@ func main() {
 						fmt.Println(err)
 						continue
 					}
-					if downLoadWebFreeResponse.success != true {
+					if downLoadWebFreeResponse.Success != true {
 						fmt.Println(err)
 						continue
 					}
 
-					downLoadUrl := downLoadWebFreeResponse.downloadurl
+					downLoadUrl := downLoadWebFreeResponse.DownLoadUrl
 					fmt.Println(downLoadUrl)
 
 					fmt.Println("=======开始下载" + strconv.Itoa(current) + "========")
@@ -182,15 +182,20 @@ func DownLoadWebFreeUrl(downLoadWebFreeFormData DownLoadWebFreeFormData) (downLo
 		return downLoadWebFreeResponse, err
 	}
 
+	req.Header.Set("authority", "www.webfree.net")
+	req.Header.Set("method", "POST")
+	req.Header.Set("path", "/wp-json/wpdm/validate-password")
+	req.Header.Set("scheme", "https")
 	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
 	req.Header.Set("Connection", "keep-alive")
-	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+	req.Header.Set("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")
 	req.Header.Set("Cookie", "__wpdm_client=3e8ac23582935cd8c0ed700cd0f84b21; PHPSESSID=458e78ddae9c5dbe00147d3fe1531906")
 	req.Header.Set("Host", "www.webfree.net")
-	req.Header.Set("Origin", "www.webfree.net")
+	req.Header.Set("Origin", "https://www.webfree.net")
+	req.Header.Set("Priority", "u=1, i")
 	referer := fmt.Sprintf("https://www.webfree.net/?__wpdmlo=%s&REFERRER=https://www.webfree.net/download/%d", downLoadWebFreeFormData.__wpdm_ID, downLoadWebFreeFormData.__wpdm_ID)
 	req.Header.Set("Referer", referer)
-	req.Header.Set("sec-ch-ua", "\"Chromium\";v=\"110\", \"Not A(Brand\";v=\"24\", \"Google Chrome\";v=\"110\"")
+	req.Header.Set("sec-ch-ua", "\"Chromium\";v=\"124\", \"Google Chrome\";v=\"124\", \"Not-A.Brand\";v=\"99\"")
 	req.Header.Set("sec-ch-ua-mobile", "?0")
 	req.Header.Set("sec-ch-ua-platform", "\"macOS\"")
 	req.Header.Set("Sec-Fetch-Dest", "empty")
