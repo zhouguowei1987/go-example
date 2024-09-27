@@ -558,9 +558,25 @@ func main() {
 			dirName: "bk.docx_cooco.net.cn/高中/政治",
 			pCid:    8158,
 			Price:   388,
-		}, {
+		},
+		{
 			dirName: "47.108.163.154",
 			pCid:    8368,
+			Price:   388,
+		},
+		{
+			dirName: "www.webfree.net/国家标准",
+			pCid:    8368,
+			Price:   388,
+		},
+		{
+			dirName: "www.webfree.net/行业标准",
+			pCid:    8370,
+			Price:   388,
+		},
+		{
+			dirName: "www.webfree.net/地方标准",
+			pCid:    8371,
 			Price:   388,
 		},
 	}
