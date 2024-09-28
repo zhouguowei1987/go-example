@@ -579,17 +579,17 @@ func main() {
 		{
 			dirName: "www.webfree.net/国家标准",
 			pCid:    8368,
-			Price:   388,
+			Price:   788,
 		},
 		{
 			dirName: "www.webfree.net/行业标准",
 			pCid:    8370,
-			Price:   388,
+			Price:   788,
 		},
 		{
 			dirName: "www.webfree.net/地方标准",
 			pCid:    8371,
-			Price:   388,
+			Price:   788,
 		},
 	}
 	rootPath := "../upload.doc88.com/"
