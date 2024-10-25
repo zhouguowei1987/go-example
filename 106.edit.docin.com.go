@@ -99,7 +99,7 @@ func EditDocInSetHttpProxy() (httpclient *http.Client) {
 	return httpclient
 }
 
-var DocInCookie = "docin_session_id=b45ae036-1776-4855-a61f-d3441addbafb; pbyCookieKey=1719393050260; cookie_id=CACBC82BFA8000012A8D1A82E3081CC5; time_id=2024626171050; partner_tips=1; last_upload_public243402665=yes; tipMaxId=574386458; userchoose=170_169_174_171_175_176_177_180_181_998_000_; userChoose=usertags169_174_171_175_176_177_180_181_998_000_; ifShowMsg=true; _gid=GA1.2.203874693.1724818626; mobilefirsttip=tip; remindClickId=-1; login_email=15238369929; user_password=QQ7VSpIhJ4%2FLb8%2FJFb0FLKpq7lLi5mzCsPdXYATSgeY%3DH_TAOWfW55issLykbgUyREQsa3gKt8jed5YAGFbDGqSIhC5uhBCK3LyhR7xS2mggnjj; refererusertype=0; s_from=direct; uaType=chrome; netfunction=\"/my/upload/myUpload.do\"; today_first_in=1; JSESSIONID=C4B8D4541FB376B3CA3B05EA20BADD4D-n2; _ga_ZYR13KTSXC=GS1.1.1724917862.75.1.1724917918.4.0.0; _ga=GA1.2.1198245365.1719393051"
+var DocInCookie = "last_upload_public243402665=yes; _ga_ZYR13KTSXC=deleted; tipMaxId=563451380; visitTopicIds=\"279237,285253,285264,284991,285122\"; docin_session_id=b7443cb8-debe-44ce-b172-b1dbcf3099e7; cookie_id=CA91473F59A00001B14FCD001CE0183B; time_id=2023122722507; partner_tips=1; _ga_ZYR13KTSXC=deleted; aliyungf_tc=b67c7843e29113946821791021990a9dfcb47204518972fa606e8fdfaf292f11; ifShowMsg=true; jumpIn=400; lastLoginType=weixin; refererfunction=https%3A%2F%2Fwww.baidu.com%2Flink%3Furl%3DQluH3KaLm_FfwysFVtbuZLqOlktV0hrWj4HpfUXdkCAQMpsEQkArHNbydexOAaZ2yd2XKuGKTpHFU6qvzVmHp_%26wd%3D%26eqid%3Ddfab7a1a002982de00000002666d7159; recharge_from_type=nav-sub1; isbaiduspider=false; netfunction=\"/my/upload/myUpload.do\"; old_fin_channel243402665=1; login_email=15238369929; user_password=cTjmkIIN9z%2BMDrH7l8%2B9UKpq7lLi5mzCsPdXYATSgeY%3DH_T8aTT1wSegEdnSZcFvulWsivllubjoCngAGFbDGqSIhC5uhBCK3LyhR7xS2mggnjj; _gid=GA1.2.1643153144.1729514198; mobilefirsttip=tip; today_first_in=1; s_from=direct; uaType=chrome; JSESSIONID=D977DC931F93169B41C6F7A431AC028C-n1; _ga=GA1.2.43085923.1672147943; _ga_ZYR13KTSXC=GS1.1.1729835588.996.1.1729836413.60.0.0"
 var downPrice = 5
 
 // ychEduSpider 编辑豆丁文档
@@ -109,14 +109,14 @@ func main() {
 	currentPage := 1
 	beginId := 0
 	for {
-		pageListUrl := "https://www.docin.com/my/upload/myUpload.do?onlypPublic=1&totalpublicnum=0"
+		pageListUrl := "https://www.docin.com/my/upload/myUpload.do?styleList=1&orderName=0&orderDate=0&orderVisit=0&orderStatus=0&folderId=-1"
 		referer := "https://www.docin.com/my/upload/myUpload.do?styleList=1&orderName=0&orderDate=0&orderVisit=0&orderStatus=0&folderId=-1"
 		if currentPage >= 1 {
-			pageListUrl = fmt.Sprintf("https://www.docin.com/my/upload/myUpload.do?styleList=1"+
-				"&orderName=0&orderDate=0&orderVisit=0&orderStatus=0&orderFolder=0"+
-				"&folderId=0&myKeyword=&publishCount=&onlypPrivate=&totalprivatenum=0"+
-				"&onlypPublic=&totalpublicnum=0&currentPage=%d"+
-				"&pageType=n&beginId=%d", currentPage, beginId)
+			pageListUrl = fmt.Sprintf("https://www.docin.com/my/upload/myUpload.do"+
+				"?styleList=1&orderName=0&orderDate=0&orderVisit=0&orderStatus=0"+
+				"&orderFolder=0&folderId=-1&myKeyword=&publishCount="+
+				"&onlypPrivate=&totalprivatenum=0&onlypPublic=&"+
+				"totalpublicnum=0&currentPage=%d&pageType=p&beginId=%d", currentPage, beginId)
 		}
 
 		pageListDoc, err := QueryDocInDoc(pageListUrl, referer)
