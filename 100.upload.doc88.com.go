@@ -15,7 +15,6 @@ import (
 	"os"
 	"path"
 	"path/filepath"
-	"rsc.io/pdf"
 	"strconv"
 	"strings"
 	"time"
@@ -93,7 +92,12 @@ func uploadFile(filePath string, uploadKey string, ck string) (uploadResponseDat
 	if err != nil {
 		return uploadResponseData, err
 	}
-	defer file.Close()
+	defer func(file *os.File) {
+		err := file.Close()
+		if err != nil {
+			fmt.Println(err)
+		}
+	}(file)
 
 	fileWriter, err := bodyWriter.CreateFormFile("upfile", filepath.Base(file.Name()))
 	if err != nil {
@@ -106,7 +110,10 @@ func uploadFile(filePath string, uploadKey string, ck string) (uploadResponseDat
 	}
 
 	contentType := bodyWriter.FormDataContentType()
-	bodyWriter.Close()
+	err = bodyWriter.Close()
+	if err != nil {
+		return UploadResponseData{}, err
+	}
 
 	err = bodyWriter.WriteField("act", "upload")
 	if err != nil {
@@ -143,7 +150,12 @@ func uploadFile(filePath string, uploadKey string, ck string) (uploadResponseDat
 		return uploadResponseData, err
 	}
 
-	defer resp.Body.Close()
+	defer func(Body io.ReadCloser) {
+		err := Body.Close()
+		if err != nil {
+
+		}
+	}(resp.Body)
 	respBytes, err := ioutil.ReadAll(resp.Body)
 	err = json.Unmarshal(respBytes, &uploadResponseData)
 	if err != nil {
@@ -558,10 +570,26 @@ func main() {
 			dirName: "bk.docx_cooco.net.cn/高中/政治",
 			pCid:    8158,
 			Price:   388,
-		}, {
+		},
+		{
 			dirName: "47.108.163.154",
 			pCid:    8368,
 			Price:   388,
+		},
+		{
+			dirName: "www.webfree.net/国家标准",
+			pCid:    8368,
+			Price:   788,
+		},
+		{
+			dirName: "www.webfree.net/行业标准",
+			pCid:    8370,
+			Price:   788,
+		},
+		{
+			dirName: "www.webfree.net/地方标准",
+			pCid:    8371,
+			Price:   788,
 		},
 	}
 	rootPath := "../upload.doc88.com/"
@@ -644,9 +672,9 @@ func main() {
 			filePageNum := 0
 			if fileExt == ".pdf" {
 				// 获取PDF文件，获取总页数
-				if pdfFile, err := pdf.Open(filePath); err == nil {
-					filePageNum = pdfFile.NumPage()
-				}
+				//if pdfFile, err := pdf.Open(filePath); err == nil {
+				//	filePageNum = pdfFile.NumPage()
+				//}
 			}
 			// 根据页数设置价格
 			if filePageNum > 0 {
@@ -677,10 +705,14 @@ func main() {
 
 			// 将已上传的文件转移到指定文件夹
 			fileFinal := finalDir + "/" + fileName
-			err = os.Rename(filePath, fileFinal)
-			if err != nil {
-				fmt.Println(err)
-				break
+			if err := os.Rename(filePath, fileFinal); err != nil {
+				// 如果文件正在被使用，等待一段时间后重试
+				time.Sleep(time.Second)
+				if err := os.Rename(filePath, fileFinal); err != nil {
+					//panic(err)
+					fmt.Println(err)
+					break
+				}
 			}
 
 			// 编辑文件所需分类和下载所需积分
