@@ -444,9 +444,9 @@ func QueryEditBydAutoFollow(requestUrl string, followRequestPayload map[string]i
 	}
 	defer resp.Body.Close()
 	// 如果访问失败，就打印当前状态码
-	//if resp.StatusCode != http.StatusOK {
-	//	return queryEditBydAutoResponseFollow, errors.New("http status :" + strconv.Itoa(resp.StatusCode))
-	//}
+	if resp.StatusCode != http.StatusOK {
+		return queryEditBydAutoResponseFollow, errors.New("http status :" + strconv.Itoa(resp.StatusCode))
+	}
 	respBytes, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return queryEditBydAutoResponseFollow, err
