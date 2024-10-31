@@ -102,7 +102,6 @@ func EditBydAutoSetHttpProxy() (httpclient *http.Client) {
 }
 
 var BydAutoEditAuthorization = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50VHlwZSI6MSwiaWQiOjY0MzIyLCJpc1N1cGVyIjpmYWxzZX0.IiINeGVqTZTqE9zHvACPX__Qu1A9YB4916lMXAumjIc"
-var BydAutoEditSaveTimeSleep = 20
 var BydAutoEditNextPageSleep = 15
 
 type QueryEditBydAutoResponseList struct {
@@ -195,8 +194,8 @@ func main() {
 			// 类型1：沟通 类型8：回访，只处理待沟通类型
 			if queryEditBydAutoResponseListData.ActivityType == 1 {
 				fmt.Println("====================开始处理数据================================")
-				// 将待沟通的类型，处理时间延长两天
-				activityDate := queryEditBydAutoResponseListData.ActivityDate + 2*(24*60*60) + 1
+				// 将待沟通的类型，处理时间随机延长1-5天
+				activityDate := queryEditBydAutoResponseListData.ActivityDate + rand.Intn(5)*(24*60*60) + 1
 				customerId := queryEditBydAutoResponseListData.CustomerId
 				getUrl := "https://zz-api.bydauto.com.cn/aiApi-dealer/v2/appCustomerService/get"
 				fmt.Println(getUrl)
@@ -252,9 +251,10 @@ func main() {
 					fmt.Println(err)
 					continue
 				}
-				for i := 1; i <= BydAutoEditSaveTimeSleep; i++ {
+				bydAutoEditSaveTimeSleep := rand.Intn(10)
+				for i := 1; i <= bydAutoEditSaveTimeSleep; i++ {
 					time.Sleep(time.Second)
-					fmt.Println("page="+strconv.Itoa(curPage)+"===========更新", queryEditBydAutoResponseListData.CustomerName, "成功，暂停", BydAutoEditSaveTimeSleep, "秒，倒计时", i, "秒===========")
+					fmt.Println("page="+strconv.Itoa(curPage)+"===========更新", queryEditBydAutoResponseListData.CustomerName, "成功，暂停", bydAutoEditSaveTimeSleep, "秒，倒计时", i, "秒===========")
 				}
 				fmt.Println("====================处理数据完成================================")
 			}
