@@ -251,7 +251,7 @@ func main() {
 					fmt.Println(err)
 					continue
 				}
-				bydAutoEditSaveTimeSleep := rand.Intn(10)
+				bydAutoEditSaveTimeSleep := rand.Intn(20)
 				for i := 1; i <= bydAutoEditSaveTimeSleep; i++ {
 					time.Sleep(time.Second)
 					fmt.Println("page="+strconv.Itoa(curPage)+"===========更新", queryEditBydAutoResponseListData.CustomerName, "成功，暂停", bydAutoEditSaveTimeSleep, "秒，倒计时", i, "秒===========")
