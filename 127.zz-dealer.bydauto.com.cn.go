@@ -102,44 +102,7 @@ func EditBydAutoSetHttpProxy() (httpclient *http.Client) {
 	return httpclient
 }
 
-type QueryEditBydAutoListFormData struct {
-	MenuIndex  int
-	ClassifyId string
-	FolderId   int
-	Sort       int
-	Keyword    string
-	ShowIndex  int
-}
-
-type EditBydAutoResponseData struct {
-	Result     string `json:"result"`
-	EditTitle  string `json:"edit_title"`
-	Class      string `json:"class"`
-	UpdateInfo string `json:"updateinfo"`
-	State      string `json:"state"`
-	SaveFile   string `json:"savefile"`
-	Other      string `json:"other"`
-}
-
-type EditBydAutoFormData struct {
-	DocCode        string
-	Title          string
-	Intro          string
-	PCid           string
-	Keyword        string
-	ShareToDoc     string
-	Download       string
-	PPrice         string
-	PDefaultPoints string
-	PPageCount     string
-	PDocFormat     string
-	Act            string
-	GroupList      string
-	GroupFreeList  string
-}
-
 var BydAutoEditAuthorization = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50VHlwZSI6MSwiaWQiOjY0MzIyLCJpc1N1cGVyIjpmYWxzZX0.IiINeGVqTZTqE9zHvACPX__Qu1A9YB4916lMXAumjIc"
-
 var BydAutoEditSaveTimeSleep = 20
 var BydAutoEditNextPageSleep = 15
 
