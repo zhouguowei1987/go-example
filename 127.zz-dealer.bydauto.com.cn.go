@@ -191,10 +191,10 @@ func main() {
 			break
 		}
 		for _, queryEditBydAutoResponseListData := range queryEditBydAutoResponseList.Data {
-			fmt.Println("====================================================")
 			fmt.Printf("客户姓名：%s，客户手机号：%s\n", queryEditBydAutoResponseListData.CustomerName, queryEditBydAutoResponseListData.CustomerMobile)
 			// 类型1：沟通 类型8：回访，只处理待沟通类型
 			if queryEditBydAutoResponseListData.ActivityType == 1 {
+				fmt.Println("====================开始处理数据================================")
 				// 将待沟通的类型，处理时间延长两天
 				activityDate := queryEditBydAutoResponseListData.ActivityDate + 2*(24*60*60) + 1
 				customerId := queryEditBydAutoResponseListData.CustomerId
@@ -256,6 +256,7 @@ func main() {
 					time.Sleep(time.Second)
 					fmt.Println("page="+strconv.Itoa(curPage)+"===========更新", queryEditBydAutoResponseListData.CustomerName, "成功，暂停", BydAutoEditSaveTimeSleep, "秒，倒计时", i, "秒===========")
 				}
+				fmt.Println("====================处理数据完成================================")
 			}
 		}
 		curPage++
