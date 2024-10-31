@@ -208,7 +208,7 @@ func main() {
 				if err != nil {
 					EditBydAutoHttpProxyUrl = ""
 					fmt.Println(err)
-					break
+					continue
 				}
 
 				followUrl := "https://zz-api.bydauto.com.cn/aiApi-dealer/v2/appCustomerService/follow"
@@ -250,7 +250,7 @@ func main() {
 				if err != nil {
 					EditBydAutoHttpProxyUrl = ""
 					fmt.Println(err)
-					break
+					continue
 				}
 				for i := 1; i <= BydAutoEditSaveTimeSleep; i++ {
 					time.Sleep(time.Second)
