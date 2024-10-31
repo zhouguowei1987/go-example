@@ -223,26 +223,30 @@ func main() {
 			fmt.Println(err)
 			continue
 		}
-		fmt.Printf("%+v", queryEditBydAutoResponseList.Data)
-		os.Exit(1)
+		//fmt.Printf("%+v", queryEditBydAutoResponseList.Data)
+		//os.Exit(1)
 		if len(queryEditBydAutoResponseList.Data) <= 0 {
 			break
 		}
 		for _, queryEditBydAutoResponseListData := range queryEditBydAutoResponseList.Data {
+			fmt.Println("====================================================")
+			fmt.Printf("客户姓名：%s，客户手机号：%s\n", queryEditBydAutoResponseListData.CustomerName, queryEditBydAutoResponseListData.CustomerMobile)
 			// 类型1：沟通 类型8：回访，只处理待沟通类型
 			if queryEditBydAutoResponseListData.ActivityType == 1 {
 				// 将待沟通的类型，处理时间延长两天
-				activityDate := queryEditBydAutoResponseListData.ActivityDate + 2*(24*60*60)
+				activityDate := queryEditBydAutoResponseListData.ActivityDate + 2*(24*60*60) + 1
 				customerId := queryEditBydAutoResponseListData.CustomerId
 				getUrl := "https://zz-api.bydauto.com.cn/aiApi-dealer/v2/appCustomerService/get"
+				fmt.Println(getUrl)
 				getRequestPayload := make(map[string]interface{})
 				getRequestPayload["customerId"] = customerId
 				getRequestPayload["dealerId"] = dealerId
 				queryEditBydAutoResponseGet, err := QueryEditBydAutoGet(getUrl, getRequestPayload)
+				//fmt.Printf("%+v\n", queryEditBydAutoResponseGet)
 				if err != nil {
 					EditBydAutoHttpProxyUrl = ""
 					fmt.Println(err)
-					continue
+					break
 				}
 
 				followUrl := "https://zz-api.bydauto.com.cn/aiApi-dealer/v2/appCustomerService/follow"
@@ -260,8 +264,8 @@ func main() {
 				followRequestPayload["level"] = "A"
 				followRequestPayload["nextActivityType"] = 1
 				followRequestPayload["nextDate"] = activityDate
-				followRequestPayload["nextTestSpecId"] = "null"
-
+				followRequestPayload["nextTestSpecId"] = nil
+				followRequestPayload["quote"] = 0
 				// 备注内容随机
 				// 初始化随机数生成器
 				rand.Seed(time.Now().UnixNano())
@@ -269,28 +273,28 @@ func main() {
 				array := []string{"已跟进", "已联系", "考虑考虑", "不着急"}
 				// 获取随机索引
 				index := rand.Intn(len(array))
-				followRequestPayload["quote"] = array[index]
+				followRequestPayload["remark"] = array[index]
 				followRequestPayload["reserveComeDate"] = 0
 				var specIds []string
 				for _, intendSeriese := range queryEditBydAutoResponseGet.Info.IntendSerieses {
 					specIds = append(specIds, strconv.Itoa(intendSeriese.Id))
 				}
 				followRequestPayload["specIds"] = strings.Join(specIds, ",")
+				followRequestPayload["testResult"] = 1
 				followRequestPayload["testSpecId"] = 0
+				//fmt.Printf("%+v\n", followRequestPayload)
 
 				_, err = QueryEditBydAutoFollow(followUrl, followRequestPayload)
 				if err != nil {
 					EditBydAutoHttpProxyUrl = ""
 					fmt.Println(err)
-					continue
+					break
 				}
 				for i := 1; i <= BydAutoEditSaveTimeSleep; i++ {
 					time.Sleep(time.Second)
 					fmt.Println("page="+strconv.Itoa(curPage)+"===========更新", queryEditBydAutoResponseListData.CustomerName, "成功，暂停", BydAutoEditSaveTimeSleep, "秒，倒计时", i, "秒===========")
 				}
 			}
-			fmt.Println("测试")
-			os.Exit(1)
 		}
 		curPage++
 		for i := 1; i <= BydAutoEditNextPageSleep; i++ {
@@ -478,13 +482,15 @@ func QueryEditBydAutoFollow(requestUrl string, followRequestPayload map[string]i
 	}
 	defer resp.Body.Close()
 	// 如果访问失败，就打印当前状态码
-	if resp.StatusCode != http.StatusOK {
-		return queryEditBydAutoResponseFollow, errors.New("http status :" + strconv.Itoa(resp.StatusCode))
-	}
+	//if resp.StatusCode != http.StatusOK {
+	//	return queryEditBydAutoResponseFollow, errors.New("http status :" + strconv.Itoa(resp.StatusCode))
+	//}
 	respBytes, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return queryEditBydAutoResponseFollow, err
 	}
+	fmt.Println(string(respBytes))
+	os.Exit(1)
 	err = json.Unmarshal(respBytes, &queryEditBydAutoResponseFollow)
 	if err != nil {
 		return queryEditBydAutoResponseFollow, err
