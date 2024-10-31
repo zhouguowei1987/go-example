@@ -6,7 +6,6 @@ import (
 	"errors"
 	"fmt"
 	"github.com/antchfx/htmlquery"
-	"golang.org/x/net/html"
 	"io/ioutil"
 	"net"
 	"net/http"
@@ -171,17 +170,37 @@ type QueryEditBydAutoResponseListData struct {
 	Status         int    `json:"status"`
 }
 
+type QueryEditBydAutoResponseGet struct {
+	Info            QueryEditBydAutoResponseGetInfo            `json:"info"`
+	PendingActivity QueryEditBydAutoResponseGetPendingActivity `json:"pendingActivity"`
+}
+
+type QueryEditBydAutoResponseGetInfo struct {
+	IntendSerieses []QueryEditBydAutoResponseGetInfoIntendSeriese `json:"intendSerieses"`
+}
+
+type QueryEditBydAutoResponseGetInfoIntendSeriese struct {
+	Id       int    `json:"id"`
+	IsMaster bool   `json:"isMaster"`
+	Name     string `json:"name"`
+}
+
+type QueryEditBydAutoResponseGetPendingActivity struct {
+	Id int `json:"id"`
+}
+
 // ychEduSpider 编辑智蛛AI经销商系统
 // @Title 编辑智蛛AI经销商系统
 // @Description https://zz-dealer.bydauto.com.cn/，编辑智蛛AI经销商系统
 func main() {
 	curPage := 0
 	for {
+		dealerId := 826
 		listRequestPayload := make(map[string]interface{})
 		listRequestPayload["activityType"] = 0
 		listRequestPayload["dateEnd"] = 0
 		listRequestPayload["dateStart"] = 0
-		listRequestPayload["dealerId"] = 826
+		listRequestPayload["dealerId"] = dealerId
 		listRequestPayload["filterType"] = 0
 		listRequestPayload["fromType"] = 0
 		listRequestPayload["key"] = ""
@@ -199,122 +218,71 @@ func main() {
 			fmt.Println(err)
 			continue
 		}
-		fmt.Printf("%+v", queryEditBydAutoResponseList.Data)
-		os.Exit(1)
-		//liNodes := htmlquery.Find(pageListDoc, `//div[@id="detailed"]/ul[@class="bookshow3"]/li`)
-		//if len(liNodes) <= 0 {
-		//	break
-		//}
-		//for _, liNode := range liNodes {
-		//
-		//	TitleNode := htmlquery.FindOne(liNode, `./div[@class="bookdoc"]/h3/a`)
-		//	Title := htmlquery.SelectAttr(TitleNode, "title")
-		//	fmt.Println(Title)
-		//
-		//	IntroNode := htmlquery.FindOne(liNode, `./div[@class="bookdoc"]/p`)
-		//	Intro := htmlquery.InnerText(IntroNode)
-		//
-		//	PPageCountNode := htmlquery.FindOne(liNode, `./div[@class="bookimg"]/em`)
-		//	PPageCount := htmlquery.InnerText(PPageCountNode)
-		//	PPageCount = PPageCount[2:]
-		//
-		//	PPriceNode := htmlquery.FindOne(liNode, `./div[@class="bookdoc"]/ul[@class="position"]/li[6]/span[@class="jifentip"]/strong[@class="red"]`)
-		//	PPrice := htmlquery.InnerText(PPriceNode)
-		//
-		//	filePageNum, _ := strconv.Atoi(PPageCount)
-		//	PPriceNew := ""
-		//	// 根据页数设置价格
-		//	if filePageNum > 0 && filePageNum <= 5 {
-		//		PPriceNew = "288"
-		//	} else if filePageNum > 5 && filePageNum <= 10 {
-		//		PPriceNew = "388"
-		//	} else if filePageNum > 10 && filePageNum <= 15 {
-		//		PPriceNew = "488"
-		//	} else if filePageNum > 15 && filePageNum <= 20 {
-		//		PPriceNew = "588"
-		//	} else if filePageNum > 20 && filePageNum <= 25 {
-		//		PPriceNew = "688"
-		//	} else if filePageNum > 25 && filePageNum <= 30 {
-		//		PPriceNew = "788"
-		//	} else if filePageNum > 30 && filePageNum <= 35 {
-		//		PPriceNew = "888"
-		//	} else if filePageNum > 35 && filePageNum <= 40 {
-		//		PPriceNew = "988"
-		//	} else if filePageNum > 40 && filePageNum <= 45 {
-		//		PPriceNew = "1088"
-		//	} else if filePageNum > 45 && filePageNum <= 50 {
-		//		PPriceNew = "1188"
-		//	} else {
-		//		PPriceNew = "1288"
-		//	}
-		//
-		//	// 新旧价格一样，则跳过
-		//	fmt.Println(PPrice, PPriceNew)
-		//	if PPrice == PPriceNew {
-		//		continue
-		//	}
-		//
-		//	PId := htmlquery.SelectAttr(liNode, "id")
-		//	PId = PId[5:]
-		//
-		//	for i := 1; i <= EditDetailTimeSleep; i++ {
-		//		time.Sleep(time.Second)
-		//		fmt.Println("page="+strconv.Itoa(curPage)+"===========获取", Title, "详情暂停", EditDetailTimeSleep, "秒，倒计时", i, "秒===========")
-		//	}
-		//
-		//	detailUrl := "https://zz-dealer.bydauto.com.cn/uc/usr_doc_manager.php?act=getDocInfo"
-		//	detailDoc, err := QueryEditBydAutoDetail(detailUrl, PId)
-		//	if err != nil {
-		//		EditBydAutoHttpProxyUrl = ""
-		//		fmt.Println(err)
-		//		continue
-		//	}
-		//
-		//	DocCodeNode := htmlquery.FindOne(detailDoc, `//dl[@class="editlayout"]/form/dd[1]/div[@class="booksedit"]/table[@class="edit-table"]/input`)
-		//	DocCode := htmlquery.SelectAttr(DocCodeNode, "value")
-		//
-		//	PCidNode := htmlquery.FindOne(detailDoc, `//dl[@class="editlayout"]/form/dd[1]/div[@class="booksedit"]/table[@class="edit-table"]/tbody/tr[3]/td[2]/div[@class="layers"]/input`)
-		//	PCid := htmlquery.SelectAttr(PCidNode, "value")
-		//
-		//	PDocFormatNode := htmlquery.FindOne(detailDoc, `//dl[@class="editlayout"]/form/dd[2]/div[@class="booksedit booksedit-bdr"]/table[@class="edit-table"]/tbody/tr[3]/td[2]/input[3]`)
-		//	PDocFormat := htmlquery.SelectAttr(PDocFormatNode, "value")
-		//
-		//	fmt.Println("===========开始修改", Title, "价格===========")
-		//	editUrl := "https://zz-dealer.bydauto.com.cn/uc/index.php"
-		//	editDoc88FormData := EditBydAutoFormData{
-		//		DocCode:        DocCode,
-		//		Title:          Title,
-		//		Intro:          Intro,
-		//		PCid:           PCid,
-		//		Keyword:        "",
-		//		ShareToDoc:     "1",
-		//		Download:       "2",
-		//		PPrice:         PPriceNew,
-		//		PDefaultPoints: "3",
-		//		PPageCount:     PPageCount,
-		//		PDocFormat:     PDocFormat,
-		//		Act:            "save_info",
-		//		GroupList:      "",
-		//		GroupFreeList:  "",
-		//	}
-		//
-		//	for i := 1; i <= EditSaveTimeSleep; i++ {
-		//		time.Sleep(time.Second)
-		//		fmt.Println("page="+strconv.Itoa(curPage)+"===========更新", Title, "成功，暂停", EditSaveTimeSleep, "秒，倒计时", i, "秒===========")
-		//	}
-		//
-		//	_, err = EditBydAuto(editUrl, editDoc88FormData)
-		//	if err != nil {
-		//		EditBydAutoHttpProxyUrl = ""
-		//		fmt.Println(err)
-		//		continue
-		//	}
-		//}
-		//curPage++
-		//for i := 1; i <= EditNextPageSleep; i++ {
-		//	time.Sleep(time.Second)
-		//	fmt.Println("===========翻", curPage, "页，暂停", EditNextPageSleep, "秒，倒计时", i, "秒===========")
-		//}
+		if len(queryEditBydAutoResponseList.Data) <= 0 {
+			break
+		}
+		for _, queryEditBydAutoResponseListData := range queryEditBydAutoResponseList.Data {
+
+			customerId := queryEditBydAutoResponseListData.CustomerId
+
+			getUrl := "https://zz-api.bydauto.com.cn/aiApi-dealer/v2/appCustomerService/get"
+			getRequestPayload := make(map[string]interface{})
+			getRequestPayload["customerId"] = customerId
+			getRequestPayload["dealerId"] = dealerId
+			queryEditBydAutoResponseGet, err := QueryEditBydAutoGet(getUrl, getRequestPayload)
+			if err != nil {
+				EditBydAutoHttpProxyUrl = ""
+				fmt.Println(err)
+				continue
+			}
+			fmt.Printf("%+v", queryEditBydAutoResponseGet)
+			os.Exit(1)
+
+			//DocCodeNode := htmlquery.FindOne(detailDoc, `//dl[@class="editlayout"]/form/dd[1]/div[@class="booksedit"]/table[@class="edit-table"]/input`)
+			//DocCode := htmlquery.SelectAttr(DocCodeNode, "value")
+			//
+			//PCidNode := htmlquery.FindOne(detailDoc, `//dl[@class="editlayout"]/form/dd[1]/div[@class="booksedit"]/table[@class="edit-table"]/tbody/tr[3]/td[2]/div[@class="layers"]/input`)
+			//PCid := htmlquery.SelectAttr(PCidNode, "value")
+			//
+			//PDocFormatNode := htmlquery.FindOne(detailDoc, `//dl[@class="editlayout"]/form/dd[2]/div[@class="booksedit booksedit-bdr"]/table[@class="edit-table"]/tbody/tr[3]/td[2]/input[3]`)
+			//PDocFormat := htmlquery.SelectAttr(PDocFormatNode, "value")
+			//
+			//fmt.Println("===========开始修改", Title, "价格===========")
+			//editUrl := "https://zz-dealer.bydauto.com.cn/uc/index.php"
+			//editDoc88FormData := EditBydAutoFormData{
+			//	DocCode:        DocCode,
+			//	Title:          Title,
+			//	Intro:          Intro,
+			//	PCid:           PCid,
+			//	Keyword:        "",
+			//	ShareToDoc:     "1",
+			//	Download:       "2",
+			//	PPrice:         PPriceNew,
+			//	PDefaultPoints: "3",
+			//	PPageCount:     PPageCount,
+			//	PDocFormat:     PDocFormat,
+			//	Act:            "save_info",
+			//	GroupList:      "",
+			//	GroupFreeList:  "",
+			//}
+			//
+			//for i := 1; i <= EditSaveTimeSleep; i++ {
+			//	time.Sleep(time.Second)
+			//	fmt.Println("page="+strconv.Itoa(curPage)+"===========更新", Title, "成功，暂停", EditSaveTimeSleep, "秒，倒计时", i, "秒===========")
+			//}
+			//
+			//_, err = EditBydAuto(editUrl, editDoc88FormData)
+			//if err != nil {
+			//	EditBydAutoHttpProxyUrl = ""
+			//	fmt.Println(err)
+			//	continue
+			//}
+		}
+		curPage++
+		for i := 1; i <= EditNextPageSleep; i++ {
+			time.Sleep(time.Second)
+			fmt.Println("===========翻", curPage, "页，暂停", EditNextPageSleep, "秒，倒计时", i, "秒===========")
+		}
 	}
 }
 
@@ -382,7 +350,7 @@ func QueryEditBydAutoList(requestUrl string, listRequestPayload map[string]inter
 	return queryEditBydAutoResponseList, nil
 }
 
-func QueryEditBydAutoDetail(requestUrl string, PId string) (doc *html.Node, err error) {
+func QueryEditBydAutoGet(requestUrl string, getRequestPayload map[string]interface{}) (queryEditBydAutoResponseGet QueryEditBydAutoResponseGet, err error) {
 	// 初始化客户端
 	var client *http.Client = &http.Client{
 		Transport: &http.Transport{
@@ -402,45 +370,48 @@ func QueryEditBydAutoDetail(requestUrl string, PId string) (doc *html.Node, err 
 	if EditBydAutoEnableHttpProxy {
 		client = EditBydAutoSetHttpProxy()
 	}
-	postData := url.Values{}
-	postData.Add("p_id", PId)
-	req, err := http.NewRequest("POST", requestUrl, strings.NewReader(postData.Encode())) //建立连接
-
+	payloadBytes, err := json.Marshal(getRequestPayload)
 	if err != nil {
-		return doc, err
+		return queryEditBydAutoResponseGet, err
+	}
+	req, err := http.NewRequest("POST", requestUrl, bytes.NewReader(payloadBytes)) //建立连接
+	if err != nil {
+		return queryEditBydAutoResponseGet, err
 	}
 
 	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
+	req.Header.Set("Authorization", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50VHlwZSI6MSwiaWQiOjY0MzIyLCJpc1N1cGVyIjpmYWxzZX0.IiINeGVqTZTqE9zHvACPX__Qu1A9YB4916lMXAumjIc")
 	req.Header.Set("Connection", "keep-alive")
-	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
-	//req.Header.Set("Cookie", EditDetailCookie)
-	req.Header.Set("Host", "zz-dealer.bydauto.com.cn")
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("Content-Length", fmt.Sprintf("%d", len(payloadBytes)))
+	req.Header.Set("Host", "zz-api.bydauto.com.cn")
 	req.Header.Set("Origin", "https://zz-dealer.bydauto.com.cn")
-	req.Header.Set("Referer", "https://zz-dealer.bydauto.com.cn/uc/doc_manager.php?act=doc_list&state=all")
+	req.Header.Set("Referer", "https://zz-dealer.bydauto.com.cn/")
 	req.Header.Set("sec-ch-ua", "\"Chromium\";v=\"110\", \"Not A(Brand\";v=\"24\", \"Google Chrome\";v=\"110\"")
 	req.Header.Set("sec-ch-ua-mobile", "?0")
 	req.Header.Set("sec-ch-ua-platform", "\"macOS\"")
 	req.Header.Set("Sec-Fetch-Dest", "empty")
 	req.Header.Set("Sec-Fetch-Mode", "cors")
 	req.Header.Set("Sec-Fetch-Site", "same-origin")
-	req.Header.Set("Sec-Fetch-User", "?1")
-	req.Header.Set("Upgrade-Insecure-Requests", "1")
 	req.Header.Set("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36")
-	req.Header.Set("X-Requested-With", "XMLHttpRequest")
 	resp, err := client.Do(req) //拿到返回的内容
 	if err != nil {
-		return doc, err
+		return queryEditBydAutoResponseGet, err
 	}
 	defer resp.Body.Close()
 	// 如果访问失败，就打印当前状态码
 	if resp.StatusCode != http.StatusOK {
-		return doc, errors.New("http status :" + strconv.Itoa(resp.StatusCode))
+		return queryEditBydAutoResponseGet, errors.New("http status :" + strconv.Itoa(resp.StatusCode))
 	}
-	doc, err = htmlquery.Parse(resp.Body)
+	respBytes, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		return doc, err
+		return queryEditBydAutoResponseGet, err
 	}
-	return doc, nil
+	err = json.Unmarshal(respBytes, &queryEditBydAutoResponseGet)
+	if err != nil {
+		return queryEditBydAutoResponseGet, err
+	}
+	return queryEditBydAutoResponseGet, nil
 }
 
 func EditBydAuto(requestUrl string, editDoc88FormData EditBydAutoFormData) (editDoc88ResponseData EditBydAutoResponseData, err error) {
