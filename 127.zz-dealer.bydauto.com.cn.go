@@ -11,6 +11,7 @@ import (
 	"net"
 	"net/http"
 	"net/url"
+	"os"
 	"strconv"
 	"strings"
 	"time"
@@ -144,46 +145,30 @@ type EditBydAutoFormData struct {
 //var EditSaveTimeSleep = 20
 //var EditNextPageSleep = 15
 
-type ListRequestPayload struct {
-	activityType int
-	dateEnd      int
-	dateStart    int
-	dealerId     int
-	filterType   int
-	fromType     int
-	key          string
-	level        string
-	onlyTotal    bool
-	pageCount    int
-	pageStart    int
-	saleIds      string
-	seriesIds    string
-}
-
 type QueryEditBydAutoResponseList struct {
-	data  QueryEditBydAutoResponseListData
-	file  string
-	total int
+	Data  []QueryEditBydAutoResponseListData `json:"data"`
+	File  string                             `json:"file"`
+	Total int                                `json:"total"`
 }
 
 type QueryEditBydAutoResponseListData struct {
-	activityDate   int
-	activityType   int
-	comeCount      int
-	content        string
-	customerId     int
-	customerMobile string
-	customerName   string
-	fromSource     string
-	fromType       int
-	isDelay        bool
-	isValid        bool
-	level          string
-	ownerName      string
-	seriesName     string
-	source         string
-	sourceIdentify string
-	status         int
+	ActivityDate   int    `json:"activityDate"`
+	ActivityType   int    `json:"activityType"`
+	ComeCount      int    `json:"comeCount"`
+	Content        string `json:"content"`
+	CustomerId     int    `json:"customerId"`
+	CustomerMobile string `json:"customerMobile"`
+	CustomerName   string `json:"customerName"`
+	FromSource     string `json:"fromSource"`
+	FromType       int    `json:"fromType"`
+	IsDelay        bool   `json:"isDelay"`
+	IsValid        bool   `json:"isValid"`
+	Level          string `json:"level"`
+	OwnerName      string `json:"ownerName"`
+	SeriesName     string `json:"seriesName"`
+	Source         string `json:"source"`
+	SourceIdentify string `json:"sourceIdentify"`
+	Status         int    `json:"status"`
 }
 
 // ychEduSpider 编辑智蛛AI经销商系统
@@ -192,21 +177,20 @@ type QueryEditBydAutoResponseListData struct {
 func main() {
 	curPage := 0
 	for {
-		listRequestPayload := ListRequestPayload{
-			activityType: 0,
-			dateEnd:      0,
-			dateStart:    0,
-			dealerId:     826,
-			filterType:   0,
-			fromType:     0,
-			key:          "",
-			level:        "",
-			onlyTotal:    false,
-			pageCount:    10,
-			pageStart:    curPage,
-			saleIds:      "",
-			seriesIds:    "",
-		}
+		listRequestPayload := make(map[string]interface{})
+		listRequestPayload["activityType"] = 0
+		listRequestPayload["dateEnd"] = 0
+		listRequestPayload["dateStart"] = 0
+		listRequestPayload["dealerId"] = 826
+		listRequestPayload["filterType"] = 0
+		listRequestPayload["fromType"] = 0
+		listRequestPayload["key"] = ""
+		listRequestPayload["level"] = ""
+		listRequestPayload["onlyTotal"] = false
+		listRequestPayload["pageCount"] = 10
+		listRequestPayload["pageStart"] = curPage
+		listRequestPayload["saleIds"] = ""
+		listRequestPayload["seriesIds"] = ""
 		pageListUrl := "https://zz-api.bydauto.com.cn/aiApi-dealer/v1/taskRpc/list"
 		fmt.Println(pageListUrl)
 		queryEditBydAutoResponseList, err := QueryEditBydAutoList(pageListUrl, listRequestPayload)
@@ -215,7 +199,8 @@ func main() {
 			fmt.Println(err)
 			continue
 		}
-		fmt.Println(queryEditBydAutoResponseList)
+		fmt.Printf("%+v", queryEditBydAutoResponseList.Data)
+		os.Exit(1)
 		//liNodes := htmlquery.Find(pageListDoc, `//div[@id="detailed"]/ul[@class="bookshow3"]/li`)
 		//if len(liNodes) <= 0 {
 		//	break
@@ -333,7 +318,7 @@ func main() {
 	}
 }
 
-func QueryEditBydAutoList(requestUrl string, listRequestPayload ListRequestPayload) (queryEditBydAutoResponseList QueryEditBydAutoResponseList, err error) {
+func QueryEditBydAutoList(requestUrl string, listRequestPayload map[string]interface{}) (queryEditBydAutoResponseList QueryEditBydAutoResponseList, err error) {
 	// 初始化客户端
 	var client *http.Client = &http.Client{
 		Transport: &http.Transport{
@@ -357,19 +342,16 @@ func QueryEditBydAutoList(requestUrl string, listRequestPayload ListRequestPaylo
 	if err != nil {
 		return queryEditBydAutoResponseList, err
 	}
-	body := bytes.NewReader(payloadBytes)
-	req, err := http.NewRequest("POST", requestUrl, body) //建立连接
-
+	req, err := http.NewRequest("POST", requestUrl, bytes.NewReader(payloadBytes)) //建立连接
 	if err != nil {
 		return queryEditBydAutoResponseList, err
 	}
 
-	req.Header.Set("Accept", "application/json, text/plain, */*")
-	req.Header.Set("Accept-Encoding", "gzip, deflate, br, zstd")
 	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
 	req.Header.Set("Authorization", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50VHlwZSI6MSwiaWQiOjY0MzIyLCJpc1N1cGVyIjpmYWxzZX0.IiINeGVqTZTqE9zHvACPX__Qu1A9YB4916lMXAumjIc")
 	req.Header.Set("Connection", "keep-alive")
-	req.Header.Set("Content-Type", "application/json;charset=UTF-8")
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("Content-Length", fmt.Sprintf("%d", len(payloadBytes)))
 	req.Header.Set("Host", "zz-api.bydauto.com.cn")
 	req.Header.Set("Origin", "https://zz-dealer.bydauto.com.cn")
 	req.Header.Set("Referer", "https://zz-dealer.bydauto.com.cn/")
@@ -379,10 +361,7 @@ func QueryEditBydAutoList(requestUrl string, listRequestPayload ListRequestPaylo
 	req.Header.Set("Sec-Fetch-Dest", "empty")
 	req.Header.Set("Sec-Fetch-Mode", "cors")
 	req.Header.Set("Sec-Fetch-Site", "same-origin")
-	req.Header.Set("Sec-Fetch-User", "?1")
-	req.Header.Set("Upgrade-Insecure-Requests", "1")
 	req.Header.Set("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36")
-	req.Header.Set("X-Requested-With", "XMLHttpRequest")
 	resp, err := client.Do(req) //拿到返回的内容
 	if err != nil {
 		return queryEditBydAutoResponseList, err
