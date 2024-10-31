@@ -159,8 +159,12 @@ type QueryEditBydAutoResponseFollow struct {
 // @Title 编辑智蛛AI经销商系统
 // @Description https://zz-dealer.bydauto.com.cn/，编辑智蛛AI经销商系统
 func main() {
+	pageCount := 10
 	curPage := 0
-	for {
+	isPageListGo := true
+	for isPageListGo {
+		// 当前页是否处理过文档
+		hasEditFlag := false
 		dealerId := 826
 		listRequestPayload := make(map[string]interface{})
 		listRequestPayload["activityType"] = 0
@@ -172,7 +176,7 @@ func main() {
 		listRequestPayload["key"] = ""
 		listRequestPayload["level"] = ""
 		listRequestPayload["onlyTotal"] = false
-		listRequestPayload["pageCount"] = 10
+		listRequestPayload["pageCount"] = pageCount
 		listRequestPayload["pageStart"] = curPage
 		listRequestPayload["saleIds"] = ""
 		listRequestPayload["seriesIds"] = ""
@@ -251,6 +255,8 @@ func main() {
 					fmt.Println(err)
 					continue
 				}
+				// 当前页是否处理过文档---处理过文档
+				hasEditFlag = true
 				bydAutoEditSaveTimeSleep := rand.Intn(20)
 				for i := 1; i <= bydAutoEditSaveTimeSleep; i++ {
 					time.Sleep(time.Second)
@@ -259,7 +265,16 @@ func main() {
 				fmt.Println("====================处理数据完成================================")
 			}
 		}
-		curPage++
+		// 如果当前页没有处理过文档，则请求下一页，如果处理过文档，则继续请求当前分页
+		if hasEditFlag == false {
+			curPage++
+			if curPage > (queryEditBydAutoResponseList.Total/pageCount)+1 {
+				fmt.Println("没有更多分页了")
+				isPageListGo = false
+				curPage = 0
+				break
+			}
+		}
 		for i := 1; i <= BydAutoEditNextPageSleep; i++ {
 			time.Sleep(time.Second)
 			fmt.Println("===========翻", curPage, "页，暂停", BydAutoEditNextPageSleep, "秒，倒计时", i, "秒===========")
