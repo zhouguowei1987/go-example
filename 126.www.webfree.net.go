@@ -38,17 +38,21 @@ type WebFree struct {
 }
 
 var webfrees = []WebFree{
+	//{
+	//	name: "国家标准",
+	//	url:  "https://www.webfree.net/downloads/gb",
+	//},
+	//{
+	//	name: "行业标准",
+	//	url:  "https://www.webfree.net/hangye-biaozhun",
+	//},
+	//{
+	//	name: "地方标准",
+	//	url:  "https://www.webfree.net/difang-biaozhun",
+	//},
 	{
-		name: "国家标准",
-		url:  "https://www.webfree.net/downloads/gb",
-	},
-	{
-		name: "行业标准",
-		url:  "https://www.webfree.net/hangye-biaozhun",
-	},
-	{
-		name: "地方标准",
-		url:  "https://www.webfree.net/difang-biaozhun",
+		name: "书籍图集",
+		url:  "https://www.webfree.net/downloads/book-and-drawings",
 	},
 }
 
@@ -104,7 +108,7 @@ func main() {
 				fmt.Println(fileName)
 
 				filePath := "E:\\workspace\\www.webfree.net\\www.webfree.net/" + webfree.name + "/" + fileName + ".pdf"
-				_, errPdf := os.Stat(filePath + ".pdf")
+				_, errPdf := os.Stat(filePath)
 				if errPdf != nil {
 
 					// 标准文件id
