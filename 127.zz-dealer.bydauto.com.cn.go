@@ -11,7 +11,6 @@ import (
 	"net"
 	"net/http"
 	"net/url"
-	"os"
 	"strconv"
 	"strings"
 	"time"
@@ -452,8 +451,6 @@ func QueryEditBydAutoFollow(requestUrl string, followRequestPayload map[string]i
 	if err != nil {
 		return queryEditBydAutoResponseFollow, err
 	}
-	fmt.Println(string(respBytes))
-	os.Exit(1)
 	err = json.Unmarshal(respBytes, &queryEditBydAutoResponseFollow)
 	if err != nil {
 		return queryEditBydAutoResponseFollow, err
