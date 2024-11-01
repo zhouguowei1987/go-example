@@ -38,18 +38,18 @@ type WebFree struct {
 }
 
 var webfrees = []WebFree{
-	//{
-	//	name: "国家标准",
-	//	url:  "https://www.webfree.net/downloads/gb",
-	//},
-	//{
-	//	name: "行业标准",
-	//	url:  "https://www.webfree.net/hangye-biaozhun",
-	//},
-	//{
-	//	name: "地方标准",
-	//	url:  "https://www.webfree.net/difang-biaozhun",
-	//},
+	{
+		name: "国家标准",
+		url:  "https://www.webfree.net/downloads/gb",
+	},
+	{
+		name: "行业标准",
+		url:  "https://www.webfree.net/hangye-biaozhun",
+	},
+	{
+		name: "地方标准",
+		url:  "https://www.webfree.net/difang-biaozhun",
+	},
 	{
 		name: "书籍图集",
 		url:  "https://www.webfree.net/downloads/book-and-drawings",
@@ -74,9 +74,14 @@ type DownLoadWebFreeResponse struct {
 // @Description https://www.webfree.net/，协筑资源标准文档
 func main() {
 	for _, webfree := range webfrees {
-		current := 1
+		current := 5
+		minCurrent := 1
 		isPageListGo := true
 		for isPageListGo {
+			if current < minCurrent {
+				isPageListGo = false
+				break
+			}
 			webfreeIndexUrl := webfree.url
 			if current > 1 {
 				webfreeIndexUrl += fmt.Sprintf("/?cp=%d", current)
@@ -84,16 +89,13 @@ func main() {
 			webfreeIndexDoc, err := htmlquery.LoadURL(webfreeIndexUrl)
 			if err != nil {
 				fmt.Println(err)
-				current = 1
-				isPageListGo = false
-				continue
+				break
 			}
 			liNodes := htmlquery.Find(webfreeIndexDoc, `//div[@id="content_wpdm_package_1"]/div[@class="row"]/div[@class="col-lg-12 col-md-12 col-12"]`)
 			if len(liNodes) <= 0 {
-				fmt.Println(err)
-				current = 1
 				isPageListGo = false
-				continue
+				fmt.Println("没有数据暂停")
+				break
 			}
 			for _, liNode := range liNodes {
 				fmt.Println("============================================================================")
@@ -147,8 +149,12 @@ func main() {
 					time.Sleep(time.Millisecond * 200)
 				}
 			}
-			current++
-			isPageListGo = true
+			if current > minCurrent {
+				current--
+			} else {
+				isPageListGo = false
+				break
+			}
 		}
 	}
 }
