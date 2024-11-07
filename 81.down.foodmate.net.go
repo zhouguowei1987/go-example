@@ -41,24 +41,9 @@ func main() {
 	var allCategory = []internalCategory{
 		{id: 1, name: "国内标准"},
 		{id: 2, name: "国外标准"},
-		//{id: 3, name: "国家标准"},
-		//{id: 4, name: "进出口行业标准"},
-		//{id: 5, name: "农业标准"},
-		//{id: 6, name: "商业标准"},
-		//{id: 7, name: "水产标准"},
-		//{id: 8, name: "轻工标准"},
-		//{id: 9, name: "其它国内标准"},
-		//{id: 12, name: "团体标准"},
-		//{id: 14, name: "医药标准"},
-		//{id: 15, name: "地方标准"},
-		//{id: 16, name: "卫生标准"},
-		//{id: 17, name: "化工标准"},
-		//{id: 18, name: "烟草标准"},
-		//{id: 19, name: "食品安全企业标准"},
-		//{id: 46, name: "认证认可标准"},
 	}
 	for _, category := range allCategory {
-		i := 1042
+		i := 1
 		isPageGo := true
 		for isPageGo {
 			listUrl := fmt.Sprintf("http://down.foodmate.net/standard/sort/%d/index-%d.html", category.id, i)
@@ -81,10 +66,11 @@ func main() {
 
 						downloadUrl := htmlquery.InnerText(htmlquery.FindOne(downNodes[1], `./@href`))
 						fmt.Println(downloadUrl)
-						downloadUrlArray, err := url.Parse(downloadUrl)
-						filePath := "../down.foodmate.net/" + downloadUrlArray.Query().Get("auth") + "-" + title + ".pdf"
+						//downloadUrlArray, err := url.Parse(downloadUrl)
+						//filePath := "E:\\workspace\\down.foodmate.net\\" + downloadUrlArray.Query().Get("auth") + "-" + title + ".pdf"
+						filePath := "E:\\workspace\\down.foodmate.net\\" + category.name + "\\" + title + ".pdf"
 						fmt.Println(filePath)
-						err = downloadFoodMatePdf(downloadUrl, filePath)
+						err := downloadFoodMatePdf(downloadUrl, filePath)
 						if err != nil {
 							fmt.Println(err)
 						}
