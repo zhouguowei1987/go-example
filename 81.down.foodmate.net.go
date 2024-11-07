@@ -31,16 +31,16 @@ func main() {
 		{id: 2, name: "国外标准"},
 	}
 	for _, category := range allCategory {
-		i := 1
+		page := 1
 		isPageGo := true
 		for isPageGo {
-			listUrl := fmt.Sprintf("http://down.foodmate.net/standard/sort/%d/index-%d.html", category.id, i)
+			listUrl := fmt.Sprintf("http://down.foodmate.net/standard/sort/%d/index-%d.html", category.id, page)
 			fmt.Println(listUrl)
 			listDoc, _ := htmlquery.LoadURL(listUrl)
 			liNodes := htmlquery.Find(listDoc, `//div[@class="bz_list"]/ul/li`)
 			if len(liNodes) >= 1 {
 				for _, liNode := range liNodes {
-					fmt.Println(category.id, i, category.name)
+					fmt.Println(category.id, page, category.name)
 					detailUrl := htmlquery.InnerText(htmlquery.FindOne(liNode, `./div[@class="bz_listl"]/ul[1]/a/@href`))
 					fmt.Println(detailUrl)
 					detailDoc, _ := htmlquery.LoadURL(detailUrl)
@@ -49,6 +49,8 @@ func main() {
 						title := htmlquery.InnerText(htmlquery.FindOne(detailDoc, `//div[@class="title2"]/span`))
 						title = strings.ReplaceAll(title, "<font color=\"red\"></font>", "")
 						title = strings.ReplaceAll(title, "/", "-")
+						title = strings.ReplaceAll(title, "\n", "")
+						title = strings.ReplaceAll(title, "\r", "")
 						title = strings.ReplaceAll(title, " ", "")
 						fmt.Println(title)
 
@@ -79,16 +81,16 @@ func main() {
 						downloadFoodMatePdfSleep := rand.Intn(20)
 						for i := 1; i <= downloadFoodMatePdfSleep; i++ {
 							time.Sleep(time.Second)
-							fmt.Println("page="+strconv.Itoa(i)+"===========更新", title, "成功，暂停", downloadFoodMatePdfSleep, "秒，倒计时", i, "秒===========")
+							fmt.Println("page="+strconv.Itoa(page)+"===========更新", title, "成功，暂停", downloadFoodMatePdfSleep, "秒，倒计时", i, "秒===========")
 						}
 					} else {
 						continue
 					}
 				}
-				i++
+				page++
 			} else {
 				isPageGo = false
-				i = 1
+				page = 1
 				break
 			}
 		}
