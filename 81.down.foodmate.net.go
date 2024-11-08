@@ -31,7 +31,7 @@ func main() {
 		{id: 2, name: "国外标准"},
 	}
 	for _, category := range allCategory {
-		page := 1
+		page := 363
 		isPageGo := true
 		for isPageGo {
 			listUrl := fmt.Sprintf("http://down.foodmate.net/standard/sort/%d/index-%d.html", category.id, page)
@@ -44,8 +44,8 @@ func main() {
 					detailUrl := htmlquery.InnerText(htmlquery.FindOne(liNode, `./div[@class="bz_listl"]/ul[1]/a/@href`))
 					fmt.Println(detailUrl)
 					detailDoc, _ := htmlquery.LoadURL(detailUrl)
-					downNodes := htmlquery.Find(detailDoc, `//div[@class="downk"]/a`)
-					if len(downNodes) == 2 {
+					downNode := htmlquery.FindOne(detailDoc, `//div[@class="downk"]/a[@class="telecom"]`)
+					if downNode != nil {
 						title := htmlquery.InnerText(htmlquery.FindOne(detailDoc, `//div[@class="title2"]/span`))
 						title = strings.ReplaceAll(title, "<font color=\"red\"></font>", "")
 						title = strings.ReplaceAll(title, "/", "-")
@@ -54,7 +54,7 @@ func main() {
 						title = strings.ReplaceAll(title, " ", "")
 						fmt.Println(title)
 
-						authUrl := htmlquery.InnerText(htmlquery.FindOne(downNodes[1], `./@href`))
+						authUrl := htmlquery.InnerText(htmlquery.FindOne(downNode, `./@href`))
 						fmt.Println(authUrl)
 						// 获取请求Location
 						downloadUrl, err := getFoodMateDownloadUrl(authUrl, detailUrl)
@@ -77,11 +77,11 @@ func main() {
 								fmt.Println(err)
 							}
 							fmt.Println("=======下载完成========")
-						}
-						downloadFoodMatePdfSleep := rand.Intn(20)
-						for i := 1; i <= downloadFoodMatePdfSleep; i++ {
-							time.Sleep(time.Second)
-							fmt.Println("page="+strconv.Itoa(page)+"===========更新", title, "成功，暂停", downloadFoodMatePdfSleep, "秒，倒计时", i, "秒===========")
+							downloadFoodMatePdfSleep := rand.Intn(20)
+							for i := 1; i <= downloadFoodMatePdfSleep; i++ {
+								time.Sleep(time.Second)
+								fmt.Println("page="+strconv.Itoa(page)+"===========更新", title, "成功，暂停", downloadFoodMatePdfSleep, "秒，倒计时", i, "秒===========")
+							}
 						}
 					} else {
 						continue
