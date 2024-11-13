@@ -6,6 +6,7 @@ import (
 	"github.com/antchfx/htmlquery"
 	"golang.org/x/net/html"
 	"io"
+	"math/rand"
 	"net"
 	"net/http"
 	"net/url"
@@ -163,7 +164,7 @@ func main() {
 					continue
 				}
 				fmt.Println("=======下载完成========")
-				DownLoadChinaZPptTimeSleep := 20
+				DownLoadChinaZPptTimeSleep := rand.Intn(20)
 				for i := 1; i <= DownLoadChinaZPptTimeSleep; i++ {
 					time.Sleep(time.Second)
 					fmt.Println("page="+strconv.Itoa(curPage)+"===========下载", Title, "成功，暂停", DownLoadChinaZPptTimeSleep, "秒，倒计时", i, "秒===========")
