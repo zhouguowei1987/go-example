@@ -31,7 +31,7 @@ func main() {
 		{id: 2, name: "国外标准"},
 	}
 	for _, category := range allCategory {
-		page := 363
+		page := 371
 		isPageGo := true
 		for isPageGo {
 			listUrl := fmt.Sprintf("http://down.foodmate.net/standard/sort/%d/index-%d.html", category.id, page)
