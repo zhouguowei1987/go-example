@@ -107,43 +107,44 @@ var DownChinaZPptNextPageSleep = 10
 
 // ychEduSpider 下载站长素材ppt模板
 // @Title 下载站长素材ppt模板
-// @Description https://sc.chinaz.com/，下载站长素材ppt模板
+// @Description https://m.sc.chinaz.com/，下载站长素材ppt模板
 func main() {
 	curPage := 1
 	isPageListGo := true
 	for isPageListGo {
-		pageListUrl := "https://sc.chinaz.com/ppt/"
+		pageListUrl := "https://m.sc.chinaz.com/ppt/"
 		if curPage > 1 {
-			pageListUrl = fmt.Sprintf("https://sc.chinaz.com/ppt/index_%d.html", curPage)
+			pageListUrl = fmt.Sprintf("https://m.sc.chinaz.com/ppt/?page=%d", curPage)
 		}
 		fmt.Println(pageListUrl)
-		pageListDoc, err := QueryChinaZPptList(pageListUrl)
+		pageListDoc, err := QueryChinaZPpt(pageListUrl, "https://m.sc.chinaz.com/")
 		if err != nil {
 			ChinaZPptHttpProxyUrl = ""
 			fmt.Println(err)
 			continue
 		}
-		liNodes := htmlquery.Find(pageListDoc, `//div[@class="ppt-list  masonry"]/div[@class="item masonry-brick"]`)
+		liNodes := htmlquery.Find(pageListDoc, `//div[@class="index-box"]/div[@class="ppt-list"]/div[@class="item"]`)
 		if len(liNodes) <= 0 {
 			break
 		}
 		for _, liNode := range liNodes {
 
-			TitleNode := htmlquery.FindOne(liNode, `./div[@class="bot-div"]/a[@class="name"]`)
+			TitleNode := htmlquery.FindOne(liNode, `./a`)
 			Title := htmlquery.SelectAttr(TitleNode, "title")
 			fmt.Println(Title)
 
-			filePath := "../sc.chinaz.com/ppt/" + Title + ".pdf"
+			filePath := "../m.sc.chinaz.com/ppt/" + Title + ".pdf"
 			if _, err := os.Stat(filePath); err != nil {
-				ViewChinaZPptDetailUrl := "https://sc.chinaz.com" + htmlquery.SelectAttr(TitleNode, "href")
-				QueryChinaZPptDownLoadUrlDoc, err := ViewChinaZPptDetail(ViewChinaZPptDetailUrl, pageListUrl)
+				ViewChinaZPptDetailUrl := htmlquery.SelectAttr(TitleNode, "href")
+				fmt.Println(ViewChinaZPptDetailUrl)
+				QueryChinaZPptDownLoadUrlDoc, err := QueryChinaZPpt(ViewChinaZPptDetailUrl, pageListUrl)
 				if err != nil {
 					ChinaZPptHttpProxyUrl = ""
 					fmt.Println(err)
 					continue
 				}
 
-				DownloadNode := htmlquery.FindOne(QueryChinaZPptDownLoadUrlDoc, `//div[@class="container ppt-detail clearfix"]/div[@class="right-div"]/div[@class="new-btn-div"]/a[@class="a-download-btn"]`)
+				DownloadNode := htmlquery.FindOne(QueryChinaZPptDownLoadUrlDoc, `//a`)
 				if DownloadNode == nil {
 					fmt.Println("没有下载按钮，跳过")
 					continue
@@ -173,67 +174,7 @@ func main() {
 	}
 }
 
-func QueryChinaZPptList(requestUrl string) (doc *html.Node, err error) {
-	// 初始化客户端
-	var client *http.Client = &http.Client{
-		Transport: &http.Transport{
-			Dial: func(netw, addr string) (net.Conn, error) {
-				c, err := net.DialTimeout(netw, addr, time.Second*3)
-				if err != nil {
-					fmt.Println("dail timeout", err)
-					return nil, err
-				}
-				return c, nil
-
-			},
-			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
-		},
-	}
-	if ChinaZPptEnableHttpProxy {
-		client = ChinaZPptSetHttpProxy()
-	}
-	req, err := http.NewRequest("GET", requestUrl, nil) //建立连接
-
-	if err != nil {
-		return doc, err
-	}
-
-	req.Header.Set("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7")
-	req.Header.Set("Accept-Encoding", "gzip, deflate, br, zstd")
-	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
-	req.Header.Set("Cache-Control", "max-age=0")
-	req.Header.Set("Cookie", ChinaZPptListCookie)
-	req.Header.Set("Host", "sc.chinaz.com")
-	req.Header.Set("Origin", "https://sc.chinaz.com")
-	req.Header.Set("Referer", "https://sc.chinaz.com/ppt/")
-	req.Header.Set("sec-ch-ua", "\"Chromium\";v=\"110\", \"Not A(Brand\";v=\"24\", \"Google Chrome\";v=\"110\"")
-	req.Header.Set("sec-ch-ua-mobile", "?0")
-	req.Header.Set("sec-ch-ua-platform", "\"macOS\"")
-	req.Header.Set("Sec-Fetch-Dest", "empty")
-	req.Header.Set("Sec-Fetch-Mode", "cors")
-	req.Header.Set("Sec-Fetch-Site", "same-origin")
-	req.Header.Set("Sec-Fetch-User", "?1")
-	req.Header.Set("Upgrade-Insecure-Requests", "1")
-	req.Header.Set("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36")
-	req.Header.Set("X-Requested-With", "XMLHttpRequest")
-	resp, err := client.Do(req) //拿到返回的内容
-	if err != nil {
-		return doc, err
-	}
-	defer resp.Body.Close()
-	// 如果访问失败，就打印当前状态码
-	if resp.StatusCode != http.StatusOK {
-		return doc, errors.New("http status :" + strconv.Itoa(resp.StatusCode))
-	}
-	doc, err = htmlquery.Parse(resp.Body)
-	if err != nil {
-		return doc, err
-	}
-	return doc, nil
-}
-
-func ViewChinaZPptDetail(requestUrl string, referer string) (doc *html.Node, err error) {
+func QueryChinaZPpt(requestUrl string, referer string) (doc *html.Node, err error) {
 	// 初始化客户端
 	var client *http.Client = &http.Client{
 		Transport: &http.Transport{
@@ -264,8 +205,8 @@ func ViewChinaZPptDetail(requestUrl string, referer string) (doc *html.Node, err
 	req.Header.Set("Connection", "keep-alive")
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 	req.Header.Set("Cookie", ChinaZPptListCookie)
-	req.Header.Set("Host", "sc.chinaz.com")
-	req.Header.Set("Origin", "https://sc.chinaz.com")
+	req.Header.Set("Host", "m.sc.chinaz.com")
+	req.Header.Set("Origin", "https://m.sc.chinaz.com")
 	req.Header.Set("Referer", referer)
 	req.Header.Set("sec-ch-ua", "\"Chromium\";v=\"110\", \"Not A(Brand\";v=\"24\", \"Google Chrome\";v=\"110\"")
 	req.Header.Set("sec-ch-ua-mobile", "?0")
@@ -322,8 +263,8 @@ func DownLoadChinaZPpt(attachmentUrl string, referer string, filePath string) er
 	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
 	req.Header.Set("Cache-Control", "max-age=0")
 	req.Header.Set("Connection", "keep-alive")
-	req.Header.Set("Host", "sc.chinaz.com")
-	req.Header.Set("Origin", "https://sc.chinaz.com")
+	req.Header.Set("Host", "m.sc.chinaz.com")
+	req.Header.Set("Origin", "https://m.sc.chinaz.com")
 	req.Header.Set("Referer", referer)
 	req.Header.Set("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36")
 	resp, err := client.Do(req) //拿到返回的内容
