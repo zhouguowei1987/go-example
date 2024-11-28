@@ -627,6 +627,10 @@ func main() {
 			dirName: "bk.docx_cooco.net.cn/高中/政治",
 			price:   "88",
 		},
+		{
+			dirName: "sc.chinaz.com/ppt",
+			price:   "88",
+		},
 	}
 	rootPath := "../upload.book118.com/"
 	for _, childDir := range uploadChildDirArr {
