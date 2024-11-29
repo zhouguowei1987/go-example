@@ -11,16 +11,24 @@ import (
 	"path/filepath"
 	"strconv"
 	"strings"
+	"time"
 )
 
 // TbzSpider 获取全国团体标准信息平台Pdf文档
 // @Title 获取全国团体标准信息平台Pdf文档
 // @Description https://www.ttbz.org.cn/，将全国团体标准信息平台Pdf文档入库
 func main() {
-	var startId = 116300
-	var endId = 116557
+	var startId = 116557
+	var endId = 122771
 	goCh := make(chan int, endId-startId)
 	for id := startId; id <= endId; id++ {
+		// 设置下载倒计时
+		//DownLoadTTbzTimeSleep := rand.Intn(20)
+		DownLoadTTbzTimeSleep := 20
+		for i := 1; i <= DownLoadTTbzTimeSleep; i++ {
+			time.Sleep(time.Second)
+			fmt.Println("id="+strconv.Itoa(id)+"===========操作完成，", "暂停", DownLoadTTbzTimeSleep, "秒，倒计时", i, "秒===========")
+		}
 		go func(id int) {
 			err := tbzSpider(id)
 			if err != nil {
