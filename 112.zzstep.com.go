@@ -502,6 +502,7 @@ func main() {
 		for _, subject := range studySection.subjects {
 			for _, paper := range subject.papers {
 				current := 1
+				maxCurrent := 15
 				isPageListGo := true
 				for isPageListGo {
 					subjectIndexUrl := paper.url
@@ -637,8 +638,14 @@ func main() {
 							}
 						}
 					}
-					current++
-					isPageListGo = true
+					if current < maxCurrent {
+						current++
+						isPageListGo = true
+					} else {
+						isPageListGo = false
+						current = 1
+						break
+					}
 				}
 			}
 		}
