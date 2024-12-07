@@ -134,28 +134,32 @@ func main() {
 			Title := htmlquery.SelectAttr(TitleNode, "title")
 			fmt.Println(Title)
 
-			filePath := "../sc.chinaz.com/ppt/" + Title + ".pptx"
+			ViewChinaZPptDetailUrl := htmlquery.SelectAttr(TitleNode, "href")
+			// 转化为pc端url
+			ViewChinaZPptDetailUrl = strings.Replace(ViewChinaZPptDetailUrl, "https://m.sc.chinaz.com", "https://sc.chinaz.com", 1)
+			ViewChinaZPptDetailUrl = strings.Replace(ViewChinaZPptDetailUrl, ".html", ".htm", 1)
+			fmt.Println(ViewChinaZPptDetailUrl)
+			ViewChinaZPptDoc, err := ViewChinaZPpt(ViewChinaZPptDetailUrl, pageListUrl)
+			if err != nil {
+				ChinaZPptHttpProxyUrl = ""
+				fmt.Println(err)
+				continue
+			}
+
+			DownloadNode := htmlquery.FindOne(ViewChinaZPptDoc, `//div[@class="right-div"]/div[@class="new-btn-div"]/a[@class="a-download-btn"]`)
+			if DownloadNode == nil {
+				fmt.Println("没有下载按钮，跳过")
+				continue
+			}
+			downloadUrl := htmlquery.SelectAttr(DownloadNode, "href")
+			fmt.Println(downloadUrl)
+
+			// 获取文件后缀
+			downloadUrlSplitArray := strings.Split(downloadUrl, ".")
+			fileSuffix := downloadUrlSplitArray[len(downloadUrlSplitArray)-1]
+			filePath := "../sc.chinaz.com/ppt/" + Title + "." + fileSuffix
 			fmt.Println(filePath)
 			if _, err := os.Stat(filePath); err != nil {
-				ViewChinaZPptDetailUrl := htmlquery.SelectAttr(TitleNode, "href")
-				// 转化为pc端url
-				ViewChinaZPptDetailUrl = strings.Replace(ViewChinaZPptDetailUrl, "https://m.sc.chinaz.com", "https://sc.chinaz.com", 1)
-				ViewChinaZPptDetailUrl = strings.Replace(ViewChinaZPptDetailUrl, ".html", ".htm", 1)
-				fmt.Println(ViewChinaZPptDetailUrl)
-				ViewChinaZPptDoc, err := ViewChinaZPpt(ViewChinaZPptDetailUrl, pageListUrl)
-				if err != nil {
-					ChinaZPptHttpProxyUrl = ""
-					fmt.Println(err)
-					continue
-				}
-
-				DownloadNode := htmlquery.FindOne(ViewChinaZPptDoc, `//div[@class="right-div"]/div[@class="new-btn-div"]/a[@class="a-download-btn"]`)
-				if DownloadNode == nil {
-					fmt.Println("没有下载按钮，跳过")
-					continue
-				}
-				downloadUrl := htmlquery.SelectAttr(DownloadNode, "href")
-				fmt.Println(downloadUrl)
 
 				fmt.Println("=======开始下载" + Title + "========")
 				err = DownLoadChinaZPpt(downloadUrl, ViewChinaZPptDetailUrl, filePath)

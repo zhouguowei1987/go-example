@@ -502,7 +502,7 @@ func main() {
 		for _, subject := range studySection.subjects {
 			for _, paper := range subject.papers {
 				current := 1
-				maxCurrent := 15
+				maxCurrent := 50
 				isPageListGo := true
 				for isPageListGo {
 					subjectIndexUrl := paper.url
@@ -579,7 +579,7 @@ func main() {
 						}
 
 						fileName := htmlquery.InnerText(htmlquery.FindOne(liNode, `./div[@class="zy-box fn-left"]/div[@class="subject-t"]/a`))
-						fileName = strings.TrimSpace(fileName)
+						//fileName = strings.TrimSpace(fileName)
 						fileName = strings.ReplaceAll(fileName, "/", "-")
 						fileName = strings.ReplaceAll(fileName, ":", "-")
 						fileName = strings.ReplaceAll(fileName, "：", "-")
