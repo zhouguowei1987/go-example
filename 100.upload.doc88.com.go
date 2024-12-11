@@ -599,7 +599,7 @@ func main() {
 		{
 			dirName: "sc.chinaz.com/ppt",
 			pCid:    8120,
-			Price:   788,
+			Price:   388,
 		},
 	}
 	rootPath := "../upload.doc88.com/"

@@ -157,6 +157,10 @@ func main() {
 			// 获取文件后缀
 			downloadUrlSplitArray := strings.Split(downloadUrl, ".")
 			fileSuffix := downloadUrlSplitArray[len(downloadUrlSplitArray)-1]
+			if fileSuffix != "pptx" {
+				fmt.Println("不是pptx文件，跳过")
+				continue
+			}
 			filePath := "../sc.chinaz.com/ppt/" + Title + "." + fileSuffix
 			fmt.Println(filePath)
 			if _, err := os.Stat(filePath); err != nil {
