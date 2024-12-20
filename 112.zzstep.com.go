@@ -23,8 +23,8 @@ var ZZStepHttpProxyUrl = ""
 var ZZStepHttpProxyUrlArr = make([]string, 0)
 
 func ZZStepHttpProxy() error {
-	pageMax := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
-	//pageMax := []int{11, 12, 13, 14, 15, 16, 17, 18, 19, 20}
+	//pageMax := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+	pageMax := []int{11, 12, 13, 14, 15, 16, 17, 18, 19, 20}
 	for _, page := range pageMax {
 		freeProxyUrl := "https://www.beesproxy.com/free"
 		if page > 1 {
@@ -536,12 +536,12 @@ func main() {
 
 						datePaper, _ := time.Parse("2006-01-02", dateText)
 						fmt.Println(datePaper)
-						dateStart, _ := time.Parse("2006-01-02", "2024-09-14")
+						dateStart, _ := time.Parse("2006-01-02", "2024-11-28")
 						fmt.Println(dateStart)
 
 						// 比较日期
 						if datePaper.After(dateStart) == false {
-							fmt.Println("日期在2024-09-14后，跳过")
+							fmt.Println("日期在2024-11-28后，跳过")
 							break
 						}
 
@@ -596,7 +596,7 @@ func main() {
 							continue
 						}
 
-						filePath := "../www2.zzstep.com/2024-09-14/www2.zzstep.com/" + studySection.name + "/" + subject.name + "/" + fileName
+						filePath := "../www2.zzstep.com/2024-11-28/www2.zzstep.com/" + studySection.name + "/" + subject.name + "/" + fileName
 						_, errDoc := os.Stat(filePath + ".doc")
 						_, errDocx := os.Stat(filePath + ".docx")
 						if errDoc != nil && errDocx != nil {

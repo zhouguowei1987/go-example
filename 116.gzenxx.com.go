@@ -397,7 +397,7 @@ func main() {
 			}
 			paperTotalNode := htmlquery.FindOne(paperIndexDoc, `//div[@class="yzm-container"]/div[@class="yzm-content-box yzm-main-left yzm-text-list"]/div[@id="page"]/span[@class="pageinfo"]/strong`)
 			paperTotalText := htmlquery.InnerText(paperTotalNode)
-			pagerTotal, err := strconv.Atoi(paperTotalText)
+			pagerTotal, err := strconv.Atoi(strings.TrimSpace(paperTotalText))
 			if err != nil {
 				fmt.Println(err)
 				continue
@@ -440,12 +440,12 @@ func main() {
 					fmt.Println(dateText)
 
 					datePaper, _ := time.Parse("2006-01-02", dateText)
-					dateStart, _ := time.Parse("2006-01-02", "2024-08-09")
+					dateStart, _ := time.Parse("2006-01-02", "2024-09-15")
 					fmt.Println(dateStart)
 
 					// 比较日期
 					if datePaper.After(dateStart) == false {
-						fmt.Println("日期在2024-08-09后，跳过")
+						fmt.Println("日期在2024-09-15后，跳过")
 						break
 					}
 
@@ -468,7 +468,7 @@ func main() {
 					attachmentUrl := "https://www.gzenxx.com/uploads/ueditor/file/" + string(regAttachmentViewUrlMatch[0][1])
 					fmt.Println(attachmentUrl)
 
-					filePath := "E:\\workspace\\www.gzenxx.com\\2024-08-09\\www.rar_gzenxx.com\\" + title + ".rar"
+					filePath := "E:\\workspace\\www.gzenxx.com\\2024-09-15\\www.rar_gzenxx.com\\" + title + ".rar"
 					_, err = os.Stat(filePath)
 					if err != nil {
 
