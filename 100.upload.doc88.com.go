@@ -15,6 +15,7 @@ import (
 	"os"
 	"path"
 	"path/filepath"
+	"rsc.io/pdf"
 	"strconv"
 	"strings"
 	"time"
@@ -682,9 +683,9 @@ func main() {
 			filePageNum := 0
 			if fileExt == ".pdf" {
 				// 获取PDF文件，获取总页数
-				//if pdfFile, err := pdf.Open(filePath); err == nil {
-				//	filePageNum = pdfFile.NumPage()
-				//}
+				if pdfFile, err := pdf.Open(filePath); err == nil {
+					filePageNum = pdfFile.NumPage()
+				}
 			}
 			// 根据页数设置价格
 			if filePageNum > 0 {
