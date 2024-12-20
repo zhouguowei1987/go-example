@@ -40,14 +40,14 @@ var AllPpt818Subject = []Ppt818Subject{
 	//	name: "excel模板",
 	//	url:  "http://www.ppt818.com/list_1_quanbu/",
 	//},
-	//{
-	//	name: "ppt模板",
-	//	url:  "http://www.ppt818.com/list_2_quanbu/",
-	//},
 	{
-		name: "word模板",
-		url:  "http://www.ppt818.com/list_3_quanbu/",
+		name: "ppt模板",
+		url:  "http://www.ppt818.com/list_2_quanbu/",
 	},
+	//{
+	//	name: "word模板",
+	//	url:  "http://www.ppt818.com/list_3_quanbu/",
+	//},
 }
 
 // ychEduSpider 获取pc6文档
@@ -91,6 +91,18 @@ func main() {
 								fileName := htmlquery.InnerText(htmlquery.FindOne(dlNode, `./div[@class="abs bb mb-b-des"]/div[@class="ell f14 cfff mbbd-inner"]`))
 								fmt.Println(fileName)
 
+								// 跳过文件名中含有“课件”字样文件
+								if strings.Index(fileName, "课件") != -1 {
+									fmt.Println("跳过文件名中含有“课件”字样文件")
+									continue
+								}
+
+								// 跳过文件名中不含有“PPT模板”字样文件
+								if strings.Index(fileName, "PPT模板") == -1 {
+									fmt.Println("跳过文件名中不含有“PPT模板”字样文件")
+									continue
+								}
+
 								detailUrl := htmlquery.InnerText(htmlquery.FindOne(dlNode, `./@href`))
 								detailUrl = "http://www.ppt818.com" + detailUrl
 								fmt.Println(detailUrl)
@@ -104,7 +116,7 @@ func main() {
 								// 文件格式
 								attachmentFormat := strings.Split(downLoadUrl, ".")
 
-								filePath := "../www.ppt818.com/www.ppt818.com/" + subject.name + "/" + categoryName + "/"
+								filePath := "../www.ppt818.com/www.ppt818.com/" + subject.name + "/"
 								fileName = fileName + "." + attachmentFormat[len(attachmentFormat)-1]
 								if _, err = os.Stat(filePath + fileName); err != nil {
 									err = downloadPpt818(downLoadUrl, detailUrl, filePath, fileName)

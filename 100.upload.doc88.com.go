@@ -602,6 +602,11 @@ func main() {
 			pCid:    8120,
 			Price:   388,
 		},
+		{
+			dirName: "www.ppt818.com",
+			pCid:    8120,
+			Price:   388,
+		},
 	}
 	rootPath := "../upload.doc88.com/"
 	for _, childDir := range uploadChildDirArr {

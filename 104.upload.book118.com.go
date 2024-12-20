@@ -631,6 +631,10 @@ func main() {
 			dirName: "sc.chinaz.com/ppt",
 			price:   "88",
 		},
+		{
+			dirName: "www.ppt818.com",
+			price:   "88",
+		},
 	}
 	rootPath := "../upload.book118.com/"
 	for _, childDir := range uploadChildDirArr {
