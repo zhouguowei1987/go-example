@@ -18,13 +18,13 @@ import (
 // @Title 获取全国团体标准信息平台Pdf文档
 // @Description https://www.ttbz.org.cn/，将全国团体标准信息平台Pdf文档入库
 func main() {
-	var startId = 116557
-	var endId = 122771
+	var startId = 126271
+	var endId = 126345
 	goCh := make(chan int, endId-startId)
 	for id := startId; id <= endId; id++ {
 		// 设置下载倒计时
 		//DownLoadTTbzTimeSleep := rand.Intn(20)
-		DownLoadTTbzTimeSleep := 20
+		DownLoadTTbzTimeSleep := 10
 		for i := 1; i <= DownLoadTTbzTimeSleep; i++ {
 			time.Sleep(time.Second)
 			fmt.Println("id="+strconv.Itoa(id)+"===========操作完成，", "暂停", DownLoadTTbzTimeSleep, "秒，倒计时", i, "秒===========")
