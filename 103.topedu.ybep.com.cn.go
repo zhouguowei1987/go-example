@@ -103,7 +103,7 @@ func main() {
 						fmt.Println(err)
 						continue
 					}
-					attachmentUrl := fmt.Sprintf("http://topedu.ybep.com.cn/new_x/project/clouddown.php?pg=really&id=%s&tp=%s&opt=0", urlParam.Get("id"), subject.tp)
+					attachmentUrl := fmt.Sprintf("http://topedu.ybep.com.cn/new_x/project/clouddown.php?pg=really&id=%s&tp=%s&opt=0&n=%s", urlParam.Get("id"), subject.tp, urlParam.Get("n"))
 					fmt.Println(attachmentUrl)
 
 					filePath := "../topedu.ybep.com.cn/" + subject.name + "/" + fileName
