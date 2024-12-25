@@ -123,6 +123,11 @@ func main() {
 					}
 				}
 				page++
+				DownTopEduNextPageSleep := rand.Intn(5)
+				for i := 1; i <= DownTopEduNextPageSleep; i++ {
+					time.Sleep(time.Second)
+					fmt.Println("===========翻", page, "页，暂停", DownTopEduNextPageSleep, "秒，倒计时", i, "秒===========")
+				}
 			} else {
 				page = 1
 				break
