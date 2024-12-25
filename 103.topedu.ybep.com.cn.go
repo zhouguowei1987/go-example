@@ -39,16 +39,15 @@ type TopEduSubject struct {
 var AllTopEduSubject = []TopEduSubject{
 	{
 		name: "中考真题",
-		url:  "http://topedu.ybep.com.cn/project/really_test.php?tp=z",
+		url:  "http://topedu.ybep.com.cn/new_x/project/really_test.php?tp=z",
 		tp:   "z",
 	},
 	{
 		name: "高考真题",
-		url:  "http://topedu.ybep.com.cn/project/really_test.php?tp=g",
+		url:  "http://topedu.ybep.com.cn/new_x/project/really_test.php?tp=g",
 		tp:   "g",
 	},
 }
-var topEduSaveYear = []string{"2023", "2022", "2021", "2020", "2019", "2018", "2017", "2016", "2015", "2014", "2013", "2012", "2011", "2010"}
 
 // ychEduSpider 获取鼎尖资源网文档
 // @Title 获取鼎尖资源网文档
@@ -84,25 +83,13 @@ func main() {
 					fileName := htmlquery.InnerText(htmlquery.FindOne(dlNode, `./span/em/a`))
 					fileName = strings.ReplaceAll(fileName, "_", "")
 					fileName = strings.ReplaceAll(fileName, " ", "")
+					fmt.Println(fileName)
 					if !strings.Contains(fileName, "doc") {
-						continue
-					}
-					ifSave := false
-					for _, year := range topEduSaveYear {
-						if strings.Contains(fileName, year) {
-							ifSave = true
-							break
-						}
-						if ifSave {
-							break
-						}
-					}
-					if !ifSave {
 						continue
 					}
 
 					detailUrl := htmlquery.InnerText(htmlquery.FindOne(dlNode, `./span/em/a/@href`))
-					detailUrl = "http://topedu.ybep.com.cn/project/" + detailUrl
+					detailUrl = "http://topedu.ybep.com.cn/new_x/project/" + detailUrl
 					fmt.Println(detailUrl)
 					//解析url 并保证没有错误
 					u, err := url.Parse(detailUrl)
@@ -115,7 +102,7 @@ func main() {
 						fmt.Println(err)
 						continue
 					}
-					attachmentUrl := fmt.Sprintf("http://topedu.ybep.com.cn/project/clouddown.php?pg=really&id=%s&tp=%s&opt=0", urlParam.Get("id"), subject.tp)
+					attachmentUrl := fmt.Sprintf("http://topedu.ybep.com.cn/new_x/project/clouddown.php?pg=really&id=%s&tp=%s&opt=0", urlParam.Get("id"), subject.tp)
 					fmt.Println(attachmentUrl)
 
 					filePath := "../topedu.ybep.com.cn/" + subject.name + "/" + fileName
