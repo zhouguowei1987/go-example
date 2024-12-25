@@ -115,11 +115,11 @@ func main() {
 							continue
 						}
 						fmt.Println("=======开始完成========")
-					}
-					DownLoadTopEduTimeSleep := rand.Intn(5)
-					for i := 1; i <= DownLoadTopEduTimeSleep; i++ {
-						time.Sleep(time.Second)
-						fmt.Println("page="+strconv.Itoa(page)+"===========下载", fileName, "成功，暂停", DownLoadTopEduTimeSleep, "秒，倒计时", i, "秒===========")
+						DownLoadTopEduTimeSleep := rand.Intn(5)
+						for i := 1; i <= DownLoadTopEduTimeSleep; i++ {
+							time.Sleep(time.Second)
+							fmt.Println("page="+strconv.Itoa(page)+"===========下载", fileName, "成功，暂停", DownLoadTopEduTimeSleep, "秒，倒计时", i, "秒===========")
+						}
 					}
 				}
 				page++
