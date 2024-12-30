@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/antchfx/htmlquery"
 	"io"
+	"math/rand"
 	"net"
 	"net/http"
 	"net/url"
@@ -39,16 +40,15 @@ type TopEduSubject struct {
 var AllTopEduSubject = []TopEduSubject{
 	{
 		name: "中考真题",
-		url:  "http://topedu.ybep.com.cn/project/really_test.php?tp=z",
+		url:  "http://topedu.ybep.com.cn/new_x/project/really_test.php?tp=z",
 		tp:   "z",
 	},
 	{
 		name: "高考真题",
-		url:  "http://topedu.ybep.com.cn/project/really_test.php?tp=g",
+		url:  "http://topedu.ybep.com.cn/new_x/project/really_test.php?tp=g",
 		tp:   "g",
 	},
 }
-var topEduSaveYear = []string{"2023", "2022", "2021", "2020", "2019", "2018", "2017", "2016", "2015", "2014", "2013", "2012", "2011", "2010"}
 
 // ychEduSpider 获取鼎尖资源网文档
 // @Title 获取鼎尖资源网文档
@@ -84,25 +84,13 @@ func main() {
 					fileName := htmlquery.InnerText(htmlquery.FindOne(dlNode, `./span/em/a`))
 					fileName = strings.ReplaceAll(fileName, "_", "")
 					fileName = strings.ReplaceAll(fileName, " ", "")
+					fmt.Println(fileName)
 					if !strings.Contains(fileName, "doc") {
-						continue
-					}
-					ifSave := false
-					for _, year := range topEduSaveYear {
-						if strings.Contains(fileName, year) {
-							ifSave = true
-							break
-						}
-						if ifSave {
-							break
-						}
-					}
-					if !ifSave {
 						continue
 					}
 
 					detailUrl := htmlquery.InnerText(htmlquery.FindOne(dlNode, `./span/em/a/@href`))
-					detailUrl = "http://topedu.ybep.com.cn/project/" + detailUrl
+					detailUrl = "http://topedu.ybep.com.cn/new_x/project/" + detailUrl
 					fmt.Println(detailUrl)
 					//解析url 并保证没有错误
 					u, err := url.Parse(detailUrl)
@@ -115,10 +103,10 @@ func main() {
 						fmt.Println(err)
 						continue
 					}
-					attachmentUrl := fmt.Sprintf("http://topedu.ybep.com.cn/project/clouddown.php?pg=really&id=%s&tp=%s&opt=0", urlParam.Get("id"), subject.tp)
+					attachmentUrl := fmt.Sprintf("http://topedu.ybep.com.cn/new_x/project/clouddown.php?pg=really&id=%s&tp=%s&opt=0&n=%s", urlParam.Get("id"), subject.tp, urlParam.Get("n"))
 					fmt.Println(attachmentUrl)
 
-					filePath := "../topedu.ybep.com.cn/" + subject.name + "/" + fileName
+					filePath := "../topedu.ybep.com.cn/topedu.ybep.com.cn/" + subject.name + "/" + fileName
 					if _, err := os.Stat(filePath); err != nil {
 						fmt.Println("=======开始下载========")
 						err = downloadTopEdu(attachmentUrl, detailUrl, filePath)
@@ -127,10 +115,19 @@ func main() {
 							continue
 						}
 						fmt.Println("=======开始完成========")
+						DownLoadTopEduTimeSleep := rand.Intn(5)
+						for i := 1; i <= DownLoadTopEduTimeSleep; i++ {
+							time.Sleep(time.Second)
+							fmt.Println("page="+strconv.Itoa(page)+"===========下载", fileName, "成功，暂停", DownLoadTopEduTimeSleep, "秒，倒计时", i, "秒===========")
+						}
 					}
-					time.Sleep(time.Second * 1)
 				}
 				page++
+				DownTopEduNextPageSleep := rand.Intn(5)
+				for i := 1; i <= DownTopEduNextPageSleep; i++ {
+					time.Sleep(time.Second)
+					fmt.Println("===========翻", page, "页，暂停", DownTopEduNextPageSleep, "秒，倒计时", i, "秒===========")
+				}
 			} else {
 				page = 1
 				break
@@ -168,7 +165,7 @@ func downloadTopEdu(attachmentUrl string, referer string, filePath string) error
 	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
 	req.Header.Set("Cache-Control", "no-cache")
 	req.Header.Set("Connection", "keep-alive")
-	req.Header.Set("Cookie", "PHPSESSID=01a3l59n6nd4bsbbvea3g62ffd; __51vcke__JnUuVbB1pNBuOI9J=9abc1268-74e1-5c53-bdff-3d5142d26680; __51vuft__JnUuVbB1pNBuOI9J=1688548296298; __51uvsct__JnUuVbB1pNBuOI9J=3; _gid=GA1.3.1657144183.1689556817; __vtins__JnUuVbB1pNBuOI9J=%7B%22sid%22%3A%20%22f23c1d7a-ea5f-594c-8b66-217cabbb615a%22%2C%20%22vd%22%3A%206%2C%20%22stt%22%3A%2044437%2C%20%22dr%22%3A%201951%2C%20%22expires%22%3A%201689558658841%2C%20%22ct%22%3A%201689556858841%7D; _ga_34B604LFFQ=GS1.1.1689556817.4.1.1689556858.19.0.0; _ga=GA1.1.1239824823.1688548299")
+	req.Header.Set("Cookie", "__51vcke__JnUuVbB1pNBuOI9J=7a1ac260-d305-5b5d-b8ff-d2650e75d779; __51vuft__JnUuVbB1pNBuOI9J=1716949675665; PHPSESSID=cvbi2rkq2ua8a3l3gcqfehp11l; __51uvsct__JnUuVbB1pNBuOI9J=3; __vtins__JnUuVbB1pNBuOI9J=%7B%22sid%22%3A%20%226025d880-da35-5d23-8302-7bafb55f6519%22%2C%20%22vd%22%3A%2036%2C%20%22stt%22%3A%20495709%2C%20%22dr%22%3A%2044058%2C%20%22expires%22%3A%201735098428534%2C%20%22ct%22%3A%201735096628534%7D")
 	req.Header.Set("Host", "opedu.ybep.com.cn")
 	req.Header.Set("Pragma", "no-cache")
 	req.Header.Set("Referer", referer)

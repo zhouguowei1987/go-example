@@ -5,11 +5,13 @@ import (
 	"fmt"
 	"github.com/antchfx/htmlquery"
 	"io"
+	"math/rand"
 	"net"
 	"net/http"
 	"net/url"
 	"os"
 	"path/filepath"
+	"sort"
 	"strconv"
 	"strings"
 	"time"
@@ -55,85 +57,83 @@ var AllPpt818Subject = []Ppt818Subject{
 // @Description http://www.ppt818.com/，获取pc6文档
 func main() {
 	for _, subject := range AllPpt818Subject {
-		// 下面分类
-		categoryListUrl := subject.url
-		fmt.Println(categoryListUrl)
+		pageListUrl := subject.url
+		fmt.Println(pageListUrl)
 
-		categoryListDoc, err := htmlquery.LoadURL(categoryListUrl)
-		if err != nil {
-			fmt.Println(err)
-			break
-		}
-		categoryANodes := htmlquery.Find(categoryListDoc, `//div[@class="clearfix classify-group"]/a]`)
-		if len(categoryANodes) >= 1 {
-			for _, categoryANode := range categoryANodes {
-				categoryName := htmlquery.InnerText(categoryANode)
-				if categoryName != "全部" {
-					categoryHref := "http://www.ppt818.com" + htmlquery.InnerText(htmlquery.FindOne(categoryANode, `./@href`))
-					page := 1
-					isPageListGo := true
-					for isPageListGo {
-						pageListUrl := fmt.Sprintf(categoryHref+"download_count_%d.html/", page)
-						fmt.Println(pageListUrl)
+		page := 1
+		isPageListGo := true
+		for isPageListGo {
+			if page > 1 {
+				pageListUrl = fmt.Sprintf(subject.url+"updated_at_%d.html", page)
+			}
+			fmt.Println(pageListUrl)
 
-						pageListDoc, err := htmlquery.LoadURL(pageListUrl)
+			pageListDoc, err := htmlquery.LoadURL(pageListUrl)
+			if err != nil {
+				fmt.Println(err)
+				break
+			}
+
+			dlNodes := htmlquery.Find(pageListDoc, `//div[@class="clearfix mb-w"]/a]`)
+			if len(dlNodes) >= 1 {
+				for _, dlNode := range dlNodes {
+
+					fmt.Println("=================================================================================")
+					// 文档详情URL
+					fileName := htmlquery.InnerText(htmlquery.FindOne(dlNode, `./div[@class="abs bb mb-b-des"]/div[@class="ell f14 cfff mbbd-inner"]`))
+					fmt.Println(fileName)
+
+					// 跳过文件名中含有“课件”字样文件
+					if strings.Index(fileName, "课件") != -1 {
+						fmt.Println("跳过文件名中含有“课件”字样文件")
+						continue
+					}
+
+					// 跳过文件名中不含有“PPT模板”字样文件
+					if strings.Index(strings.ToLower(fileName), "ppt") == -1 {
+						fmt.Println("跳过文件名中不含有“ppt”字样文件")
+						continue
+					}
+
+					detailUrl := htmlquery.InnerText(htmlquery.FindOne(dlNode, `./@href`))
+					detailUrl = "http://www.ppt818.com" + detailUrl
+					fmt.Println(detailUrl)
+
+					detailDoc, _ := htmlquery.LoadURL(detailUrl)
+
+					// 下载文档URL
+					downLoadUrl := htmlquery.InnerText(htmlquery.FindOne(detailDoc, `//a[@class="db f16 cfff tc mt30 download-btn downloadCount"]/@href`))
+					fmt.Println(downLoadUrl)
+
+					// 文件格式
+					attachmentFormat := strings.Split(downLoadUrl, ".")
+
+					if In(attachmentFormat[len(attachmentFormat)-1], []string{"ppt", "pptx"}) == false {
+						fmt.Println("不是ppt文件")
+						continue
+					}
+					filePath := "../www.ppt818.com/www.ppt818.com/" + subject.name + "/"
+					fileName = fileName + "." + attachmentFormat[len(attachmentFormat)-1]
+					if _, err = os.Stat(filePath + fileName); err != nil {
+						fmt.Println("=======开始下载" + fileName + "========")
+						err = downloadPpt818(downLoadUrl, detailUrl, filePath, fileName)
 						if err != nil {
 							fmt.Println(err)
-							break
+							continue
 						}
-
-						dlNodes := htmlquery.Find(pageListDoc, `//div[@class="clearfix mb-w"]/a]`)
-						if len(dlNodes) >= 1 {
-							for _, dlNode := range dlNodes {
-
-								fmt.Println("=================================================================================")
-								// 文档详情URL
-								fileName := htmlquery.InnerText(htmlquery.FindOne(dlNode, `./div[@class="abs bb mb-b-des"]/div[@class="ell f14 cfff mbbd-inner"]`))
-								fmt.Println(fileName)
-
-								// 跳过文件名中含有“课件”字样文件
-								if strings.Index(fileName, "课件") != -1 {
-									fmt.Println("跳过文件名中含有“课件”字样文件")
-									continue
-								}
-
-								// 跳过文件名中不含有“PPT模板”字样文件
-								if strings.Index(fileName, "PPT模板") == -1 {
-									fmt.Println("跳过文件名中不含有“PPT模板”字样文件")
-									continue
-								}
-
-								detailUrl := htmlquery.InnerText(htmlquery.FindOne(dlNode, `./@href`))
-								detailUrl = "http://www.ppt818.com" + detailUrl
-								fmt.Println(detailUrl)
-
-								detailDoc, _ := htmlquery.LoadURL(detailUrl)
-
-								// 下载文档URL
-								downLoadUrl := htmlquery.InnerText(htmlquery.FindOne(detailDoc, `//a[@class="db f16 cfff tc mt30 download-btn downloadCount"]/@href`))
-								fmt.Println(downLoadUrl)
-
-								// 文件格式
-								attachmentFormat := strings.Split(downLoadUrl, ".")
-
-								filePath := "../www.ppt818.com/www.ppt818.com/" + subject.name + "/"
-								fileName = fileName + "." + attachmentFormat[len(attachmentFormat)-1]
-								if _, err = os.Stat(filePath + fileName); err != nil {
-									err = downloadPpt818(downLoadUrl, detailUrl, filePath, fileName)
-									if err != nil {
-										fmt.Println(err)
-										continue
-									}
-								}
-							}
-							page++
-						} else {
-							isPageListGo = false
-							page = 1
-							break
+						fmt.Println("=======下载完成========")
+						DownLoadPPT818TimeSleep := rand.Intn(5)
+						for i := 1; i <= DownLoadPPT818TimeSleep; i++ {
+							time.Sleep(time.Second)
+							fmt.Println("page="+strconv.Itoa(page)+"===========下载", fileName, "成功，暂停", DownLoadPPT818TimeSleep, "秒，倒计时", i, "秒===========")
 						}
 					}
 				}
+				page++
+			} else {
+				isPageListGo = false
+				page = 1
+				break
 			}
 		}
 	}
@@ -199,4 +199,13 @@ func downloadPpt818(attachmentUrl string, referer string, filePath string, fileN
 		return err
 	}
 	return nil
+}
+
+func In(target string, str_array []string) bool {
+	sort.Strings(str_array)
+	index := sort.SearchStrings(str_array, target)
+	if index < len(str_array) && str_array[index] == target {
+		return true
+	}
+	return false
 }
