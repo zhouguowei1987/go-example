@@ -106,7 +106,7 @@ func main() {
 					attachmentUrl := fmt.Sprintf("http://topedu.ybep.com.cn/new_x/project/clouddown.php?pg=really&id=%s&tp=%s&opt=0&n=%s", urlParam.Get("id"), subject.tp, urlParam.Get("n"))
 					fmt.Println(attachmentUrl)
 
-					filePath := "../topedu.ybep.com.cn/" + subject.name + "/" + fileName
+					filePath := "../topedu.ybep.com.cn/topedu.ybep.com.cn/" + subject.name + "/" + fileName
 					if _, err := os.Stat(filePath); err != nil {
 						fmt.Println("=======开始下载========")
 						err = downloadTopEdu(attachmentUrl, detailUrl, filePath)

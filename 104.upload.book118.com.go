@@ -376,11 +376,11 @@ func main() {
 			price:   "88",
 		},
 		{
-			dirName: "finish.topedu.ybep.com.cn/中考真题",
+			dirName: "docx.topedu.ybep.com.cn/中考真题",
 			price:   "88",
 		},
 		{
-			dirName: "finish.topedu.ybep.com.cn/高考真题",
+			dirName: "docx.topedu.ybep.com.cn/高考真题",
 			price:   "88",
 		},
 		{
