@@ -42,14 +42,14 @@ var AllJianLiSheJiSubject = []JianLiSheJiSubject{
 		name: "中文简历",
 		url:  "https://www.jianlisheji.com/jianli/jianlimuban/",
 	},
-	{
-		name: "英文简历",
-		url:  "https://www.jianlisheji.com/jianli/yingwenjianli/",
-	},
-	{
-		name: "表格简历",
-		url:  "https://www.jianlisheji.com/jianli/biaogejianli/",
-	},
+	//{
+	//	name: "英文简历",
+	//	url:  "https://www.jianlisheji.com/jianli/yingwenjianli/",
+	//},
+	//{
+	//	name: "表格简历",
+	//	url:  "https://www.jianlisheji.com/jianli/biaogejianli/",
+	//},
 	{
 		name: "小升初简历",
 		url:  "https://www.jianlisheji.com/jianli/xiaoshengchu/",
@@ -111,7 +111,7 @@ func main() {
 					// 下载文档URL
 					downLoadUrl := fmt.Sprintf("https://www.jianlisheji.com/download/vip_download_word/?code=%s&keyid=%s&time=%s&encrypt=%s", vipCheckReturn.code, vipCheckReturn.keyid, vipCheckReturn.time, vipCheckReturn.encrypt)
 
-					filePath := "F:\\workspace\\www.jianlisheji.com\\www.jianlisheji.com\\"
+					filePath := "E:\\workspace\\www.jianlisheji.com\\www.jianlisheji.com\\"
 					fileName = fileName + "." + fileFormat
 					if _, err := os.Stat(filePath + fileName); err != nil {
 						fmt.Println("=======开始下载========")

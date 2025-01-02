@@ -89,6 +89,12 @@ func main() {
 						continue
 					}
 
+					// 跳过文件名中含有“课时”字样文件
+					if strings.Index(fileName, "课时") != -1 {
+						fmt.Println("跳过文件名中含有“课时”字样文件")
+						continue
+					}
+
 					// 跳过文件名中不含有“PPT模板”字样文件
 					if strings.Index(strings.ToLower(fileName), "ppt") == -1 {
 						fmt.Println("跳过文件名中不含有“ppt”字样文件")
