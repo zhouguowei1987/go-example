@@ -24,8 +24,7 @@ func main() {
 	goCh := make(chan int, endId-startId)
 	for id := startId; id <= endId; id++ {
 		// 设置下载倒计时
-		//DownLoadPptTimeSleep := rand.Intn(20)
-		DownLoadPptTimeSleep := 10
+		DownLoadPptTimeSleep := 2
 		for i := 1; i <= DownLoadPptTimeSleep; i++ {
 			time.Sleep(time.Second)
 			fmt.Println("id="+strconv.Itoa(id)+"===========操作完成，", "暂停", DownLoadPptTimeSleep, "秒，倒计时", i, "秒===========")
