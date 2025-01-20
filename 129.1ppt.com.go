@@ -21,7 +21,6 @@ func main() {
 	//103045
 	var startId = 129682
 	var endId = 129683
-	goCh := make(chan int, endId-startId)
 	for id := startId; id <= endId; id++ {
 		// 设置下载倒计时
 		DownLoadPptTimeSleep := 2
@@ -29,16 +28,11 @@ func main() {
 			time.Sleep(time.Second)
 			fmt.Println("id="+strconv.Itoa(id)+"===========操作完成，", "暂停", DownLoadPptTimeSleep, "秒，倒计时", i, "秒===========")
 		}
-		go func(id int) {
-			err := pptSpider(id)
-			if err != nil {
-				fmt.Println(err)
-			}
-			goCh <- id
-		}(id)
-		fmt.Println(<-goCh)
+		err := pptSpider(id)
+		if err != nil {
+			fmt.Println(err)
+		}
 	}
-	//pptSpider(82515)
 }
 
 func pptSpider(id int) error {
