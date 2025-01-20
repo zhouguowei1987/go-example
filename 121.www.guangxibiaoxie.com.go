@@ -17,8 +17,8 @@ import (
 // @Title 获取广西标准化协会Pdf文档
 // @Description http://www.guangxibiaoxie.com/，将广西标准化协会Pdf文档入库
 func main() {
-	var startId = 1
-	var endId = 2580
+	var startId = 2580
+	var endId = 3702
 	goCh := make(chan int, endId-startId)
 	for id := startId; id <= endId; id++ {
 		go func(id int) {
@@ -30,7 +30,7 @@ func main() {
 		}(id)
 		fmt.Println(<-goCh)
 	}
-	//guangXiBiaoXieSpider(2548)
+	//guangXiBiaoXieSpider(3702)
 }
 
 func guangXiBiaoXieSpider(id int) error {
@@ -42,14 +42,14 @@ func guangXiBiaoXieSpider(id int) error {
 	}
 	// 查看是否有下载链接
 	detailDocText := htmlquery.OutputHTML(detailDoc, true)
-	regFile := regexp.MustCompile(`<a href="http://guangxibiaoxie.com/uploads/(.*?)"`)
+	regFile := regexp.MustCompile(`<a href="http(.*?)://guangxibiaoxie.com/(.*?)uploads/(.*?)"`)
 	regFindStingMatch := regFile.FindStringSubmatch(detailDocText)
 	if len(regFindStingMatch) < 2 {
 		return errors.New("没有文档下载链接")
 	}
 
 	// 下载文档URL
-	downLoadUrl := "http://guangxibiaoxie.com/uploads/" + regFindStingMatch[1]
+	downLoadUrl := "http://guangxibiaoxie.com/uploads/" + regFindStingMatch[3]
 	fmt.Println(downLoadUrl)
 
 	// 文档名称
