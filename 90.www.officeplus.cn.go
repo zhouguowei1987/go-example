@@ -160,6 +160,7 @@ type downloadUrlResult struct {
 
 func downloadUrl(id string) (fileUrl string, err error) {
 	apiUrl := fmt.Sprintf("https://api.officeplus.cn/api/v2.0/web/download/%s/download-url", id)
+	fmt.Println(apiUrl)
 	// 初始化客户端
 	var client *http.Client = &http.Client{
 		Transport: &http.Transport{
