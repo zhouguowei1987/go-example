@@ -100,9 +100,12 @@ func EditBydAutoSetHttpProxy() (httpclient *http.Client) {
 	}
 	return httpclient
 }
+// 李奎丽
+// var BydAutoEditAuthorization = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50VHlwZSI6MSwiaWQiOjY0MzIyLCJpc1N1cGVyIjpmYWxzZX0.IiINeGVqTZTqE9zHvACPX__Qu1A9YB4916lMXAumjIc"
 
-var BydAutoEditAuthorization = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50VHlwZSI6MSwiaWQiOjY0MzIyLCJpc1N1cGVyIjpmYWxzZX0.IiINeGVqTZTqE9zHvACPX__Qu1A9YB4916lMXAumjIc"
-var BydAutoEditNextPageSleep = 15
+// 高宏瑞
+var BydAutoEditAuthorization = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50VHlwZSI6MSwiaWQiOjExMTA2NCwiaXNTdXBlciI6ZmFsc2V9.17zcz8xR6-cOP8OZjDUcAOoAYe2imAAKxi7vNc66PDc"
+var BydAutoEditNextPageSleep = 10
 
 type QueryEditBydAutoResponseList struct {
 	Data  []QueryEditBydAutoResponseListData `json:"data"`
@@ -198,8 +201,14 @@ func main() {
 			// 类型1：沟通 类型8：回访，只处理待沟通类型
 			if queryEditBydAutoResponseListData.ActivityType == 1 {
 				fmt.Println("====================开始处理数据================================")
-				// 将待沟通的类型，处理时间随机延长1-5天
-				activityDate := queryEditBydAutoResponseListData.ActivityDate + rand.Intn(5)*(24*60*60) + 1
+				// 将待沟通的类型，处理时间随机延长2-10天
+				randIntN := rand.Intn(5)
+				if randIntN == 0{
+				    randIntN = 1
+				}
+                // randIntN默认值是1-5
+                randIntN = randIntN*(2*24*60*60)
+				activityDate := queryEditBydAutoResponseListData.ActivityDate + randIntN + 1
 				customerId := queryEditBydAutoResponseListData.CustomerId
 				getUrl := "https://zz-api.bydauto.com.cn/aiApi-dealer/v2/appCustomerService/get"
 				fmt.Println(getUrl)
@@ -257,7 +266,8 @@ func main() {
 				}
 				// 当前页是否处理过文档---处理过文档
 				hasEditFlag = true
-				bydAutoEditSaveTimeSleep := rand.Intn(20)
+// 				bydAutoEditSaveTimeSleep := rand.Intn(3)
+				bydAutoEditSaveTimeSleep := 15
 				for i := 1; i <= bydAutoEditSaveTimeSleep; i++ {
 					time.Sleep(time.Second)
 					fmt.Println("page="+strconv.Itoa(curPage)+"===========更新", queryEditBydAutoResponseListData.CustomerName, "成功，暂停", bydAutoEditSaveTimeSleep, "秒，倒计时", i, "秒===========")
