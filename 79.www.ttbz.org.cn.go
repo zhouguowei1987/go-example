@@ -19,8 +19,8 @@ import (
 // @Description https://www.ttbz.org.cn/，将全国团体标准信息平台Pdf文档入库
 func main() {
 	//104208
-	var startId = 131595
-	var endId = 131597
+	var startId = 132099
+	var endId = 132122
 	goCh := make(chan int, endId-startId)
 	for id := startId; id <= endId; id++ {
 		// 设置下载倒计时
@@ -39,7 +39,7 @@ func main() {
 		}(id)
 		fmt.Println(<-goCh)
 	}
-	//tbzSpider(82515)
+	//tbzSpider(132099)
 }
 
 func getTbz(url string) (doc *html.Node, err error) {
@@ -48,12 +48,12 @@ func getTbz(url string) (doc *html.Node, err error) {
 	if err != nil {
 		return doc, err
 	}
-	req.Header.Set("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9")
-	req.Header.Set("Accept-Encoding", "gzip, deflate")
+	req.Header.Set("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7")
+	req.Header.Set("Accept-Encoding", "gzip, deflate, br, zstd")
 	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
 	req.Header.Set("Cache-Control", "no-cache")
 	req.Header.Set("Connection", "keep-alive")
-	req.Header.Set("Cookie", "__51cke__=; ASP.NET_SessionId=53jwt0vjbjz2norxu0pk23mq; __tins__18926186=%7B%22sid%22%3A%201693922913345%2C%20%22vd%22%3A%203%2C%20%22expires%22%3A%201693924812409%7D; __51laig__=375")
+	req.Header.Set("Cookie", "__51cke__=; ASP.NET_SessionId=kztywruoejdlibymyizdhk0z; __jsluid_s=4e74def0a093311d3c09d1caf84e0fb9; __jsluid_h=746830dcf9977a07d36ede64b0d40169; __tins__18926186=%7B%22sid%22%3A%201738251677710%2C%20%22vd%22%3A%203%2C%20%22expires%22%3A%201738253794075%7D; __51laig__=3405; _d_id=e74d0cc99a4fad5bb5dbe40b478de9")
 	req.Header.Set("Host", "www.ttbz.org.cn")
 	req.Header.Set("Pragma", "no-cache")
 	req.Header.Set("Upgrade-Insecure-Requests", "1")
