@@ -105,7 +105,7 @@ func EditBydAutoSetHttpProxy() (httpclient *http.Client) {
 
 // 高宏瑞
 var BydAutoEditAuthorization = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50VHlwZSI6MSwiaWQiOjExMTA2NCwiaXNTdXBlciI6ZmFsc2V9.17zcz8xR6-cOP8OZjDUcAOoAYe2imAAKxi7vNc66PDc"
-var BydAutoEditNextPageSleep = 10
+var BydAutoEditNextPageSleep = 5
 
 type QueryEditBydAutoResponseList struct {
 	Data  []QueryEditBydAutoResponseListData `json:"data"`
@@ -208,7 +208,10 @@ func main() {
 				}
                 // randIntN默认值是1-5
                 randIntN = randIntN*(2*24*60*60)
-				activityDate := queryEditBydAutoResponseListData.ActivityDate + randIntN + 1
+// 				activityDate := queryEditBydAutoResponseListData.ActivityDate + randIntN + 1
+                todayNow := time.Now()
+                todayNowSeconds := todayNow.Unix()
+				activityDate := int(todayNowSeconds) + randIntN + 1
 				customerId := queryEditBydAutoResponseListData.CustomerId
 				getUrl := "https://zz-api.bydauto.com.cn/aiApi-dealer/v2/appCustomerService/get"
 				fmt.Println(getUrl)
@@ -224,6 +227,7 @@ func main() {
 				}
 
 				followUrl := "https://zz-api.bydauto.com.cn/aiApi-dealer/v2/appCustomerService/follow"
+				fmt.Println(followUrl)
 				followRequestPayload := make(map[string]interface{})
 				followRequestPayload["activityId"] = queryEditBydAutoResponseGet.PendingActivity.Id
 				followRequestPayload["competitionSerieses"] = ""
@@ -256,7 +260,7 @@ func main() {
 				followRequestPayload["specIds"] = strings.Join(specIds, ",")
 				followRequestPayload["testResult"] = 1
 				followRequestPayload["testSpecId"] = 0
-				//fmt.Printf("%+v\n", followRequestPayload)
+// 				fmt.Printf("%+v\n", followRequestPayload)
 
 				_, err = QueryEditBydAutoFollow(followUrl, followRequestPayload)
 				if err != nil {
@@ -266,8 +270,7 @@ func main() {
 				}
 				// 当前页是否处理过文档---处理过文档
 				hasEditFlag = true
-// 				bydAutoEditSaveTimeSleep := rand.Intn(3)
-				bydAutoEditSaveTimeSleep := 15
+				bydAutoEditSaveTimeSleep := rand.Intn(3)
 				for i := 1; i <= bydAutoEditSaveTimeSleep; i++ {
 					time.Sleep(time.Second)
 					fmt.Println("page="+strconv.Itoa(curPage)+"===========更新", queryEditBydAutoResponseListData.CustomerName, "成功，暂停", bydAutoEditSaveTimeSleep, "秒，倒计时", i, "秒===========")
@@ -452,8 +455,8 @@ func QueryEditBydAutoFollow(requestUrl string, followRequestPayload map[string]i
 	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
 	req.Header.Set("Authorization", BydAutoEditAuthorization)
 	req.Header.Set("Connection", "keep-alive")
-	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Content-Length", fmt.Sprintf("%d", len(payloadBytes)))
+	req.Header.Set("Content-Type", "application/json;charset=UTF-8")
 	req.Header.Set("Host", "zz-api.bydauto.com.cn")
 	req.Header.Set("Origin", "https://zz-dealer.bydauto.com.cn")
 	req.Header.Set("Referer", "https://zz-dealer.bydauto.com.cn/")
