@@ -1,17 +1,22 @@
 package main
 
 import (
+	"bufio"
 	"errors"
 	"fmt"
 	"github.com/antchfx/htmlquery"
 	"golang.org/x/net/html"
+	"golang.org/x/net/html/charset"
+	"golang.org/x/text/encoding"
+	"golang.org/x/text/transform"
 	"io"
+	"io/ioutil"
 	"net/http"
 	"os"
 	"path/filepath"
 	"strconv"
 	"strings"
-	"time"
+	// 	"time"
 )
 
 // TbzSpider 获取全国团体标准信息平台Pdf文档
@@ -19,27 +24,27 @@ import (
 // @Description https://www.ttbz.org.cn/，将全国团体标准信息平台Pdf文档入库
 func main() {
 	//104208
-	var startId = 132099
-	var endId = 132122
-	goCh := make(chan int, endId-startId)
-	for id := startId; id <= endId; id++ {
-		// 设置下载倒计时
-		//DownLoadTTbzTimeSleep := rand.Intn(20)
-		DownLoadTTbzTimeSleep := 10
-		for i := 1; i <= DownLoadTTbzTimeSleep; i++ {
-			time.Sleep(time.Second)
-			fmt.Println("id="+strconv.Itoa(id)+"===========操作完成，", "暂停", DownLoadTTbzTimeSleep, "秒，倒计时", i, "秒===========")
-		}
-		go func(id int) {
-			err := tbzSpider(id)
-			if err != nil {
-				fmt.Println(err)
-			}
-			goCh <- id
-		}(id)
-		fmt.Println(<-goCh)
-	}
-	//tbzSpider(132099)
+	// 	var startId = 132099
+	// 	var endId = 132122
+	// 	goCh := make(chan int, endId-startId)
+	// 	for id := startId; id <= endId; id++ {
+	// 		// 设置下载倒计时
+	// 		//DownLoadTTbzTimeSleep := rand.Intn(20)
+	// 		DownLoadTTbzTimeSleep := 10
+	// 		for i := 1; i <= DownLoadTTbzTimeSleep; i++ {
+	// 			time.Sleep(time.Second)
+	// 			fmt.Println("id="+strconv.Itoa(id)+"===========操作完成，", "暂停", DownLoadTTbzTimeSleep, "秒，倒计时", i, "秒===========")
+	// 		}
+	// 		go func(id int) {
+	// 			err := tbzSpider(id)
+	// 			if err != nil {
+	// 				fmt.Println(err)
+	// 			}
+	// 			goCh <- id
+	// 		}(id)
+	// 		fmt.Println(<-goCh)
+	// 	}
+	tbzSpider(132099)
 }
 
 func getTbz(url string) (doc *html.Node, err error) {
@@ -53,7 +58,8 @@ func getTbz(url string) (doc *html.Node, err error) {
 	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
 	req.Header.Set("Cache-Control", "no-cache")
 	req.Header.Set("Connection", "keep-alive")
-	req.Header.Set("Cookie", "__51cke__=; ASP.NET_SessionId=kztywruoejdlibymyizdhk0z; __jsluid_s=4e74def0a093311d3c09d1caf84e0fb9; __jsluid_h=746830dcf9977a07d36ede64b0d40169; __tins__18926186=%7B%22sid%22%3A%201738251677710%2C%20%22vd%22%3A%203%2C%20%22expires%22%3A%201738253794075%7D; __51laig__=3405; _d_id=e74d0cc99a4fad5bb5dbe40b478de9")
+	req.Header.Set("Cookie", "__51cke__=; ASP.NET_SessionId=kztywruoejdlibymyizdhk0z; __jsluid_s=4e74def0a093311d3c09d1caf84e0fb9; __jsluid_h=746830dcf9977a07d36ede64b0d40169; __tins__18926186=%7B%22sid%22%3A%201738768582283%2C%20%22vd%22%3A%2016%2C%20%22expires%22%3A%201738770484135%7D; __51laig__=3428; _d_id=df16859d50768a3fa9abe40b478dd1")
+	req.Header.Set("Content-Type", "text/html; charset=utf-8")
 	req.Header.Set("Host", "www.ttbz.org.cn")
 	req.Header.Set("Pragma", "no-cache")
 	req.Header.Set("Upgrade-Insecure-Requests", "1")
@@ -67,11 +73,34 @@ func getTbz(url string) (doc *html.Node, err error) {
 	if resp.StatusCode != http.StatusOK {
 		return doc, errors.New("http status :" + strconv.Itoa(resp.StatusCode))
 	}
-	doc, err = htmlquery.Parse(resp.Body)
+
+	//网页的编码是未知的，可能是GBK、UTF8等，所以要是能包装个方法去判断网络编码就好了
+	//正好golang.org/net/html包中有个chartset.DetermineEncoding方法可以直接拿来使用
+	//把现在把这个方法给重新包装成DetermineEncoding()来用
+	e := DetermineEncoding(resp.Body)
+	//用对应的编码读取网页编码
+	utf8Reader := transform.NewReader(resp.Body, e.NewDecoder())
+	utf8Body, err := ioutil.ReadAll(utf8Reader)
+	if err != nil {
+		panic(err)
+	}
+
+	doc, err = html.Parse(strings.NewReader(string(utf8Body)))
+	//doc, err = htmlquery.Parse(resp.Body)
 	if err != nil {
 		return doc, err
 	}
 	return doc, nil
+}
+
+// DetermineEncoding 判断网络编码
+func DetermineEncoding(r io.Reader) encoding.Encoding {
+	bytes, err := bufio.NewReader(r).Peek(1024)
+	if err != nil {
+		panic(err)
+	}
+	encode, _, _ := charset.DetermineEncoding(bytes, "")
+	return encode
 }
 
 func downloadPdf(pdfUrl string, filePath string) error {
@@ -151,12 +180,12 @@ func copyTbzFile(src, dst string) (err error) {
 func tbzSpider(id int) error {
 	detailUrl := fmt.Sprintf("https://www.ttbz.org.cn/StandardManage/Detail/%d", id)
 	detailDoc, err := getTbz(detailUrl)
-	//fmt.Println(htmlquery.InnerText(detailDoc))
-	//os.Exit(1)
 	if err != nil {
 		return err
 	}
 	detailTableNodes := htmlquery.Find(detailDoc, `//table[@class="tctable"]`)
+	fmt.Println(len(detailTableNodes))
+	os.Exit(1)
 	if len(detailTableNodes) == 3 {
 		// 标准详细信息table
 		detailTableNode := detailTableNodes[1]
