@@ -60,7 +60,7 @@ func main() {
 				continue
 			}
 			aHrefUrl := htmlquery.InnerText(aHrefNode)
-			fileIdStr := strings.ReplaceAll(aHrefUrl, "download.asp?id=", "")
+			fileIdStr := strings.ReplaceAll(aHrefUrl, "https://www.czsx.com.cn/download.asp?id=", "")
 			fileId, _ := strconv.Atoi(fileIdStr)
 
 			if fileId <= 0 {
@@ -74,7 +74,7 @@ func main() {
 				continue
 			}
 
-			filePath := "F:\\workspace\\www.rar_czsx.com.cn\\" + title + ".rar"
+			filePath := "E:\\workspace\\www.czsx.com.cn\\www.rar_czsx.com.cn\\" + title + ".rar"
 			if _, err := os.Stat(filePath); err != nil {
 				detailUrl := fmt.Sprintf("http://www.czsx.com.cn/down.asp?id=%d", fileId)
 				fmt.Println(detailUrl)

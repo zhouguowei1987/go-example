@@ -606,6 +606,11 @@ func main() {
 			pCid:    8120,
 			Price:   388,
 		},
+        {
+            dirName: "docx.www.czsx.com.cn",
+            pCid:    8156,
+            Price:   388,
+        },
 	}
 	rootPath := "../upload.doc88.com/"
 	for _, childDir := range uploadChildDirArr {
