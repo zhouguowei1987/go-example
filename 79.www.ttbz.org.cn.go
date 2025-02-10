@@ -1,21 +1,17 @@
 package main
 
 import (
-	"bufio"
 	"errors"
 	"fmt"
 	"github.com/antchfx/htmlquery"
 	"golang.org/x/net/html"
-	"golang.org/x/net/html/charset"
-	"golang.org/x/text/encoding"
-	"golang.org/x/text/transform"
 	"io"
-	"io/ioutil"
 	"net/http"
 	"os"
 	"path/filepath"
 	"strconv"
 	"strings"
+	"time"
 	// 	"time"
 )
 
@@ -24,27 +20,27 @@ import (
 // @Description https://www.ttbz.org.cn/，将全国团体标准信息平台Pdf文档入库
 func main() {
 	//104208
-	// 	var startId = 132099
-	// 	var endId = 132122
-	// 	goCh := make(chan int, endId-startId)
-	// 	for id := startId; id <= endId; id++ {
-	// 		// 设置下载倒计时
-	// 		//DownLoadTTbzTimeSleep := rand.Intn(20)
-	// 		DownLoadTTbzTimeSleep := 10
-	// 		for i := 1; i <= DownLoadTTbzTimeSleep; i++ {
-	// 			time.Sleep(time.Second)
-	// 			fmt.Println("id="+strconv.Itoa(id)+"===========操作完成，", "暂停", DownLoadTTbzTimeSleep, "秒，倒计时", i, "秒===========")
-	// 		}
-	// 		go func(id int) {
-	// 			err := tbzSpider(id)
-	// 			if err != nil {
-	// 				fmt.Println(err)
-	// 			}
-	// 			goCh <- id
-	// 		}(id)
-	// 		fmt.Println(<-goCh)
-	// 	}
-	tbzSpider(132099)
+	var startId = 131960
+	var endId = 132282
+	goCh := make(chan int, endId-startId)
+	for id := startId; id <= endId; id++ {
+		// 设置下载倒计时
+		//DownLoadTTbzTimeSleep := rand.Intn(20)
+		DownLoadTTbzTimeSleep := 10
+		for i := 1; i <= DownLoadTTbzTimeSleep; i++ {
+			time.Sleep(time.Second)
+			fmt.Println("id="+strconv.Itoa(id)+"===========操作完成，", "暂停", DownLoadTTbzTimeSleep, "秒，倒计时", i, "秒===========")
+		}
+		go func(id int) {
+			err := tbzSpider(id)
+			if err != nil {
+				fmt.Println(err)
+			}
+			goCh <- id
+		}(id)
+		fmt.Println(<-goCh)
+	}
+	//tbzSpider(132099)
 }
 
 func getTbz(url string) (doc *html.Node, err error) {
@@ -54,7 +50,6 @@ func getTbz(url string) (doc *html.Node, err error) {
 		return doc, err
 	}
 	req.Header.Set("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7")
-	req.Header.Set("Accept-Encoding", "gzip, deflate, br, zstd")
 	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
 	req.Header.Set("Cache-Control", "no-cache")
 	req.Header.Set("Connection", "keep-alive")
@@ -73,34 +68,11 @@ func getTbz(url string) (doc *html.Node, err error) {
 	if resp.StatusCode != http.StatusOK {
 		return doc, errors.New("http status :" + strconv.Itoa(resp.StatusCode))
 	}
-
-	//网页的编码是未知的，可能是GBK、UTF8等，所以要是能包装个方法去判断网络编码就好了
-	//正好golang.org/net/html包中有个chartset.DetermineEncoding方法可以直接拿来使用
-	//把现在把这个方法给重新包装成DetermineEncoding()来用
-	e := DetermineEncoding(resp.Body)
-	//用对应的编码读取网页编码
-	utf8Reader := transform.NewReader(resp.Body, e.NewDecoder())
-	utf8Body, err := ioutil.ReadAll(utf8Reader)
-	if err != nil {
-		panic(err)
-	}
-
-	doc, err = html.Parse(strings.NewReader(string(utf8Body)))
-	//doc, err = htmlquery.Parse(resp.Body)
+	doc, err = htmlquery.Parse(resp.Body)
 	if err != nil {
 		return doc, err
 	}
 	return doc, nil
-}
-
-// DetermineEncoding 判断网络编码
-func DetermineEncoding(r io.Reader) encoding.Encoding {
-	bytes, err := bufio.NewReader(r).Peek(1024)
-	if err != nil {
-		panic(err)
-	}
-	encode, _, _ := charset.DetermineEncoding(bytes, "")
-	return encode
 }
 
 func downloadPdf(pdfUrl string, filePath string) error {
@@ -184,8 +156,6 @@ func tbzSpider(id int) error {
 		return err
 	}
 	detailTableNodes := htmlquery.Find(detailDoc, `//table[@class="tctable"]`)
-	fmt.Println(len(detailTableNodes))
-	os.Exit(1)
 	if len(detailTableNodes) == 3 {
 		// 标准详细信息table
 		detailTableNode := detailTableNodes[1]
