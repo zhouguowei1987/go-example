@@ -14,6 +14,7 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"sort"
 	"strconv"
 	"strings"
 	"time"
@@ -74,14 +75,11 @@ func pptSpider(id int) error {
 	// 获取文件后缀
 	downloadUrlSplitArray := strings.Split(attachUrl, ".")
 	fileSuffix := downloadUrlSplitArray[len(downloadUrlSplitArray)-1]
-	if fileSuffix not in ["zip","rar"] {
+	fileSuffixArray := []string{"zip", "rar"}
+	if InArray(fileSuffix, fileSuffixArray) {
 		return errors.New("既不是zip文件，也不是rar文件，跳过")
 	}
-	if fileSuffix == "zip"{
-	    filePath := "../www.1ppt.com/www.zip_1ppt.com/" + title + ".zip"
-	}else if fileSuffix == "rar"{
-	    filePath := "../www.1ppt.com/www.rar_1ppt.com/" + title + ".rar"
-	}
+	filePath := "../www.1ppt.com/www." + fileSuffix + "_1ppt.com/" + title + "." + fileSuffix
 	if _, err := os.Stat(filePath); err != nil {
 		fmt.Println("=======开始下载========")
 		err = downloadPpt(attachUrl, downloadDetailUrl, filePath)
@@ -96,6 +94,15 @@ func pptSpider(id int) error {
 		}
 	}
 	return nil
+}
+
+func InArray(target string, str_array []string) bool {
+	sort.Strings(str_array)
+	index := sort.SearchStrings(str_array, target)
+	if index < len(str_array) && str_array[index] == target {
+		return true
+	}
+	return false
 }
 
 func getPptDownloadDetailDoc(url string, referer string) (doc *html.Node, err error) {
@@ -174,15 +181,15 @@ func downloadPpt(pdfUrl string, referer string, filePath string) error {
 	req.Header.Set("Host", "1ppt.com")
 	req.Header.Set("Referer", referer)
 	req.Header.Set("sec-ch-ua", "\"Chromium\";v=\"110\", \"Not A(Brand\";v=\"24\", \"Google Chrome\";v=\"110\"")
-    req.Header.Set("sec-ch-ua-mobile", "?0")
-    req.Header.Set("sec-ch-ua-platform", "\"macOS\"")
-    req.Header.Set("Sec-Fetch-Dest", "document")
-    req.Header.Set("Sec-Fetch-Mode", "navigate")
-    req.Header.Set("Sec-Fetch-Site", "same-origin")
-    req.Header.Set("Sec-Fetch-User", "?1")
-    req.Header.Set("Upgrade-Insecure-Requests", "1")
-    req.Header.Set("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36")
-    resp, err := client.Do(req) //拿到返回的内容
+	req.Header.Set("sec-ch-ua-mobile", "?0")
+	req.Header.Set("sec-ch-ua-platform", "\"macOS\"")
+	req.Header.Set("Sec-Fetch-Dest", "document")
+	req.Header.Set("Sec-Fetch-Mode", "navigate")
+	req.Header.Set("Sec-Fetch-Site", "same-origin")
+	req.Header.Set("Sec-Fetch-User", "?1")
+	req.Header.Set("Upgrade-Insecure-Requests", "1")
+	req.Header.Set("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36")
+	resp, err := client.Do(req) //拿到返回的内容
 	if err != nil {
 		return err
 	}
