@@ -19,9 +19,9 @@ import (
 // @Title 获取全国团体标准信息平台Pdf文档
 // @Description https://www.ttbz.org.cn/，将全国团体标准信息平台Pdf文档入库
 func main() {
-	//104208
-	var startId = 131960
-	var endId = 132282
+	//104411
+	var startId = 104411
+	var endId = 132313
 	goCh := make(chan int, endId-startId)
 	for id := startId; id <= endId; id++ {
 		// 设置下载倒计时
