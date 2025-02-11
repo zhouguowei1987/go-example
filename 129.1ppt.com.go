@@ -81,7 +81,7 @@ func pptSpider(id int) error {
 	filePath := "../1ppt.com/" + title + ".zip"
 	if _, err := os.Stat(filePath); err != nil {
 		fmt.Println("=======开始下载========")
-		err = downloadPpt(attachUrl, filePath)
+		err = downloadPpt(attachUrl, downloadDetailUrl, filePath)
 		if err != nil {
 			return err
 		}
@@ -156,7 +156,7 @@ func decodeAndParseHTML(gb2312Content string) (*html.Node, error) {
 	return doc, nil
 }
 
-func downloadPpt(pdfUrl string, filePath string) error {
+func downloadPpt(pdfUrl string, referer string, filePath string) error {
 	client := &http.Client{}                        //初始化客户端
 	req, err := http.NewRequest("GET", pdfUrl, nil) //建立连接
 	if err != nil {
@@ -169,10 +169,17 @@ func downloadPpt(pdfUrl string, filePath string) error {
 	req.Header.Set("Connection", "keep-alive")
 	req.Header.Set("Cookie", "mizToken=202501191741290.5355677329169450.001375657287244314; Hm_lvt_087ceb5ea69d10fb5bbb6bc49c209fa2=1737279673; HMACCOUNT=2CEC63D57647BCA5; acw_tc=2760826617373331730588303edf6930cea2e1031f6c2dc10a9d79b45ba631; Hm_lpvt_087ceb5ea69d10fb5bbb6bc49c209fa2=1737333516")
 	req.Header.Set("Host", "1ppt.com")
-	req.Header.Set("Pragma", "no-cache")
-	req.Header.Set("Upgrade-Insecure-Requests", "1")
-	req.Header.Set("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36")
-	resp, err := client.Do(req) //拿到返回的内容
+	req.Header.Set("Referer", referer)
+	req.Header.Set("sec-ch-ua", "\"Chromium\";v=\"110\", \"Not A(Brand\";v=\"24\", \"Google Chrome\";v=\"110\"")
+    req.Header.Set("sec-ch-ua-mobile", "?0")
+    req.Header.Set("sec-ch-ua-platform", "\"macOS\"")
+    req.Header.Set("Sec-Fetch-Dest", "document")
+    req.Header.Set("Sec-Fetch-Mode", "navigate")
+    req.Header.Set("Sec-Fetch-Site", "same-origin")
+    req.Header.Set("Sec-Fetch-User", "?1")
+    req.Header.Set("Upgrade-Insecure-Requests", "1")
+    req.Header.Set("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36")
+    resp, err := client.Do(req) //拿到返回的内容
 	if err != nil {
 		return err
 	}
