@@ -78,7 +78,7 @@ func pptSpider(id int) error {
 		return errors.New("不是zip文件，跳过")
 	}
 
-	filePath := "../1ppt.com/" + title + ".zip"
+	filePath := "../www.1ppt.com/www.zip_1ppt.com/" + title + ".zip"
 	if _, err := os.Stat(filePath); err != nil {
 		fmt.Println("=======开始下载========")
 		err = downloadPpt(attachUrl, downloadDetailUrl, filePath)
