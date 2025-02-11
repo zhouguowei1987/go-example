@@ -75,7 +75,7 @@ func pptSpider(id int) error {
 	downloadUrlSplitArray := strings.Split(attachUrl, ".")
 	fileSuffix := downloadUrlSplitArray[len(downloadUrlSplitArray)-1]
 	fileSuffixArray := []string{"zip", "rar"}
-	if stringContains(fileSuffixArray, fileSuffix) {
+	if !stringContains(fileSuffixArray, fileSuffix) {
 		return errors.New("既不是zip文件，也不是rar文件，跳过")
 	}
 	filePath := "../www.1ppt.com/www." + fileSuffix + "_1ppt.com/" + title + "." + fileSuffix
