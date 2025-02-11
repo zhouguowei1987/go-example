@@ -14,7 +14,6 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
-	"sort"
 	"strconv"
 	"strings"
 	"time"
@@ -76,7 +75,7 @@ func pptSpider(id int) error {
 	downloadUrlSplitArray := strings.Split(attachUrl, ".")
 	fileSuffix := downloadUrlSplitArray[len(downloadUrlSplitArray)-1]
 	fileSuffixArray := []string{"zip", "rar"}
-	if InArray(fileSuffix, fileSuffixArray) {
+	if stringContains(fileSuffixArray, fileSuffix) {
 		return errors.New("既不是zip文件，也不是rar文件，跳过")
 	}
 	filePath := "../www.1ppt.com/www." + fileSuffix + "_1ppt.com/" + title + "." + fileSuffix
@@ -96,11 +95,11 @@ func pptSpider(id int) error {
 	return nil
 }
 
-func InArray(target string, str_array []string) bool {
-	sort.Strings(str_array)
-	index := sort.SearchStrings(str_array, target)
-	if index < len(str_array) && str_array[index] == target {
-		return true
+func stringContains(slice []string, value string) bool {
+	for _, item := range slice {
+		if item == value {
+			return true
+		}
 	}
 	return false
 }
