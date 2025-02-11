@@ -86,7 +86,7 @@ func pptSpider(id int) error {
 			return err
 		}
 		fmt.Println("=======完成下载========")
-		DownLoad1PptTimeSleep := rand.Intn(20)
+		DownLoad1PptTimeSleep := rand.Intn(5)
 		for i := 1; i <= DownLoad1PptTimeSleep; i++ {
 			time.Sleep(time.Second)
 			fmt.Println("id="+strconv.Itoa(id)+"===========下载", title, "成功，暂停", DownLoad1PptTimeSleep, "秒，倒计时", i, "秒===========")
