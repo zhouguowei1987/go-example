@@ -100,10 +100,11 @@ func EditBydAutoSetHttpProxy() (httpclient *http.Client) {
 	}
 	return httpclient
 }
-// 李奎丽
+
+// BydAutoEditAuthorization 李奎丽
 var BydAutoEditAuthorization = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50VHlwZSI6MSwiaWQiOjY0MzIyLCJpc1N1cGVyIjpmYWxzZX0.IiINeGVqTZTqE9zHvACPX__Qu1A9YB4916lMXAumjIc"
 
-// 高宏瑞
+// BydAutoEditNextPageSleep 高宏瑞
 // var BydAutoEditAuthorization = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50VHlwZSI6MSwiaWQiOjExMTA2NCwiaXNTdXBlciI6ZmFsc2V9.17zcz8xR6-cOP8OZjDUcAOoAYe2imAAKxi7vNc66PDc"
 var BydAutoEditNextPageSleep = 5
 
@@ -203,14 +204,14 @@ func main() {
 				fmt.Println("====================开始处理数据================================")
 				// 将待沟通的类型，处理时间随机延长2-10天
 				randIntN := rand.Intn(5)
-				if randIntN == 0{
-				    randIntN = 1
+				if randIntN == 0 {
+					randIntN = 1
 				}
-                // randIntN默认值是1-5
-                randIntN = randIntN*(2*24*60*60)
-// 				activityDate := queryEditBydAutoResponseListData.ActivityDate + randIntN + 1
-                todayNow := time.Now()
-                todayNowSeconds := todayNow.Unix()
+				// randIntN默认值是1-5
+				randIntN = randIntN * (2 * 24 * 60 * 60)
+				// 				activityDate := queryEditBydAutoResponseListData.ActivityDate + randIntN + 1
+				todayNow := time.Now()
+				todayNowSeconds := todayNow.Unix()
 				activityDate := int(todayNowSeconds) + randIntN + 1
 				customerId := queryEditBydAutoResponseListData.CustomerId
 				getUrl := "https://zz-api.bydauto.com.cn/aiApi-dealer/v2/appCustomerService/get"
@@ -260,7 +261,7 @@ func main() {
 				followRequestPayload["specIds"] = strings.Join(specIds, ",")
 				followRequestPayload["testResult"] = 1
 				followRequestPayload["testSpecId"] = 0
-// 				fmt.Printf("%+v\n", followRequestPayload)
+				// 				fmt.Printf("%+v\n", followRequestPayload)
 
 				_, err = QueryEditBydAutoFollow(followUrl, followRequestPayload)
 				if err != nil {
