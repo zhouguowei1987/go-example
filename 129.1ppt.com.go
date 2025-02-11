@@ -74,11 +74,14 @@ func pptSpider(id int) error {
 	// 获取文件后缀
 	downloadUrlSplitArray := strings.Split(attachUrl, ".")
 	fileSuffix := downloadUrlSplitArray[len(downloadUrlSplitArray)-1]
-	if fileSuffix != "zip" {
-		return errors.New("不是zip文件，跳过")
+	if fileSuffix not in ["zip","rar"] {
+		return errors.New("既不是zip文件，也不是rar文件，跳过")
 	}
-
-	filePath := "../www.1ppt.com/www.zip_1ppt.com/" + title + ".zip"
+	if fileSuffix == "zip"{
+	    filePath := "../www.1ppt.com/www.zip_1ppt.com/" + title + ".zip"
+	}else if fileSuffix == "rar"{
+	    filePath := "../www.1ppt.com/www.rar_1ppt.com/" + title + ".rar"
+	}
 	if _, err := os.Stat(filePath); err != nil {
 		fmt.Println("=======开始下载========")
 		err = downloadPpt(attachUrl, downloadDetailUrl, filePath)
