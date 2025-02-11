@@ -20,7 +20,7 @@ import (
 // @Description https://www.ttbz.org.cn/，将全国团体标准信息平台Pdf文档入库
 func main() {
 	//105516
-	var startId = 105516
+	var startId = 106206
 	var endId = 132313
 	goCh := make(chan int, endId-startId)
 	for id := startId; id <= endId; id++ {
@@ -172,12 +172,10 @@ func tbzSpider(id int) error {
 		if aHrefText != "" {
 			span2Text := htmlquery.InnerText(htmlquery.FindOne(aHrefTdNode[1], `./span[@id="Span2"]`))
 			if span2Text == "不公开" {
-				fmt.Println("不公开文档，跳过")
 				return errors.New("不公开文档，跳过")
 			}
 			aHref := htmlquery.InnerText(htmlquery.FindOne(aHrefTdNode[1], `./span[@id="Span2"]/a`))
 			if aHref != "查看" {
-				fmt.Println("没有下载链接")
 				return errors.New("没有下载链接")
 			}
 			// 标准编号
