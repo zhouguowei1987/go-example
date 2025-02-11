@@ -19,18 +19,11 @@ import (
 // @Title 获取全国团体标准信息平台Pdf文档
 // @Description https://www.ttbz.org.cn/，将全国团体标准信息平台Pdf文档入库
 func main() {
-	//104411
-	var startId = 104411
+	//105516
+	var startId = 105516
 	var endId = 132313
 	goCh := make(chan int, endId-startId)
 	for id := startId; id <= endId; id++ {
-		// 设置下载倒计时
-		//DownLoadTTbzTimeSleep := rand.Intn(20)
-		DownLoadTTbzTimeSleep := 10
-		for i := 1; i <= DownLoadTTbzTimeSleep; i++ {
-			time.Sleep(time.Second)
-			fmt.Println("id="+strconv.Itoa(id)+"===========操作完成，", "暂停", DownLoadTTbzTimeSleep, "秒，倒计时", i, "秒===========")
-		}
 		go func(id int) {
 			err := tbzSpider(id)
 			if err != nil {
@@ -188,9 +181,6 @@ func tbzSpider(id int) error {
 					standardNo := htmlquery.InnerText(htmlquery.FindOne(standardNoTdNodes[1], `./span[@id="r1_c5"]`))
 					standardNo = strings.ReplaceAll(standardNo, "/", "-")
 					fmt.Println(standardNo)
-					//if !strings.Contains(standardNo, "T-ZZB") {
-					//	return nil
-					//}
 
 					// 中文标题
 					chineseTitleTrNode := trNodes[3]
@@ -229,6 +219,13 @@ func tbzSpider(id int) error {
 							return err
 						}
 						fmt.Println("=======完成下载========")
+
+						// 设置下载倒计时
+						DownLoadTTbzTimeSleep := 10
+						for i := 1; i <= DownLoadTTbzTimeSleep; i++ {
+							time.Sleep(time.Second)
+							fmt.Println("id="+strconv.Itoa(id)+"===========操作完成，", "暂停", DownLoadTTbzTimeSleep, "秒，倒计时", i, "秒===========")
+						}
 					}
 
 				}
