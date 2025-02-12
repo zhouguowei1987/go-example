@@ -23,8 +23,8 @@ import (
 // @Title 获取第一ppt文档
 // @Description https://1ppt.com/，将第一ppt文档入库
 func main() {
-	var startId = 3
-	var endId = 130283
+	var startId = 71895
+	var endId = 71514
 	for id := startId; id <= endId; id++ {
 		err := pptSpider(id)
 		if err != nil {
@@ -35,7 +35,7 @@ func main() {
 }
 
 func pptSpider(id int) error {
-	detailUrl := fmt.Sprintf("https://www.1ppt.com/article/%d.html", id)
+	detailUrl := fmt.Sprintf("https://www.1ppt.com/word/%d.html", id)
 	fmt.Println(detailUrl)
 	detailDoc, err := htmlquery.LoadURL(detailUrl)
 
@@ -48,7 +48,7 @@ func pptSpider(id int) error {
 		return errors.New("详情页没有下载按钮")
 	}
 
-	downloadDetailUrl := fmt.Sprintf("https://www.1ppt.com/plus/download.php?open=0&aid=%d&cid=3", id)
+	downloadDetailUrl := fmt.Sprintf("https://www.1ppt.com/plus/download.php?open=0&aid=%d&cid=23", id)
 	fmt.Println(downloadDetailUrl)
 	downloadDetailDoc, err := getPptDownloadDetailDoc(downloadDetailUrl, detailUrl)
 	if err != nil {
@@ -78,7 +78,7 @@ func pptSpider(id int) error {
 	if !stringContains(fileSuffixArray, fileSuffix) {
 		return errors.New("既不是zip文件，也不是rar文件，跳过")
 	}
-	filePath := "../www.1ppt.com/www." + fileSuffix + "_1ppt.com/" + title + "." + fileSuffix
+	filePath := "../www.1ppt.com/www." + fileSuffix + "_word_1ppt.com/" + title + "." + fileSuffix
 	if _, err := os.Stat(filePath); err != nil {
 		fmt.Println("=======开始下载========")
 		err = downloadPpt(attachUrl, downloadDetailUrl, filePath)
