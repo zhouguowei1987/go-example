@@ -164,10 +164,9 @@ func getPptDownloadDetailDoc(url string, referer string) (doc *html.Node, err er
 	if resp.StatusCode != http.StatusOK {
 		return doc, errors.New("http status :" + strconv.Itoa(resp.StatusCode))
 	}
-	//doc, err = htmlquery.Parse(resp.Body)
 	bodyBytes, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		panic(err)
+		return doc, err
 	}
 	doc, err = decodeAndParseHTML(string(bodyBytes))
 	if err != nil {
