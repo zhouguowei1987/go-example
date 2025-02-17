@@ -23,7 +23,7 @@ import (
 // @Title 获取第一ppt文档
 // @Description https://1ppt.com/，将第一ppt文档入库
 func main() {
-	var startId = 3
+	var startId = 130462
 	var endId = 130463
 	for id := startId; id <= endId; id++ {
 		err := pptSpider(id)
