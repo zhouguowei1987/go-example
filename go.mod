@@ -2,8 +2,6 @@ module gobyexample
 
 go 1.23
 
-toolchain go1.23.6
-
 require (
 	github.com/antchfx/htmlquery v1.3.4
 	github.com/djimenez/iconv-go v0.0.0-20160305225143-8960e66bd3da
