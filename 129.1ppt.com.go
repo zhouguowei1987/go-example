@@ -23,8 +23,8 @@ import (
 // @Title 获取第一ppt文档
 // @Description https://1ppt.com/，将第一ppt文档入库
 func main() {
-	var startId = 130462
-	var endId = 130463
+	var startId = 105127
+	var endId = 130524
 	for id := startId; id <= endId; id++ {
 		err := pptSpider(id)
 		if err != nil {
@@ -102,11 +102,11 @@ func pptSpider(id int) error {
 	// 获取文件后缀
 	downloadUrlSplitArray := strings.Split(attachUrl, ".")
 	fileSuffix := downloadUrlSplitArray[len(downloadUrlSplitArray)-1]
-	fileSuffixArray := []string{"zip", "rar"}
+	fileSuffixArray := []string{"zip"}
 	if !stringContains(fileSuffixArray, fileSuffix) {
-		return errors.New("既不是zip文件，也不是rar文件，跳过")
+		return errors.New("既不是zip文件，跳过")
 	}
-	filePath := "F:\\workspace\\www.1ppt.com\\www." + fileSuffix + "_1ppt.com/" + title + "." + fileSuffix
+	filePath := "F:\\workspace\\www.1ppt.com\\www." + fileSuffix + "_1ppt.com\\" + title + "." + fileSuffix
 	if _, err := os.Stat(filePath); err != nil {
 		fmt.Println("=======开始下载========")
 		err = downloadPpt(attachUrl, downloadDetailUrl, filePath)
