@@ -18,7 +18,7 @@ import (
 // @Description http://www.guangxibiaoxie.com/，将广西标准化协会Pdf文档入库
 func main() {
 	var startId = 2580
-	var endId = 3702
+	var endId = 3767
 	goCh := make(chan int, endId-startId)
 	for id := startId; id <= endId; id++ {
 		go func(id int) {

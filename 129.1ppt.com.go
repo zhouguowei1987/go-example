@@ -23,8 +23,8 @@ import (
 // @Title 获取第一ppt文档
 // @Description https://1ppt.com/，将第一ppt文档入库
 func main() {
-	var startId = 130462
-	var endId = 130463
+	var startId = 130524
+	var endId = 130887
 	for id := startId; id <= endId; id++ {
 		err := pptSpider(id)
 		if err != nil {
@@ -33,6 +33,8 @@ func main() {
 	}
 	//pptSpider(130283)
 }
+
+var pptCookie = "acw_tc=1a0c63d717409647225794494e0059e036ec3d42d61d60cd861ec9d0f62672; Hm_lvt_087ceb5ea69d10fb5bbb6bc49c209fa2=1739247434,1740964723; HMACCOUNT=2CEC63D57647BCA5; Hm_lpvt_087ceb5ea69d10fb5bbb6bc49c209fa2=1740964767"
 
 func pptSpider(id int) error {
 	detailUrl := fmt.Sprintf("https://www.1ppt.com/article/%d.html", id)
@@ -47,7 +49,6 @@ func pptSpider(id int) error {
 	if detailDownloadButtonNode == nil {
 		return errors.New("详情页没有下载按钮")
 	}
-
 	downloadDetailUrl := fmt.Sprintf("https://www.1ppt.com/plus/download.php?open=0&aid=%d&cid=3", id)
 	fmt.Println(downloadDetailUrl)
 	downloadDetailDoc, err := getPptDownloadDetailDoc(downloadDetailUrl, detailUrl)
@@ -102,11 +103,11 @@ func pptSpider(id int) error {
 	// 获取文件后缀
 	downloadUrlSplitArray := strings.Split(attachUrl, ".")
 	fileSuffix := downloadUrlSplitArray[len(downloadUrlSplitArray)-1]
-	fileSuffixArray := []string{"zip", "rar"}
+	fileSuffixArray := []string{"zip"}
 	if !stringContains(fileSuffixArray, fileSuffix) {
-		return errors.New("既不是zip文件，也不是rar文件，跳过")
+		return errors.New("既不是zip文件，跳过")
 	}
-	filePath := "F:\\workspace\\www.1ppt.com\\www." + fileSuffix + "_1ppt.com/" + title + "." + fileSuffix
+	filePath := "F:\\workspace\\www.1ppt.com\\www." + fileSuffix + "_1ppt.com\\" + title + "." + fileSuffix
 	if _, err := os.Stat(filePath); err != nil {
 		fmt.Println("=======开始下载========")
 		err = downloadPpt(attachUrl, downloadDetailUrl, filePath)
@@ -143,7 +144,7 @@ func getPptDownloadDetailDoc(url string, referer string) (doc *html.Node, err er
 	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
 	req.Header.Set("Cache-Control", "max-age=0")
 	req.Header.Set("Connection", "keep-alive")
-	req.Header.Set("Cookie", "mizToken=202501200928550.359382022694436640.9092217902997255; HMACCOUNT=00EDEFEA78E0441D; acw_tc=1a0c655917391955004167396e0045853fbe2d10f2f74d83faf9ee6a1f2601; Hm_lvt_087ceb5ea69d10fb5bbb6bc49c209fa2=1737336287,1739195501; Hm_lpvt_087ceb5ea69d10fb5bbb6bc49c209fa2=1739196761")
+	req.Header.Set("Cookie", pptCookie)
 	req.Header.Set("Host", "www.1ppt.com")
 	req.Header.Set("Referer", referer)
 	req.Header.Set("Sec-Ch-Ua", "\"Google Chrome\";v=\"131\", \"Chromium\";v=\"131\", \"Not_A Brand\";v=\"24\"")
@@ -199,11 +200,11 @@ func downloadPpt(pdfUrl string, referer string, filePath string) error {
 		return err
 	}
 	req.Header.Set("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9")
-	req.Header.Set("Accept-Encoding", "gzip, deflate")
+	//req.Header.Set("Accept-Encoding", "gzip, deflate")
 	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
 	req.Header.Set("Cache-Control", "no-cache")
 	req.Header.Set("Connection", "keep-alive")
-	req.Header.Set("Cookie", "mizToken=202501191741290.5355677329169450.001375657287244314; Hm_lvt_087ceb5ea69d10fb5bbb6bc49c209fa2=1737279673; HMACCOUNT=2CEC63D57647BCA5; acw_tc=2760826617373331730588303edf6930cea2e1031f6c2dc10a9d79b45ba631; Hm_lpvt_087ceb5ea69d10fb5bbb6bc49c209fa2=1737333516")
+	req.Header.Set("Cookie", pptCookie)
 	req.Header.Set("Host", "1ppt.com")
 	req.Header.Set("Referer", referer)
 	req.Header.Set("sec-ch-ua", "\"Chromium\";v=\"110\", \"Not A(Brand\";v=\"24\", \"Google Chrome\";v=\"110\"")

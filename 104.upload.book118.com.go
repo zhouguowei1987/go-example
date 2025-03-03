@@ -21,9 +21,9 @@ import (
 )
 
 // SessionId 15238369929
-var SessionId = "upl1c9poffaqearfmdclkl0ru5"
-var Token = "3cabba46df1b1ec810b2a7a65b828e01"
-var Cookie = "CRM_DETAIL_INFOS=[{\"aid\":8010123047006036,\"title\":\"åˆ\u009Dä¸­è‹±è¯­äººæ•™ç‰ˆ-å…«ä¸‹-unit_4ã€Šwhy_don&apos; PHPSESSID=upl1c9poffaqearfmdclkl0ru5; a_5001214301011114=1; a_8110060017006044=1; a_7103123105006051=1; a_5342222004010022=1; a_8104054004006045=1; a_8103126004006045=1; a_6013130131010050=1; a_6025040104010102=1; a_6021214104010102=1; a_5004303242011123=1; a_7131160111004152=1; a_6010131022002203=1; a_8035044027005111=1; a_7121003036004131=1; a_7004120132006053=1; a_6211042023001240=1; a_8035101016006033=1; home_51596649=1; a_8066031117004074=1; home_6907122=3; a_5224202203004314=1; home_4248920=2; a_5133202000000000=1; home_162=1; a_7165030124006060=1; a_7045043145006062=1; a_6143002243010113=1; 94ca48fd8a42333b=1712894529%2C1; a_5303324322011220=1; a_7042030005004126=1; a_5222013144004022=1; Hm_lvt_27fe35f56bdde9c16e63129d678cd236=1718439297; a_5232333324011040=1; a_8021021024006075=1; 30d8fb61e609cac11=1718448470%2C1; a_8017126106004101=1; Hm_lpvt_27fe35f56bdde9c16e63129d678cd236=1718449050; a_7054021151006126=1; s_rfd=cdh%3D%3Ec865f4f0%7C%7C%7Ctrd%3D%3Emax.book118.com%7C%7C%7Cftrd%3D%3Ebook118.com; HMACCOUNT=487EF362690A1D5D; a_5344222244011240=1; a_6120010043010204=1; a_6241044143010205=1; a_8141030077006115=1; a_7165163120006140=1; a_8134101077006115=1; a_8014065011006117=1; a_6234145141010211=1; a_8005031037002052=1; a_5144131204011310=1; Hm_lvt_af8c54428f2dd7308990f5dd456fae6d=1723907279; a_8112117055006121=1; a_6153234152004141=1; a_8006034074006122=1; a_5024232124010331=1; a_8004115074006122=1; home_46465572=13; d6b93d63cc960c878126=1725000217%2C2; Hm_lpvt_af8c54428f2dd7308990f5dd456fae6d=1725000219; a_7044043062006146=1; a_6105132212010224=1; 94ca48fd8a42333b_login_passwordlogin=1729661832%2C1; CLIENT_SYS_UN_ID=3rvhcmcfS1q3WmPXIfihAg==; 23180e48f45d3ffdf83d11798c3cf2df=1732012068%2C1; Hm_lvt_ed4f006fba260fb55ee1dfcb3e754e1c=1732869765; a_7015041021010003=1; a_6132002022011003=1; Hm_lvt_f32e81852cb54f29133561587adb93c1=1733128481; a_8106135077007005=1; return_url=http%3A%2F%2Fmax.book118.com%2Fuser_center_v1%2Fdoc%2Findex%2Findex.html; 94ca48fd8a42333b_code_getgraphcode=1734919551%2C1; max_u_token=ec5bf7547b6a570919e5624368a6a2de; a_7015163064010013=1; a_7142164035005012=1; a_8011102054003133=1; detail_show_similar=0; s_v=cdh%3D%3Ec865f4f0%7C%7C%7Cvid%3D%3E1695983286868757343%7C%7C%7Cfsts%3D%3E1695983286%7C%7C%7Cdsfs%3D%3E455%7C%7C%7Cnps%3D%3E136; Hm_lpvt_ed4f006fba260fb55ee1dfcb3e754e1c=1735272257; a_5021041141012020=1; 0ab7d33081eeb=2022%E5%B9%B4%E5%9B%9B%E5%B7%9D%E7%9C%81%E8%87%AA%E8%B4%A1%E5%B8%82%E4%B8%AD%E8%80%83%E5%8C%96%E5%AD%A6%E8%AF%95%E5%8D%B7%EF%BC%88%E5%90%AB%E8%A7%A3%E6%9E%90%E7%89%88%EF%BC%89; input_search_logs=a%3A1%3A%7Bi%3A0%3Ba%3A2%3A%7Bs%3A8%3A%22keywords%22%3Bs%3A61%3A%222022%E5%B9%B4%E5%9B%9B%E5%B7%9D%E7%9C%81%E8%87%AA%E8%B4%A1%E5%B8%82%E4%B8%AD%E8%80%83%E5%8C%96%E5%AD%A6%E8%AF%95%E5%8D%B7%EF%BC%88%E5%90%AB%E8%A7%A3%E6%9E%90%E7%89%88%EF%BC%89%22%3Bs%3A4%3A%22time%22%3Bi%3A1735272270%3B%7D%7D; Hm_lvt_90eba6da4a0cf4f7f07614e930242936=1735272273; s_m=174645614%3D%3Esimilar%7C%7C%7C377633538%3D%3Epreview_re%7C%7C%7C908837254%3D%3Esimilar%7C%7C%7C1841443071%3D%3Esimilar%7C%7C%7C1978635343%3D%3Esimilar%7C%7C%7C1982161289%3D%3Esimilar%7C%7C%7Ccdh%3D%3Ec865f4f0%7C%7C%7C-425000343%3D%3Esimilar%7C%7C%7C-897180436%3D%3Esimilar%7C%7C%7C-780484034%3D%3Esimilar%7C%7C%7C-1911702904%3D%3Esimilar%7C%7C%7C-982241833%3D%3Esimilar%7C%7C%7C-660567806%3D%3Esearch_filter_item_href; s_s=cdh%3D%3Ec865f4f0%7C%7C%7Clast_req%3D%3E1735272279%7C%7C%7Csid%3D%3E1735272257807041708%7C%7C%7Cdsps%3D%3E0; Hm_lpvt_90eba6da4a0cf4f7f07614e930242936=1735272279; PREVIEWHISTORYPAGES=710461121_1,705637093_4; ef7656dc08a0f1cf4c78acb87d97a1b9=1735286418%2C2; c4da14928424747de8b677208095de01=1735628447%2C2; operation_user_center=1; UPLOAD_AGREEMENT_CHECKED=1; Hm_lpvt_f32e81852cb54f29133561587adb93c1=1735697739"
+var SessionId = "8j5cbctli97mrdaipee47bjg75"
+var Token = "8bbaa6e0e730a48ac48fc37851cf59bd"
+var Cookie = "CLIENT_SYS_UN_ID=wKh2CmblP9zCxwkKfGiJAg==; UPLOAD_AGREEMENT_CHECKED=1; PHPSESSID=8j5cbctli97mrdaipee47bjg75; HMACCOUNT=2CEC63D57647BCA5; 94ca48fd8a42333b_code_getgraphcode=1739117139%2C1; max_u_token=125cff0af322e46301c57b92e2a0e10b; vip_left_recommend_doc_info=628987892; detail_show_similar=0; Hm_lvt_ed4f006fba260fb55ee1dfcb3e754e1c=1737643571,1739975137; a_8036113126007030=1; s_rfd=cdh%3D%3Ec865f4f0%7C%7C%7Ctrd%3D%3Emax.book118.com%7C%7C%7Cftrd%3D%3Ebook118.com; a_7010134064006105=1; 30d8fb61e609cac11=1739975175%2C1; a_7065105013010033=1; c4da14928424747de8b677208095de01=1740069471%2C1; Hm_lvt_f32e81852cb54f29133561587adb93c1=1739117135; s_v=cdh%3D%3Ec865f4f0%7C%7C%7Cvid%3D%3E1726300125295199813%7C%7C%7Cfsts%3D%3E1726300125%7C%7C%7Cdsfs%3D%3E160%7C%7C%7Cnps%3D%3E5; a_7132033111010036=1; Hm_lvt_27fe35f56bdde9c16e63129d678cd236=1740099639; Hm_lpvt_27fe35f56bdde9c16e63129d678cd236=1740099639; a_7105026003004042=1; a_5314332322004212=1; Hm_lvt_af8c54428f2dd7308990f5dd456fae6d=1737643628,1740099654; home_15045200=2; d6b93d63cc960c878126=1740099679%2C1; home_46465572=5; Hm_lpvt_af8c54428f2dd7308990f5dd456fae6d=1740099750; a_5341000301002021=1; a_5133202000000000=1; Hm_lvt_01a0a5632981ad913df7ee8d0d145f4c=1740099793; a_8037105117007033=1; a_8040025117007033=1; 5a9a221b83986f79ee93b689251380af=1740099869%2C2; Hm_lpvt_01a0a5632981ad913df7ee8d0d145f4c=1740099870; a_7042143142010036=1; s_m=34045279%3D%3Epreview_re%7C%7C%7C1189496135%3D%3Esecondcate_doclist_item_href%7C%7C%7C1872290310%3D%3Esecondcate_doclist_item_href%7C%7C%7Ccdh%3D%3Ec865f4f0%7C%7C%7C-1320480330%3D%3Esimilar%7C%7C%7C-734988587%3D%3Epreview_re%7C%7C%7C-997290743%3D%3Esecondcate_doclist_item_href%7C%7C%7C-1904860231%3D%3Esecondcate_doclist_item_href; s_s=cdh%3D%3Ec865f4f0%7C%7C%7Clast_req%3D%3E1740099901%7C%7C%7Csid%3D%3E1740099618721118748%7C%7C%7Cdsps%3D%3E1; Hm_lpvt_ed4f006fba260fb55ee1dfcb3e754e1c=1740099901; a_7042124142010036=1; PREVIEWHISTORYPAGES=727793067_2,727793080_3,727793169_2,211769600_4,430035420_2,727577224_1,720704027_2; ef7656dc08a0f1cf4c78acb87d97a1b9=1740184694%2C1; operation_user_center=1; Hm_lpvt_f32e81852cb54f29133561587adb93c1=1740242092"
 
 // SessionId 15803889687
 //var SessionId = "vb8kht61sj31fau20k1r4lejv3"
@@ -72,8 +72,8 @@ func VerifyUploadDocument(title string, format string, price string, md5 string)
 	requestUrl := "https://max.book118.com/user_center_v1/upload/Api/verifyUploadDocument.html"
 	req, err := http.NewRequest("POST", requestUrl, strings.NewReader(postData.Encode())) //建立连接
 
-	req.Header.Set("Accept", "application/json, text/javascript, */*; q=0.01")
-	req.Header.Set("Accept-Encoding", "gzip, deflate, br")
+	req.Header.Set("Accept", "*/*")
+	//req.Header.Set("Accept-Encoding", "gzip, deflate, br")
 	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
 	req.Header.Set("Connection", "keep-alive")
 	req.Header.Set("Cookie", Cookie)
@@ -144,8 +144,8 @@ func GetDocCate(title string) (systemCategory GetDocCateResponseData, err error)
 	requestUrl := "https://max.book118.com/user_center_v1/upload/Api/getDocCate.html"
 	req, err := http.NewRequest("POST", requestUrl, strings.NewReader(postData.Encode())) //建立连接
 
-	req.Header.Set("Accept", "application/json, text/javascript, */*; q=0.01")
-	req.Header.Set("Accept-Encoding", "gzip, deflate, br")
+	req.Header.Set("Accept", "*/*")
+	//req.Header.Set("Accept-Encoding", "gzip, deflate, br")
 	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
 	req.Header.Set("Connection", "keep-alive")
 	req.Header.Set("Cookie", Cookie)
@@ -308,7 +308,7 @@ func Book18Upload(filePath string, id string, md5 string, title string, systemCa
 	}
 
 	req.Header.Set("Accept", "*/*")
-	req.Header.Set("Accept-Encoding", "gzip, deflate, br")
+	//req.Header.Set("Accept-Encoding", "gzip, deflate, br")
 	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
 	req.Header.Set("Connection", "keep-alive")
 	req.Header.Set("Content-Type", contentType)
