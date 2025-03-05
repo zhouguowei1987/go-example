@@ -212,7 +212,7 @@ func downloadYchEdu(attachmentUrl string, filePath string) error {
 	// 创建一个文件用于保存
 	fileDiv := filepath.Dir(filePath)
 	if _, err = os.Stat(fileDiv); err != nil {
-		if os.MkdirAll(fileDiv, 0644) != nil {
+		if os.MkdirAll(fileDiv, 0777) != nil {
 			return err
 		}
 	}
