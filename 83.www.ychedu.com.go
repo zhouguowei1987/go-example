@@ -79,24 +79,23 @@ func main() {
 		page := 0
 		maxPage := 0
 		isPageGo := true
-		if isPageGo {
+		for isPageGo {
 			var listUrl = fmt.Sprintf(category.categoryUrl)
 			if page != 0 {
 				listUrl = strings.ReplaceAll(category.categoryUrl, "Index.html", "") + fmt.Sprintf("List_%d.html", page)
 			}
 			fmt.Println(listUrl)
 			// 获取最大页面
+			listDoc, err := htmlquery.LoadURL(listUrl)
+			if err != nil {
+				fmt.Println(err)
+				break
+			}
 			if page == 0 {
-				listDoc, err := htmlquery.LoadURL(listUrl)
-				if err != nil {
-					fmt.Println(err)
-					continue
-				}
 				countNode := htmlquery.FindOne(listDoc, `//div[@class="showpage"]/b`)
 				countInt, _ := strconv.Atoi(htmlquery.InnerText(countNode))
 				maxPage = countInt/(27) + 1
 			}
-			listDoc, _ := htmlquery.LoadURL(listUrl)
 			divNodes := htmlquery.Find(listDoc, `//div[@class="bk21"]/div[@align="center"][1]/div`)
 			if len(divNodes) >= 1 {
 				for _, divNode := range divNodes {
@@ -130,12 +129,14 @@ func main() {
 				page++
 				if page > maxPage {
 					isPageGo = false
+					page = 0
 					fmt.Println("没有更多分页")
 					break
 				}
 			} else {
 				isPageGo = false
 				page = 0
+				break
 			}
 		}
 	}
