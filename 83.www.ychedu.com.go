@@ -110,11 +110,14 @@ func main() {
 
 					ychEduDownloadUrl := htmlquery.InnerText(htmlquery.FindOne(detailDoc, `//div[@class="nr10down"]/a/@href`))
 					fmt.Println(ychEduDownloadUrl)
-					filePath := "../www.ychedu.com/www.ychedu.com/" + category.categoryName + "/" + title + ".zip"
-					fmt.Println(filePath)
-					if _, err := os.Stat(filePath); err != nil {
+					zipFilePath := "../www.ychedu.com/www.zip_ychedu.com/" + category.categoryName + "/" + title + ".zip"
+					rarFilePath := "../www.ychedu.com/www.rar_ychedu.com/" + category.categoryName + "/" + title + ".rar"
+					_, zipErr := os.Stat(zipFilePath)
+					_, rarErr := os.Stat(rarFilePath)
+					if zipErr != nil && rarErr != nil {
 						fmt.Println("=======开始下载========")
-						err := downloadYchEdu(ychEduDownloadUrl, filePath)
+						filePath := "../www.ychedu.com/www.ychedu.com/" + category.categoryName
+						err := downloadYchEdu(ychEduDownloadUrl, filePath, title)
 						if err != nil {
 							fmt.Println(err)
 						}
@@ -151,7 +154,7 @@ func ychEduStringContains(slice []string, value string) bool {
 	return false
 }
 
-func downloadYchEdu(attachmentUrl string, filePath string) error {
+func downloadYchEdu(attachmentUrl string, filePath string, title string) error {
 	// 初始化客户端
 	var client *http.Client = &http.Client{
 		Transport: &http.Transport{
@@ -197,19 +200,24 @@ func downloadYchEdu(attachmentUrl string, filePath string) error {
 
 	var suffix string
 	contentType := resp.Header.Get("Content-Type")
+	fmt.Println(contentType)
 	switch contentType {
 	case "application/x-zip-compressed":
-		// docx
-		suffix = ".zip"
+		suffix = "zip"
+		break
+	case "application/x-rar-compressed":
+		suffix = "rar"
 		break
 	default:
 		return nil
 	}
-	fileSuffixArray := []string{".zip"}
+	fileSuffixArray := []string{"zip", "rar"}
 	if !ychEduStringContains(fileSuffixArray, suffix) {
-		return errors.New("既不是zip文件，跳过")
+		return errors.New("既不是zip文件，也不是rar文件，跳过")
 	}
 	// 创建一个文件用于保存
+	filePath = strings.ReplaceAll(filePath, "/www.ychedu.com/www.ychedu.com/", fmt.Sprintf("/www.ychedu.com/www.%s_ychedu.com/", suffix))
+	filePath = filePath + "/" + title + "." + suffix
 	fileDiv := filepath.Dir(filePath)
 	if _, err = os.Stat(fileDiv); err != nil {
 		if os.MkdirAll(fileDiv, 0777) != nil {
