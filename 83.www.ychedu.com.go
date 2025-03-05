@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/antchfx/htmlquery"
 	"io"
+	"math/rand"
 	"net"
 	"net/http"
 	"net/url"
@@ -36,25 +37,38 @@ type AdultEducationCategory struct {
 }
 
 var adultEducationCategory = []AdultEducationCategory{
-	//{categoryName: "医药类资源", categoryUrl: "http://www.ychedu.com/CRJY/YYST/"},
-	//{categoryName: "母婴育儿", categoryUrl: "http://www.ychedu.com/CRJY/myye/"},
-	{categoryName: "中医中药", categoryUrl: "http://www.ychedu.com/CRJY/zyzy/"},
-	{categoryName: "汽车驾驶技巧", categoryUrl: "http://www.ychedu.com/CRJY/qcjsjq/"},
-	{categoryName: "中国名著小说100部", categoryUrl: "http://www.ychedu.com/CRJY/zgxs/"},
-	{categoryName: "世界名著100名", categoryUrl: "http://www.ychedu.com/CRJY/sjmz/"},
-	//{categoryName: "招生就业移民留学", categoryUrl: "http://www.ychedu.com/CRJY/QTST/"},
-	{categoryName: "意境最美诗词", categoryUrl: "http://www.ychedu.com/CRJY/shici/"},
-	//{categoryName: "财会类试题", categoryUrl: "http://www.ychedu.com/CRJY/CKST/"},
-	//{categoryName: "公务员试题", categoryUrl: "http://www.ychedu.com/CRJY/GWYST/"},
-	//{categoryName: "职业资格考试题", categoryUrl: "http://www.ychedu.com/CRJY/ZYZG/"},
-	//{categoryName: "建筑类试题", categoryUrl: "http://www.ychedu.com/CRJY/GZLST/"},
-	//{categoryName: "考研试题", categoryUrl: "http://www.ychedu.com/CRJY/KYST/"},
-	//{categoryName: "考博试题", categoryUrl: "http://www.ychedu.com/CRJY/KBST/"},
-	//{categoryName: "自考试题", categoryUrl: "http://www.ychedu.com/CRJY/ZKST/"},
-	//{categoryName: "英语四级试题", categoryUrl: "http://www.ychedu.com/CRJY/YYSJ/"},
-	//{categoryName: "英语六级试题", categoryUrl: "http://www.ychedu.com/CRJY/YYLJ/"},
-	//{categoryName: "计算机试题", categoryUrl: "http://www.ychedu.com/CRJY/JSJST/"},
-	//{categoryName: "司法考试试题", categoryUrl: "http://www.ychedu.com/CRJY/SFKS/"},
+	{categoryName: "中考试题", categoryUrl: "http://yw.ychedu.com/ZCZT/Index.html"},
+	{categoryName: "中考试题", categoryUrl: "http://yy.ychedu.com/ZCML/Index.html"},
+	{categoryName: "中考试题", categoryUrl: "http://sx.ychedu.com/ZCZT/Index.html"},
+	{categoryName: "中考试题", categoryUrl: "http://sx.ychedu.com/ZCML/Index.html"},
+	{categoryName: "中考试题", categoryUrl: "http://yy.ychedu.com/ZCZT/Index.html"},
+	{categoryName: "中考试题", categoryUrl: "http://yy.ychedu.com/ZCML/Index.html"},
+	{categoryName: "中考试题", categoryUrl: "http://wl.ychedu.com/ZCZT/Index.html"},
+	{categoryName: "中考试题", categoryUrl: "http://wl.ychedu.com/ZCML/Index.html"},
+	{categoryName: "中考试题", categoryUrl: "http://hx.ychedu.com/ZCZT/Index.html"},
+	{categoryName: "中考试题", categoryUrl: "http://hx.ychedu.com/ZCML/Index.html"},
+	{categoryName: "中考试题", categoryUrl: "http://zz.ychedu.com/ZCZT/Index.html"},
+	{categoryName: "中考试题", categoryUrl: "http://zz.ychedu.com/ZCML/Index.html"},
+	{categoryName: "中考试题", categoryUrl: "http://ls.ychedu.com/ZCZT/Index.html"},
+	{categoryName: "中考试题", categoryUrl: "http://ls.ychedu.com/ZCML/Index.html"},
+	{categoryName: "中考试题", categoryUrl: "http://qt.ychedu.com/ZCZT/Index.html"},
+	{categoryName: "中考试题", categoryUrl: "http://qt.ychedu.com/ZCML/Index.html"},
+	{categoryName: "高考试题", categoryUrl: "http://yw.ychedu.com/GKZT/Index.html"},
+	{categoryName: "高考试题", categoryUrl: "http://yy.ychedu.com/GKML/Index.html"},
+	{categoryName: "高考试题", categoryUrl: "http://sx.ychedu.com/GKZT/Index.html"},
+	{categoryName: "高考试题", categoryUrl: "http://sx.ychedu.com/GKML/Index.html"},
+	{categoryName: "高考试题", categoryUrl: "http://yy.ychedu.com/GKZT/Index.html"},
+	{categoryName: "高考试题", categoryUrl: "http://yy.ychedu.com/GKML/Index.html"},
+	{categoryName: "高考试题", categoryUrl: "http://wl.ychedu.com/GKZT/Index.html"},
+	{categoryName: "高考试题", categoryUrl: "http://wl.ychedu.com/GKML/Index.html"},
+	{categoryName: "高考试题", categoryUrl: "http://hx.ychedu.com/GKZT/Index.html"},
+	{categoryName: "高考试题", categoryUrl: "http://hx.ychedu.com/GKML/Index.html"},
+	{categoryName: "高考试题", categoryUrl: "http://zz.ychedu.com/GKZT/Index.html"},
+	{categoryName: "高考试题", categoryUrl: "http://zz.ychedu.com/GKML/Index.html"},
+	{categoryName: "高考试题", categoryUrl: "http://ls.ychedu.com/GKZT/Index.html"},
+	{categoryName: "高考试题", categoryUrl: "http://ls.ychedu.com/GKML/Index.html"},
+	{categoryName: "高考试题", categoryUrl: "http://qt.ychedu.com/GKZT/Index.html"},
+	{categoryName: "高考试题", categoryUrl: "http://qt.ychedu.com/GKML/Index.html"},
 }
 
 // ychEduSpider 获取宜城教育文档
@@ -62,61 +76,81 @@ var adultEducationCategory = []AdultEducationCategory{
 // @Description http://www.ychedu.com/，获取宜城教育文档
 func main() {
 	for _, category := range adultEducationCategory {
-		detail := make(map[int]string)
 		page := 0
+		maxPage := 0
 		isPageGo := true
-		for isPageGo {
-			func() {
-				defer func() {
-					if p := recover(); p != nil {
-						fmt.Printf("panic recover! p: %#v\n", p)
-						detail[page] = "panic"
-					}
-				}()
-				var listUrl = fmt.Sprintf(category.categoryUrl)
-				if page != 0 {
-					listUrl = fmt.Sprintf(category.categoryUrl+"List_%d.html", page)
+		if isPageGo {
+			var listUrl = fmt.Sprintf(category.categoryUrl)
+			if page != 0 {
+				listUrl = strings.ReplaceAll(category.categoryUrl, "Index.html", "") + fmt.Sprintf("List_%d.html", page)
+			}
+			fmt.Println(listUrl)
+			// 获取最大页面
+			if page == 0 {
+				listDoc, err := htmlquery.LoadURL(listUrl)
+				if err != nil {
+					fmt.Println(err)
+					continue
 				}
-				fmt.Println(listUrl)
-				listDoc, _ := htmlquery.LoadURL(listUrl)
-				divNodes := htmlquery.Find(listDoc, `//div[@class="bk21"]/div[@align="center"][1]/div`)
-				if len(divNodes) >= 1 {
-					for _, divNode := range divNodes {
-						detailUrl := htmlquery.InnerText(htmlquery.FindOne(divNode, `./ul[@id="soft_lb1"]/div/li/a/@href`))
-						detailDoc, _ := htmlquery.LoadURL(detailUrl)
-						fmt.Println(detailUrl)
+				countNode := htmlquery.FindOne(listDoc, `//div[@class="showpage"]/b`)
+				countInt, _ := strconv.Atoi(htmlquery.InnerText(countNode))
+				maxPage = countInt/(27) + 1
+			}
+			listDoc, _ := htmlquery.LoadURL(listUrl)
+			divNodes := htmlquery.Find(listDoc, `//div[@class="bk21"]/div[@align="center"][1]/div`)
+			if len(divNodes) >= 1 {
+				for _, divNode := range divNodes {
+					detailUrl := htmlquery.InnerText(htmlquery.FindOne(divNode, `./ul[@id="soft_lb1"]/div/li/a/@href`))
+					detailDoc, _ := htmlquery.LoadURL(detailUrl)
+					fmt.Println(detailUrl)
 
-						//div[@class="nr10y"]/table/tbody/tr[1]/td/p[1]/strong/font
-						title := htmlquery.InnerText(htmlquery.FindOne(detailDoc, `//div[@class="nr10y"]/table/tbody/tr[1]/td/p[1]`))
-						//titleArray := strings.Split(title, "-")
-						//title = titleArray[0]
-						title = strings.ReplaceAll(title, " ", "")
-						fmt.Println(title)
+					title := htmlquery.InnerText(htmlquery.FindOne(divNode, `./ul[@id="soft_lb1"]/div/li/a`))
+					title = strings.TrimSpace(title)
+					title = strings.ReplaceAll(title, "免费", "")
+					fmt.Println(title)
 
-						downloadUrl := htmlquery.InnerText(htmlquery.FindOne(detailDoc, `//div[@class="nr10down"]/a/@href`))
-						fmt.Println(downloadUrl)
-
-						//downloadUrlArray, err := url.Parse(downloadUrl)
-						//softID := downloadUrlArray.Query().Get("SoftID")
-						filePath := "../www.ychedu.com/" + category.categoryName + "/"
-						fmt.Println(filePath)
-
-						err := downloadYchEdu(downloadUrl, filePath, title)
+					ychEduDownloadUrl := htmlquery.InnerText(htmlquery.FindOne(detailDoc, `//div[@class="nr10down"]/a/@href`))
+					fmt.Println(ychEduDownloadUrl)
+					filePath := "../www.ychedu.com/www.ychedu.com/" + category.categoryName + "/" + title + ".zip"
+					fmt.Println(filePath)
+					if _, err := os.Stat(filePath); err != nil {
+						fmt.Println("=======开始下载========")
+						err := downloadYchEdu(ychEduDownloadUrl, filePath)
 						if err != nil {
 							fmt.Println(err)
 						}
+						fmt.Println("=======完成下载========")
+						DownLoadYchEduTimeSleep := rand.Intn(5)
+						for i := 1; i <= DownLoadYchEduTimeSleep; i++ {
+							time.Sleep(time.Second)
+							fmt.Println("page="+strconv.Itoa(page)+"===========下载", title, "成功，暂停", DownLoadYchEduTimeSleep, "秒，倒计时", i, "秒===========")
+						}
 					}
-					page++
-				} else {
-					isPageGo = false
-					page = 0
 				}
-			}()
+				page++
+				if page > maxPage {
+					isPageGo = false
+					fmt.Println("没有更多分页")
+					break
+				}
+			} else {
+				isPageGo = false
+				page = 0
+			}
 		}
 	}
 }
 
-func downloadYchEdu(attachmentUrl string, filePath string, title string) error {
+func ychEduStringContains(slice []string, value string) bool {
+	for _, item := range slice {
+		if item == value {
+			return true
+		}
+	}
+	return false
+}
+
+func downloadYchEdu(attachmentUrl string, filePath string) error {
 	// 初始化客户端
 	var client *http.Client = &http.Client{
 		Transport: &http.Transport{
@@ -141,7 +175,7 @@ func downloadYchEdu(attachmentUrl string, filePath string, title string) error {
 		return err
 	}
 	req.Header.Set("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9")
-	req.Header.Set("Accept-Encoding", "gzip, deflate")
+	//req.Header.Set("Accept-Encoding", "gzip, deflate")
 	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
 	req.Header.Set("Cache-Control", "no-cache")
 	req.Header.Set("Connection", "keep-alive")
@@ -163,33 +197,25 @@ func downloadYchEdu(attachmentUrl string, filePath string, title string) error {
 	var suffix string
 	contentType := resp.Header.Get("Content-Type")
 	switch contentType {
-	case "application/msword":
-		// doc
-		suffix = ".doc"
-		break
-	case "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
+	case "application/x-zip-compressed":
 		// docx
-		suffix = ".docx"
-		break
-		//case "application/vnd.ms-powerpoint":
-		//	// ppt
-		//	suffix = ".ppt"
-		//	break
-		//case "application/vnd.openxmlformats-officedocument.presentationml.presentation":
-		//	// pptx
-		//	suffix = ".pptx"
+		suffix = ".zip"
 		break
 	default:
 		return nil
 	}
+	fileSuffixArray := []string{".zip"}
+	if !ychEduStringContains(fileSuffixArray, suffix) {
+		return errors.New("既不是zip文件，跳过")
+	}
 	// 创建一个文件用于保存
 	fileDiv := filepath.Dir(filePath)
 	if _, err = os.Stat(fileDiv); err != nil {
-		if os.MkdirAll(fileDiv, 0777) != nil {
+		if os.MkdirAll(fileDiv, 0644) != nil {
 			return err
 		}
 	}
-	out, err := os.Create(filePath + title + suffix)
+	out, err := os.Create(filePath)
 	if err != nil {
 		return err
 	}
