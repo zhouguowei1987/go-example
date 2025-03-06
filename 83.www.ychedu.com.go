@@ -112,6 +112,8 @@ func main() {
 					title := htmlquery.InnerText(titleNode)
 					title = strings.TrimSpace(title)
 					title = strings.ReplaceAll(title, "免费", "")
+					title = strings.ReplaceAll(title, "-", "")
+					title = strings.ReplaceAll(title, " ", "")
 					fmt.Println(title)
 
 					ychEduDownloadUrlNode := htmlquery.FindOne(detailDoc, `//div[@class="nr10down"]/a/@href`)
@@ -135,6 +137,7 @@ func main() {
 						err := downloadYchEdu(ychEduDownloadUrl, filePath, title)
 						if err != nil {
 							fmt.Println(err)
+							continue
 						}
 						fmt.Println("=======完成下载========")
 						DownLoadYchEduTimeSleep := rand.Intn(10)
