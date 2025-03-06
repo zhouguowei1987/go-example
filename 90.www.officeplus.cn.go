@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
+	"math/rand"
 	"net"
 	"net/http"
 	"net/url"
@@ -41,10 +42,10 @@ var OfficePlusAllCategory = []OfficePlusCategory{
 		name:     "Word模板",
 		keywords: "word-content",
 	},
-	{
-		name:     "Excel模板",
-		keywords: "excel-content",
-	},
+	//{
+	//	name:     "Excel模板",
+	//	keywords: "excel-content",
+	//},
 }
 
 type apiOfficePlusListResult struct {
@@ -59,6 +60,8 @@ type apiOfficePlusListResultItems struct {
 	Title    string `json:"title"`
 }
 
+var officePlusAuthorization = "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJXaWNVc2VySWQiOiIwZDZmNmRkYy05ZDJiLTQ2ZTUtYTFhNS1kNGRkYTZjYWFkODAiLCJPZmZpY2VQbHVzVXNlcklkIjoiNzI4OWU4NzYtNjY4ZS01YTEzLTRiMTctM2EwYTM2ODk4ODg1Iiwic3ViIjoid2ljYXV0aEBvZmZpY2VwbHVzLmNuIiwiYXVkIjoid2ljYXV0aEBvZmZpY2VwbHVzLmNuIiwibmJmIjoxNzQxMTg3MzU4LCJleHAiOjE3NDEyNzM3NTgsImlhdCI6MTc0MTE4NzM1OCwiaXNzIjoid2ljYXV0aEBvZmZpY2VwbHVzLmNuIn0.mrYB82pkorBq4pVVTZsUYwJbqYjv3cZDohmz9VJRDZtQxatSZdNfTUWc6D5eUFm_ClRWV2Qcnpp5-TimnsQG5cvuXScsBuQ8YaxjuTkyxYHAqELVH5GFv6v0YEyF7eLIb0VtaQNy1PMjA0XqblQR0rI_1Y0QTN3jRIegrjJO9wGt2oe05AW-zhB_mB5Nxd3HklW8RX8Y37lQVYOGSA-gdpBLcWBhohzZF2vRfB5SYmRLeBHl4Hi6bQLWPAWmz8UEBW1Wz0Ma9f8OyYtF34VV6X56jCgAGjuMKZYuxu4RnXe9ApLNLX0fbog8gL1-tBdAWkHxh41j5MykJ5VyIneF1w"
+
 // ychEduSpider 获取office-plus模板文档
 // @Title 获取office-plus模板文档
 // @Description https://www.officeplus.cn/，获取office-plus模板文档
@@ -66,7 +69,7 @@ func main() {
 	for _, category := range OfficePlusAllCategory {
 		page := 0
 		for true {
-			apiUrl := fmt.Sprintf("https://api.officeplus.cn/api/website/v2.1/contents/%s/search?orderBy=Total&pageIndex=%d&pageSize=15&l2Method=1", category.keywords, page)
+			apiUrl := fmt.Sprintf("https://api.officeplus.cn/api/website/v2.1/contents/%s/search?orderBy=Total&pageIndex=%d&pageSize=30&paymentType=0&l2Method=1", category.keywords, page)
 			fmt.Println(apiUrl)
 			// 初始化客户端
 			var client *http.Client = &http.Client{
@@ -91,7 +94,7 @@ func main() {
 			req, err := http.NewRequest("GET", apiUrl, strings.NewReader(postData.Encode())) //建立连接
 			if err != nil {
 				fmt.Println(err)
-				page = 1
+				page = 0
 				break
 			}
 			req.Header.Set("Accept", "application/json, text/plain, */*")
@@ -109,19 +112,18 @@ func main() {
 			respBytes, err := ioutil.ReadAll(resp.Body)
 			if err != nil {
 				fmt.Println(err)
-				page = 1
+				page = 0
 				break
 			}
 			apiOfficePlusListResult := &apiOfficePlusListResult{}
 			err = json.Unmarshal(respBytes, apiOfficePlusListResult)
 			if err != nil {
 				fmt.Println(err)
-				page = 1
+				page = 0
 				break
 			}
 			fmt.Println("======================================================")
 			fmt.Println(category.name, category.keywords, page)
-			filePath := "../www.officeplus.cn/" + category.name + "/"
 			for _, item := range apiOfficePlusListResult.Items {
 				itemId := item.Id
 				itemTitle := item.Title
@@ -129,18 +131,27 @@ func main() {
 				itemTitle = strings.ReplaceAll(itemTitle, " ", "")
 				fmt.Println(itemId, itemTitle)
 
-				downloadUrl, err := downloadUrl(itemId)
+				attachUrl, err := downloadUrl(itemId)
 				if err != nil {
 					fmt.Println(err)
 					continue
 				}
-				fileName := itemTitle + "." + strings.Split(item.FileName, ".")[1]
-				err = downloadOfficePlus(downloadUrl, filePath, fileName)
+				filePath := "../www.officeplus.cn/" + category.name + "/" + itemTitle + "." + strings.Split(item.FileName, ".")[1]
+				_, err = os.Stat(filePath)
 				if err != nil {
-					fmt.Println(err)
-					continue
+					fmt.Println("=======开始下载========")
+					err = downloadOfficePlus(attachUrl, filePath)
+					if err != nil {
+						fmt.Println(err)
+						continue
+					}
+					fmt.Println("=======完成下载========")
+					DownLoadYchEduTimeSleep := rand.Intn(5)
+					for i := 1; i <= DownLoadYchEduTimeSleep; i++ {
+						time.Sleep(time.Second)
+						fmt.Println("page="+strconv.Itoa(page)+"===========下载", itemTitle, "成功，暂停", DownLoadYchEduTimeSleep, "秒，倒计时", i, "秒===========")
+					}
 				}
-				time.Sleep(time.Second * 1)
 			}
 			if apiOfficePlusListResult.PageCount > page {
 				page++
@@ -153,13 +164,12 @@ func main() {
 }
 
 type downloadUrlResult struct {
-	DownloadUrl    string `json:"downloadUrl"`
-	IsFreeDownload bool   `json:"isFreeDownload"`
-	UserId         string `json:"userId"`
+	DownloadUrl string `json:"downloadUrl"`
+	UserId      string `json:"userId"`
 }
 
 func downloadUrl(id string) (fileUrl string, err error) {
-	apiUrl := fmt.Sprintf("https://api.officeplus.cn/api/v2.0/web/download/%s/download-url", id)
+	apiUrl := fmt.Sprintf("https://api.officeplus.cn/api/website/v2.1/download/%s/download-url", id)
 	fmt.Println(apiUrl)
 	// 初始化客户端
 	var client *http.Client = &http.Client{
@@ -187,9 +197,9 @@ func downloadUrl(id string) (fileUrl string, err error) {
 		return "", err
 	}
 	req.Header.Set("Accept", "application/json, text/plain, */*")
-	req.Header.Set("accept-encoding", "gzip, deflate, br")
+	//req.Header.Set("accept-encoding", "gzip, deflate, br")
 	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
-	req.Header.Set("authorization", "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJXaWNVc2VySWQiOiIwZDZmNmRkYy05ZDJiLTQ2ZTUtYTFhNS1kNGRkYTZjYWFkODAiLCJXaWNVc2VyTmFtZSI6IldJQzhRQUlBMUNHIiwiV3hOaWNrTmFtZSI6Iktv5Y2XIiwiV3hIZWFkSW1hZ2VVcmwiOiJodHRwczovL3RoaXJkd3gucWxvZ28uY24vbW1vcGVuL3ZpXzMyL1EwajRUd0dUZlRMS2xHb2ZpYVB5bndKMnhkY2NqS3RqeUFQRWNLc3M4RWFrdXR3dDBFQXpWNjdUMFViZnd6YWhGVUdDQjAzVDFIcWFqWW9ZVjNjSVJPQS8xMzIiLCJXeFVuaW9uSWQiOiJvekdfZDZwckxyMVpTd3pEb25kWU9XOUtTblBJIiwiV3hPcGVuSWQiOiJvMjZBSzY4b25BOGFuUWRZTlR6X1ZucVRZb0VRIiwic3ViIjoid2ljYXV0aEBvZmZpY2VwbHVzLmNuIiwiYXVkIjoid2ljYXV0aEBvZmZpY2VwbHVzLmNuIiwibmJmIjoxNjc5OTg2ODE4LCJleHAiOjE2ODA1OTE2MTgsImlhdCI6MTY3OTk4NjgxOCwiaXNzIjoid2ljYXV0aEBvZmZpY2VwbHVzLmNuIn0.C2SQIlQgcaLAWGmDyx7DjZb0kNOhd0PEv1DJ66DB0Z2xnqo6D1B5CmFz-JudSYSDCYSpHrWwZAOtEIIuX8Qg2zgzxwYGmz_eTLLtO5SYdi-2QLymcA9s5wqd3NuBaO9fDvmJb5BqZ6uuAVPpB0jOBS_STjPTqVoxmB7SHmprNH4JeY5nUYT9a0y9mYBChNDwtPg0a59-BIME_-N8P5SpcsZelsqC8my7dbZMbiiI3ESVmIqgDM302z3t-RilgJ9oZAWlkDQ-Qg7npX5QrlNspd50F34mfm8dsnTcsC9h5K2gLBbg2zneBaDkR_sOdNmG1E5QIYTjkplLr11HEJemIA")
+	req.Header.Set("authorization", officePlusAuthorization)
 	req.Header.Set("Origin", "https://www.officeplus.cn")
 	req.Header.Set("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36")
 	resp, err := client.Do(req) //拿到返回的内容
@@ -214,7 +224,7 @@ func downloadUrl(id string) (fileUrl string, err error) {
 	return fileUrl, nil
 }
 
-func downloadOfficePlus(attachmentUrl string, filePath string, fileName string) error {
+func downloadOfficePlus(attachmentUrl string, filePath string) error {
 	// 初始化客户端
 	var client *http.Client = &http.Client{
 		Transport: &http.Transport{
@@ -262,11 +272,11 @@ func downloadOfficePlus(attachmentUrl string, filePath string, fileName string) 
 	// 创建一个文件用于保存
 	fileDiv := filepath.Dir(filePath)
 	if _, err = os.Stat(fileDiv); err != nil {
-		if os.MkdirAll(fileDiv, 0777) != nil {
+		if os.MkdirAll(fileDiv, 0644) != nil {
 			return err
 		}
 	}
-	out, err := os.Create(filePath + fileName)
+	out, err := os.Create(filePath)
 	if err != nil {
 		return err
 	}
