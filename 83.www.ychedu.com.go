@@ -91,10 +91,11 @@ func main() {
 				fmt.Println(err)
 				break
 			}
-			if page == 0 {
+			if maxPage == 0 {
 				countNode := htmlquery.FindOne(listDoc, `//div[@class="showpage"]/b`)
 				countInt, _ := strconv.Atoi(htmlquery.InnerText(countNode))
 				maxPage = countInt/(27) + 1
+				page = maxPage / 2
 			}
 			divNodes := htmlquery.Find(listDoc, `//div[@class="bk21"]/div[@align="center"][1]/div`)
 			if len(divNodes) >= 1 {
@@ -103,18 +104,32 @@ func main() {
 					detailDoc, _ := htmlquery.LoadURL(detailUrl)
 					fmt.Println(detailUrl)
 
-					title := htmlquery.InnerText(htmlquery.FindOne(divNode, `./ul[@id="soft_lb1"]/div/li/a`))
+					titleNode := htmlquery.FindOne(divNode, `./ul[@id="soft_lb1"]/div/li/a`)
+					if titleNode == nil {
+						fmt.Println("标题不存在")
+						continue
+					}
+					title := htmlquery.InnerText(titleNode)
 					title = strings.TrimSpace(title)
 					title = strings.ReplaceAll(title, "免费", "")
 					fmt.Println(title)
 
-					ychEduDownloadUrl := htmlquery.InnerText(htmlquery.FindOne(detailDoc, `//div[@class="nr10down"]/a/@href`))
+					ychEduDownloadUrlNode := htmlquery.FindOne(detailDoc, `//div[@class="nr10down"]/a/@href`)
+					if ychEduDownloadUrlNode == nil {
+						fmt.Println("下载链接不存在")
+						continue
+					}
+					ychEduDownloadUrl := htmlquery.InnerText(ychEduDownloadUrlNode)
 					fmt.Println(ychEduDownloadUrl)
-					zipFilePath := "../www.ychedu.com/www.zip_ychedu.com/" + category.categoryName + "/" + title + ".zip"
-					rarFilePath := "../www.ychedu.com/www.rar_ychedu.com/" + category.categoryName + "/" + title + ".rar"
+					zipFilePath := "../www.ychedu.com/www.ychedu.com/" + category.categoryName + "/" + title + ".zip"
+					rarFilePath := "../www.ychedu.com/www.ychedu.com/" + category.categoryName + "/" + title + ".rar"
+					docFilePath := "../www.ychedu.com/www.ychedu.com/" + category.categoryName + "/" + title + ".doc"
+					docxFilePath := "../www.ychedu.com/www.ychedu.com/" + category.categoryName + "/" + title + ".docx"
 					_, zipErr := os.Stat(zipFilePath)
 					_, rarErr := os.Stat(rarFilePath)
-					if zipErr != nil && rarErr != nil {
+					_, docErr := os.Stat(docFilePath)
+					_, docxErr := os.Stat(docxFilePath)
+					if zipErr != nil && rarErr != nil && docErr != nil && docxErr != nil {
 						fmt.Println("=======开始下载========")
 						filePath := "../www.ychedu.com/www.ychedu.com/" + category.categoryName
 						err := downloadYchEdu(ychEduDownloadUrl, filePath, title)
@@ -122,7 +137,7 @@ func main() {
 							fmt.Println(err)
 						}
 						fmt.Println("=======完成下载========")
-						DownLoadYchEduTimeSleep := rand.Intn(5)
+						DownLoadYchEduTimeSleep := rand.Intn(10)
 						for i := 1; i <= DownLoadYchEduTimeSleep; i++ {
 							time.Sleep(time.Second)
 							fmt.Println("page="+strconv.Itoa(page)+"===========下载", title, "成功，暂停", DownLoadYchEduTimeSleep, "秒，倒计时", i, "秒===========")
@@ -205,18 +220,23 @@ func downloadYchEdu(attachmentUrl string, filePath string, title string) error {
 	case "application/x-zip-compressed":
 		suffix = "zip"
 		break
-	case "application/x-rar-compressed":
+	case "application/octet-stream":
 		suffix = "rar"
+		break
+	case "application/msword":
+		suffix = "doc"
+		break
+	case "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
+		suffix = "docx"
 		break
 	default:
 		return nil
 	}
-	fileSuffixArray := []string{"zip", "rar"}
+	fileSuffixArray := []string{"zip", "rar", "doc", "docx"}
 	if !ychEduStringContains(fileSuffixArray, suffix) {
 		return errors.New("既不是zip文件，也不是rar文件，跳过")
 	}
 	// 创建一个文件用于保存
-	filePath = strings.ReplaceAll(filePath, "/www.ychedu.com/www.ychedu.com/", fmt.Sprintf("/www.ychedu.com/www.%s_ychedu.com/", suffix))
 	filePath = filePath + "/" + title + "." + suffix
 	fileDiv := filepath.Dir(filePath)
 	if _, err = os.Stat(fileDiv); err != nil {
