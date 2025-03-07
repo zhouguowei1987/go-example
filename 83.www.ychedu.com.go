@@ -114,6 +114,7 @@ func main() {
 					title = strings.ReplaceAll(title, "免费", "")
 					title = strings.ReplaceAll(title, "-", "")
 					title = strings.ReplaceAll(title, " ", "")
+					title = strings.ReplaceAll(title, "|", "-")
 					fmt.Println(title)
 
 					ychEduDownloadUrlNode := htmlquery.FindOne(detailDoc, `//div[@class="nr10down"]/a/@href`)
@@ -139,9 +140,11 @@ func main() {
 							fmt.Println(err)
 							// 创建一个空文件，防止重复下载访问
 							filePath = filePath + "\\" + title + ".rar"
+							fmt.Println(filePath)
 							fmt.Println("=======开始创建空文件========")
 							_, err := os.Create(filePath)
 							if err != nil {
+								fmt.Println(err)
 								fmt.Println("创建空文件失败")
 							}
 							fmt.Println("=======完成创建空文件========")
