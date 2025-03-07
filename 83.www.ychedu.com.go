@@ -38,7 +38,7 @@ type AdultEducationCategory struct {
 
 var adultEducationCategory = []AdultEducationCategory{
 	{categoryName: "中考试题", categoryUrl: "http://yw.ychedu.com/ZCZT/Index.html"},
-	{categoryName: "中考试题", categoryUrl: "http://yy.ychedu.com/ZCML/Index.html"},
+	{categoryName: "中考试题", categoryUrl: "http://yw.ychedu.com/ZCML/Index.html"},
 	{categoryName: "中考试题", categoryUrl: "http://sx.ychedu.com/ZCZT/Index.html"},
 	{categoryName: "中考试题", categoryUrl: "http://sx.ychedu.com/ZCML/Index.html"},
 	{categoryName: "中考试题", categoryUrl: "http://yy.ychedu.com/ZCZT/Index.html"},
@@ -54,7 +54,7 @@ var adultEducationCategory = []AdultEducationCategory{
 	{categoryName: "中考试题", categoryUrl: "http://qt.ychedu.com/ZCZT/Index.html"},
 	{categoryName: "中考试题", categoryUrl: "http://qt.ychedu.com/ZCML/Index.html"},
 	{categoryName: "高考试题", categoryUrl: "http://yw.ychedu.com/GKZT/Index.html"},
-	{categoryName: "高考试题", categoryUrl: "http://yy.ychedu.com/GKML/Index.html"},
+	{categoryName: "高考试题", categoryUrl: "http://yw.ychedu.com/GKML/Index.html"},
 	{categoryName: "高考试题", categoryUrl: "http://sx.ychedu.com/GKZT/Index.html"},
 	{categoryName: "高考试题", categoryUrl: "http://sx.ychedu.com/GKML/Index.html"},
 	{categoryName: "高考试题", categoryUrl: "http://yy.ychedu.com/GKZT/Index.html"},
@@ -95,7 +95,7 @@ func main() {
 				countNode := htmlquery.FindOne(listDoc, `//div[@class="showpage"]/b`)
 				countInt, _ := strconv.Atoi(htmlquery.InnerText(countNode))
 				maxPage = countInt/(27) + 1
-				page = maxPage / 2
+				//page = maxPage / 2
 			}
 			divNodes := htmlquery.Find(listDoc, `//div[@class="bk21"]/div[@align="center"][1]/div`)
 			if len(divNodes) >= 1 {
@@ -137,7 +137,14 @@ func main() {
 						err := downloadYchEdu(ychEduDownloadUrl, filePath, title)
 						if err != nil {
 							fmt.Println(err)
-							continue
+							// 创建一个空文件，防止重复下载访问
+							filePath = filePath + "/" + title + ".rar"
+							fmt.Println("=======开始创建空文件========")
+							_, err := os.Create(filePath)
+							if err != nil {
+								fmt.Println("创建空文件失败")
+							}
+							fmt.Println("=======完成创建空文件========")
 						}
 						fmt.Println("=======完成下载========")
 						DownLoadYchEduTimeSleep := rand.Intn(10)

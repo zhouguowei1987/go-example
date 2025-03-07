@@ -651,6 +651,14 @@ func main() {
 			dirName: "www.finish_zip_1ppt.com",
 			price:   "88",
 		},
+		{
+			dirName: "docx.officeplus.cn",
+			price:   "88",
+		},
+		{
+			dirName: "ppt.officeplus.cn",
+			price:   "88",
+		},
 	}
 	rootPath := "../upload.book118.com/"
 	for _, childDir := range uploadChildDirArr {

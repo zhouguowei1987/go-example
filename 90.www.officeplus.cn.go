@@ -38,14 +38,14 @@ type OfficePlusCategory struct {
 }
 
 var OfficePlusAllCategory = []OfficePlusCategory{
-	{
-		name:     "Word模板",
-		keywords: "word-content",
-	},
 	//{
-	//	name:     "Excel模板",
-	//	keywords: "excel-content",
+	//	name:     "Word模板",
+	//	keywords: "word-content",
 	//},
+	{
+		name:     "Ppt模板",
+		keywords: "ppt-content",
+	},
 }
 
 type apiOfficePlusListResult struct {
@@ -126,9 +126,13 @@ func main() {
 			fmt.Println(category.name, category.keywords, page)
 			for _, item := range apiOfficePlusListResult.Items {
 				itemId := item.Id
-				itemTitle := item.Title
+				itemTitle := strings.ToLower(item.Title)
 				itemTitle = strings.ReplaceAll(itemTitle, "/", "-")
+				itemTitle = strings.ReplaceAll(itemTitle, "-", "")
 				itemTitle = strings.ReplaceAll(itemTitle, " ", "")
+				itemTitle = strings.ReplaceAll(itemTitle, "word简历模版", "")
+				itemTitle = strings.ReplaceAll(itemTitle, "word合同模版", "")
+				itemTitle = strings.ReplaceAll(itemTitle, "word范文", "")
 				fmt.Println(itemId, itemTitle)
 
 				attachUrl, err := downloadUrl(itemId)
@@ -136,7 +140,7 @@ func main() {
 					fmt.Println(err)
 					continue
 				}
-				filePath := "../www.officeplus.cn/" + category.name + "/" + itemTitle + "." + strings.Split(item.FileName, ".")[1]
+				filePath := "../www.officeplus.cn/www.officeplus.cn/" + category.name + "/" + itemTitle + "." + strings.Split(item.FileName, ".")[1]
 				_, err = os.Stat(filePath)
 				if err != nil {
 					fmt.Println("=======开始下载========")
