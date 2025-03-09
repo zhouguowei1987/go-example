@@ -114,6 +114,7 @@ func main() {
 					title = strings.ReplaceAll(title, "免费", "")
 					title = strings.ReplaceAll(title, "-", "")
 					title = strings.ReplaceAll(title, " ", "")
+					title = strings.ReplaceAll(title, "|", "-")
 					fmt.Println(title)
 
 					ychEduDownloadUrlNode := htmlquery.FindOne(detailDoc, `//div[@class="nr10down"]/a/@href`)
@@ -123,25 +124,27 @@ func main() {
 					}
 					ychEduDownloadUrl := htmlquery.InnerText(ychEduDownloadUrlNode)
 					fmt.Println(ychEduDownloadUrl)
-					zipFilePath := "../www.ychedu.com/www.ychedu.com/" + category.categoryName + "/" + title + ".zip"
-					rarFilePath := "../www.ychedu.com/www.ychedu.com/" + category.categoryName + "/" + title + ".rar"
-					docFilePath := "../www.ychedu.com/www.ychedu.com/" + category.categoryName + "/" + title + ".doc"
-					docxFilePath := "../www.ychedu.com/www.ychedu.com/" + category.categoryName + "/" + title + ".docx"
+					zipFilePath := "F:\\workspace\\www.ychedu.com\\www.ychedu.com\\" + category.categoryName + "\\" + title + ".zip"
+					rarFilePath := "F:\\workspace\\www.ychedu.com\\www.ychedu.com\\" + category.categoryName + "\\" + title + ".rar"
+					docFilePath := "F:\\workspace\\www.ychedu.com\\www.ychedu.com\\" + category.categoryName + "\\" + title + ".doc"
+					docxFilePath := "F:\\workspace\\www.ychedu.com\\www.ychedu.com\\" + category.categoryName + "\\" + title + ".docx"
 					_, zipErr := os.Stat(zipFilePath)
 					_, rarErr := os.Stat(rarFilePath)
 					_, docErr := os.Stat(docFilePath)
 					_, docxErr := os.Stat(docxFilePath)
 					if zipErr != nil && rarErr != nil && docErr != nil && docxErr != nil {
 						fmt.Println("=======开始下载========")
-						filePath := "../www.ychedu.com/www.ychedu.com/" + category.categoryName
+						filePath := "F:\\workspace\\www.ychedu.com\\www.ychedu.com\\" + category.categoryName
 						err := downloadYchEdu(ychEduDownloadUrl, filePath, title)
 						if err != nil {
 							fmt.Println(err)
 							// 创建一个空文件，防止重复下载访问
-							filePath = filePath + "/" + title + ".rar"
+							filePath = filePath + "\\" + title + ".rar"
+							fmt.Println(filePath)
 							fmt.Println("=======开始创建空文件========")
 							_, err := os.Create(filePath)
 							if err != nil {
+								fmt.Println(err)
 								fmt.Println("创建空文件失败")
 							}
 							fmt.Println("=======完成创建空文件========")
@@ -247,7 +250,7 @@ func downloadYchEdu(attachmentUrl string, filePath string, title string) error {
 		return errors.New("既不是zip文件，也不是rar文件，跳过")
 	}
 	// 创建一个文件用于保存
-	filePath = filePath + "/" + title + "." + suffix
+	filePath = filePath + "\\" + title + "." + suffix
 	fileDiv := filepath.Dir(filePath)
 	if _, err = os.Stat(fileDiv); err != nil {
 		if os.MkdirAll(fileDiv, 0777) != nil {
