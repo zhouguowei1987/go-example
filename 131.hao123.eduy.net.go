@@ -104,12 +104,24 @@ func main() {
 					id, _ := strconv.Atoi(idStr)
 
 					eduYDownloadUrl := fmt.Sprintf("http://hao123.eduy.net/e/DownSys/DownSoft/?classid=%d&id=%d&pathid=0", category.classId, id)
-					fmt.Println(eduYDownloadUrl)
+					eduYDownloadDoc, err := htmlquery.LoadURL(eduYDownloadUrl)
+					if err != nil {
+						fmt.Println(err)
+						continue
+					}
+					// /html/body/center/table/tbody/tr/td/table/tbody/tr[8]/td[2]/a
+					attachmentNode := htmlquery.FindOne(eduYDownloadDoc, `/html/body/center/table/tbody/tr/td/table/tbody/tr[8]/td[2]/a/@href`)
+					if attachmentNode == nil {
+						fmt.Println("没有下载链接，跳过")
+						continue
+					}
+					attachmentUrl := "http://hao123.eduy.net/e/DownSys" + strings.ReplaceAll(htmlquery.InnerText(attachmentNode), "..", "")
+					fmt.Println(attachmentUrl)
 					filePath := "F:\\workspace\\hao123.eduy.net\\hao123.eduy.net\\" + category.categoryName + "\\" + title + ".rar"
 					_, err = os.Stat(filePath)
 					if err != nil {
 						fmt.Println("=======开始下载========")
-						err := downloadEduY(eduYDownloadUrl, filePath)
+						err := downloadEduY(attachmentUrl, filePath, eduYDownloadUrl)
 						if err != nil {
 							fmt.Println(err)
 							continue
@@ -132,7 +144,7 @@ func main() {
 	}
 }
 
-func downloadEduY(attachmentUrl string, filePath string) error {
+func downloadEduY(attachmentUrl string, filePath string, referer string) error {
 	// 初始化客户端
 	var client *http.Client = &http.Client{
 		Transport: &http.Transport{
@@ -163,7 +175,7 @@ func downloadEduY(attachmentUrl string, filePath string) error {
 	req.Header.Set("Connection", "keep-alive")
 	req.Header.Set("Host", "hao123.eduy.net")
 	req.Header.Set("Pragma", "no-cache")
-	req.Header.Set("Referer", "http://hao123.eduy.net/")
+	req.Header.Set("Referer", referer)
 	req.Header.Set("Upgrade-Insecure-Requests", "1")
 	req.Header.Set("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36")
 	resp, err := client.Do(req) //拿到返回的内容
