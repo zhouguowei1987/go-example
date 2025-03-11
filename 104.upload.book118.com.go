@@ -659,6 +659,14 @@ func main() {
 			dirName: "ppt.officeplus.cn",
 			price:   "88",
 		},
+		{
+			dirName: "www.docx_ychedu.com/中考试题",
+			price:   "88",
+		},
+		{
+			dirName: "www.docx_ychedu.com/高考试题",
+			price:   "88",
+		},
 	}
 	rootPath := "../upload.book118.com/"
 	for _, childDir := range uploadChildDirArr {
