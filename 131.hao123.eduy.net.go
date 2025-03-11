@@ -132,15 +132,6 @@ func main() {
 	}
 }
 
-func eduYStringContains(slice []string, value string) bool {
-	for _, item := range slice {
-		if item == value {
-			return true
-		}
-	}
-	return false
-}
-
 func downloadEduY(attachmentUrl string, filePath string) error {
 	// 初始化客户端
 	var client *http.Client = &http.Client{
