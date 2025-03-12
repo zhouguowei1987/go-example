@@ -137,7 +137,7 @@ func main() {
 				page++
 			} else {
 				isPageGo = false
-				page = 0
+				page = 1
 				break
 			}
 		}
