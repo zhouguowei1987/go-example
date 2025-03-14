@@ -37,22 +37,22 @@ type AdultEducationCategory struct {
 }
 
 var adultEducationCategory = []AdultEducationCategory{
-	{categoryName: "中考试题", categoryUrl: "http://yw.ychedu.com/ZCZT/Index.html"},
-	{categoryName: "中考试题", categoryUrl: "http://yw.ychedu.com/ZCML/Index.html"},
-	{categoryName: "中考试题", categoryUrl: "http://sx.ychedu.com/ZCZT/Index.html"},
-	{categoryName: "中考试题", categoryUrl: "http://sx.ychedu.com/ZCML/Index.html"},
-	{categoryName: "中考试题", categoryUrl: "http://yy.ychedu.com/ZCZT/Index.html"},
-	{categoryName: "中考试题", categoryUrl: "http://yy.ychedu.com/ZCML/Index.html"},
-	{categoryName: "中考试题", categoryUrl: "http://wl.ychedu.com/ZCZT/Index.html"},
-	{categoryName: "中考试题", categoryUrl: "http://wl.ychedu.com/ZCML/Index.html"},
-	{categoryName: "中考试题", categoryUrl: "http://hx.ychedu.com/ZCZT/Index.html"},
-	{categoryName: "中考试题", categoryUrl: "http://hx.ychedu.com/ZCML/Index.html"},
-	{categoryName: "中考试题", categoryUrl: "http://zz.ychedu.com/ZCZT/Index.html"},
-	{categoryName: "中考试题", categoryUrl: "http://zz.ychedu.com/ZCML/Index.html"},
-	{categoryName: "中考试题", categoryUrl: "http://ls.ychedu.com/ZCZT/Index.html"},
-	{categoryName: "中考试题", categoryUrl: "http://ls.ychedu.com/ZCML/Index.html"},
-	{categoryName: "中考试题", categoryUrl: "http://qt.ychedu.com/ZCZT/Index.html"},
-	{categoryName: "中考试题", categoryUrl: "http://qt.ychedu.com/ZCML/Index.html"},
+	//{categoryName: "中考试题", categoryUrl: "http://yw.ychedu.com/ZCZT/Index.html"},
+	//{categoryName: "中考试题", categoryUrl: "http://yw.ychedu.com/ZCML/Index.html"},
+	//{categoryName: "中考试题", categoryUrl: "http://sx.ychedu.com/ZCZT/Index.html"},
+	//{categoryName: "中考试题", categoryUrl: "http://sx.ychedu.com/ZCML/Index.html"},
+	//{categoryName: "中考试题", categoryUrl: "http://yy.ychedu.com/ZCZT/Index.html"},
+	//{categoryName: "中考试题", categoryUrl: "http://yy.ychedu.com/ZCML/Index.html"},
+	//{categoryName: "中考试题", categoryUrl: "http://wl.ychedu.com/ZCZT/Index.html"},
+	//{categoryName: "中考试题", categoryUrl: "http://wl.ychedu.com/ZCML/Index.html"},
+	//{categoryName: "中考试题", categoryUrl: "http://hx.ychedu.com/ZCZT/Index.html"},
+	//{categoryName: "中考试题", categoryUrl: "http://hx.ychedu.com/ZCML/Index.html"},
+	//{categoryName: "中考试题", categoryUrl: "http://zz.ychedu.com/ZCZT/Index.html"},
+	//{categoryName: "中考试题", categoryUrl: "http://zz.ychedu.com/ZCML/Index.html"},
+	//{categoryName: "中考试题", categoryUrl: "http://ls.ychedu.com/ZCZT/Index.html"},
+	//{categoryName: "中考试题", categoryUrl: "http://ls.ychedu.com/ZCML/Index.html"},
+	//{categoryName: "中考试题", categoryUrl: "http://qt.ychedu.com/ZCZT/Index.html"},
+	//{categoryName: "中考试题", categoryUrl: "http://qt.ychedu.com/ZCML/Index.html"},
 	{categoryName: "高考试题", categoryUrl: "http://yw.ychedu.com/GKZT/Index.html"},
 	{categoryName: "高考试题", categoryUrl: "http://yw.ychedu.com/GKML/Index.html"},
 	{categoryName: "高考试题", categoryUrl: "http://sx.ychedu.com/GKZT/Index.html"},
@@ -93,6 +93,10 @@ func main() {
 			}
 			if maxPage == 0 {
 				countNode := htmlquery.FindOne(listDoc, `//div[@class="showpage"]/b`)
+				if countNode == nil {
+					fmt.Println("文档总数不存在")
+					break
+				}
 				countInt, _ := strconv.Atoi(htmlquery.InnerText(countNode))
 				maxPage = countInt/(27) + 1
 				//page = maxPage / 2
