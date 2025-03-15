@@ -170,18 +170,6 @@ func main() {
 					downPrice = 5
 				} else if filePageNum > 20 && filePageNum <= 25 {
 					downPrice = 6
-				} else if filePageNum > 25 && filePageNum <= 30 {
-					downPrice = 7
-				} else if filePageNum > 30 && filePageNum <= 35 {
-					downPrice = 8
-				} else if filePageNum > 35 && filePageNum <= 40 {
-					downPrice = 9
-				} else if filePageNum > 40 && filePageNum <= 45 {
-					downPrice = 10
-				} else if filePageNum > 45 && filePageNum <= 50 {
-					downPrice = 11
-				} else {
-					downPrice = 12
 				}
 			}
 
