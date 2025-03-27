@@ -38,16 +38,16 @@ type EduYEducationCategory struct {
 }
 
 var eduYEducationCategory = []EduYEducationCategory{
-	{
-		categoryName: "小学",
-		categoryUrl:  "http://hao123.eduy.net/jiaoxueziyuan/shiti/xiaoxue/index.html",
-		classId:      29,
-	},
-	{
-		categoryName: "初中",
-		categoryUrl:  "http://hao123.eduy.net/jiaoxueziyuan/shiti/chuzhong/index.html",
-		classId:      30,
-	},
+	//{
+	//	categoryName: "小学",
+	//	categoryUrl:  "http://hao123.eduy.net/jiaoxueziyuan/shiti/xiaoxue/index.html",
+	//	classId:      29,
+	//},
+	//{
+	//	categoryName: "初中",
+	//	categoryUrl:  "http://hao123.eduy.net/jiaoxueziyuan/shiti/chuzhong/index.html",
+	//	classId:      30,
+	//},
 	{
 		categoryName: "高中",
 		categoryUrl:  "http://hao123.eduy.net/jiaoxueziyuan/shiti/gaozhong/index.html",
