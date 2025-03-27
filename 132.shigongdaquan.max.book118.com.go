@@ -45,18 +45,18 @@ func main() {
 			break
 		}
 		// /html/body/table/tbody/tr
-		topCategoryNodes := htmlquery.Find(topListDoc, `//html/body/table/tbody/tr`)
-		if len(topCategoryNodes) >= 1 {
-			for _, topCatrgoryNode := range topCategoryNodes {
-				topDirNodeA := htmlquery.FindOne(topCatrgoryNode, `td/a`)
+		topCategoryListNodes := htmlquery.Find(topListDoc, `//html/body/table/tbody/tr`)
+		if len(topCategoryListNodes) >= 1 {
+			for _, topCategoryNode := range topCategoryListNodes {
+				topDirNodeA := htmlquery.FindOne(topCategoryNode, `./td/a`)
 				if topDirNodeA == nil {
-					fmt.Println("不是要提取的内容，跳过")
+					fmt.Println("不是顶级类别，跳过")
 					continue
 				}
 				topDirTitle := htmlquery.InnerText(topDirNodeA)
 				fmt.Println(topDirTitle)
 
-				topDirUrlA := htmlquery.FindOne(topCatrgoryNode, `./@href`)
+				topDirUrlA := htmlquery.FindOne(topDirNodeA, `./@href`)
 				if topDirUrlA == nil {
 					fmt.Println("连接不存在")
 					continue
@@ -73,7 +73,7 @@ func main() {
 				listNodes := htmlquery.Find(secondListDoc, `//html/body/table[2]/tbody/tr`)
 				if len(listNodes) >= 1 {
 					for _, listNode := range listNodes {
-						wordA := htmlquery.FindOne(listNode, `td/a`)
+						wordA := htmlquery.FindOne(listNode, `./td/a`)
 						if wordA == nil {
 							fmt.Println("不是要提取的内容，跳过")
 							continue
@@ -86,7 +86,7 @@ func main() {
 						}
 						fmt.Println(title)
 
-						wordUrlA := htmlquery.FindOne(listNode, `./@href`)
+						wordUrlA := htmlquery.FindOne(listNode, `./td/a/@href`)
 						if wordUrlA == nil {
 							fmt.Println("连接不存在")
 							continue
