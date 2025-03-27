@@ -64,7 +64,7 @@ func main() {
 			secondListDoc, err := htmlquery.LoadURL(secondCategoryUrl)
 			if err != nil {
 				fmt.Println(err)
-				break
+				continue
 			}
 			// /html/body/table[2]/tbody/tr[1]
 			listNodes := htmlquery.Find(secondListDoc, `//html/body/table[2]/tbody/tr`)
