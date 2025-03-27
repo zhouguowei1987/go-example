@@ -35,80 +35,76 @@ func ShiGongDaQuanSetHttpProxy() (httpclient *http.Client) {
 // @Title 获取施工大全文档
 // @Description http://shigongdaquan.max.book118.com/，获取施工大全文档
 func main() {
-	isPageGo := true
-	for isPageGo {
-		// 第一步：顶级分类
-		var topListUrl = "http://shigongdaquan.max.book118.com/"
-		topListDoc, err := htmlquery.LoadURL(topListUrl)
-		if err != nil {
-			fmt.Println(err)
-			break
-		}
-		// /html/body/table/tbody/tr
-		topCategoryListNodes := htmlquery.Find(topListDoc, `//html/body/table/tbody/tr`)
-		if len(topCategoryListNodes) >= 1 {
-			for _, topCategoryNode := range topCategoryListNodes {
-				topDirNodeA := htmlquery.FindOne(topCategoryNode, `./td/a`)
-				if topDirNodeA == nil {
-					fmt.Println("不是顶级类别，跳过")
-					continue
-				}
-				topDirTitle := htmlquery.InnerText(topDirNodeA)
-				fmt.Println(topDirTitle)
+	// 第一步：顶级分类
+	var topListUrl = "http://shigongdaquan.max.book118.com/"
+	topListDoc, err := htmlquery.LoadURL(topListUrl)
+	if err != nil {
+		fmt.Println(err)
+	}
+	// /html/body/table/tbody/tr
+	topCategoryListNodes := htmlquery.Find(topListDoc, `//html/body/table/tbody/tr`)
+	if len(topCategoryListNodes) >= 1 {
+		for _, topCategoryNode := range topCategoryListNodes {
+			topDirNodeA := htmlquery.FindOne(topCategoryNode, `./td/a`)
+			if topDirNodeA == nil {
+				fmt.Println("不是顶级类别，跳过")
+				continue
+			}
+			topDirTitle := htmlquery.InnerText(topDirNodeA)
+			fmt.Println(topDirTitle)
 
-				topDirUrlA := htmlquery.FindOne(topDirNodeA, `./@href`)
-				if topDirUrlA == nil {
-					fmt.Println("连接不存在")
-					continue
-				}
+			topDirUrlA := htmlquery.FindOne(topDirNodeA, `./@href`)
+			if topDirUrlA == nil {
+				fmt.Println("连接不存在")
+				continue
+			}
 
-				secondCategoryUrl := "http://shigongdaquan.max.book118.com" + htmlquery.InnerText(topDirUrlA)
-				fmt.Println(secondCategoryUrl)
-				secondListDoc, err := htmlquery.LoadURL(secondCategoryUrl)
-				if err != nil {
-					fmt.Println(err)
-					break
-				}
-				// /html/body/table[2]/tbody/tr[1]
-				listNodes := htmlquery.Find(secondListDoc, `//html/body/table[2]/tbody/tr`)
-				if len(listNodes) >= 1 {
-					for _, listNode := range listNodes {
-						wordA := htmlquery.FindOne(listNode, `./td/a`)
-						if wordA == nil {
-							fmt.Println("不是要提取的内容，跳过")
-							continue
-						}
-						title := htmlquery.InnerText(wordA)
-						title = strings.ToLower(title)
-						if !strings.Contains(title, "doc") && !strings.Contains(title, "docx") && !strings.Contains(title, "pdf") {
-							fmt.Println("不是要提取的内容类型，跳过")
-							continue
-						}
-						fmt.Println(title)
+			secondCategoryUrl := "http://shigongdaquan.max.book118.com" + htmlquery.InnerText(topDirUrlA)
+			fmt.Println(secondCategoryUrl)
+			secondListDoc, err := htmlquery.LoadURL(secondCategoryUrl)
+			if err != nil {
+				fmt.Println(err)
+				break
+			}
+			// /html/body/table[2]/tbody/tr[1]
+			listNodes := htmlquery.Find(secondListDoc, `//html/body/table[2]/tbody/tr`)
+			if len(listNodes) >= 1 {
+				for _, listNode := range listNodes {
+					wordA := htmlquery.FindOne(listNode, `./td/a`)
+					if wordA == nil {
+						fmt.Println("不是要提取的内容，跳过")
+						continue
+					}
+					title := htmlquery.InnerText(wordA)
+					title = strings.ToLower(title)
+					if !strings.Contains(title, "doc") && !strings.Contains(title, "docx") && !strings.Contains(title, "pdf") {
+						fmt.Println("不是要提取的内容类型，跳过")
+						continue
+					}
+					fmt.Println(title)
 
-						wordUrlA := htmlquery.FindOne(listNode, `./td/a/@href`)
-						if wordUrlA == nil {
-							fmt.Println("连接不存在")
-							continue
-						}
+					wordUrlA := htmlquery.FindOne(listNode, `./td/a/@href`)
+					if wordUrlA == nil {
+						fmt.Println("连接不存在")
+						continue
+					}
 
-						attachmentUrl := "http://shigongdaquan.max.book118.com" + htmlquery.InnerText(wordUrlA)
-						fmt.Println(attachmentUrl)
-						filePath := "F:\\workspace\\shigongdaquan.max.book118.com\\shigongdaquan.max.book118.com\\" + title
-						_, err = os.Stat(filePath)
+					attachmentUrl := "http://shigongdaquan.max.book118.com" + htmlquery.InnerText(wordUrlA)
+					fmt.Println(attachmentUrl)
+					filePath := "F:\\workspace\\shigongdaquan.max.book118.com\\shigongdaquan.max.book118.com\\" + title
+					_, err = os.Stat(filePath)
+					if err != nil {
+						fmt.Println("=======开始下载========")
+						err := downloadShiGongDaQuan(attachmentUrl, filePath, secondCategoryUrl)
 						if err != nil {
-							fmt.Println("=======开始下载========")
-							err := downloadShiGongDaQuan(attachmentUrl, filePath, secondCategoryUrl)
-							if err != nil {
-								fmt.Println(err)
-								continue
-							}
-							fmt.Println("=======完成下载========")
-							DownLoadShiGongDaQuanTimeSleep := rand.Intn(10)
-							for i := 1; i <= DownLoadShiGongDaQuanTimeSleep; i++ {
-								time.Sleep(time.Second)
-								fmt.Println("topDirTitle="+topDirTitle+"===========下载", title, "成功，暂停", DownLoadShiGongDaQuanTimeSleep, "秒，倒计时", i, "秒===========")
-							}
+							fmt.Println(err)
+							continue
+						}
+						fmt.Println("=======完成下载========")
+						DownLoadShiGongDaQuanTimeSleep := rand.Intn(10)
+						for i := 1; i <= DownLoadShiGongDaQuanTimeSleep; i++ {
+							time.Sleep(time.Second)
+							fmt.Println("topDirTitle="+topDirTitle+"===========下载", title, "成功，暂停", DownLoadShiGongDaQuanTimeSleep, "秒，倒计时", i, "秒===========")
 						}
 					}
 				}
