@@ -77,7 +77,7 @@ func main() {
 					}
 					title := htmlquery.InnerText(wordA)
 					title = strings.ToLower(title)
-					if !strings.Contains(title, "doc") && !strings.Contains(title, "docx") && !strings.Contains(title, "pdf") {
+					if !strings.Contains(title, "doc") && !strings.Contains(title, "docx") {
 						fmt.Println("不是要提取的内容类型，跳过")
 						continue
 					}
