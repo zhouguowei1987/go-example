@@ -12,15 +12,14 @@ import (
 	"strconv"
 	"strings"
 	"time"
-	// 	"time"
 )
 
 // TbzSpider 获取全国团体标准信息平台Pdf文档
 // @Title 获取全国团体标准信息平台Pdf文档
 // @Description https://www.ttbz.org.cn/，将全国团体标准信息平台Pdf文档入库
 func main() {
-	var startId = 133553
-	var endId = 133726
+	var startId = 134500
+	var endId = 134567
 	goCh := make(chan int, endId-startId)
 	for id := startId; id <= endId; id++ {
 		go func(id int) {
