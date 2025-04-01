@@ -667,6 +667,18 @@ func main() {
 			dirName: "www.docx_ychedu.com/高考试题",
 			price:   "88",
 		},
+		{
+			dirName: "hao123.docx_eduy.net/小学",
+			price:   "88",
+		},
+		{
+			dirName: "hao123.docx_eduy.net/初中",
+			price:   "88",
+		},
+		{
+			dirName: "hao123.docx_eduy.net/高中",
+			price:   "88",
+		},
 	}
 	rootPath := "../upload.book118.com/"
 	for _, childDir := range uploadChildDirArr {

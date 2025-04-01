@@ -652,6 +652,21 @@ func main() {
 			pCid:    8244,
 			Price:   200,
 		},
+		{
+			dirName: "hao123.docx_eduy.net/小学",
+			pCid:    8242,
+			Price:   200,
+		},
+		{
+			dirName: "hao123.docx_eduy.net/初中",
+			pCid:    8243,
+			Price:   200,
+		},
+		{
+			dirName: "hao123.docx_eduy.net/高中",
+			pCid:    8244,
+			Price:   200,
+		},
 	}
 	rootPath := "../upload.doc88.com/"
 	for _, childDir := range uploadChildDirArr {
