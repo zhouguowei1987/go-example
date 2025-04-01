@@ -679,6 +679,10 @@ func main() {
 			dirName: "hao123.docx_eduy.net/高中",
 			price:   "88",
 		},
+		{
+			dirName: "shigongdaquan.max.book118.com",
+			price:   "88",
+		},
 	}
 	rootPath := "../upload.book118.com/"
 	for _, childDir := range uploadChildDirArr {
