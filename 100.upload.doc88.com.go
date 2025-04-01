@@ -666,11 +666,6 @@ func main() {
 			pCid:    8244,
 			Price:   200,
 		},
-		{
-			dirName: "shigongdaquan.max.book118.com",
-			pCid:    55830,
-			Price:   200,
-		},
 	}
 	rootPath := "../upload.doc88.com/"
 	for _, childDir := range uploadChildDirArr {
