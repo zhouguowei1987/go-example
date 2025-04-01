@@ -91,7 +91,7 @@ func main() {
 
 					attachmentUrl := "http://shigongdaquan.max.book118.com" + htmlquery.InnerText(wordUrlA)
 					fmt.Println(attachmentUrl)
-					filePath := "F:\\workspace\\shigongdaquan.max.book118.com\\shigongdaquan.max.book118.com\\" + title
+					filePath := "F:\\workspace\\shigongdaquan.max.book118.com\\" + title
 					_, err = os.Stat(filePath)
 					if err != nil {
 						fmt.Println("=======开始下载========")
