@@ -1,12 +1,14 @@
 module gobyexample
 
-go 1.23
+go 1.23.0
+
+toolchain go1.23.8
 
 require (
 	github.com/antchfx/htmlquery v1.3.4
 	github.com/djimenez/iconv-go v0.0.0-20160305225143-8960e66bd3da
-	golang.org/x/net v0.33.0
-	golang.org/x/text v0.21.0
+	golang.org/x/net v0.38.0
+	golang.org/x/text v0.24.0
 	rsc.io/pdf v0.1.1
 )
 
