@@ -3,7 +3,6 @@ package main
 import (
 	"errors"
 	"fmt"
-	"github.com/antchfx/htmlquery"
 	"io"
 	"net"
 	"net/http"
@@ -13,6 +12,8 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/antchfx/htmlquery"
 )
 
 const (
@@ -197,12 +198,12 @@ func main() {
 						fmt.Println(dateText)
 
 						datePaper, _ := time.Parse("2006-01-02", dateText)
-						dateStart, _ := time.Parse("2006-01-02", "2024-01-01")
+						dateStart, _ := time.Parse("2006-01-02", "2024-08-22")
 						fmt.Println(dateStart)
 
 						// 比较日期
 						if datePaper.After(dateStart) == false {
-							fmt.Println("日期在2024-01-01后，跳过")
+							fmt.Println("日期在2024-08-22后，跳过")
 							break
 						}
 
@@ -210,7 +211,7 @@ func main() {
 						detailDoc, _ := htmlquery.LoadURL(detailUrl)
 						fmt.Println(detailUrl)
 
-						filePath := "E:\\workspace\\www.shijuan1.com\\2024-01-01\\www.rar_shijuan1.com\\" + testCategory.name + "\\" + title + ".rar"
+						filePath := "E:\\workspace\\www.shijuan1.com\\2024-08-22\\www.rar_shijuan1.com\\" + testCategory.name + "\\" + title + ".rar"
 						if _, err := os.Stat(filePath); err != nil {
 							downloadUrl := "https://www.shijuan1.com" + htmlquery.InnerText(htmlquery.FindOne(detailDoc, `//ul[@class="downurllist"]/li/a/@href`))
 							fmt.Println(downloadUrl)
