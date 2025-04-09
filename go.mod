@@ -10,3 +10,5 @@ require (
 	golang.org/x/text v0.24.0
 	rsc.io/pdf v0.1.1
 )
+
+require github.com/otiai10/gosseract/v2 v2.4.1 // indirect
