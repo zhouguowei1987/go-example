@@ -101,6 +101,8 @@ func main() {
 
 					filePath := "../dbba.sacinfo.org.cn/" + fileName + ".pdf"
 					if _, err := os.Stat(filePath); err != nil {
+						// 识别验证码
+					ValidateCaptchaGoTo:
 						// 获取验证码图片
 						// 获取当前时间的纳秒级时间戳
 						nanoTimestamp := time.Now().UnixNano()
@@ -130,7 +132,7 @@ func main() {
 						}
 						if responseValidateCaptcha.Code != 0 {
 							fmt.Println(responseValidateCaptcha.Msg)
-							continue
+							goto ValidateCaptchaGoTo
 						}
 
 						downLoadUrl := fmt.Sprintf("https://dbba.sacinfo.org.cn/portal/download/%s", responseValidateCaptcha.Msg)
@@ -364,9 +366,9 @@ func validateCaptchaDbBa(captcha string, pk string, referer string) (responseVal
 	if DbBaEnableHttpProxy {
 		client = DbBaSetHttpProxy()
 	}
-	fmt.Print("Enter an captcha and press enter: ")
-	fmt.Scanln(&captcha) // 等待用户按下回车键后继续执行
-	fmt.Println("You entered captcha:", captcha)
+	//fmt.Print("Enter an captcha and press enter: ")
+	//fmt.Scanln(&captcha) // 等待用户按下回车键后继续执行
+	//fmt.Println("You entered captcha:", captcha)
 	responseValidateCaptcha = ResponseValidateCaptcha{}
 	requestUrl := fmt.Sprintf("https://dbba.sacinfo.org.cn/portal/validate-captcha/down?captcha=%s&pk=%s", captcha, pk)
 	req, err := http.NewRequest("POST", requestUrl, nil) //建立连接
