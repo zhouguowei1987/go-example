@@ -66,7 +66,7 @@ const DbBaCookie = "HMACCOUNT=487EF362690A1D5D; Hm_lvt_36f2f0446e1c2cda8410befc2
 // @Description https://dbba.sacinfo.org.cn/，获取地方标准文档
 func main() {
 	requestUrl := "https://dbba.sacinfo.org.cn/stdQueryList"
-	current := 1
+	current := 15
 	minCurrent := 1
 	size := 15
 	status := ""
@@ -101,9 +101,6 @@ func main() {
 
 					filePath := "../dbba.sacinfo.org.cn/" + fileName + ".pdf"
 					if _, err := os.Stat(filePath); err != nil {
-						// 识别验证码
-						ValidateCaptchaGoToCurrentCount := 1
-						ValidateCaptchaGoToMaxCount := 10
 					ValidateCaptchaGoTo:
 						// 获取验证码图片
 						// 获取当前时间的纳秒级时间戳
@@ -123,10 +120,6 @@ func main() {
 						captcha, err := TesseractValidateCodeDbBa(validateCodeFilePath)
 						captcha = strings.TrimSpace(captcha)
 						fmt.Println("识别的验证码：", captcha)
-						if len(captcha) < 4 {
-							fmt.Println("验证码长度不是4哥字符")
-							goto ValidateCaptchaGoTo
-						}
 
 						// 获取下载地址
 						validateCaptchaReferer := fmt.Sprintf("https://dbba.sacinfo.org.cn/portal/online/%s", records.Pk)
@@ -136,19 +129,10 @@ func main() {
 							fmt.Println(err)
 							continue
 						}
-						fmt.Println("ValidateCaptchaGoToCurrentCount = ", ValidateCaptchaGoToCurrentCount)
 						if responseValidateCaptcha.Code != 0 {
 							fmt.Println(responseValidateCaptcha.Msg)
-							ValidateCaptchaGoToCurrentCount++
-							if ValidateCaptchaGoToCurrentCount < ValidateCaptchaGoToMaxCount {
-								goto ValidateCaptchaGoTo
-							} else {
-								fmt.Println("验证码验证次数 = ", ValidateCaptchaGoToCurrentCount, "跳过")
-								continue
-							}
+							goto ValidateCaptchaGoTo
 						}
-						ValidateCaptchaGoToCurrentCount = 1
-
 						downLoadUrl := fmt.Sprintf("https://dbba.sacinfo.org.cn/portal/download/%s", responseValidateCaptcha.Msg)
 						fmt.Println(downLoadUrl)
 
