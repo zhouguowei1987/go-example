@@ -102,6 +102,8 @@ func main() {
 					filePath := "../dbba.sacinfo.org.cn/" + fileName + ".pdf"
 					if _, err := os.Stat(filePath); err != nil {
 						// 识别验证码
+						ValidateCaptchaGoToCurrentCount := 1
+						ValidateCaptchaGoToMaxCount := 10
 					ValidateCaptchaGoTo:
 						// 获取验证码图片
 						// 获取当前时间的纳秒级时间戳
@@ -132,8 +134,12 @@ func main() {
 						}
 						if responseValidateCaptcha.Code != 0 {
 							fmt.Println(responseValidateCaptcha.Msg)
-							goto ValidateCaptchaGoTo
+							ValidateCaptchaGoToCurrentCount++
+							if ValidateCaptchaGoToCurrentCount < ValidateCaptchaGoToMaxCount {
+								goto ValidateCaptchaGoTo
+							}
 						}
+						ValidateCaptchaGoToCurrentCount = 1
 
 						downLoadUrl := fmt.Sprintf("https://dbba.sacinfo.org.cn/portal/download/%s", responseValidateCaptcha.Msg)
 						fmt.Println(downLoadUrl)
