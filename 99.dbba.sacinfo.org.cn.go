@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/antchfx/htmlquery"
+	"github.com/otiai10/gosseract/v2"
 	"io"
 	"io/ioutil"
 	"net"
@@ -54,6 +54,13 @@ type ResponseDataRecords struct {
 	Status     string `json:"status"`
 }
 
+type ResponseValidateCaptcha struct {
+	Code int    `json:"code"`
+	Msg  string `json:"msg"`
+}
+
+const DbBaCookie = "HMACCOUNT=487EF362690A1D5D; Hm_lvt_36f2f0446e1c2cda8410befc24743a9b=1743992992; JSESSIONID=FEEED60A3C4044DF74B01A684F844610; Hm_lpvt_36f2f0446e1c2cda8410befc24743a9b=1744255687"
+
 // ychEduSpider 获取地方标准文档
 // @Title 获取地方标准文档
 // @Description https://dbba.sacinfo.org.cn/，获取地方标准文档
@@ -92,26 +99,45 @@ func main() {
 					fileName := chName + "(" + code + ")"
 					fmt.Println(fileName)
 
-					downLoadUrl := fmt.Sprintf("https://dbba.sacinfo.org.cn/attachment/downloadStdFile?pk=%s", records.Pk)
-					fmt.Println(downLoadUrl)
-
-					detailUrl := fmt.Sprintf("https://dbba.sacinfo.org.cn/stdDetail/%s", records.Pk)
-					fmt.Println(detailUrl)
-
 					filePath := "../dbba.sacinfo.org.cn/" + fileName + ".pdf"
 					if _, err := os.Stat(filePath); err != nil {
-
-						detailDoc, err := htmlquery.LoadURL(detailUrl)
+					ValidateCaptchaGoTo:
+						// 获取验证码图片
+						// 获取当前时间的纳秒级时间戳
+						nanoTimestamp := time.Now().UnixNano()
+						// 将纳秒级时间戳转换为毫秒级
+						millis := nanoTimestamp / 1e6 // 或者 nanoTimestamp / 1000000
+						fmt.Println("当前时间的毫秒级时间戳:", millis)
+						validateCodeUrl := fmt.Sprintf("https://dbba.sacinfo.org.cn/portal/validate-code?pk=%s&t=%d", records.Pk, millis)
+						fmt.Println(validateCodeUrl)
+						validateCodeFilePath := "./dbba-validate-code/validate-code.png"
+						err := downloadValidateCodeDbBa(validateCodeUrl, validateCodeFilePath)
 						if err != nil {
 							fmt.Println(err)
 							continue
 						}
-						// 查看是否有下载链接
-						downloadButton := htmlquery.FindOne(detailDoc, `//div[@class="container main-body"]/div[@class="row"]/div[@class="col-sm-12"]/div/div[@class="page-header"]/h4/a`)
-						if downloadButton == nil {
-							fmt.Println("没有附件下载链接")
+						// 获取验证码文字信息
+						captcha, err := TesseractValidateCodeDbBa(validateCodeFilePath)
+						captcha = strings.TrimSpace(captcha)
+						fmt.Println("识别的验证码：", captcha)
+
+						// 获取下载地址
+						validateCaptchaReferer := fmt.Sprintf("https://dbba.sacinfo.org.cn/portal/online/%s", records.Pk)
+						responseValidateCaptcha, err := validateCaptchaDbBa(captcha, records.Pk, validateCaptchaReferer)
+						fmt.Println(responseValidateCaptcha, err)
+						if err != nil {
+							fmt.Println(err)
 							continue
 						}
+						if responseValidateCaptcha.Code != 0 {
+							fmt.Println(responseValidateCaptcha.Msg)
+							goto ValidateCaptchaGoTo
+						}
+						downLoadUrl := fmt.Sprintf("https://dbba.sacinfo.org.cn/portal/download/%s", responseValidateCaptcha.Msg)
+						fmt.Println(downLoadUrl)
+
+						detailUrl := fmt.Sprintf("https://dbba.sacinfo.org.cn/stdDetail/%s", records.Pk)
+						fmt.Println(detailUrl)
 
 						fmt.Println("=======开始下载" + strconv.Itoa(current) + "========")
 						err = downloadDbBa(downLoadUrl, detailUrl, filePath)
@@ -191,8 +217,7 @@ func GetStdQueryList(requestUrl string, current int, size int, status string) (r
 	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
 	req.Header.Set("Connection", "keep-alive")
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
-	req.Header.Set("Cookie", "__51vcke__JohyjbD1C0xg9qUz=0b89b92a-6862-5964-950c-fd0424460459; __51vuft__JohyjbD1C0xg9qUz=1676033539876; mobile=15238369929; JSESSIONID=2619B18AD9F7D848ED3D0ED88206F936; __51uvsct__JohyjbD1C0xg9qUz=3; token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1SWQiOjE2MjM5ODczNDYxMDM3MDk2OTgsInVUeXBlIjoyLCJleHAiOjE2NzY2NTcyNDR9.yB-IPSls4xcQTdNKqG43q1d9hz8w3FxIYWWw0xH0shM; __vtins__JohyjbD1C0xg9qUz=%7B%22sid%22%3A%20%22647da08c-62a8-599a-995e-4a351a7137c1%22%2C%20%22vd%22%3A%207%2C%20%22stt%22%3A%20395895%2C%20%22dr%22%3A%209501%2C%20%22expires%22%3A%201676054244939%2C%20%22ct%22%3A%201676052444939%7D")
-	req.Header.Set("Host", "bilianku.com")
+	req.Header.Set("Host", "dbba.sacinfo.org.cn")
 	req.Header.Set("Origin", "https://dbba.sacinfo.org.cn")
 	req.Header.Set("Referer", "https://dbba.sacinfo.org.cn/stdList")
 	req.Header.Set("sec-ch-ua", "\"Chromium\";v=\"110\", \"Not A(Brand\";v=\"24\", \"Google Chrome\";v=\"110\"")
@@ -222,6 +247,171 @@ func GetStdQueryList(requestUrl string, current int, size int, status string) (r
 	return responseData, nil
 }
 
+func downloadValidateCodeDbBa(validateCodeUrl string, filePath string) error {
+	// 初始化客户端
+	var client *http.Client = &http.Client{
+		Transport: &http.Transport{
+			Dial: func(netw, addr string) (net.Conn, error) {
+				c, err := net.DialTimeout(netw, addr, time.Second*3)
+				if err != nil {
+					fmt.Println("dail timeout", err)
+					return nil, err
+				}
+				return c, nil
+
+			},
+			MaxIdleConnsPerHost:   10,
+			ResponseHeaderTimeout: time.Second * 3,
+		},
+	}
+	if DbBaEnableHttpProxy {
+		client = DbBaSetHttpProxy()
+	}
+	req, err := http.NewRequest("GET", validateCodeUrl, nil) //建立连接
+	if err != nil {
+		return err
+	}
+
+	req.Header.Set("authority", "dbba.sacinfo.org.cn")
+	req.Header.Set("method", "GET")
+	path := strings.Replace(validateCodeUrl, "https://dbba.sacinfo.org.cn", "", 1)
+	fmt.Println(path)
+	req.Header.Set("path", path)
+	req.Header.Set("scheme", "https")
+	req.Header.Set("Accept", "mage/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8")
+	req.Header.Set("Accept-Encoding", "gzip, deflate, br")
+	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
+	req.Header.Set("Cookie", DbBaCookie)
+	req.Header.Set("Connection", "keep-alive")
+	req.Header.Set("Host", "dbba.sacinfo.org.cn")
+	req.Header.Set("sec-ch-ua", "\"Chromium\";v=\"110\", \"Not A(Brand\";v=\"24\", \"Google Chrome\";v=\"110\"")
+	req.Header.Set("sec-ch-ua-mobile", "?0")
+	req.Header.Set("sec-ch-ua-platform", "\"macOS\"")
+	req.Header.Set("Sec-Fetch-Dest", "document")
+	req.Header.Set("Sec-Fetch-Mode", "navigate")
+	req.Header.Set("Sec-Fetch-Site", "same-origin")
+	req.Header.Set("Sec-Fetch-User", "?1")
+	req.Header.Set("Upgrade-Insecure-Requests", "1")
+	req.Header.Set("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36")
+	resp, err := client.Do(req) //拿到返回的内容
+	if err != nil {
+		return err
+	}
+	defer resp.Body.Close()
+	// 如果访问失败，就打印当前状态码
+	if resp.StatusCode != http.StatusOK {
+		return errors.New("http status :" + strconv.Itoa(resp.StatusCode))
+	}
+
+	// 创建一个文件用于保存
+	fileDiv := filepath.Dir(filePath)
+	if _, err = os.Stat(fileDiv); err != nil {
+		if os.MkdirAll(fileDiv, 0777) != nil {
+			return err
+		}
+	}
+	out, err := os.Create(filePath)
+	if err != nil {
+		return err
+	}
+	defer out.Close()
+
+	// 然后将响应流和文件流对接起来
+	_, err = io.Copy(out, resp.Body)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func TesseractValidateCodeDbBa(imagePath string) (codeText string, err error) {
+	// 创建Tesseract客户端
+	client := gosseract.NewClient()
+	defer client.Close()
+	// 设置语言模型
+	client.SetLanguage("eng")
+	// 设置白名单字符
+	client.SetWhitelist("0123456789abcdefghijklmnopqrstuvwxyz")
+	// 识别图片中的文本
+	err = client.SetImage(imagePath)
+	if err != nil {
+		return codeText, fmt.Errorf("设置图片出错: %v", err)
+	}
+	text, err := client.Text()
+	if err != nil {
+		return codeText, fmt.Errorf("识别出错: %v", err)
+	}
+	return text, nil
+}
+
+func validateCaptchaDbBa(captcha string, pk string, referer string) (responseValidateCaptcha ResponseValidateCaptcha, err error) {
+	// 初始化客户端
+	var client *http.Client = &http.Client{
+		Transport: &http.Transport{
+			Dial: func(netw, addr string) (net.Conn, error) {
+				c, err := net.DialTimeout(netw, addr, time.Second*3)
+				if err != nil {
+					fmt.Println("dail timeout", err)
+					return nil, err
+				}
+				return c, nil
+
+			},
+			MaxIdleConnsPerHost:   10,
+			ResponseHeaderTimeout: time.Second * 3,
+		},
+	}
+	if DbBaEnableHttpProxy {
+		client = DbBaSetHttpProxy()
+	}
+	//fmt.Print("Enter an captcha and press enter: ")
+	//fmt.Scanln(&captcha) // 等待用户按下回车键后继续执行
+	//fmt.Println("You entered captcha:", captcha)
+	responseValidateCaptcha = ResponseValidateCaptcha{}
+	requestUrl := fmt.Sprintf("https://dbba.sacinfo.org.cn/portal/validate-captcha/down?captcha=%s&pk=%s", captcha, pk)
+	req, err := http.NewRequest("POST", requestUrl, nil) //建立连接
+	if err != nil {
+		return responseValidateCaptcha, err
+	}
+	req.Header.Set("authority", "dbba.sacinfo.org.cn")
+	req.Header.Set("method", "POST")
+	req.Header.Set("path", "/portal/validate-captcha/down")
+	req.Header.Set("scheme", "https")
+	req.Header.Set("Accept", "*/*")
+	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
+	req.Header.Set("Connection", "keep-alive")
+	req.Header.Set("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")
+	req.Header.Set("Cookie", DbBaCookie)
+	req.Header.Set("Origin", "https://dbba.sacinfo.org.cn")
+	req.Header.Set("Priority", "u=1, i")
+	req.Header.Set("Referer", referer)
+	req.Header.Set("sec-ch-ua", "\"Chromium\";v=\"110\", \"Not A(Brand\";v=\"24\", \"Google Chrome\";v=\"110\"")
+	req.Header.Set("sec-ch-ua-mobile", "?0")
+	req.Header.Set("sec-ch-ua-platform", "\"macOS\"")
+	req.Header.Set("Sec-Fetch-Dest", "document")
+	req.Header.Set("Sec-Fetch-Mode", "navigate")
+	req.Header.Set("Sec-Fetch-Site", "same-origin")
+	req.Header.Set("Sec-Fetch-User", "?1")
+	req.Header.Set("Upgrade-Insecure-Requests", "1")
+	req.Header.Set("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36")
+	req.Header.Set("X-Requested-With", "XMLHttpRequest")
+	resp, err := client.Do(req) //拿到返回的内容
+	if err != nil {
+		return responseValidateCaptcha, err
+	}
+	defer resp.Body.Close()
+
+	respBytes, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return responseValidateCaptcha, err
+	}
+	err = json.Unmarshal(respBytes, &responseValidateCaptcha)
+	if err != nil {
+		return responseValidateCaptcha, err
+	}
+	return responseValidateCaptcha, nil
+}
+
 func downloadDbBa(attachmentUrl string, referer string, filePath string) error {
 	// 初始化客户端
 	var client *http.Client = &http.Client{
@@ -247,9 +437,16 @@ func downloadDbBa(attachmentUrl string, referer string, filePath string) error {
 		return err
 	}
 
+	req.Header.Set("authority", "dbba.sacinfo.org.cn")
+	req.Header.Set("method", "GET")
+	path := strings.Replace(attachmentUrl, "https://dbba.sacinfo.org.cn", "", 1)
+	fmt.Println(path)
+	req.Header.Set("path", path)
+	req.Header.Set("scheme", "https")
 	req.Header.Set("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7")
 	req.Header.Set("Accept-Encoding", "gzip, deflate, br")
 	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
+	req.Header.Set("Cookie", DbBaCookie)
 	req.Header.Set("Connection", "keep-alive")
 	req.Header.Set("Host", "dbba.sacinfo.org.cn")
 	req.Header.Set("Referer", referer)
