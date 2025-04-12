@@ -121,7 +121,7 @@ func main() {
                         continue
                     }
                     // 是否有验证码窗口
-                    captchaModalDialogNode := htmlquery.FindOne(portalOnlineDoc, `//div[@class="container main-body"]/div[@class="row"]/div[@class="col-sm-12"]/div[@class="modal"]div[@class="modal-dialog"]`)
+                    captchaModalDialogNode := htmlquery.FindOne(portalOnlineDoc, `//div[@class="container main-body"]/div[@class="row"]/div[@class="col-sm-12"]/div[@class="modal"]/div[@class="modal-dialog"]`)
 					if captchaModalDialogNode == nil{
 					    fmt.Println("没有输入验证码窗口")
                         continue
