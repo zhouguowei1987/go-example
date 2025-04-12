@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/antchfx/htmlquery"
 	"github.com/otiai10/gosseract/v2"
 	"io"
 	"io/ioutil"
@@ -69,7 +70,7 @@ func main() {
 	current := 5684
 	minCurrent := 1
 	size := 15
-	status := ""
+	status := "现行"
 	isPageListGo := true
 	for isPageListGo {
 		if current < minCurrent {
@@ -99,6 +100,18 @@ func main() {
 					fileName := chName + "(" + code + ")"
 					fmt.Println(fileName)
 
+                    stdDetailUrl := fmt.Sprintf("https://hbba.sacinfo.org.cn/stdDetail/%s", records.Pk)
+                    stdDetailDoc, err := htmlquery.LoadURL(stdDetailUrl)
+                    if err != nil {
+                        fmt.Println(err)
+                        continue
+                    }
+					// 是否有查看文本按钮
+					downloadButtonNode := htmlquery.FindOne(stdDetailDoc, `//div[@class="container main-body"]/div[@class="sidebar sidebar-left"]/div[@class="sidebar-tabs"]/a`)
+					if downloadButtonNode == nil{
+					    fmt.Println("没有下载按钮跳过")
+                        continue
+					}
 					filePath := "../hbba.sacinfo.org.cn/" + fileName + ".pdf"
 					if _, err := os.Stat(filePath); err != nil {
                         ValidateCaptchaGoTo:
