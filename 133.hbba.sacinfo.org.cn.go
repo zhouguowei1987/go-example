@@ -110,7 +110,7 @@ func main() {
                             fmt.Println("当前时间的毫秒级时间戳:", millis)
                             validateCodeUrl := fmt.Sprintf("https://hbba.sacinfo.org.cn/portal/validate-code?pk=%s&t=%d", records.Pk, millis)
                             fmt.Println(validateCodeUrl)
-                            validateCodeFilePath := "./dbba-validate-code/validate-code.png"
+                            validateCodeFilePath := "./hbba-validate-code/validate-code.png"
                             err := downloadValidateCodeHbBa(validateCodeUrl, validateCodeFilePath)
                             if err != nil {
                                 fmt.Println(err)
