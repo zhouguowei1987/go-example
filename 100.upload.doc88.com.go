@@ -253,6 +253,11 @@ func main() {
 			Price:   200,
 		},
 		{
+			dirName: "finish-hbba.sacinfo.org.cn",
+			pCid:    8370,
+			Price:   200,
+		},
+		{
 			dirName: "finish.tikuvip（2023）.51test.net/高考",
 			pCid:    8244,
 			Price:   200,
