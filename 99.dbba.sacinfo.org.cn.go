@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/antchfx/htmlquery"
 	"github.com/otiai10/gosseract/v2"
 	"io"
 	"io/ioutil"
@@ -98,6 +99,33 @@ func main() {
 
 					fileName := chName + "(" + code + ")"
 					fmt.Println(fileName)
+
+					stdDetailUrl := fmt.Sprintf("https://hbba.sacinfo.org.cn/stdDetail/%s", records.Pk)
+                    stdDetailDoc, err := htmlquery.LoadURL(stdDetailUrl)
+                    if err != nil {
+                        fmt.Println(err)
+                        continue
+                    }
+					// 是否有查看文本按钮
+					downloadButtonNode := htmlquery.FindOne(stdDetailDoc, `//div[@class="container main-body"]/div[@class="sidebar sidebar-left"]/div[@class="sidebar-tabs"]/a`)
+					if downloadButtonNode == nil{
+					    fmt.Println("没有下载按钮跳过")
+                        continue
+					}
+
+
+					portalOnlineUrl := fmt.Sprintf("https://hbba.sacinfo.org.cn/portal/online/%s", records.Pk)
+                    portalOnlineDoc, err := htmlquery.LoadURL(portalOnlineUrl)
+                    if err != nil {
+                        fmt.Println(err)
+                        continue
+                    }
+                    // 是否有验证码窗口
+                    captchaModalDialogNode := htmlquery.FindOne(portalOnlineDoc, `//div[@class="container main-body"]/div[@class="row"]/div[@class="col-sm-12"]/div[@class="modal"]div[@class="modal-dialog"]`)
+					if captchaModalDialogNode == nil{
+					    fmt.Println("没有输入验证码窗口")
+                        continue
+					}
 
 					filePath := "../dbba.sacinfo.org.cn/" + fileName + ".pdf"
 					if _, err := os.Stat(filePath); err != nil {
