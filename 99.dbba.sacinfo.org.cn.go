@@ -100,7 +100,7 @@ func main() {
 					fileName := chName + "(" + code + ")"
 					fmt.Println(fileName)
 
-					stdDetailUrl := fmt.Sprintf("https://hbba.sacinfo.org.cn/stdDetail/%s", records.Pk)
+					stdDetailUrl := fmt.Sprintf("https://dbba.sacinfo.org.cn/stdDetail/%s", records.Pk)
                     stdDetailDoc, err := htmlquery.LoadURL(stdDetailUrl)
                     if err != nil {
                         fmt.Println(err)
@@ -114,7 +114,8 @@ func main() {
 					}
 
 
-					portalOnlineUrl := fmt.Sprintf("https://hbba.sacinfo.org.cn/portal/online/%s", records.Pk)
+
+					portalOnlineUrl := fmt.Sprintf("https://dbba.sacinfo.org.cn/portal/online/%s", records.Pk)
                     portalOnlineDoc, err := htmlquery.LoadURL(portalOnlineUrl)
                     if err != nil {
                         fmt.Println(err)
