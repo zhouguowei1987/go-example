@@ -19,12 +19,12 @@ import (
 )
 
 const (
-	DbBaEnableHttpProxy = false
-	DbBaHttpProxyUrl    = "111.225.152.186:8089"
+	HbBaEnableHttpProxy = false
+	HbBaHttpProxyUrl    = "111.225.152.186:8089"
 )
 
-func DbBaSetHttpProxy() (httpclient *http.Client) {
-	ProxyURL, _ := url.Parse(DbBaHttpProxyUrl)
+func HbBaSetHttpProxy() (httpclient *http.Client) {
+	ProxyURL, _ := url.Parse(HbBaHttpProxyUrl)
 	httpclient = &http.Client{
 		Transport: &http.Transport{
 			Proxy: http.ProxyURL(ProxyURL),
@@ -60,17 +60,17 @@ type ResponseValidateCaptcha struct {
 	Msg  string `json:"msg"`
 }
 
-const DbBaCookie = "HMACCOUNT=487EF362690A1D5D; Hm_lvt_36f2f0446e1c2cda8410befc24743a9b=1743992992; Hm_lpvt_36f2f0446e1c2cda8410befc24743a9b=1744381058; JSESSIONID=47741EB2118FEFA59FBAD27AE3C7EF17"
+const HbBaCookie = "HMACCOUNT=487EF362690A1D5D; Hm_lvt_bc6f61eace617162b31b982f796830e6=1744429362; Hm_lpvt_bc6f61eace617162b31b982f796830e6=1744555921; JSESSIONID=ACACCA00349BD85B3872768A7FEBF6FB"
 
-// ychEduSpider 获取地方标准文档
-// @Title 获取地方标准文档
-// @Description https://dbba.sacinfo.org.cn/，获取地方标准文档
+// ychEduSpider 获取行业标准文档
+// @Title 获取行业标准文档
+// @Description https://hbba.sacinfo.org.cn/，获取行业标准文档
 func main() {
-	requestUrl := "https://dbba.sacinfo.org.cn/stdQueryList"
-	current := 10
+	requestUrl := "https://hbba.sacinfo.org.cn/stdQueryList"
+	current := 2491
 	minCurrent := 1
 	size := 15
-	status := ""
+	status := "现行"
 	isPageListGo := true
 	for isPageListGo {
 		if current < minCurrent {
@@ -100,7 +100,7 @@ func main() {
 					fileName := chName + "(" + code + ")"
 					fmt.Println(fileName)
 
-					stdDetailUrl := fmt.Sprintf("https://dbba.sacinfo.org.cn/stdDetail/%s", records.Pk)
+                    stdDetailUrl := fmt.Sprintf("https://hbba.sacinfo.org.cn/stdDetail/%s", records.Pk)
                     stdDetailDoc, err := htmlquery.LoadURL(stdDetailUrl)
                     if err != nil {
                         fmt.Println(err)
@@ -113,9 +113,7 @@ func main() {
                         continue
 					}
 
-
-
-					portalOnlineUrl := fmt.Sprintf("https://dbba.sacinfo.org.cn/portal/online/%s", records.Pk)
+					portalOnlineUrl := fmt.Sprintf("https://hbba.sacinfo.org.cn/portal/online/%s", records.Pk)
                     portalOnlineDoc, err := htmlquery.LoadURL(portalOnlineUrl)
                     if err != nil {
                         fmt.Println(err)
@@ -128,7 +126,7 @@ func main() {
                         continue
 					}
 
-					filePath := "../dbba.sacinfo.org.cn/" + fileName + ".pdf"
+					filePath := "../hbba.sacinfo.org.cn/" + fileName + ".pdf"
 					if _, err := os.Stat(filePath); err != nil {
                         ValidateCaptchaGoTo:
                             // 获取验证码图片
@@ -137,16 +135,16 @@ func main() {
                             // 将纳秒级时间戳转换为毫秒级
                             millis := nanoTimestamp / 1e6 // 或者 nanoTimestamp / 1000000
                             fmt.Println("当前时间的毫秒级时间戳:", millis)
-                            validateCodeUrl := fmt.Sprintf("https://dbba.sacinfo.org.cn/portal/validate-code?pk=%s&t=%d", records.Pk, millis)
+                            validateCodeUrl := fmt.Sprintf("https://hbba.sacinfo.org.cn/portal/validate-code?pk=%s&t=%d", records.Pk, millis)
                             fmt.Println(validateCodeUrl)
-                            validateCodeFilePath := "./dbba-validate-code/validate-code.png"
-                            err := downloadValidateCodeDbBa(validateCodeUrl, validateCodeFilePath)
+                            validateCodeFilePath := "./hbba-validate-code/validate-code.png"
+                            err := downloadValidateCodeHbBa(validateCodeUrl, validateCodeFilePath)
                             if err != nil {
                                 fmt.Println(err)
                                 continue
                             }
                             // 获取验证码文字信息
-                            captcha, err := TesseractValidateCodeDbBa(validateCodeFilePath)
+                            captcha, err := TesseractValidateCodeHbBa(validateCodeFilePath)
                             captcha = strings.TrimSpace(captcha)
                             fmt.Println("识别的验证码：", captcha)
                             if len(captcha) !=4{
@@ -154,8 +152,8 @@ func main() {
                             }
 
                             // 获取下载地址
-                            validateCaptchaReferer := fmt.Sprintf("https://dbba.sacinfo.org.cn/portal/online/%s", records.Pk)
-                            responseValidateCaptcha, err := validateCaptchaDbBa(captcha, records.Pk, validateCaptchaReferer)
+                            validateCaptchaReferer := fmt.Sprintf("https://hbba.sacinfo.org.cn/portal/online/%s", records.Pk)
+                            responseValidateCaptcha, err := validateCaptchaHbBa(captcha, records.Pk, validateCaptchaReferer)
                             fmt.Println(responseValidateCaptcha, err)
                             if err != nil {
                                 fmt.Println(err)
@@ -165,20 +163,20 @@ func main() {
                                 fmt.Println(responseValidateCaptcha.Msg)
                                 goto ValidateCaptchaGoTo
                             }
-                            downLoadUrl := fmt.Sprintf("https://dbba.sacinfo.org.cn/portal/download/%s", responseValidateCaptcha.Msg)
+                            downLoadUrl := fmt.Sprintf("https://hbba.sacinfo.org.cn/portal/download/%s", responseValidateCaptcha.Msg)
                             fmt.Println(downLoadUrl)
 
-                            detailUrl := fmt.Sprintf("https://dbba.sacinfo.org.cn/stdDetail/%s", records.Pk)
+                            detailUrl := fmt.Sprintf("https://hbba.sacinfo.org.cn/stdDetail/%s", records.Pk)
                             fmt.Println(detailUrl)
 
                             fmt.Println("=======开始下载" + strconv.Itoa(current) + "========")
-                            err = downloadDbBa(downLoadUrl, detailUrl, filePath)
+                            err = downloadHbBa(downLoadUrl, detailUrl, filePath)
                             if err != nil {
                                 fmt.Println(err)
                                 continue
                             }
                             //复制文件
-                            tempFilePath := strings.ReplaceAll(filePath, "dbba.sacinfo.org.cn", "temp-dbba.sacinfo.org.cn")
+                            tempFilePath := strings.ReplaceAll(filePath, "hbba.sacinfo.org.cn", "temp-hbba.sacinfo.org.cn")
                             err = copyDbbaFile(filePath, tempFilePath)
                             if err != nil {
                                 fmt.Println(err)
@@ -232,8 +230,8 @@ func GetStdQueryList(requestUrl string, current int, size int, status string) (r
 			ResponseHeaderTimeout: time.Second * 3,
 		},
 	}
-	if DbBaEnableHttpProxy {
-		client = DbBaSetHttpProxy()
+	if HbBaEnableHttpProxy {
+		client = HbBaSetHttpProxy()
 	}
 	responseData = ResponseData{}
 	postData := url.Values{}
@@ -249,9 +247,9 @@ func GetStdQueryList(requestUrl string, current int, size int, status string) (r
 	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
 	req.Header.Set("Connection", "keep-alive")
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
-	req.Header.Set("Host", "dbba.sacinfo.org.cn")
-	req.Header.Set("Origin", "https://dbba.sacinfo.org.cn")
-	req.Header.Set("Referer", "https://dbba.sacinfo.org.cn/stdList")
+	req.Header.Set("Host", "hbba.sacinfo.org.cn")
+	req.Header.Set("Origin", "https://hbba.sacinfo.org.cn")
+	req.Header.Set("Referer", "https://hbba.sacinfo.org.cn/stdList")
 	req.Header.Set("sec-ch-ua", "\"Chromium\";v=\"110\", \"Not A(Brand\";v=\"24\", \"Google Chrome\";v=\"110\"")
 	req.Header.Set("sec-ch-ua-mobile", "?0")
 	req.Header.Set("sec-ch-ua-platform", "\"macOS\"")
@@ -279,7 +277,7 @@ func GetStdQueryList(requestUrl string, current int, size int, status string) (r
 	return responseData, nil
 }
 
-func downloadValidateCodeDbBa(validateCodeUrl string, filePath string) error {
+func downloadValidateCodeHbBa(validateCodeUrl string, filePath string) error {
 	// 初始化客户端
 	var client *http.Client = &http.Client{
 		Transport: &http.Transport{
@@ -296,26 +294,26 @@ func downloadValidateCodeDbBa(validateCodeUrl string, filePath string) error {
 			ResponseHeaderTimeout: time.Second * 3,
 		},
 	}
-	if DbBaEnableHttpProxy {
-		client = DbBaSetHttpProxy()
+	if HbBaEnableHttpProxy {
+		client = HbBaSetHttpProxy()
 	}
 	req, err := http.NewRequest("GET", validateCodeUrl, nil) //建立连接
 	if err != nil {
 		return err
 	}
 
-	req.Header.Set("authority", "dbba.sacinfo.org.cn")
+	req.Header.Set("authority", "hbba.sacinfo.org.cn")
 	req.Header.Set("method", "GET")
-	path := strings.Replace(validateCodeUrl, "https://dbba.sacinfo.org.cn", "", 1)
+	path := strings.Replace(validateCodeUrl, "https://hbba.sacinfo.org.cn", "", 1)
 	fmt.Println(path)
 	req.Header.Set("path", path)
 	req.Header.Set("scheme", "https")
 	req.Header.Set("Accept", "mage/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8")
 	req.Header.Set("Accept-Encoding", "gzip, deflate, br")
 	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
-	req.Header.Set("Cookie", DbBaCookie)
+	req.Header.Set("Cookie", HbBaCookie)
 	req.Header.Set("Connection", "keep-alive")
-	req.Header.Set("Host", "dbba.sacinfo.org.cn")
+	req.Header.Set("Host", "hbba.sacinfo.org.cn")
 	req.Header.Set("sec-ch-ua", "\"Chromium\";v=\"110\", \"Not A(Brand\";v=\"24\", \"Google Chrome\";v=\"110\"")
 	req.Header.Set("sec-ch-ua-mobile", "?0")
 	req.Header.Set("sec-ch-ua-platform", "\"macOS\"")
@@ -356,7 +354,7 @@ func downloadValidateCodeDbBa(validateCodeUrl string, filePath string) error {
 	return nil
 }
 
-func TesseractValidateCodeDbBa(imagePath string) (codeText string, err error) {
+func TesseractValidateCodeHbBa(imagePath string) (codeText string, err error) {
 	// 创建Tesseract客户端
 	client := gosseract.NewClient()
 	defer client.Close()
@@ -376,7 +374,7 @@ func TesseractValidateCodeDbBa(imagePath string) (codeText string, err error) {
 	return text, nil
 }
 
-func validateCaptchaDbBa(captcha string, pk string, referer string) (responseValidateCaptcha ResponseValidateCaptcha, err error) {
+func validateCaptchaHbBa(captcha string, pk string, referer string) (responseValidateCaptcha ResponseValidateCaptcha, err error) {
 	// 初始化客户端
 	var client *http.Client = &http.Client{
 		Transport: &http.Transport{
@@ -393,19 +391,19 @@ func validateCaptchaDbBa(captcha string, pk string, referer string) (responseVal
 			ResponseHeaderTimeout: time.Second * 3,
 		},
 	}
-	if DbBaEnableHttpProxy {
-		client = DbBaSetHttpProxy()
+	if HbBaEnableHttpProxy {
+		client = HbBaSetHttpProxy()
 	}
 // 	fmt.Print("Enter an captcha and press enter: ")
 // 	fmt.Scanln(&captcha) // 等待用户按下回车键后继续执行
 // 	fmt.Println("You entered captcha:", captcha)
 	responseValidateCaptcha = ResponseValidateCaptcha{}
-	requestUrl := fmt.Sprintf("https://dbba.sacinfo.org.cn/portal/validate-captcha/down?captcha=%s&pk=%s", captcha, pk)
+	requestUrl := fmt.Sprintf("https://hbba.sacinfo.org.cn/portal/validate-captcha/down?captcha=%s&pk=%s", captcha, pk)
 	req, err := http.NewRequest("POST", requestUrl, nil) //建立连接
 	if err != nil {
 		return responseValidateCaptcha, err
 	}
-	req.Header.Set("authority", "dbba.sacinfo.org.cn")
+	req.Header.Set("authority", "hbba.sacinfo.org.cn")
 	req.Header.Set("method", "POST")
 	req.Header.Set("path", "/portal/validate-captcha/down")
 	req.Header.Set("scheme", "https")
@@ -413,8 +411,8 @@ func validateCaptchaDbBa(captcha string, pk string, referer string) (responseVal
 	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
 	req.Header.Set("Connection", "keep-alive")
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")
-	req.Header.Set("Cookie", DbBaCookie)
-	req.Header.Set("Origin", "https://dbba.sacinfo.org.cn")
+	req.Header.Set("Cookie", HbBaCookie)
+	req.Header.Set("Origin", "https://hbba.sacinfo.org.cn")
 	req.Header.Set("Priority", "u=1, i")
 	req.Header.Set("Referer", referer)
 	req.Header.Set("sec-ch-ua", "\"Chromium\";v=\"110\", \"Not A(Brand\";v=\"24\", \"Google Chrome\";v=\"110\"")
@@ -444,7 +442,7 @@ func validateCaptchaDbBa(captcha string, pk string, referer string) (responseVal
 	return responseValidateCaptcha, nil
 }
 
-func downloadDbBa(attachmentUrl string, referer string, filePath string) error {
+func downloadHbBa(attachmentUrl string, referer string, filePath string) error {
 	// 初始化客户端
 	var client *http.Client = &http.Client{
 		Transport: &http.Transport{
@@ -461,26 +459,26 @@ func downloadDbBa(attachmentUrl string, referer string, filePath string) error {
 			ResponseHeaderTimeout: time.Second * 3,
 		},
 	}
-	if DbBaEnableHttpProxy {
-		client = DbBaSetHttpProxy()
+	if HbBaEnableHttpProxy {
+		client = HbBaSetHttpProxy()
 	}
 	req, err := http.NewRequest("GET", attachmentUrl, nil) //建立连接
 	if err != nil {
 		return err
 	}
 
-	req.Header.Set("authority", "dbba.sacinfo.org.cn")
+	req.Header.Set("authority", "hbba.sacinfo.org.cn")
 	req.Header.Set("method", "GET")
-	path := strings.Replace(attachmentUrl, "https://dbba.sacinfo.org.cn", "", 1)
+	path := strings.Replace(attachmentUrl, "https://hbba.sacinfo.org.cn", "", 1)
 	fmt.Println(path)
 	req.Header.Set("path", path)
 	req.Header.Set("scheme", "https")
 	req.Header.Set("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7")
 	req.Header.Set("Accept-Encoding", "gzip, deflate, br")
 	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
-	req.Header.Set("Cookie", DbBaCookie)
+	req.Header.Set("Cookie", HbBaCookie)
 	req.Header.Set("Connection", "keep-alive")
-	req.Header.Set("Host", "dbba.sacinfo.org.cn")
+	req.Header.Set("Host", "hbba.sacinfo.org.cn")
 	req.Header.Set("Referer", referer)
 	req.Header.Set("sec-ch-ua", "\"Chromium\";v=\"110\", \"Not A(Brand\";v=\"24\", \"Google Chrome\";v=\"110\"")
 	req.Header.Set("sec-ch-ua-mobile", "?0")
