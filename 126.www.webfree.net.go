@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/antchfx/htmlquery"
 	"io"
 	"io/ioutil"
 	"net"
@@ -15,6 +14,8 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/antchfx/htmlquery"
 )
 
 const (
@@ -38,18 +39,18 @@ type WebFree struct {
 }
 
 var webfrees = []WebFree{
+	// {
+	// 	name: "国家标准",
+	// 	url:  "https://www.webfree.net/downloads/gb",
+	// },
+	// {
+	// 	name: "行业标准",
+	// 	url:  "https://www.webfree.net/hangye-biaozhun",
+	// },
 	{
-		name: "国家标准",
-		url:  "https://www.webfree.net/downloads/gb",
+		name: "地方标准",
+		url:  "https://www.webfree.net/difang-biaozhun",
 	},
-	//{
-	//	name: "行业标准",
-	//	url:  "https://www.webfree.net/hangye-biaozhun",
-	//},
-	//{
-	//	name: "地方标准",
-	//	url:  "https://www.webfree.net/difang-biaozhun",
-	//},
 	//{
 	//	name: "书籍图集",
 	//	url:  "https://www.webfree.net/downloads/book-and-drawings",
@@ -74,7 +75,7 @@ type DownLoadWebFreeResponse struct {
 // @Description https://www.webfree.net/，协筑资源标准文档
 func main() {
 	for _, webfree := range webfrees {
-		current := 343
+		current := 149
 		minCurrent := 1
 		isPageListGo := true
 		for isPageListGo {
@@ -109,7 +110,7 @@ func main() {
 				fileName = strings.ReplaceAll(fileName, " ", "")
 				fmt.Println(fileName)
 
-				filePath := "E:\\workspace\\www.webfree.net\\www.webfree.net/" + webfree.name + "/" + fileName + ".pdf"
+				filePath := "D:\\workspace\\www.webfree.net\\www.webfree.net/" + webfree.name + "/" + fileName + ".pdf"
 				_, errPdf := os.Stat(filePath)
 				if errPdf != nil {
 
