@@ -67,9 +67,9 @@ const HbBaCookie = "HMACCOUNT=487EF362690A1D5D; Hm_lvt_bc6f61eace617162b31b982f7
 // @Description https://hbba.sacinfo.org.cn/，获取行业标准文档
 func main() {
 	requestUrl := "https://hbba.sacinfo.org.cn/stdQueryList"
-// 	300
-	current := 350
-	minCurrent := 320
+// 	350
+	current := 10
+	minCurrent := 1
 	size := 15
 	status := "现行"
 	isPageListGo := true
