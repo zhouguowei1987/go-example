@@ -60,14 +60,14 @@ type ResponseValidateCaptcha struct {
 	Msg  string `json:"msg"`
 }
 
-const DbBaCookie = "HMACCOUNT=487EF362690A1D5D; Hm_lvt_36f2f0446e1c2cda8410befc24743a9b=1746589440; Hm_lpvt_36f2f0446e1c2cda8410befc24743a9b=1747300008; JSESSIONID=CE8D49C88FC204EB33E42C1C2BC83685"
+const DbBaCookie = "HMACCOUNT=487EF362690A1D5D; Hm_lvt_36f2f0446e1c2cda8410befc24743a9b=1746589440; Hm_lpvt_36f2f0446e1c2cda8410befc24743a9b=1747386499; JSESSIONID=AC97DD44438963A53A7D89B2F3F6B663"
 
 // ychEduSpider 获取地方标准文档
 // @Title 获取地方标准文档
 // @Description https://dbba.sacinfo.org.cn/，获取地方标准文档
 func main() {
 	requestUrl := "https://dbba.sacinfo.org.cn/stdQueryList"
-	current := 10
+	current := 1784
 	minCurrent := 1
 	size := 15
 	status := ""
