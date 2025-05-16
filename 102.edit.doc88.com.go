@@ -203,14 +203,8 @@ func main() {
 				PPriceNew = "788"
 			} else if filePageNum > 30 && filePageNum <= 35 {
 				PPriceNew = "888"
-			} else if filePageNum > 35 && filePageNum <= 40 {
-				PPriceNew = "988"
-			} else if filePageNum > 40 && filePageNum <= 45 {
-				PPriceNew = "1088"
-			} else if filePageNum > 45 && filePageNum <= 50 {
-				PPriceNew = "1188"
 			} else {
-				PPriceNew = "1288"
+				PPriceNew = "988"
 			}
 
 			// 新旧价格一样，则跳过
