@@ -101,7 +101,23 @@ func main() {
 					attachmentUrl := "http://www.19mini.cn/e/DownSys" + strings.ReplaceAll(htmlquery.InnerText(attachmentNode), "..", "")
 					fmt.Println(attachmentUrl)
 
-					filePath := "F:\\workspace\\www.19mini.cn\\www.19mini.cn\\" + category.categoryName + "\\" + title + ".rar"
+					// 获取文档类型
+					MiNi19ViewUrl := fmt.Sprintf("http://www.19mini.cn/ziyuan/shijuan/%d.html", id)
+					fmt.Println(MiNi19ViewUrl)
+					MiNi19ViewDoc, err := htmlquery.LoadURL(MiNi19ViewUrl)
+					if err != nil {
+						fmt.Println(err)
+						continue
+					}
+					fileTypeNode := htmlquery.FindOne(MiNi19ViewDoc, `./div[@class="infolist"]/span[5]`)
+					if fileTypeNode == nil {
+						fmt.Println("文档类型不存在")
+						continue
+					}
+					fileType := htmlquery.InnerText(fileTypeNode)
+					fmt.Println(fileType)
+
+					filePath := "F:\\workspace\\www.19mini.cn\\www.19mini.cn\\" + category.categoryName + "\\" + title + fileType
 					_, err = os.Stat(filePath)
 					if err != nil {
 						fmt.Println("=======开始下载========")
