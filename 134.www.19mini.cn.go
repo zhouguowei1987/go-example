@@ -109,7 +109,7 @@ func main() {
 						fmt.Println(err)
 						continue
 					}
-					fileTypeNode := htmlquery.FindOne(MiNi19ViewDoc, `./div[@class="infolist"]/span[5]`)
+					fileTypeNode := htmlquery.FindOne(MiNi19ViewDoc, `//div[@class="infolist"]/span[5]`)
 					if fileTypeNode == nil {
 						fmt.Println("文档类型不存在")
 						continue
