@@ -676,6 +676,11 @@ func main() {
 			pCid:    8244,
 			Price:   200,
 		},
+		{
+			dirName: "down.foodmate.net/",
+			pCid:    8370,
+			Price:   788,
+		},
 	}
 	rootPath := "../upload.doc88.com/"
 	for _, childDir := range uploadChildDirArr {

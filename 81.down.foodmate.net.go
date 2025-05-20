@@ -31,7 +31,7 @@ func main() {
 		{id: 2, name: "国外标准"},
 	}
 	for _, category := range allCategory {
-		page := 371
+		page := 1
 		isPageGo := true
 		for isPageGo {
 			listUrl := fmt.Sprintf("http://down.foodmate.net/standard/sort/%d/index-%d.html", category.id, page)
@@ -68,7 +68,7 @@ func main() {
 							continue
 						}
 						fmt.Println(downloadUrl)
-						filePath := "E:\\workspace\\down.foodmate.net\\" + category.name + "\\" + title + ".pdf"
+						filePath := "../down.foodmate.net/" + title + ".pdf"
 						fmt.Println(filePath)
 						if _, err := os.Stat(filePath); err != nil {
 							fmt.Println("=======开始下载========")
@@ -77,7 +77,7 @@ func main() {
 								fmt.Println(err)
 							}
 							fmt.Println("=======下载完成========")
-							downloadFoodMatePdfSleep := rand.Intn(20)
+							downloadFoodMatePdfSleep := rand.Intn(5)
 							for i := 1; i <= downloadFoodMatePdfSleep; i++ {
 								time.Sleep(time.Second)
 								fmt.Println("page="+strconv.Itoa(page)+"===========更新", title, "成功，暂停", downloadFoodMatePdfSleep, "秒，倒计时", i, "秒===========")
