@@ -76,6 +76,14 @@ func main() {
 							if err != nil {
 								fmt.Println(err)
 							}
+
+							//复制文件
+							err = FoodMateCopyFile(filePath, "upload.doc88.com/down.foodmate.net")
+							if err != nil {
+								fmt.Println(err)
+								continue
+							}
+
 							fmt.Println("=======下载完成========")
 							downloadFoodMatePdfSleep := rand.Intn(5)
 							for i := 1; i <= downloadFoodMatePdfSleep; i++ {
@@ -182,4 +190,31 @@ func downloadFoodMatePdf(pdfUrl string, filePath string, referer string) error {
 		return err
 	}
 	return nil
+}
+
+func FoodMateCopyFile(src, dst string) (err error) {
+	in, err := os.Open(src)
+	if err != nil {
+		return
+	}
+	defer func(in *os.File) {
+		err := in.Close()
+		if err != nil {
+			return
+		}
+	}(in)
+
+	out, err := os.Create(dst)
+	if err != nil {
+		return
+	}
+	defer func(out *os.File) {
+		err := out.Close()
+		if err != nil {
+			return
+		}
+	}(out)
+
+	_, err = io.Copy(out, in)
+	return
 }
