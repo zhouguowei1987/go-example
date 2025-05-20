@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/antchfx/htmlquery"
+	"golang.org/x/net/html"
 	"io"
 	"math/rand"
 	"net"
@@ -45,6 +46,8 @@ var miNi19EducationCategory = []MiNi19EducationCategory{
 	},
 }
 
+const MiNi19Cookie = "Hm_lvt_e82ba7292d1c4fbfbf1933dc51f62e60=1747718117; HMACCOUNT=00EDEFEA78E0441D; XLA_CI=d33d1c917ec25cd36d5c8418379865f0; Hm_lpvt_e82ba7292d1c4fbfbf1933dc51f62e60=1747719871; _wtspurl=/ziyuan/shijuan/index.html; _wtsuid=efd4cf65-e0d9-4614-9688-23b53af04db9; _wtscpk=6f6bc82a5c; _wtsexp=1747720744; _wtsjsk=66ac11e330c71700c3f7195d57dff66c"
+
 // MiNi19Spider 获取迷你语文网文档
 // @Title 获取迷你语文网文档
 // @Description http://www.19mini.cn/，获取迷你语文网文档
@@ -58,7 +61,7 @@ func main() {
 				listUrl = strings.ReplaceAll(category.categoryUrl, "index.html", "") + fmt.Sprintf("index_%d.html", page)
 			}
 			fmt.Println(listUrl)
-			listDoc, err := htmlquery.LoadURL(listUrl)
+			listDoc, err := ListMiNi19(listUrl, "http://www.19mini.cn/ziyuan/shijuan/index.html")
 			if err != nil {
 				fmt.Println(err)
 				break
@@ -152,6 +155,54 @@ func main() {
 			}
 		}
 	}
+}
+
+func ListMiNi19(requestUrl string, referer string) (doc *html.Node, err error) {
+	// 初始化客户端
+	var client *http.Client = &http.Client{
+		Transport: &http.Transport{
+			Dial: func(netw, addr string) (net.Conn, error) {
+				c, err := net.DialTimeout(netw, addr, time.Second*3)
+				if err != nil {
+					fmt.Println("dail timeout", err)
+					return nil, err
+				}
+				return c, nil
+
+			},
+			MaxIdleConnsPerHost:   10,
+			ResponseHeaderTimeout: time.Second * 3,
+		},
+	}
+	if ChinaZPptEnableHttpProxy {
+		client = ChinaZPptSetHttpProxy()
+	}
+	req, err := http.NewRequest("GET", requestUrl, nil) //建立连接
+
+	if err != nil {
+		return doc, err
+	}
+	req.Header.Set("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7")
+	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
+	req.Header.Set("Connection", "keep-alive")
+	req.Header.Set("Cookie", MiNi19Cookie)
+	req.Header.Set("Referer", referer)
+	req.Header.Set("Upgrade-Insecure-Requests", "1")
+	req.Header.Set("User-Agent", "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Mobile Safari/537.36")
+	resp, err := client.Do(req) //拿到返回的内容
+	if err != nil {
+		return doc, err
+	}
+	defer resp.Body.Close()
+	// 如果访问失败，就打印当前状态码
+	if resp.StatusCode != http.StatusOK {
+		return doc, errors.New("http status :" + strconv.Itoa(resp.StatusCode))
+	}
+	doc, err = htmlquery.Parse(resp.Body)
+	if err != nil {
+		return doc, err
+	}
+	return doc, nil
 }
 
 func downloadMiNi19(attachmentUrl string, filePath string, referer string) error {

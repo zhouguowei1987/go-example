@@ -83,16 +83,16 @@ func main() {
 				isPageListGo = false
 				break
 			}
-			webfreeIndexUrl := webfree.url
+			webFreeIndexUrl := webfree.url
 			if current > 1 {
-				webfreeIndexUrl += fmt.Sprintf("/?cp=%d", current)
+				webFreeIndexUrl += fmt.Sprintf("/?cp=%d", current)
 			}
-			webfreeIndexDoc, err := htmlquery.LoadURL(webfreeIndexUrl)
+			webFreeIndexDoc, err := htmlquery.LoadURL(webFreeIndexUrl)
 			if err != nil {
 				fmt.Println(err)
 				break
 			}
-			liNodes := htmlquery.Find(webfreeIndexDoc, `//div[@id="content_wpdm_package_1"]/div[@class="row"]/div[@class="col-lg-12 col-md-12 col-12"]`)
+			liNodes := htmlquery.Find(webFreeIndexDoc, `//div[@id="content_wpdm_package_1"]/div[@class="row"]/div[@class="col-lg-12 col-md-12 col-12"]`)
 			if len(liNodes) <= 0 {
 				isPageListGo = false
 				fmt.Println("没有数据暂停")
