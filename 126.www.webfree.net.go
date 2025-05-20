@@ -39,18 +39,18 @@ type WebFree struct {
 }
 
 var webfrees = []WebFree{
-// 	{
-// 		name: "国家标准",
-// 		url:  "https://www.webfree.net/downloads/gb",
-// 	},
-// 	{
-// 		name: "行业标准",
-// 		url:  "https://www.webfree.net/hangye-biaozhun",
-// 	},
-// 	{
-// 		name: "地方标准",
-// 		url:  "https://www.webfree.net/difang-biaozhun",
-// 	},
+	{
+		name: "国家标准",
+		url:  "https://www.webfree.net/downloads/gb",
+	},
+	{
+		name: "行业标准",
+		url:  "https://www.webfree.net/hangye-biaozhun",
+	},
+	{
+		name: "地方标准",
+		url:  "https://www.webfree.net/difang-biaozhun",
+	},
 	{
 		name: "书籍图集",
 		url:  "https://www.webfree.net/downloads/book-and-drawings",
@@ -75,7 +75,7 @@ type DownLoadWebFreeResponse struct {
 // @Description https://www.webfree.net/，协筑资源标准文档
 func main() {
 	for _, webfree := range webfrees {
-		current := 79
+		current := 10
 		minCurrent := 1
 		isPageListGo := true
 		for isPageListGo {
