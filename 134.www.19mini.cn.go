@@ -17,7 +17,7 @@ import (
 	"time"
 )
 
-var MiNi19EnableHttpProxy = true
+var MiNi19EnableHttpProxy = false
 var MiNi19HttpProxyUrl = ""
 var MiNi19HttpProxyUrlArr = make([]string, 0)
 
