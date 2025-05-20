@@ -116,6 +116,12 @@ func main() {
 					}
 					fileType := htmlquery.InnerText(fileTypeNode)
 					fmt.Println(fileType)
+					if strings.Index(fileType, "doc") == -1 {
+						fileType = ".doc"
+					} else {
+						fmt.Println("文档类型不是doc文档，跳过")
+						continue
+					}
 
 					filePath := "F:\\workspace\\www.19mini.cn\\www.19mini.cn\\" + category.categoryName + "\\" + title + fileType
 					_, err = os.Stat(filePath)
