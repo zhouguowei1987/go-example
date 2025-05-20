@@ -174,8 +174,8 @@ func ListMiNi19(requestUrl string, referer string) (doc *html.Node, err error) {
 			ResponseHeaderTimeout: time.Second * 3,
 		},
 	}
-	if ChinaZPptEnableHttpProxy {
-		client = ChinaZPptSetHttpProxy()
+	if MiNi19EnableHttpProxy {
+		client = MiNi19SetHttpProxy()
 	}
 	req, err := http.NewRequest("GET", requestUrl, nil) //建立连接
 
