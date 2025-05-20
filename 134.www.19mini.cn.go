@@ -17,16 +17,89 @@ import (
 	"time"
 )
 
-const (
-	MiNi19EnableHttpProxy = false
-	MiNi19HttpProxyUrl    = "27.42.168.46:55481"
-)
+var MiNi19EnableHttpProxy = true
+var MiNi19HttpProxyUrl = ""
+var MiNi19HttpProxyUrlArr = make([]string, 0)
+
+func MiNi19HttpProxy() error {
+	//pageMax := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+	pageMax := []int{11, 12, 13, 14, 15, 16, 17, 18, 19, 20}
+	for _, page := range pageMax {
+		freeProxyUrl := "https://www.beesproxy.com/free"
+		if page > 1 {
+			freeProxyUrl = fmt.Sprintf("https://www.beesproxy.com/free/page/%d", page)
+		}
+		beesProxyDoc, err := htmlquery.LoadURL(freeProxyUrl)
+		if err != nil {
+			return err
+		}
+		trNodes := htmlquery.Find(beesProxyDoc, `//figure[@class="wp-block-table"]/table[@class="table table-bordered bg--secondary"]/tbody/tr`)
+		if len(trNodes) > 0 {
+			for _, trNode := range trNodes {
+				ipNode := htmlquery.FindOne(trNode, "./td[1]")
+				if ipNode == nil {
+					continue
+				}
+				ip := htmlquery.InnerText(ipNode)
+
+				portNode := htmlquery.FindOne(trNode, "./td[2]")
+				if portNode == nil {
+					continue
+				}
+				port := htmlquery.InnerText(portNode)
+
+				protocolNode := htmlquery.FindOne(trNode, "./td[5]")
+				if protocolNode == nil {
+					continue
+				}
+				protocol := htmlquery.InnerText(protocolNode)
+
+				switch protocol {
+				case "HTTP":
+					MiNi19HttpProxyUrlArr = append(MiNi19HttpProxyUrlArr, "http://"+ip+":"+port)
+				case "HTTPS":
+					MiNi19HttpProxyUrlArr = append(MiNi19HttpProxyUrlArr, "https://"+ip+":"+port)
+				}
+			}
+		}
+	}
+	return nil
+}
 
 func MiNi19SetHttpProxy() (httpclient *http.Client) {
+	if MiNi19HttpProxyUrl == "" {
+		if len(MiNi19HttpProxyUrlArr) <= 0 {
+			err := MiNi19HttpProxy()
+			if err != nil {
+				MiNi19SetHttpProxy()
+			}
+		}
+		if len(MiNi19HttpProxyUrlArr) > 1 {
+			MiNi19HttpProxyUrl = MiNi19HttpProxyUrlArr[0]
+		}
+		if len(MiNi19HttpProxyUrlArr) >= 2 {
+			MiNi19HttpProxyUrlArr = MiNi19HttpProxyUrlArr[1:]
+		} else {
+			MiNi19HttpProxyUrlArr = make([]string, 0)
+		}
+	}
+
+	fmt.Println(MiNi19HttpProxyUrl)
 	ProxyURL, _ := url.Parse(MiNi19HttpProxyUrl)
 	httpclient = &http.Client{
 		Transport: &http.Transport{
 			Proxy: http.ProxyURL(ProxyURL),
+			Dial: func(netw, addr string) (net.Conn, error) {
+				c, err := net.DialTimeout(netw, addr, time.Second*3)
+				if err != nil {
+					fmt.Println("dail timeout", err)
+					return nil, err
+				}
+				return c, nil
+
+			},
+			MaxIdleConnsPerHost:   10,
+			ResponseHeaderTimeout: time.Second * 3,
 		},
 	}
 	return httpclient
