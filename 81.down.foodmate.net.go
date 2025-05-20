@@ -31,7 +31,7 @@ func main() {
 		{id: 2, name: "国外标准"},
 	}
 	for _, category := range allCategory {
-		page := 1
+		page := 125
 		isPageGo := true
 		for isPageGo {
 			listUrl := fmt.Sprintf("http://down.foodmate.net/standard/sort/%d/index-%d.html", category.id, page)
@@ -78,7 +78,8 @@ func main() {
 							}
 
 							//复制文件
-							err = FoodMateCopyFile(filePath, "upload.doc88.com/down.foodmate.net")
+							tempFilePath := strings.ReplaceAll(filePath, "down.foodmate.net", "temp-down.foodmate.net")
+							err = FoodMateCopyFile(filePath, tempFilePath)
 							if err != nil {
 								fmt.Println(err)
 								continue
