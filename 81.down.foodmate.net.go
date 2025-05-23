@@ -31,7 +31,7 @@ func main() {
 		{id: 2, name: "国外标准"},
 	}
 	for _, category := range allCategory {
-		page := 125
+		page := 597
 		isPageGo := true
 		for isPageGo {
 			listUrl := fmt.Sprintf("http://down.foodmate.net/standard/sort/%d/index-%d.html", category.id, page)
@@ -53,6 +53,10 @@ func main() {
 						title = strings.ReplaceAll(title, "\r", "")
 						title = strings.ReplaceAll(title, " ", "")
 						fmt.Println(title)
+						if strings.Index(title, "DB") != -1{
+						    fmt.Println("地方标准，跳过")
+							continue
+						}
 
 						authUrl := htmlquery.InnerText(htmlquery.FindOne(downNode, `./@href`))
 						fmt.Println(authUrl)
