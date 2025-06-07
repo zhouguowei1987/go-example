@@ -3,8 +3,6 @@ package main
 import (
 	"errors"
 	"fmt"
-	"github.com/antchfx/htmlquery"
-	"golang.org/x/net/html"
 	"io"
 	"math/rand"
 	"net"
@@ -15,6 +13,9 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/antchfx/htmlquery"
+	"golang.org/x/net/html"
 )
 
 var MiNi19EnableHttpProxy = false
@@ -126,7 +127,7 @@ const MiNi19Cookie = "Hm_lvt_e82ba7292d1c4fbfbf1933dc51f62e60=1747718117; HMACCO
 // @Description http://www.19mini.cn/，获取迷你语文网文档
 func main() {
 	for _, category := range miNi19EducationCategory {
-		page := 1
+		page := 7
 		isPageGo := true
 		for isPageGo {
 			var listUrl = fmt.Sprintf(category.categoryUrl)
