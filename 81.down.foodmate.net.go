@@ -31,7 +31,7 @@ func main() {
 		{id: 2, name: "国外标准"},
 	}
 	for _, category := range allCategory {
-		page := 371
+		page := 597
 		isPageGo := true
 		for isPageGo {
 			listUrl := fmt.Sprintf("http://down.foodmate.net/standard/sort/%d/index-%d.html", category.id, page)
@@ -53,6 +53,10 @@ func main() {
 						title = strings.ReplaceAll(title, "\r", "")
 						title = strings.ReplaceAll(title, " ", "")
 						fmt.Println(title)
+						if strings.Index(title, "DB") != -1{
+						    fmt.Println("地方标准，跳过")
+							continue
+						}
 
 						authUrl := htmlquery.InnerText(htmlquery.FindOne(downNode, `./@href`))
 						fmt.Println(authUrl)
@@ -68,7 +72,7 @@ func main() {
 							continue
 						}
 						fmt.Println(downloadUrl)
-						filePath := "E:\\workspace\\down.foodmate.net\\" + category.name + "\\" + title + ".pdf"
+						filePath := "../down.foodmate.net/" + title + ".pdf"
 						fmt.Println(filePath)
 						if _, err := os.Stat(filePath); err != nil {
 							fmt.Println("=======开始下载========")
@@ -76,8 +80,17 @@ func main() {
 							if err != nil {
 								fmt.Println(err)
 							}
+
+							//复制文件
+							tempFilePath := strings.ReplaceAll(filePath, "down.foodmate.net", "temp-down.foodmate.net")
+							err = FoodMateCopyFile(filePath, tempFilePath)
+							if err != nil {
+								fmt.Println(err)
+								continue
+							}
+
 							fmt.Println("=======下载完成========")
-							downloadFoodMatePdfSleep := rand.Intn(20)
+							downloadFoodMatePdfSleep := rand.Intn(5)
 							for i := 1; i <= downloadFoodMatePdfSleep; i++ {
 								time.Sleep(time.Second)
 								fmt.Println("page="+strconv.Itoa(page)+"===========更新", title, "成功，暂停", downloadFoodMatePdfSleep, "秒，倒计时", i, "秒===========")
@@ -182,4 +195,31 @@ func downloadFoodMatePdf(pdfUrl string, filePath string, referer string) error {
 		return err
 	}
 	return nil
+}
+
+func FoodMateCopyFile(src, dst string) (err error) {
+	in, err := os.Open(src)
+	if err != nil {
+		return
+	}
+	defer func(in *os.File) {
+		err := in.Close()
+		if err != nil {
+			return
+		}
+	}(in)
+
+	out, err := os.Create(dst)
+	if err != nil {
+		return
+	}
+	defer func(out *os.File) {
+		err := out.Close()
+		if err != nil {
+			return
+		}
+	}(out)
+
+	_, err = io.Copy(out, in)
+	return
 }
