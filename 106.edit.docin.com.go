@@ -3,14 +3,15 @@ package main
 import (
 	"errors"
 	"fmt"
-	"github.com/antchfx/htmlquery"
-	"golang.org/x/net/html"
 	"net"
 	"net/http"
 	"net/url"
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/antchfx/htmlquery"
+	"golang.org/x/net/html"
 )
 
 var EditDocInEnableHttpProxy = false

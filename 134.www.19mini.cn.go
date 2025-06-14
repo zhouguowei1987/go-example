@@ -23,8 +23,8 @@ var MiNi19HttpProxyUrl = ""
 var MiNi19HttpProxyUrlArr = make([]string, 0)
 
 func MiNi19HttpProxy() error {
-	//pageMax := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
-	pageMax := []int{11, 12, 13, 14, 15, 16, 17, 18, 19, 20}
+	pageMax := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+	// pageMax := []int{11, 12, 13, 14, 15, 16, 17, 18, 19, 20}
 	for _, page := range pageMax {
 		freeProxyUrl := "https://www.beesproxy.com/free"
 		if page > 1 {
@@ -110,32 +110,58 @@ type MiNi19EducationCategory struct {
 	categoryName string
 	categoryUrl  string
 	classId      int
+	startPage    int
+	wtspurl      string
 }
 
 var miNi19EducationCategory = []MiNi19EducationCategory{
+	// {
+	// 	categoryName: "教案",
+	// 	categoryUrl:  "http://www.19mini.cn/ziyuan/jiaoan/",
+	// 	classId:      29,
+	// 	startPage:    1,
+	// 	wtspurl:      "/ziyuan/jiaoan/",
+	// },
+	// {
+	// 	categoryName: "试卷",
+	// 	categoryUrl:  "http://www.19mini.cn/ziyuan/shijuan/",
+	// 	classId:      30,
+	// 	startPage:    1,
+	// 	wtspurl:      "/ziyuan/shijuan/",
+	// },
 	{
-		categoryName: "试卷",
-		categoryUrl:  "http://www.19mini.cn/ziyuan/shijuan/",
-		classId:      30,
+		categoryName: "资料",
+		categoryUrl:  "http://www.19mini.cn/ziyuan/ziliao/",
+		classId:      33,
+		startPage:    1,
+		wtspurl:      "/ziyuan/ziliao/",
+	},
+	{
+		categoryName: "训练",
+		categoryUrl:  "http://www.19mini.cn/ziyuan/xunlian/",
+		classId:      34,
+		startPage:    1,
+		wtspurl:      "/ziyuan/xunlian/",
 	},
 }
 
-const MiNi19Cookie = "Hm_lvt_e82ba7292d1c4fbfbf1933dc51f62e60=1747718117; HMACCOUNT=00EDEFEA78E0441D; XLA_CI=d33d1c917ec25cd36d5c8418379865f0; Hm_lpvt_e82ba7292d1c4fbfbf1933dc51f62e60=1747719871; _wtspurl=/ziyuan/shijuan/index.html; _wtsuid=efd4cf65-e0d9-4614-9688-23b53af04db9; _wtscpk=6f6bc82a5c; _wtsexp=1747720744; _wtsjsk=66ac11e330c71700c3f7195d57dff66c"
+var MiNi19Cookie = "Hm_lvt_e82ba7292d1c4fbfbf1933dc51f62e60=1747493636,1747717671,1749290636; HMACCOUNT=1CCD0111717619C6; XLA_CI=23bb8bc755f819c1fe15ab77e57ffc56; Hm_lpvt_e82ba7292d1c4fbfbf1933dc51f62e60=1749476471; _wtspurl=wtspurl; _wtsuid=ebaf0b44-8238-4ba6-bb84-5b964a783a70; _wtscpk=26716981c1; _wtsexp=1749477828; _wtsjsk=01cc0ef384da84859bdc1d97d17189f9"
 
 // MiNi19Spider 获取迷你语文网文档
 // @Title 获取迷你语文网文档
 // @Description http://www.19mini.cn/，获取迷你语文网文档
 func main() {
 	for _, category := range miNi19EducationCategory {
-		page := 7
+		page := category.startPage
 		isPageGo := true
+		MiNi19Cookie = strings.ReplaceAll(MiNi19Cookie, "_wtspurl=wtspurl", "_wtspurl="+category.wtspurl)
 		for isPageGo {
 			var listUrl = fmt.Sprintf(category.categoryUrl)
 			if page != 1 {
 				listUrl = strings.ReplaceAll(category.categoryUrl, "index.html", "") + fmt.Sprintf("index_%d.html", page)
 			}
 			fmt.Println(listUrl)
-			listDoc, err := ListMiNi19(listUrl, "http://www.19mini.cn/ziyuan/shijuan/index.html")
+			listDoc, err := ListMiNi19(listUrl, category.categoryUrl)
 			if err != nil {
 				fmt.Println(err)
 				break
@@ -143,6 +169,10 @@ func main() {
 			divNodes := htmlquery.Find(listDoc, `//ul[@class="e2"]/li`)
 			if len(divNodes) >= 1 {
 				for _, divNode := range divNodes {
+					fmt.Println("============================================================================")
+					fmt.Println("分页：", page)
+					fmt.Println("=======当前页URL", listUrl, "========")
+
 					titleNode := htmlquery.FindOne(divNode, `./a[@class="title"]`)
 					if titleNode == nil {
 						fmt.Println("标题不存在")
@@ -155,6 +185,16 @@ func main() {
 					title = strings.ReplaceAll(title, " ", "")
 					title = strings.ReplaceAll(title, "|", "-")
 					fmt.Println(title)
+					// 过滤文件名中含有“扫描”字样文件
+					if strings.Index(title, "扫描") != -1 {
+						fmt.Println("过滤文件名中含有“扫描”字样文件")
+						continue
+					}
+					// 过滤文件名中含有“图片”字样文件
+					if strings.Index(title, "图片") != -1 {
+						fmt.Println("过滤文件名中含有“图片”字样文件")
+						continue
+					}
 
 					detailUrl := htmlquery.InnerText(htmlquery.FindOne(divNode, `./a[@class="title"]/@href`))
 					detailUrlSplitArray := strings.Split(detailUrl, "/")
@@ -162,9 +202,59 @@ func main() {
 					idStr := strings.ReplaceAll(idHtml, ".html", "")
 					id, _ := strconv.Atoi(idStr)
 
+					// 获取文档类型
+					MiNi19ViewUrl := fmt.Sprintf(category.categoryUrl+"%d.html", id)
+					fmt.Println(MiNi19ViewUrl)
+					MiNi19ViewDoc, err := MiNi19ViewDoc(MiNi19ViewUrl, listUrl)
+
+					// 获取文档页详情后，暂停一段时间
+					MiNi19ViewDocTimeSleep := rand.Intn(3)
+					for i := 1; i <= MiNi19ViewDocTimeSleep; i++ {
+						time.Sleep(time.Second)
+						fmt.Println("===========获取文档页详情：", title, "成功，暂停", MiNi19ViewDocTimeSleep, "秒，倒计时", i, "秒===========")
+					}
+					// fmt.Println(htmlquery.InnerText(MiNi19ViewDoc))
+					// os.Exit(1)
+					if err != nil {
+						fmt.Println(err)
+						continue
+					}
+					fileTypeNode := htmlquery.FindOne(MiNi19ViewDoc, `//div[@class="infolist"]/span[5]`)
+					if fileTypeNode == nil {
+						fmt.Println("文档类型不存在")
+						continue
+					}
+					fileType := htmlquery.InnerText(fileTypeNode)
+					fmt.Println(fileType)
+					if strings.Index(fileType, "doc") == -1 && strings.Index(fileType, "zip") == -1 {
+						fmt.Println("文档类型不是doc或zip文档，跳过")
+						continue
+					}
+
+					if strings.Index(fileType, "doc") != -1 {
+						fileType = ".doc"
+					} else if strings.Index(fileType, "zip") != -1 {
+						fileType = ".zip"
+					}
+
+					filePath := "F:\\workspace\\www.19mini.cn\\www.19mini.cn\\" + title + fileType
+					_, err = os.Stat(filePath)
+					if err == nil {
+						fmt.Println("文档已下载过，跳过")
+						continue
+					}
 					MiNi19DownloadUrl := fmt.Sprintf("http://www.19mini.cn/e/DownSys/DownSoft/?classid=%d&id=%d&pathid=0", category.classId, id)
 					fmt.Println(MiNi19DownloadUrl)
-					MiNi19DownloadDoc, err := htmlquery.LoadURL(MiNi19DownloadUrl)
+					MiNi19DownloadDoc, err := MiNi19DownloadDoc(MiNi19DownloadUrl, detailUrl)
+
+					// 获取下载页详情后，暂停一段时间
+					MiNi19DownloadDocTimeSleep := rand.Intn(3)
+					for i := 1; i <= MiNi19DownloadDocTimeSleep; i++ {
+						time.Sleep(time.Second)
+						fmt.Println("===========获取下载页详情：", title, "成功，暂停", MiNi19DownloadDocTimeSleep, "秒，倒计时", i, "秒===========")
+					}
+					// fmt.Println(htmlquery.InnerText(MiNi19DownloadDoc))
+					// os.Exit(1)
 					if err != nil {
 						fmt.Println(err)
 						continue
@@ -178,47 +268,18 @@ func main() {
 					attachmentUrl := "http://www.19mini.cn/e/DownSys" + strings.ReplaceAll(htmlquery.InnerText(attachmentNode), "..", "")
 					fmt.Println(attachmentUrl)
 
-					// 获取文档类型
-					MiNi19ViewUrl := fmt.Sprintf("http://www.19mini.cn/ziyuan/shijuan/%d.html", id)
-					fmt.Println(MiNi19ViewUrl)
-					MiNi19ViewDoc, err := htmlquery.LoadURL(MiNi19ViewUrl)
+					fmt.Println("=======开始下载========")
+					err = downloadMiNi19(attachmentUrl, filePath, MiNi19DownloadUrl)
 					if err != nil {
 						fmt.Println(err)
 						continue
 					}
-					fileTypeNode := htmlquery.FindOne(MiNi19ViewDoc, `//div[@class="infolist"]/span[5]`)
-					if fileTypeNode == nil {
-						fmt.Println("文档类型不存在")
-						continue
-					}
-					fileType := htmlquery.InnerText(fileTypeNode)
-					fmt.Println(fileType)
-					if strings.Index(fileType, "doc") == -1 && strings.Index(fileType, "pdf") == -1 {
-						fmt.Println("文档类型不是doc和pdf文档，跳过")
-						continue
-					}
-
-					if strings.Index(fileType, "doc") != -1 {
-						fileType = ".doc"
-					} else if strings.Index(fileType, "pdf") != -1 {
-						fileType = ".pdf"
-					}
-
-					filePath := "F:\\workspace\\www.19mini.cn\\www.19mini.cn\\" + category.categoryName + "\\" + title + fileType
-					_, err = os.Stat(filePath)
-					if err != nil {
-						fmt.Println("=======开始下载========")
-						err := downloadMiNi19(attachmentUrl, filePath, MiNi19DownloadUrl)
-						if err != nil {
-							fmt.Println(err)
-							continue
-						}
-						fmt.Println("=======完成下载========")
-						DownLoadMiNi19TimeSleep := rand.Intn(10)
-						for i := 1; i <= DownLoadMiNi19TimeSleep; i++ {
-							time.Sleep(time.Second)
-							fmt.Println("page="+strconv.Itoa(page)+"===========下载", title, "成功，暂停", DownLoadMiNi19TimeSleep, "秒，倒计时", i, "秒===========")
-						}
+					fmt.Println("=======完成下载========")
+					// DownLoadMiNi19TimeSleep := rand.Intn(10)
+					DownLoadMiNi19TimeSleep := 10
+					for i := 1; i <= DownLoadMiNi19TimeSleep; i++ {
+						time.Sleep(time.Second)
+						fmt.Println("page="+strconv.Itoa(page)+"===========下载", title, "成功，暂停", DownLoadMiNi19TimeSleep, "秒，倒计时", i, "秒===========")
 					}
 				}
 				page++
@@ -232,6 +293,103 @@ func main() {
 }
 
 func ListMiNi19(requestUrl string, referer string) (doc *html.Node, err error) {
+	// 初始化客户端
+	var client *http.Client = &http.Client{
+		Transport: &http.Transport{
+			Dial: func(netw, addr string) (net.Conn, error) {
+				c, err := net.DialTimeout(netw, addr, time.Second*3)
+				if err != nil {
+					fmt.Println("dail timeout", err)
+					return nil, err
+				}
+				return c, nil
+
+			},
+			MaxIdleConnsPerHost:   10,
+			ResponseHeaderTimeout: time.Second * 3,
+		},
+	}
+	if MiNi19EnableHttpProxy {
+		client = MiNi19SetHttpProxy()
+	}
+	req, err := http.NewRequest("GET", requestUrl, nil) //建立连接
+
+	if err != nil {
+		return doc, err
+	}
+	fmt.Println(referer)
+	req.Header.Set("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7")
+	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
+	req.Header.Set("Connection", "keep-alive")
+	req.Header.Set("Cookie", MiNi19Cookie)
+	req.Header.Set("Referer", referer)
+	req.Header.Set("Upgrade-Insecure-Requests", "1")
+	req.Header.Set("User-Agent", "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Mobile Safari/537.36")
+	resp, err := client.Do(req) //拿到返回的内容
+	if err != nil {
+		return doc, err
+	}
+	defer resp.Body.Close()
+	// 如果访问失败，就打印当前状态码
+	if resp.StatusCode != http.StatusOK {
+		return doc, errors.New("http status :" + strconv.Itoa(resp.StatusCode))
+	}
+	doc, err = htmlquery.Parse(resp.Body)
+	if err != nil {
+		return doc, err
+	}
+	return doc, nil
+}
+
+func MiNi19DownloadDoc(requestUrl string, referer string) (doc *html.Node, err error) {
+	// 初始化客户端
+	var client *http.Client = &http.Client{
+		Transport: &http.Transport{
+			Dial: func(netw, addr string) (net.Conn, error) {
+				c, err := net.DialTimeout(netw, addr, time.Second*3)
+				if err != nil {
+					fmt.Println("dail timeout", err)
+					return nil, err
+				}
+				return c, nil
+
+			},
+			MaxIdleConnsPerHost:   10,
+			ResponseHeaderTimeout: time.Second * 3,
+		},
+	}
+	if MiNi19EnableHttpProxy {
+		client = MiNi19SetHttpProxy()
+	}
+	req, err := http.NewRequest("GET", requestUrl, nil) //建立连接
+
+	if err != nil {
+		return doc, err
+	}
+	req.Header.Set("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7")
+	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
+	req.Header.Set("Connection", "keep-alive")
+	req.Header.Set("Cookie", MiNi19Cookie)
+	req.Header.Set("Referer", referer)
+	req.Header.Set("Upgrade-Insecure-Requests", "1")
+	req.Header.Set("User-Agent", "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Mobile Safari/537.36")
+	resp, err := client.Do(req) //拿到返回的内容
+	if err != nil {
+		return doc, err
+	}
+	defer resp.Body.Close()
+	// 如果访问失败，就打印当前状态码
+	if resp.StatusCode != http.StatusOK {
+		return doc, errors.New("http status :" + strconv.Itoa(resp.StatusCode))
+	}
+	doc, err = htmlquery.Parse(resp.Body)
+	if err != nil {
+		return doc, err
+	}
+	return doc, nil
+}
+
+func MiNi19ViewDoc(requestUrl string, referer string) (doc *html.Node, err error) {
 	// 初始化客户端
 	var client *http.Client = &http.Client{
 		Transport: &http.Transport{

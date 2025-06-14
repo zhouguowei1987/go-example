@@ -15,9 +15,10 @@ import (
 	"os"
 	"path"
 	"path/filepath"
-	"rsc.io/pdf"
 	"strconv"
 	"strings"
+
+	"rsc.io/pdf"
 )
 
 // SessionId 15238369929
@@ -677,6 +678,10 @@ func main() {
 		},
 		{
 			dirName: "hao123.docx_eduy.net/高中",
+			price:   "88",
+		},
+		{
+			dirName: "www.docx_19mini.cn",
 			price:   "88",
 		},
 	}
