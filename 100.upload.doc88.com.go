@@ -805,7 +805,7 @@ func main() {
 			editResponseData, err := editFile(docCode, title, intro, pCid, price, pDocFormat)
 			if err != nil {
 				fmt.Println(err)
-				break
+				continue
 			}
 			fmt.Println(editResponseData)
 
