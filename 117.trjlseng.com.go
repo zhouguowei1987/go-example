@@ -3,7 +3,6 @@ package main
 import (
 	"errors"
 	"fmt"
-	"github.com/antchfx/htmlquery"
 	"io"
 	"net"
 	"net/http"
@@ -14,6 +13,8 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/antchfx/htmlquery"
 )
 
 var TRjlSengEnableHttpProxy = false
@@ -269,24 +270,25 @@ func main() {
 					fmt.Println(title)
 
 					// 日期
-					dateNode := htmlquery.FindOne(liNode, `./div[@class="yzm-new-list-right"]/div[@class="yzm-new-list-info"]/text()[2]`)
-					if dateNode == nil {
+					dateViewsNode := htmlquery.FindOne(liNode, `./div[@class="yzm-new-list-right"]/div[@class="yzm-new-list-info"]`)
+					if dateViewsNode == nil {
 						fmt.Println("没有日期div")
 						break
 					}
-					dateText := htmlquery.InnerText(dateNode)
-					dateText = strings.Replace(dateText, " 更新时间：", "", -1)
+					dateViewsText := htmlquery.InnerText(dateViewsNode)
+					dateText := strings.Split(dateViewsText, " 浏览: ")[0]
+					dateText = strings.Replace(dateText, "时间: ", "", -1)
 					dateText = strings.Trim(dateText, " ")
 					fmt.Println(dateText)
 
 					datePaper, _ := time.Parse("2006-01-02", dateText)
 					fmt.Println(datePaper)
-					dateStart, _ := time.Parse("2006-01-02", "2024-08-09")
+					dateStart, _ := time.Parse("2006-01-02", "2024-12-16")
 					fmt.Println(dateStart)
 
 					// 比较日期
 					if datePaper.After(dateStart) == false {
-						fmt.Println("日期在2024-08-09后，跳过")
+						fmt.Println("日期在2024-12-16后，跳过")
 						break
 					}
 
@@ -309,7 +311,7 @@ func main() {
 					attachmentUrl := "https://www.trjlseng.com/uploads/ueditor/file/" + string(regAttachmentViewUrlMatch[0][1])
 					fmt.Println(attachmentUrl)
 
-					filePath := "E:\\workspace\\www.trjlseng.com\\2024-08-09\\www.rar_trjlseng.com\\" + title + ".rar"
+					filePath := "E:\\workspace\\www.trjlseng.com\\2024-12-16\\www.rar_trjlseng.com\\" + title + ".rar"
 					_, err = os.Stat(filePath)
 					if err != nil {
 
