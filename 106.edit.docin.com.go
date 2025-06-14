@@ -162,15 +162,15 @@ func main() {
 			filePageNum, _ := strconv.Atoi(filePage)
 			if filePageNum > 0 {
 				if filePageNum > 0 && filePageNum <= 5 {
-					downPrice = 2
+					downPrice = 1
 				} else if filePageNum > 5 && filePageNum <= 10 {
-					downPrice = 3
+					downPrice = 2
 				} else if filePageNum > 10 && filePageNum <= 15 {
-					downPrice = 4
+					downPrice = 3
 				} else if filePageNum > 15 && filePageNum <= 20 {
-					downPrice = 5
+					downPrice = 4
 				} else if filePageNum > 20 && filePageNum <= 25 {
-					downPrice = 6
+					downPrice = 5
 				}
 			}
 

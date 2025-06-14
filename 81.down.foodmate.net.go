@@ -28,79 +28,94 @@ func main() {
 	// 国内标准列表
 	var allCategory = []internalCategory{
 		{id: 1, name: "国内标准"},
-		{id: 2, name: "国外标准"},
+// 		{id: 2, name: "国外标准"},
 	}
 	for _, category := range allCategory {
-		page := 597
+		page := 10
+	    minPage := 1
 		isPageGo := true
 		for isPageGo {
 			listUrl := fmt.Sprintf("http://down.foodmate.net/standard/sort/%d/index-%d.html", category.id, page)
 			fmt.Println(listUrl)
-			listDoc, _ := htmlquery.LoadURL(listUrl)
+			listDoc, err := htmlquery.LoadURL(listUrl)
+			if err != nil{
+                fmt.Println("无法获取文档列表页，跳过")
+                continue
+            }
 			liNodes := htmlquery.Find(listDoc, `//div[@class="bz_list"]/ul/li`)
 			if len(liNodes) >= 1 {
 				for _, liNode := range liNodes {
 					fmt.Println(category.id, page, category.name)
 					detailUrl := htmlquery.InnerText(htmlquery.FindOne(liNode, `./div[@class="bz_listl"]/ul[1]/a/@href`))
 					fmt.Println(detailUrl)
-					detailDoc, _ := htmlquery.LoadURL(detailUrl)
-					downNode := htmlquery.FindOne(detailDoc, `//div[@class="downk"]/a[@class="telecom"]`)
-					if downNode != nil {
-						title := htmlquery.InnerText(htmlquery.FindOne(detailDoc, `//div[@class="title2"]/span`))
-						title = strings.ReplaceAll(title, "<font color=\"red\"></font>", "")
-						title = strings.ReplaceAll(title, "/", "-")
-						title = strings.ReplaceAll(title, "\n", "")
-						title = strings.ReplaceAll(title, "\r", "")
-						title = strings.ReplaceAll(title, " ", "")
-						fmt.Println(title)
-						if strings.Index(title, "DB") != -1{
-						    fmt.Println("地方标准，跳过")
-							continue
-						}
-
-						authUrl := htmlquery.InnerText(htmlquery.FindOne(downNode, `./@href`))
-						fmt.Println(authUrl)
-						// 获取请求Location
-						downloadUrl, err := getFoodMateDownloadUrl(authUrl, detailUrl)
-						if len(downloadUrl) == 0 {
-							fmt.Println(err)
-							continue
-						}
-						// 只下载pdf文件
-						if strings.Index(downloadUrl, ".pdf") == -1 {
-							fmt.Println("不是pdf文件")
-							continue
-						}
-						fmt.Println(downloadUrl)
-						filePath := "../down.foodmate.net/" + title + ".pdf"
-						fmt.Println(filePath)
-						if _, err := os.Stat(filePath); err != nil {
-							fmt.Println("=======开始下载========")
-							err = downloadFoodMatePdf(downloadUrl, filePath, detailUrl)
-							if err != nil {
-								fmt.Println(err)
-							}
-
-							//复制文件
-							tempFilePath := strings.ReplaceAll(filePath, "down.foodmate.net", "temp-down.foodmate.net")
-							err = FoodMateCopyFile(filePath, tempFilePath)
-							if err != nil {
-								fmt.Println(err)
-								continue
-							}
-
-							fmt.Println("=======下载完成========")
-							downloadFoodMatePdfSleep := rand.Intn(5)
-							for i := 1; i <= downloadFoodMatePdfSleep; i++ {
-								time.Sleep(time.Second)
-								fmt.Println("page="+strconv.Itoa(page)+"===========更新", title, "成功，暂停", downloadFoodMatePdfSleep, "秒，倒计时", i, "秒===========")
-							}
-						}
-					} else {
-						continue
+					detailDoc, err := htmlquery.LoadURL(detailUrl)
+					if err != nil{
+					    fmt.Println("无法获取文档详情，跳过")
+					    continue
 					}
+					downNode := htmlquery.FindOne(detailDoc, `//div[@class="downk"]/a[@class="telecom"]`)
+					if downNode == nil {
+					    fmt.Println("没有下载地址，跳过")
+					    continue
+					}
+					title := htmlquery.InnerText(htmlquery.FindOne(detailDoc, `//div[@class="title2"]/span`))
+                    title = strings.ReplaceAll(title, "<font color=\"red\"></font>", "")
+                    title = strings.ReplaceAll(title, "/", "-")
+                    title = strings.ReplaceAll(title, "\n", "")
+                    title = strings.ReplaceAll(title, "\r", "")
+                    title = strings.ReplaceAll(title, " ", "")
+                    fmt.Println(title)
+                    if strings.Index(title, "DB") != -1{
+                        fmt.Println("地方标准，跳过")
+                        continue
+                    }
+
+                    authUrl := htmlquery.InnerText(htmlquery.FindOne(downNode, `./@href`))
+                    fmt.Println(authUrl)
+                    // 获取请求Location
+                    downloadUrl, err := getFoodMateDownloadUrl(authUrl, detailUrl)
+                    if len(downloadUrl) == 0 {
+                        fmt.Println(err)
+                        continue
+                    }
+                    // 只下载pdf文件
+                    if strings.Index(downloadUrl, ".pdf") == -1 {
+                        fmt.Println("不是pdf文件")
+                        continue
+                    }
+                    fmt.Println(downloadUrl)
+                    filePath := "../down.foodmate.net/" + title + ".pdf"
+                    fmt.Println(filePath)
+                    if _, err := os.Stat(filePath); err != nil {
+                        fmt.Println("=======开始下载========")
+                        err = downloadFoodMatePdf(downloadUrl, filePath, detailUrl)
+                        if err != nil {
+                            fmt.Println(err)
+                        }
+
+                        //复制文件
+                        tempFilePath := strings.ReplaceAll(filePath, "down.foodmate.net", "temp-down.foodmate.net")
+                        err = FoodMateCopyFile(filePath, tempFilePath)
+                        if err != nil {
+                            fmt.Println(err)
+                            continue
+                        }
+
+                        fmt.Println("=======下载完成========")
+                        downloadFoodMatePdfSleep := rand.Intn(5)
+                        for i := 1; i <= downloadFoodMatePdfSleep; i++ {
+                            time.Sleep(time.Second)
+                            fmt.Println("page="+strconv.Itoa(page)+"===========更新", title, "成功，暂停", downloadFoodMatePdfSleep, "秒，倒计时", i, "秒===========")
+                        }
+                    }
 				}
-				page++
+				if page > minPage {
+                    page--
+                } else {
+                    isPageGo = false
+                    page = 1
+                    break
+                }
 			} else {
 				isPageGo = false
 				page = 1
