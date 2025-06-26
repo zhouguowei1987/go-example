@@ -105,7 +105,7 @@ func CzWlZxSetHttpProxy() (httpclient *http.Client) {
 	return httpclient
 }
 
-var CzWlZxCookie = "ASP.NET_SessionId=m4fbkx45xuffbirtaimlyxyy; Hm_lvt_43bc53ae85afc8f10b75f500b7f506b6=1750862924; HMACCOUNT=1CCD0111717619C6; Hm_lpvt_43bc53ae85afc8f10b75f500b7f506b6=1750905871"
+var CzWlZxCookie = "fieldExpand_area=0; ASP.NET_SessionId=m4fbkx45xuffbirtaimlyxyy; Hm_lvt_43bc53ae85afc8f10b75f500b7f506b6=1750862924; HMACCOUNT=1CCD0111717619C6; Hm_lpvt_43bc53ae85afc8f10b75f500b7f506b6=1750909779"
 
 // CzWlZxSpider 获取初中物理在线文档
 // @Title 获取初中物理在线文档
@@ -114,17 +114,17 @@ func main() {
 	page := 1
 	isPageGo := true
 	for isPageGo {
-		var listUrl = "http://www.czwlzx.cn/Category_1219/index.aspx?area=All&banben=All&type1=All&type2=%E5%85%8D%E8%B4%B9"
+		var listUrl = "http://www.czwlzx.cn/Category_1219/index.aspx?area=All&banben=All&type1=All&type2=免费"
 		var listReferer = "http://www.czwlzx.cn/sj/List_1219.html"
 		if page != 1 {
-			listUrl = fmt.Sprintf("http://www.czwlzx.cn/Category_1219/Index_%d.aspx?area=All&banben=All&type1=All&type2=%e5%85%8d%e8%b4%b9", page)
-			listReferer = fmt.Sprintf("http://www.czwlzx.cn/Category_1219/Index_%d.aspx?area=All&banben=All&type1=All&type2=%e5%85%8d%e8%b4%b9", page-1)
+			listUrl = fmt.Sprintf("http://www.czwlzx.cn/Category_1219/Index_%d.aspx?area=All&banben=All&type1=All&type2=免费", page)
+			listReferer = fmt.Sprintf("http://www.czwlzx.cn/Category_1219/Index_%d.aspx?area=All&banben=All&type1=All&type2=免费", page-1)
 		}
 		fmt.Println(listUrl)
 		fmt.Println(listReferer)
 		// os.Exit(1)
 		listDoc, err := ListCzWlZx(listUrl, listReferer)
-		fmt.Println(htmlquery.InnerText(listDoc))
+		// fmt.Println(htmlquery.InnerText(listDoc))
 		// os.Exit(1)
 		if err != nil {
 			fmt.Println(err)
