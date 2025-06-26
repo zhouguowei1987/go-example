@@ -130,7 +130,8 @@ func main() {
 			fmt.Println(err)
 			break
 		}
-		divNodes := htmlquery.Find(listDoc, `//div[@class="main"]/div[@class="bd"]/div[@class="list-cont"]/div[@class="clearfix list-item"]`)
+
+		divNodes := htmlquery.Find(listDoc, `//div[@class="main"]/div[@class="bd"][2]/div[@class="list-cont"]/div[@class="clearfix list-item"]`)
 		fmt.Println(len(divNodes))
 		// os.Exit(1)
 		if len(divNodes) >= 1 {
