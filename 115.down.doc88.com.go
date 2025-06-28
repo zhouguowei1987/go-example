@@ -114,7 +114,7 @@ type QueryDownDoc88ListFormData struct {
 var DownListCookie = "new_user_task_degree=100; cdb_sys_sid=usrcbi0lk9bcuoaok1d5h70ke0; cdb_RW_ID_1392951280=2340; cdb_RW_ID_1672846620=3839; cdb_RW_ID_2008636090=1; cdb_RW_ID_2008629885=1; cdb_RW_ID_335703776=5; cdb_RW_ID_228722088=7; cdb_READED_PC_ID=%2C447; cdb_RW_ID_2008798462=1587; cdb_RW_ID_1675317234=950; cdb_RW_ID_2008457230=686; cdb_RW_ID_2005292790=19; cdb_RW_ID_2036761478=1; cdb_RW_ID_2035886221=1; cdb_RW_ID_2037028201=2; cdb_RW_ID_1443403331=620; cdb_RW_ID_2043350748=2; cdb_RW_ID_2050714108=1; cdb_RW_ID_2038752397=334; ShowSkinTip_1=1; showAnnotateTipIf=1; Page_13743815423194=1; PHPSESSID=usrcbi0lk9bcuoaok1d5h70ke0; doc88_lt=doc88; cdb_token=5176691bb4a2b7d6bd67c231efd81e657d782f6cb333928fd33f234c70382d9a89fe0ad0ebba21c3dc7bc12152ab66ccc2f5b04d04e00e86770e2edff24aa4a84def49f043721d23d9581971a85c09bd546a550a976fe5c6d92f350c3f26f274; cdb_login_if=1; cdb_uid=104598337; cdb_tokenid=d9c3JT8Nn4biuHjlgRiRhsxY7%2BiGJVwjubocIDlhJA9UZ2c7CgVEhg%2Bz1qAOKRoFf1u9DkC7%2Fy9t8ou31UQ4%2BPaYW%2F9thhQbhPp%2FOozoNUBb; c_login_name=woyoceo; cdb_logined=1; show_index=1; cdb_change_message=1; cdb_msg_num=0; siftState=0; cdb_pageType=2; cdb_msg_time=1750770483"
 var DownLoadUrlCookie = "cdb_sys_sid=usrcbi0lk9bcuoaok1d5h70ke0; cdb_RW_ID_1392951280=2340; cdb_RW_ID_1672846620=3839; cdb_RW_ID_2008636090=1; cdb_RW_ID_2008629885=1; cdb_RW_ID_335703776=5; cdb_RW_ID_228722088=7; cdb_READED_PC_ID=%2C447; cdb_RW_ID_2008798462=1587; cdb_RW_ID_1675317234=950; cdb_RW_ID_2008457230=686; cdb_RW_ID_2005292790=19; cdb_RW_ID_2036761478=1; cdb_RW_ID_2035886221=1; cdb_RW_ID_2037028201=2; cdb_RW_ID_1443403331=620; cdb_RW_ID_2043350748=2; cdb_RW_ID_2050714108=1; cdb_RW_ID_2038752397=334; ShowSkinTip_1=1; showAnnotateTipIf=1; Page_13743815423194=1; PHPSESSID=usrcbi0lk9bcuoaok1d5h70ke0; doc88_lt=doc88; cdb_token=5176691bb4a2b7d6bd67c231efd81e657d782f6cb333928fd33f234c70382d9a89fe0ad0ebba21c3dc7bc12152ab66ccc2f5b04d04e00e86770e2edff24aa4a84def49f043721d23d9581971a85c09bd546a550a976fe5c6d92f350c3f26f274; cdb_login_if=1; cdb_uid=104598337; cdb_tokenid=d9c3JT8Nn4biuHjlgRiRhsxY7%2BiGJVwjubocIDlhJA9UZ2c7CgVEhg%2Bz1qAOKRoFf1u9DkC7%2Fy9t8ou31UQ4%2BPaYW%2F9thhQbhPp%2FOozoNUBb; c_login_name=woyoceo; cdb_logined=1; show_index=1; cdb_change_message=1; cdb_msg_num=0; siftState=0; cdb_pageType=2; cdb_msg_time=1750770483"
 
-var DownNextPageSleep = 10
+var DownNextPageSleep = 20
 var TodayCurrentDownLoadCount = 0
 var TodayMaxDownLoadCount = 150000
 
@@ -122,7 +122,7 @@ var TodayMaxDownLoadCount = 150000
 // @Title 下载道客巴巴文档
 // @Description https://www.doc88.com/，下载道客巴巴文档
 func main() {
-	curPage := 29
+	curPage := 1699
 	isPageListGo := true
 	for isPageListGo {
 		pageListUrl := fmt.Sprintf("https://www.doc88.com/uc/doc_manager.php?act=ajax_doc_list&curpage=%d", curPage)
@@ -171,7 +171,7 @@ func main() {
 			}
 			fmt.Println("=====下载次数", fileDownLoadCount, "=====")
 
-			filePath := "../down.ttbz.org.cn/" + Title + ".pdf"
+			filePath := "../down.ttbz.org.cn/www.ttbz.org.cn/" + Title + ".pdf"
 			if _, err := os.Stat(filePath); err != nil {
 
 				PidStr := htmlquery.SelectAttr(liNode, "id")

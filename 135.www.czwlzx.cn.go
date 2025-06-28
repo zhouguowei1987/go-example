@@ -105,125 +105,128 @@ func CzWlZxSetHttpProxy() (httpclient *http.Client) {
 	return httpclient
 }
 
-var CzWlZxCookie = "fieldExpand_area=0; ASP.NET_SessionId=m4fbkx45xuffbirtaimlyxyy; Hm_lvt_43bc53ae85afc8f10b75f500b7f506b6=1750862924; HMACCOUNT=1CCD0111717619C6; Hm_lpvt_43bc53ae85afc8f10b75f500b7f506b6=1750909779"
+var CzWlZxCookie = "ASP.NET_SessionId=u50wxubbcwnj30nby2hstcyl; Hm_lvt_43bc53ae85afc8f10b75f500b7f506b6=1750862924,1750943997; HMACCOUNT=1CCD0111717619C6; Hm_lpvt_43bc53ae85afc8f10b75f500b7f506b6=1750996680"
 
 // CzWlZxSpider 获取初中物理在线文档
 // @Title 获取初中物理在线文档
 // @Description http://www.czwlzx.cn/，获取初中物理在线文档
 func main() {
-	page := 1
-	isPageGo := true
-	for isPageGo {
-		var listUrl = "http://www.czwlzx.cn/Category_1219/index.aspx?area=All&banben=All&type1=All&type2=免费"
-		var listReferer = "http://www.czwlzx.cn/sj/List_1219.html"
-		if page != 1 {
-			listUrl = fmt.Sprintf("http://www.czwlzx.cn/Category_1219/Index_%d.aspx?area=All&banben=All&type1=All&type2=免费", page)
-			listReferer = fmt.Sprintf("http://www.czwlzx.cn/Category_1219/Index_%d.aspx?area=All&banben=All&type1=All&type2=免费", page-1)
-		}
-		fmt.Println(listUrl)
-		fmt.Println(listReferer)
-		// os.Exit(1)
-		listDoc, err := ListCzWlZx(listUrl, listReferer)
-		// fmt.Println(htmlquery.InnerText(listDoc))
-		// os.Exit(1)
+	// 154331
+	var startId = 116068
+	var endId = 8254
+	for id := startId; id >= endId; id-- {
+		err := CzWlZxSpider(id)
 		if err != nil {
 			fmt.Println(err)
-			break
-		}
-
-		divNodes := htmlquery.Find(listDoc, `//div[@class="main"]/div[@class="bd"][2]/div[@class="list-cont"]/div[@class="clearfix list-item"]`)
-		fmt.Println(len(divNodes))
-		// os.Exit(1)
-		if len(divNodes) >= 1 {
-			for _, divNode := range divNodes {
-				fmt.Println("============================================================================")
-				fmt.Println("分页：", page)
-				fmt.Println("=======当前页URL", listUrl, "========")
-
-				titleNode := htmlquery.FindOne(divNode, `./div[@class="list-mid"]/div[@class="mid-tit"]/a[@class="high_light"]`)
-				if titleNode == nil {
-					fmt.Println("标题不存在")
-					continue
-				}
-				title := htmlquery.InnerText(titleNode)
-				title = strings.TrimSpace(title)
-				title = strings.ReplaceAll(title, "免费", "")
-				title = strings.ReplaceAll(title, "-", "")
-				title = strings.ReplaceAll(title, " ", "")
-				title = strings.ReplaceAll(title, "|", "-")
-				fmt.Println(title)
-				// os.Exit(1)
-				// 过滤文件名中含有“扫描”字样文件
-				if strings.Index(title, "扫描") != -1 {
-					fmt.Println("过滤文件名中含有“扫描”字样文件")
-					continue
-				}
-				// 过滤文件名中含有“图片”字样文件
-				if strings.Index(title, "图片") != -1 {
-					fmt.Println("过滤文件名中含有“图片”字样文件")
-					continue
-				}
-
-				idStr := htmlquery.SelectAttr(divNode, "id")
-				id, _ := strconv.Atoi(idStr)
-				fmt.Println(id)
-				// os.Exit(1)
-
-				detailUrl := fmt.Sprintf("http://www.czwlzx.cn/Item/%d.aspx", id)
-				fmt.Println(detailUrl)
-
-				fileType := ""
-				// docx文档
-				typeIconDocxNode := htmlquery.FindOne(divNode, `./span[@class="type-icon docx"]`)
-				if typeIconDocxNode != nil {
-					fileType = ".docx"
-				}
-
-				// pdf文档
-				typeIconPdfNode := htmlquery.FindOne(divNode, `./span[@class="type-icon pdf"]`)
-				if typeIconPdfNode != nil {
-					fileType = ".pdf"
-				}
-
-				fmt.Println(fileType)
-				// os.Exit(1)
-				if len(fileType) == 0 {
-					fmt.Println("文档类型不是doc或pdf文档，跳过")
-					continue
-				}
-				filePath := "F:\\workspace\\www.czwlzx.cn\\www.czwlzx.cn\\" + title + fileType
-				_, err = os.Stat(filePath)
-				if err == nil {
-					fmt.Println("文档已下载过，跳过")
-					continue
-				}
-				CzWlZxDownloadUrl := fmt.Sprintf("http://www.czwlzx.cn/Common/ShowDownloadUrl.aspx?urlid=0&id=%d", id)
-				fmt.Println(CzWlZxDownloadUrl)
-
-				fmt.Println("=======开始下载========")
-				err = downloadCzWlZx(CzWlZxDownloadUrl, filePath, detailUrl)
-				if err != nil {
-					fmt.Println(err)
-					continue
-				}
-				fmt.Println("=======完成下载========")
-				// DownLoadCzWlZxTimeSleep := rand.Intn(10)
-				DownLoadCzWlZxTimeSleep := 10
-				for i := 1; i <= DownLoadCzWlZxTimeSleep; i++ {
-					time.Sleep(time.Second)
-					fmt.Println("page="+strconv.Itoa(page)+"===========下载", title, "成功，暂停", DownLoadCzWlZxTimeSleep, "秒，倒计时", i, "秒===========")
-				}
-			}
-			page++
-		} else {
-			isPageGo = false
-			page = 1
-			break
 		}
 	}
+	// err := CzWlZxSpider(154187)
+	// if err != nil {
+	// 	fmt.Println(err)
+	// }
 }
 
-func ListCzWlZx(requestUrl string, referer string) (doc *html.Node, err error) {
+func CzWlZxSpider(id int) error {
+	detailDocUrl := fmt.Sprintf("http://www.czwlzx.cn/Item/%d.aspx", id)
+	fmt.Println(detailDocUrl)
+	var detailRefererUrl = "http://www.czwlzx.cn/sj/List_1219.html"
+	detailDoc, err := CzWlZxDetailDoc(detailDocUrl, detailRefererUrl)
+	// fmt.Println(htmlquery.InnerText(detailDoc))
+	// os.Exit(1)
+
+	if err != nil {
+		return err
+	}
+	fmt.Println("============================================================================")
+	fmt.Println("=======当前页URL", detailDocUrl, "========")
+
+	titleNode := htmlquery.FindOne(detailDoc, `//div[@class="content"]/div[@class="ppttit"]/h2`)
+	if titleNode == nil {
+		return errors.New("标题不存在")
+	}
+	title := htmlquery.InnerText(titleNode)
+	title = strings.TrimSpace(title)
+	title = strings.ReplaceAll(title, "免费", "")
+	title = strings.ReplaceAll(title, "-", "")
+	title = strings.ReplaceAll(title, " ", "")
+	title = strings.ReplaceAll(title, "|", "-")
+	fmt.Println(title)
+	// os.Exit(1)
+	// 过滤文件名中含有“扫描”字样文件
+	if strings.Index(title, "扫描") != -1 {
+		return errors.New("过滤文件名中含有“扫描”字样文件")
+	}
+	// 过滤文件名中含有“图片”字样文件
+	if strings.Index(title, "图片") != -1 {
+		return errors.New("过滤文件名中含有“图片”字样文件")
+	}
+	// 过滤文件名中含有“pdf”字样文件
+	if strings.Index(title, "pdf") != -1 {
+		return errors.New("过滤文件名中含有“pdf”字样文件")
+	}
+
+	// 文档类型
+	var fileType = ""
+	fileTypeDocNode := htmlquery.FindOne(detailDoc, `//div[@class="content"]/div[@class="ppttit"]/h2/i[@class="icon docx"]`)
+	fileTypePdfNode := htmlquery.FindOne(detailDoc, `//div[@class="content"]/div[@class="ppttit"]/h2/i[@class="icon pdf"]`)
+
+	if fileTypeDocNode != nil {
+		fileType = ".docx"
+	} else if fileTypePdfNode != nil {
+		fileType = ".pdf"
+	}
+	fmt.Println(fileType)
+	if len(fileType) == 0 {
+		return errors.New("文档类型不是doc或pdf文档，跳过")
+	}
+
+	// 所需点券
+	pointsNode := htmlquery.FindOne(detailDoc, `//div[@class="content"]/div[@class="maindiv"]/div[@id="shoufeitishi"]/div[@class="btn-1"]/em[@class="point1"]`)
+	if pointsNode == nil {
+		return errors.New("没有点券div")
+	}
+	pointsText := htmlquery.InnerText(pointsNode)
+	// 去除空格
+	pointsText = strings.Replace(pointsText, " ", "", -1)
+	// 去除换行符
+	pointsText = strings.Replace(pointsText, "\n", "", -1)
+	// fmt.Println(pointsText)
+	pointsText = strings.ReplaceAll(pointsText, "个点券", "")
+
+	points, err := strconv.Atoi(pointsText)
+	if err != nil {
+		return err
+	}
+	fmt.Println(points)
+	// os.Exit(1)
+	if points > 0 {
+		return errors.New("需要点券下载")
+	}
+
+	filePath := "F:\\workspace\\www.czwlzx.cn\\www.czwlzx.cn\\" + title + fileType
+	_, err = os.Stat(filePath)
+	if err == nil {
+		return errors.New("文档已下载过，跳过")
+	}
+	CzWlZxDownloadUrl := fmt.Sprintf("http://www.czwlzx.cn/Common/ShowDownloadUrl.aspx?urlid=0&id=%d", id)
+	fmt.Println(CzWlZxDownloadUrl)
+
+	fmt.Println("=======开始下载========")
+	err = downloadCzWlZx(CzWlZxDownloadUrl, filePath, detailDocUrl)
+	if err != nil {
+		return err
+	}
+	fmt.Println("=======完成下载========")
+	// DownLoadCzWlZxTimeSleep := rand.Intn(10)
+	DownLoadCzWlZxTimeSleep := 10
+	for i := 1; i <= DownLoadCzWlZxTimeSleep; i++ {
+		time.Sleep(time.Second)
+		fmt.Println("id="+strconv.Itoa(id)+"===========下载", title, "成功，暂停", DownLoadCzWlZxTimeSleep, "秒，倒计时", i, "秒===========")
+	}
+	return nil
+}
+
+func CzWlZxDetailDoc(requestUrl string, referer string) (doc *html.Node, err error) {
 	// 初始化客户端
 	var client *http.Client = &http.Client{
 		Transport: &http.Transport{
@@ -250,6 +253,7 @@ func ListCzWlZx(requestUrl string, referer string) (doc *html.Node, err error) {
 	}
 
 	req.Header.Set("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7")
+	// req.Header.Set("Accept-Encoding", "gzip, deflate")
 	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
 	req.Header.Set("Cache-Control", "max-age=0")
 	req.Header.Set("Connection", "keep-alive")
