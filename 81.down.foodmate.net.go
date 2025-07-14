@@ -31,7 +31,8 @@ func main() {
 // 		{id: 2, name: "国外标准"},
 	}
 	for _, category := range allCategory {
-		page := 10
+// 	    4000
+		page := 20
 	    minPage := 1
 		isPageGo := true
 		for isPageGo {

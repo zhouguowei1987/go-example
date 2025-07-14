@@ -18,7 +18,7 @@ import (
 // @Description http://www.guangxibiaoxie.com/，将广西标准化协会Pdf文档入库
 func main() {
 	var startId = 2580
-	var endId = 3767
+	var endId = 4180
 	goCh := make(chan int, endId-startId)
 	for id := startId; id <= endId; id++ {
 		go func(id int) {
@@ -71,6 +71,8 @@ func guangXiBiaoXieSpider(id int) error {
 	title = strings.ReplaceAll(titleSplit[1], " ", "")
 	title = strings.ReplaceAll(title, "《", "")
 	title = strings.ReplaceAll(title, "》", "")
+	title = strings.ReplaceAll(title, "()", "")
+	title = strings.ReplaceAll(title, "（)", "")
 	title = strings.TrimSpace(title)
 	standardNo := strings.TrimSpace(titleSplit[0])
 	title = title + "(" + standardNo + ")"

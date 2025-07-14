@@ -1,6 +1,7 @@
 package main
 
 import (
+    "crypto/tls"
 	"errors"
 	"fmt"
 	"github.com/antchfx/htmlquery"
@@ -18,8 +19,8 @@ import (
 // @Title 获取全国团体标准信息平台Pdf文档
 // @Description https://www.ttbz.org.cn/，将全国团体标准信息平台Pdf文档入库
 func main() {
-	var startId = 139100
-	var endId = 139179
+	var startId = 141200
+	var endId = 141216
 	goCh := make(chan int, endId-startId)
 	for id := startId; id <= endId; id++ {
 		go func(id int) {
@@ -35,7 +36,13 @@ func main() {
 }
 
 func getTbz(url string) (doc *html.Node, err error) {
-	client := &http.Client{}                     //初始化客户端
+    // 创建一个自定义的http.Transport
+	tr := &http.Transport{
+		TLSClientConfig: &tls.Config{
+			InsecureSkipVerify: true, // 忽略证书验证
+		},
+	}
+	client := &http.Client{Transport: tr}           //初始化客户端
 	req, err := http.NewRequest("GET", url, nil) //建立连接
 	if err != nil {
 		return doc, err
@@ -67,7 +74,13 @@ func getTbz(url string) (doc *html.Node, err error) {
 }
 
 func downloadPdf(pdfUrl string, filePath string) error {
-	client := &http.Client{}                        //初始化客户端
+	// 创建一个自定义的http.Transport
+	tr := &http.Transport{
+		TLSClientConfig: &tls.Config{
+			InsecureSkipVerify: true, // 忽略证书验证
+		},
+	}
+	client := &http.Client{Transport: tr}           //初始化客户端                     //初始化客户端
 	req, err := http.NewRequest("GET", pdfUrl, nil) //建立连接
 	if err != nil {
 		return err
