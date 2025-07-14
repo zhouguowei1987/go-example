@@ -105,14 +105,14 @@ func CzWlZxSetHttpProxy() (httpclient *http.Client) {
 	return httpclient
 }
 
-var CzWlZxCookie = "ASP.NET_SessionId=u50wxubbcwnj30nby2hstcyl; Hm_lvt_43bc53ae85afc8f10b75f500b7f506b6=1750862924,1750943997; HMACCOUNT=1CCD0111717619C6; Hm_lpvt_43bc53ae85afc8f10b75f500b7f506b6=1750996680"
+var CzWlZxCookie = "Hm_lvt_43bc53ae85afc8f10b75f500b7f506b6=1751030895; ASP.NET_SessionId=qukkqa55xvbqhy45qt5w4gaw; Hm_lvt_43bc53ae85afc8f10b75f500b7f506b6=1750862924,1750943997,1751263265; Hm_lpvt_43bc53ae85afc8f10b75f500b7f506b6=1751263265; HMACCOUNT=1CCD0111717619C6"
 
 // CzWlZxSpider 获取初中物理在线文档
 // @Title 获取初中物理在线文档
 // @Description http://www.czwlzx.cn/，获取初中物理在线文档
 func main() {
-	// 154331
-	var startId = 116068
+	// 154373
+	var startId = 22162
 	var endId = 8254
 	for id := startId; id >= endId; id-- {
 		err := CzWlZxSpider(id)
@@ -167,17 +167,18 @@ func CzWlZxSpider(id int) error {
 
 	// 文档类型
 	var fileType = ""
-	fileTypeDocNode := htmlquery.FindOne(detailDoc, `//div[@class="content"]/div[@class="ppttit"]/h2/i[@class="icon docx"]`)
-	fileTypePdfNode := htmlquery.FindOne(detailDoc, `//div[@class="content"]/div[@class="ppttit"]/h2/i[@class="icon pdf"]`)
-
-	if fileTypeDocNode != nil {
+	fileTypeDocxNode := htmlquery.FindOne(detailDoc, `//div[@class="content"]/div[@class="ppttit"]/h2/i[@class="icon docx"]`)
+	if fileTypeDocxNode != nil {
 		fileType = ".docx"
-	} else if fileTypePdfNode != nil {
-		fileType = ".pdf"
 	}
+	fileTypeDocNode := htmlquery.FindOne(detailDoc, `//div[@class="content"]/div[@class="ppttit"]/h2/i[@class="icon doc"]`)
+	if fileTypeDocNode != nil {
+		fileType = ".doc"
+	}
+
 	fmt.Println(fileType)
 	if len(fileType) == 0 {
-		return errors.New("文档类型不是doc或pdf文档，跳过")
+		return errors.New("文档类型不是doc，跳过")
 	}
 
 	// 所需点券

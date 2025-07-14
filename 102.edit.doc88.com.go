@@ -143,13 +143,14 @@ var EditEditCookie = "cdb_sys_sid=usrcbi0lk9bcuoaok1d5h70ke0; cdb_RW_ID_13929512
 
 var EditDetailTimeSleep = 10
 var EditSaveTimeSleep = 10
-var EditNextPageSleep = 10
+var EditNextPageSleep = 15
 
 // ychEduSpider 编辑道客巴巴文档
 // @Title 编辑道客巴巴文档
 // @Description https://www.doc88.com/，编辑道客巴巴文档
 func main() {
-	curPage := 461
+	curPage := 2586
+
 	for {
 		pageListUrl := fmt.Sprintf("https://www.doc88.com/uc/doc_manager.php?act=ajax_doc_list&curpage=%d", curPage)
 		fmt.Println(pageListUrl)

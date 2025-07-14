@@ -122,7 +122,8 @@ var TodayMaxDownLoadCount = 150000
 // @Title 下载道客巴巴文档
 // @Description https://www.doc88.com/，下载道客巴巴文档
 func main() {
-	curPage := 1699
+	curPage := 2913
+
 	isPageListGo := true
 	for isPageListGo {
 		pageListUrl := fmt.Sprintf("https://www.doc88.com/uc/doc_manager.php?act=ajax_doc_list&curpage=%d", curPage)

@@ -537,12 +537,12 @@ func main() {
 
 						datePaper, _ := time.Parse("2006-01-02", dateText)
 						fmt.Println(datePaper)
-						dateStart, _ := time.Parse("2006-01-02", "2025-06-15")
+						dateStart, _ := time.Parse("2006-01-02", "2025-06-23")
 						fmt.Println(dateStart)
 
 						// 比较日期
 						if datePaper.After(dateStart) == false {
-							fmt.Println("日期在2025-06-15后，跳过")
+							fmt.Println("日期在2025-06-23后，跳过")
 							break
 						}
 
@@ -597,7 +597,7 @@ func main() {
 							continue
 						}
 
-						filePath := "../www2.zzstep.com/2025-06-15/www2.zzstep.com/" + studySection.name + "/" + subject.name + "/" + fileName
+						filePath := "../www2.zzstep.com/2025-06-23/www2.zzstep.com/" + studySection.name + "/" + subject.name + "/" + fileName
 						_, errDoc := os.Stat(filePath + ".doc")
 						_, errDocx := os.Stat(filePath + ".docx")
 						if errDoc != nil && errDocx != nil {
