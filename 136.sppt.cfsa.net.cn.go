@@ -142,8 +142,8 @@ func main() {
 		SpPtCfSaHttpProxyUrl = ""
 		fmt.Println(err)
 	}
-	for _, spPtCfSa := range querySpPtCfSaListResponse {
-		fmt.Println("=====================開始處理數據=========================")
+	for id_index, spPtCfSa := range querySpPtCfSaListResponse {
+		fmt.Println("=====================开始处理数据 id_index = ", id_index, "=========================")
 		code := spPtCfSa.CODE
 		fmt.Println(code)
 
