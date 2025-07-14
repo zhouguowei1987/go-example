@@ -679,6 +679,10 @@ func main() {
 			dirName: "www.docx_19mini.cn",
 			price:   "88",
 		},
+		{
+			dirName: "www.docx_czwlzx.cn",
+			price:   "88",
+		},
 	}
 	rootPath := "../upload.book118.com/"
 	for _, childDir := range uploadChildDirArr {
