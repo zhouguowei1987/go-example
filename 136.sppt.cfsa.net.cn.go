@@ -154,7 +154,7 @@ func main() {
 		title = strings.ReplaceAll(title, "|", "-")
 		fmt.Println(title)
 
-		if len(spPtCfSa.FJ) < 0 {
+		if len(spPtCfSa.FJ) <= 0 {
 			fmt.Println("数据不完整，跳过")
 			continue
 		}
