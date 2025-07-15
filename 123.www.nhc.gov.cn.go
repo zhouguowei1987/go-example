@@ -188,7 +188,7 @@ func main() {
 										}
 										fmt.Println(downLoadUrl)
 
-										filePath := "../www.nhc.gov.cn/www.nhc.gov.cn/" + chineseTitle + ".pdf"
+										filePath := "../www.nhc.gov.cn/" + chineseTitle + ".pdf"
 										if _, err := os.Stat(filePath); err != nil {
 											// 开始下载
 											fmt.Println("=======开始下载========")
