@@ -7,7 +7,6 @@ import (
 	"golang.org/x/net/html"
 	"io"
 	"io/ioutil"
-	"math/rand"
 	"net"
 	"net/http"
 	"net/url"
@@ -111,14 +110,14 @@ func NhcGovSetHttpProxy() (httpclient *http.Client) {
 // _yfxkpy_firsttime 1737352968986 2025-01-20 14:02:48
 // _yfxkpy_lasttime 1752595494940 2025-07-16 00:04:54
 // _yfxkpy_visittime 1752675674051 2025-07-16 22:21:14
-var NhcGovCookie = "5uRo8RWcod0KO=60y8G.w6Y4_LzcRDMJ2.mH18Ru80wjr4R6oIOU9bY_uTP3sE.cTLoGfEV95_6RgBjC7wLfcFyNrlGxBpdhjCwuhA; _yfxkpy_ssid_10006654=%7B%22_yfxkpy_firsttime%22%3A%221752677284918%22%2C%22_yfxkpy_lasttime%22%3A%221752800113095%22%2C%22_yfxkpy_visittime%22%3A%221752800113095%22%2C%22_yfxkpy_cookie%22%3A%2220250716224804921929759466664133%22%2C%22_yfxkpy_returncount%22%3A%221%22%7D; ariauseGraymode=false; arialoadData=true; ariaappid=e2dcc6e6e04fd7a68ae6f8b8a9be7f7d; 5uRo8RWcod0KP=0Cqo.QKvr0Ijovqp7zxzFziTsBqf._Cl0FdkBGQ5lA0Zb8lp3WlISgelbJRGWXsYUast3u9BvOlS33hOPILnB_8Zm_8iJriktJo42y4gnI6QOpqVIrMUY2nKM90ZfjlJrbsH1azVdtk7QLIN9kdtgHjuyIqTq6cGMExIiMCbg9fCladRNdmwP.ovV4RnItI.qIX5TO8yCd0XFf2zwJipmRTKnkDZqVcB24EKjLgKp9ehU9g5ZcG7TyqlPHDgsC2x90kWznplRJbXvUXEj.f3l8NWQo3GMftsl6fl.BYV73P79LgQBI_3X9ABj0oD1KlTAtA5Dl2jtFO.SxWKp73CqGHkqqOv0GSvEiIplItovF5O3gFZtmCVURDemCMioczYPO.cL7Xcxah2ize0X6knwDOXqZBrOal98IVdj7b6pgeUSdJm8dSBEfxZ4x.Lsc2gX"
+var NhcGovCookie = "5uRo8RWcod0KO=60gn6YSStIhgQLrerVuRPZIDrs2BFmduflPNi9cZs2B8HYMm34JLTYpatWC9kl1GV5j6pxUuLF.hFjMK_7_275Cq; _yfxkpy_ssid_10006654=%7B%22_yfxkpy_firsttime%22%3A%221752818262011%22%2C%22_yfxkpy_lasttime%22%3A%221752818262011%22%2C%22_yfxkpy_visittime%22%3A%221752818262011%22%2C%22_yfxkpy_cookie%22%3A%2220250718135742015352643484080141%22%7D; arialoadData=true; ariauseGraymode=false; ariaappid=e2dcc6e6e04fd7a68ae6f8b8a9be7f7d; 5uRo8RWcod0KP=0qCa4qYDjuCeiLs3gSJZHzOvpNA7VPz12bEaFjr9uFIjW5Hn0G79OztH4S4GEzUtlw3AzXuYYKEHT3RvbIUsWbfiLEELtrFllxGWweowAxOH2kLVu4kcN41IkKBsBqKsPJo0qBHWULVIC_fhWGFxZTY3DkFaxtXp.3quuzuIQiqV8.VMpgIzxT2Y7qcPcsPQgPmciQYZznNNPtdGly6EkNCsv4PElElzByPyjwDjUfN9J9t1XFVf2.iMAliaqgPHfnehXAKsSZeL5OzWrq6KSacdoz6DA204uGLGhuDG7dQpcqzmXe0D.lJitCYZl8SUjij.ooOyhJlTqq2eAroBS6XBk.VOwRX_3fXpkJlMYjanKKwjMb9JRpHtcPcFR.6Nk"
 
 type yfxkpySsid10006654 struct {
-	Yfxkpy_firsttime   string `json:"_yfxkpy_firsttime"`
-	Yfxkpy_lasttime    string `json:"_yfxkpy_lasttime"`
-	Yfxkpy_visittime   string `json:"_yfxkpy_visittime"`
-	Yfxkpy_cookie      string `json:"_yfxkpy_cookie"`
-	Yfxkpy_returncount string `json:"_yfxkpy_returncount"`
+	Yfxkpy_firsttime string `json:"_yfxkpy_firsttime"`
+	Yfxkpy_lasttime  string `json:"_yfxkpy_lasttime"`
+	Yfxkpy_visittime string `json:"_yfxkpy_visittime"`
+	Yfxkpy_cookie    string `json:"_yfxkpy_cookie"`
+	//Yfxkpy_returncount string `json:"_yfxkpy_returncount"`
 }
 
 func create_yfxkpy_ssid() {
@@ -129,11 +128,11 @@ func create_yfxkpy_ssid() {
 	// 格式化日期和时间
 	now_day := t.Format("20060102150405")
 	yfxkpy_ssid_10006654 := yfxkpySsid10006654{
-		Yfxkpy_firsttime:   strconv.Itoa(int(now_milliseconds)),
-		Yfxkpy_lasttime:    strconv.Itoa(int(now_milliseconds)),
-		Yfxkpy_visittime:   strconv.Itoa(int(now_milliseconds)),
-		Yfxkpy_cookie:      now_day + "04921929759466664133",
-		Yfxkpy_returncount: "1",
+		Yfxkpy_firsttime: strconv.Itoa(int(now_milliseconds)),
+		Yfxkpy_lasttime:  strconv.Itoa(int(now_milliseconds)),
+		Yfxkpy_visittime: strconv.Itoa(int(now_milliseconds)),
+		Yfxkpy_cookie:    now_day + "34962272829032799947",
+		//Yfxkpy_returncount: "1",
 	}
 	// 将结构体转换为JSON字节数组
 	yfxkpy_ssid_10006654_json_data, err := json.Marshal(yfxkpy_ssid_10006654)
@@ -145,7 +144,7 @@ func create_yfxkpy_ssid() {
 	yfxkpy_ssid_10006654_json_data_string = url.QueryEscape(yfxkpy_ssid_10006654_json_data_string)
 	fmt.Println(yfxkpy_ssid_10006654_json_data_string)
 
-	NhcGovCookie = fmt.Sprintf("5uRo8RWcod0KO=60y8G.w6Y4_LzcRDMJ2.mH18Ru80wjr4R6oIOU9bY_uTP3sE.cTLoGfEV95_6RgBjC7wLfcFyNrlGxBpdhjCwuhA; _yfxkpy_ssid_10006654=%s; ariauseGraymode=false; arialoadData=true; ariaappid=e2dcc6e6e04fd7a68ae6f8b8a9be7f7d; 5uRo8RWcod0KP=0Cqo.QKvr0Ijovqp7zxzFziTsBqf._Cl0FdkBGQ5lA0Zb8lp3WlISgelbJRGWXsYUast3u9BvOlS33hOPILnB_8Zm_8iJriktJo42y4gnI6QOpqVIrMUY2nKM90ZfjlJrbsH1azVdtk7QLIN9kdtgHjuyIqTq6cGMExIiMCbg9fCladRNdmwP.ovV4RnItI.qIX5TO8yCd0XFf2zwJipmRTKnkDZqVcB24EKjLgKp9ehU9g5ZcG7TyqlPHDgsC2x90kWznplRJbXvUXEj.f3l8NWQo3GMftsl6fl.BYV73P79LgQBI_3X9ABj0oD1KlTAtA5Dl2jtFO.SxWKp73CqGHkqqOv0GSvEiIplItovF5O3gFZtmCVURDemCMioczYPO.cL7Xcxah2ize0X6knwDOXqZBrOal98IVdj7b6pgeUSdJm8dSBEfxZ4x.Lsc2gX", yfxkpy_ssid_10006654_json_data_string)
+	NhcGovCookie = fmt.Sprintf("5uRo8RWcod0KO=60TCvitvBLBpJ.NneNrtxj2tueZKlyI24gbWjpl854jkEZz3sSKw6Fj38Dsebktu.GtXtVNLfJPXDUX5oEP2eXWG; _yfxkpy_ssid_10006654=%s; arialoadData=true; ariauseGraymode=false; ariaappid=e2dcc6e6e04fd7a68ae6f8b8a9be7f7d; 5uRo8RWcod0KP=0wppx6pKHgHmzcaaFLzhBzJubKvmTBs6WFAqwUmIzmlA1pOIDwIcL2CL2FMlhn197kym19GvMt4Qti8H_gte3RV9l8SQurIKjPaH02OuPf9ido.mUeP2xF1B3MKdbArTCgVoEVlgR.WN7zuTO4p9in3QUXbDPYIdtE3wZ5I9BgSryi0cPHLn7iLLeOU3NEFICgZkYW.t6yUekcf3sFJnj6FqItzWQvosAurPwI5.ZbvhA_qvjJ1_QOHG5.gdBUwwFyXQ70SQV5AoDaz.oWrJOfRZZ0n4JdvBLWYwbxiYvAUA7714LNv5201kbA_bibfjdr5hZr69Q5_hShwXayd0f7hS6NL2kgPeiSrwgYRUVKrkosaBvyaI6RzZD4DDtkyVT1pZ1rPFSEE83aVPF03.H9q", yfxkpy_ssid_10006654_json_data_string)
 	fmt.Println(NhcGovCookie)
 }
 
@@ -216,8 +215,8 @@ func main() {
 			break
 		}
 		fmt.Println("=======完成下载========")
-		//DownLoadNhcGovTimeSleep := 10
-		DownLoadNhcGovTimeSleep := rand.Intn(5)
+		DownLoadNhcGovTimeSleep := 10
+		//DownLoadNhcGovTimeSleep := rand.Intn(5)
 		for i := 1; i <= DownLoadNhcGovTimeSleep; i++ {
 			time.Sleep(time.Second)
 			fmt.Println("title="+title+"===========下载", title, "成功，暂停", DownLoadNhcGovTimeSleep, "秒，倒计时", i, "秒===========")
