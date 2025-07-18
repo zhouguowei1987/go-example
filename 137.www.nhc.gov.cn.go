@@ -108,12 +108,45 @@ func NhcGovSetHttpProxy() (httpclient *http.Client) {
 	return httpclient
 }
 
-// _yfxkpy_firsttime 1748789542542 2025-07-16 11:14:03
-// _yfxkpy_lasttime 1752635422911 2025-07-16 11:10:22
-// _yfxkpy_visittime 1752635422911 2025-07-16 11:10:22
-var NhcGovCookie = "sVoELocvxVW0S=5ZCewgg5x.lwIRUfd5Os_9gZNFxtFa3nuYdA6vgRiwPcOclyvF_tK2qwg5N98WYFDgyyIOHSycpJgCLrjkmhdJq; 5uRo8RWcod0KO=60kIcUTd7w2UNAs9nmzRXcLX.ZG6P3v7yRuSgPR7Q1p9UIri_QA93ERV7uhjN.wrrRbU7idYR6nBhkaKcYXkfshG; enable_5uRo8RWcod0K=true; JSESSIONID=9C480E27499298CB3CBA83E5128D83FB; ariawapForceOldFixed=false; arialoadData=true; 5uRo8RWcod0KS=60HGjkwJ4ZXxqmcF7HAlk9ozCjyXTF2WM2OLgPyy.KcwOGsF0W.atGC9CJfZOy1nCxfY.idZiUCtCDpRFTeHxI9q; 5uRo8RWcod0KT=0qMWrH0FvMch3bjl5J3EfYSJ0nMKpET4uyIfrAbMpCu7e3VcDNS93HUUHD4q30b4xkORvzvSitYyHSj087Grmftv9N1R64xesST_hd8IchFtvL.JG7hEeO0cmEYoZIyLqT6wHlsT0lKwdHcc_PL8OLQt613ufCZxmdOSprfFQTxTj_dgWAnp7wxapG0XbJAgbrWmyDzA26dwLwoAmwYdOakXpMCoYKQxiM1YgiZnzwBg7ABoEfoQJY6yfH7lHWL_yjO6buMS27jPhxoC.YkYdtq; _yfxkpy_ssid_10006654=%7B%22_yfxkpy_firsttime%22%3A%221737352968986%22%2C%22_yfxkpy_lasttime%22%3A%221752595494940%22%2C%22_yfxkpy_visittime%22%3A%221752596019158%22%2C%22_yfxkpy_cookie%22%3A%2220250120140248997354195004763129%22%2C%22_yfxkpy_returncount%22%3A%225%22%7D; ariauseGraymode=false; ariaappid=e2dcc6e6e04fd7a68ae6f8b8a9be7f7d; 5uRo8RWcod0KP=01q4HO.QJZ1vXEaAfEXQie6FW_ODtRTU84FKLZuN7ZMlCiol_i5VaA0pHEyVvqprzVfpnqKN._E2Ksd7s9RPK1j9bZkCa3dmuUvfDnb4r2AgktbNa3_v9DOWZwvCraS3O.LgOReWU3hNyRPd1IoRCzpqAYb2SPAFlrQhIolStS36JL9lDaKIAEinx1hQ_fVAiuGp7NzfJB4hCOa1WVnVmh0aFcp6SQBuK1yf2khUisvvOuOO_bHXC17zFA0S36zj8ackGVxDHHku2VTEeRBbVN_tP9pR252MpayDVq59idRd_oLWX9GWkVRZ.GO38apcYaaATAJKbNZCDxUEhFfaIzY2cY7cgLFAaeyZdwT21cS1A1hHxM_KphaJBiS7PgOWNyA1b1jqa34JKe6LPJ8VA9C6vV9L.7Sru6FafaqXHWEG"
+// _yfxkpy_firsttime 1737352968986 2025-01-20 14:02:48
+// _yfxkpy_lasttime 1752595494940 2025-07-16 00:04:54
+// _yfxkpy_visittime 1752675674051 2025-07-16 22:21:14
+var NhcGovCookie = "5uRo8RWcod0KO=60y8G.w6Y4_LzcRDMJ2.mH18Ru80wjr4R6oIOU9bY_uTP3sE.cTLoGfEV95_6RgBjC7wLfcFyNrlGxBpdhjCwuhA; _yfxkpy_ssid_10006654=%7B%22_yfxkpy_firsttime%22%3A%221752677284918%22%2C%22_yfxkpy_lasttime%22%3A%221752800113095%22%2C%22_yfxkpy_visittime%22%3A%221752800113095%22%2C%22_yfxkpy_cookie%22%3A%2220250716224804921929759466664133%22%2C%22_yfxkpy_returncount%22%3A%221%22%7D; ariauseGraymode=false; arialoadData=true; ariaappid=e2dcc6e6e04fd7a68ae6f8b8a9be7f7d; 5uRo8RWcod0KP=0Cqo.QKvr0Ijovqp7zxzFziTsBqf._Cl0FdkBGQ5lA0Zb8lp3WlISgelbJRGWXsYUast3u9BvOlS33hOPILnB_8Zm_8iJriktJo42y4gnI6QOpqVIrMUY2nKM90ZfjlJrbsH1azVdtk7QLIN9kdtgHjuyIqTq6cGMExIiMCbg9fCladRNdmwP.ovV4RnItI.qIX5TO8yCd0XFf2zwJipmRTKnkDZqVcB24EKjLgKp9ehU9g5ZcG7TyqlPHDgsC2x90kWznplRJbXvUXEj.f3l8NWQo3GMftsl6fl.BYV73P79LgQBI_3X9ABj0oD1KlTAtA5Dl2jtFO.SxWKp73CqGHkqqOv0GSvEiIplItovF5O3gFZtmCVURDemCMioczYPO.cL7Xcxah2ize0X6knwDOXqZBrOal98IVdj7b6pgeUSdJm8dSBEfxZ4x.Lsc2gX"
 
-type struct _yfxkpy_ssid_10006654{
+type yfxkpySsid10006654 struct {
+	Yfxkpy_firsttime   string `json:"_yfxkpy_firsttime"`
+	Yfxkpy_lasttime    string `json:"_yfxkpy_lasttime"`
+	Yfxkpy_visittime   string `json:"_yfxkpy_visittime"`
+	Yfxkpy_cookie      string `json:"_yfxkpy_cookie"`
+	Yfxkpy_returncount string `json:"_yfxkpy_returncount"`
+}
+
+func create_yfxkpy_ssid() {
+	now_milliseconds := time.Now().UnixMilli()
+	// 将毫秒转换为纳秒
+	now_nanoseconds := now_milliseconds / 1000
+	t := time.Unix(now_nanoseconds, 0)
+	// 格式化日期和时间
+	now_day := t.Format("20060102150405")
+	yfxkpy_ssid_10006654 := yfxkpySsid10006654{
+		Yfxkpy_firsttime:   strconv.Itoa(int(now_milliseconds)),
+		Yfxkpy_lasttime:    strconv.Itoa(int(now_milliseconds)),
+		Yfxkpy_visittime:   strconv.Itoa(int(now_milliseconds)),
+		Yfxkpy_cookie:      now_day + "04921929759466664133",
+		Yfxkpy_returncount: "1",
+	}
+	// 将结构体转换为JSON字节数组
+	yfxkpy_ssid_10006654_json_data, err := json.Marshal(yfxkpy_ssid_10006654)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	yfxkpy_ssid_10006654_json_data_string := string(yfxkpy_ssid_10006654_json_data)
+	yfxkpy_ssid_10006654_json_data_string = url.QueryEscape(yfxkpy_ssid_10006654_json_data_string)
+	fmt.Println(yfxkpy_ssid_10006654_json_data_string)
+
+	NhcGovCookie = fmt.Sprintf("5uRo8RWcod0KO=60y8G.w6Y4_LzcRDMJ2.mH18Ru80wjr4R6oIOU9bY_uTP3sE.cTLoGfEV95_6RgBjC7wLfcFyNrlGxBpdhjCwuhA; _yfxkpy_ssid_10006654=%s; ariauseGraymode=false; arialoadData=true; ariaappid=e2dcc6e6e04fd7a68ae6f8b8a9be7f7d; 5uRo8RWcod0KP=0Cqo.QKvr0Ijovqp7zxzFziTsBqf._Cl0FdkBGQ5lA0Zb8lp3WlISgelbJRGWXsYUast3u9BvOlS33hOPILnB_8Zm_8iJriktJo42y4gnI6QOpqVIrMUY2nKM90ZfjlJrbsH1azVdtk7QLIN9kdtgHjuyIqTq6cGMExIiMCbg9fCladRNdmwP.ovV4RnItI.qIX5TO8yCd0XFf2zwJipmRTKnkDZqVcB24EKjLgKp9ehU9g5ZcG7TyqlPHDgsC2x90kWznplRJbXvUXEj.f3l8NWQo3GMftsl6fl.BYV73P79LgQBI_3X9ABj0oD1KlTAtA5Dl2jtFO.SxWKp73CqGHkqqOv0GSvEiIplItovF5O3gFZtmCVURDemCMioczYPO.cL7Xcxah2ize0X6knwDOXqZBrOal98IVdj7b6pgeUSdJm8dSBEfxZ4x.Lsc2gX", yfxkpy_ssid_10006654_json_data_string)
+	fmt.Println(NhcGovCookie)
 }
 
 // 下载国家卫生标准文档
@@ -315,6 +348,8 @@ func NhcGovDetailDoc(requestUrl string, referer string) (doc *html.Node, err err
 	if err != nil {
 		return doc, err
 	}
+	// 初始化cookie
+	create_yfxkpy_ssid()
 	req.Header.Set("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7")
 	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
 	req.Header.Set("Connection", "keep-alive")
@@ -362,9 +397,12 @@ func downloadNhcGov(attachmentUrl string, referer string, filePath string) error
 	if err != nil {
 		return err
 	}
+	// 初始化cookie
+	create_yfxkpy_ssid()
 
 	req.Header.Set("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7")
 	req.Header.Set("Connection", "keep-alive")
+	req.Header.Set("Cookie", NhcGovCookie)
 	req.Header.Set("Host", "www.nhc.gov.cn")
 	req.Header.Set("Referer", referer)
 	req.Header.Set("sec-ch-ua", "\"Chromium\";v=\"110\", \"Not A(Brand\";v=\"24\", \"Google Chrome\";v=\"110\"")
