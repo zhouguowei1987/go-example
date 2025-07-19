@@ -39,7 +39,7 @@ var ZjAmrCookie = "node_id=nginx_1; node_id=nginx_1; _d_id=30fbbb89f633bbccfddce
 // @Description http://zlzx.zjamr.zj.gov.cn/，获取浙江标准在线
 func main() {
 	maxPage := 3197
-	page := 1
+	page := 495
 	isPageListGo := true
 	for isPageListGo {
 		requestUrl := fmt.Sprintf("https://zlzx.zjamr.zj.gov.cn/bzzx/public/news/list/BZBP/ALL/%d.html", page)
@@ -107,11 +107,17 @@ func main() {
 				DownLoadZjAmrTimeSleep := rand.Intn(5)
 				for i := 1; i <= DownLoadZjAmrTimeSleep; i++ {
 					time.Sleep(time.Second)
-					fmt.Println("page="+strconv.Itoa(page)+"==========="+filePath+"下载成功，暂停", DownLoadZjAmrTimeSleep, "秒，倒计时", i, "秒===========")
+					fmt.Println("page="+strconv.Itoa(page)+",filePath="+filePath+"===========下载成功，暂停", DownLoadZjAmrTimeSleep, "秒，倒计时", i, "秒===========")
 				}
 
 			}
 		}
+		DownLoadZjAmrPageTimeSleep := 10
+//         DownLoadZjAmrPageTimeSleep := rand.Intn(5)
+        for i := 1; i <= DownLoadZjAmrPageTimeSleep; i++ {
+            time.Sleep(time.Second)
+            fmt.Println("page="+strconv.Itoa(page)+"===========，暂停", DownLoadZjAmrPageTimeSleep, "秒，倒计时", i, "秒===========")
+        }
 		page++
 		if page > maxPage {
 			isPageListGo = false
