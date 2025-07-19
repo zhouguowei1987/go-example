@@ -442,12 +442,12 @@ func main() {
 					fmt.Println(dateText)
 
 					datePaper, _ := time.Parse("2006-01-02", dateText)
-					dateStart, _ := time.Parse("2006-01-02", "2025-06-16")
+					dateStart, _ := time.Parse("2006-01-02", "2025-07-04")
 					fmt.Println(dateStart)
 
 					// 比较日期
 					if datePaper.After(dateStart) == false {
-						fmt.Println("日期在2025-06-16后，跳过")
+						fmt.Println("日期在2025-07-04后，跳过")
 						break
 					}
 
@@ -470,7 +470,7 @@ func main() {
 					attachmentUrl := "https://www.gzenxx.com/uploads/ueditor/file/" + string(regAttachmentViewUrlMatch[0][1])
 					fmt.Println(attachmentUrl)
 
-					filePath := "E:\\workspace\\www.gzenxx.com\\2025-06-16\\www.rar_gzenxx.com\\" + title + ".rar"
+					filePath := "E:\\workspace\\www.gzenxx.com\\2025-07-04\\www.rar_gzenxx.com\\" + title + ".rar"
 					_, err = os.Stat(filePath)
 					if err != nil {
 
