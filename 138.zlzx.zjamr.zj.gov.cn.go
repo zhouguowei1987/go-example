@@ -91,7 +91,7 @@ func main() {
 
 				downloadText := htmlquery.InnerText(downloadNode)
 				downloadTextArray := strings.Split(downloadText, "\"")
-// 				fmt.Println(downloadTextArray)
+				// 				fmt.Println(downloadTextArray)
 				downloadUrl := downloadTextArray[1]
 				downloadUrl = strings.ReplaceAll(downloadUrl, "\\/", "/")
 				fmt.Println(downloadUrl)
@@ -107,7 +107,7 @@ func main() {
 				DownLoadZjAmrTimeSleep := rand.Intn(5)
 				for i := 1; i <= DownLoadZjAmrTimeSleep; i++ {
 					time.Sleep(time.Second)
-					fmt.Println("page="+page+"==========="+filePath+"下载成功，暂停", DownLoadZjAmrTimeSleep, "秒，倒计时", i, "秒===========")
+					fmt.Println("page="+strconv.Itoa(page)+"==========="+filePath+"下载成功，暂停", DownLoadZjAmrTimeSleep, "秒，倒计时", i, "秒===========")
 				}
 
 			}
