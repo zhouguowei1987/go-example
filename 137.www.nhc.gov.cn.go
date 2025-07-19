@@ -7,7 +7,6 @@ import (
 	"golang.org/x/net/html"
 	"io"
 	"io/ioutil"
-	"math/rand"
 	"net"
 	"net/http"
 	"net/url"
@@ -108,12 +107,45 @@ func NhcGovSetHttpProxy() (httpclient *http.Client) {
 	return httpclient
 }
 
-// _yfxkpy_firsttime 1748789542542 2025-07-16 11:14:03
-// _yfxkpy_lasttime 1752635422911 2025-07-16 11:10:22
-// _yfxkpy_visittime 1752635422911 2025-07-16 11:10:22
-var NhcGovCookie = "sVoELocvxVW0S=5ZCewgg5x.lwIRUfd5Os_9gZNFxtFa3nuYdA6vgRiwPcOclyvF_tK2qwg5N98WYFDgyyIOHSycpJgCLrjkmhdJq; 5uRo8RWcod0KO=60kIcUTd7w2UNAs9nmzRXcLX.ZG6P3v7yRuSgPR7Q1p9UIri_QA93ERV7uhjN.wrrRbU7idYR6nBhkaKcYXkfshG; enable_5uRo8RWcod0K=true; JSESSIONID=9C480E27499298CB3CBA83E5128D83FB; ariawapForceOldFixed=false; arialoadData=true; 5uRo8RWcod0KS=60HGjkwJ4ZXxqmcF7HAlk9ozCjyXTF2WM2OLgPyy.KcwOGsF0W.atGC9CJfZOy1nCxfY.idZiUCtCDpRFTeHxI9q; 5uRo8RWcod0KT=0qMWrH0FvMch3bjl5J3EfYSJ0nMKpET4uyIfrAbMpCu7e3VcDNS93HUUHD4q30b4xkORvzvSitYyHSj087Grmftv9N1R64xesST_hd8IchFtvL.JG7hEeO0cmEYoZIyLqT6wHlsT0lKwdHcc_PL8OLQt613ufCZxmdOSprfFQTxTj_dgWAnp7wxapG0XbJAgbrWmyDzA26dwLwoAmwYdOakXpMCoYKQxiM1YgiZnzwBg7ABoEfoQJY6yfH7lHWL_yjO6buMS27jPhxoC.YkYdtq; _yfxkpy_ssid_10006654=%7B%22_yfxkpy_firsttime%22%3A%221737352968986%22%2C%22_yfxkpy_lasttime%22%3A%221752595494940%22%2C%22_yfxkpy_visittime%22%3A%221752596019158%22%2C%22_yfxkpy_cookie%22%3A%2220250120140248997354195004763129%22%2C%22_yfxkpy_returncount%22%3A%225%22%7D; ariauseGraymode=false; ariaappid=e2dcc6e6e04fd7a68ae6f8b8a9be7f7d; 5uRo8RWcod0KP=01q4HO.QJZ1vXEaAfEXQie6FW_ODtRTU84FKLZuN7ZMlCiol_i5VaA0pHEyVvqprzVfpnqKN._E2Ksd7s9RPK1j9bZkCa3dmuUvfDnb4r2AgktbNa3_v9DOWZwvCraS3O.LgOReWU3hNyRPd1IoRCzpqAYb2SPAFlrQhIolStS36JL9lDaKIAEinx1hQ_fVAiuGp7NzfJB4hCOa1WVnVmh0aFcp6SQBuK1yf2khUisvvOuOO_bHXC17zFA0S36zj8ackGVxDHHku2VTEeRBbVN_tP9pR252MpayDVq59idRd_oLWX9GWkVRZ.GO38apcYaaATAJKbNZCDxUEhFfaIzY2cY7cgLFAaeyZdwT21cS1A1hHxM_KphaJBiS7PgOWNyA1b1jqa34JKe6LPJ8VA9C6vV9L.7Sru6FafaqXHWEG"
+// _yfxkpy_firsttime 1737352968986 2025-01-20 14:02:48
+// _yfxkpy_lasttime 1752595494940 2025-07-16 00:04:54
+// _yfxkpy_visittime 1752675674051 2025-07-16 22:21:14
+var NhcGovCookie = "5uRo8RWcod0KO=60gn6YSStIhgQLrerVuRPZIDrs2BFmduflPNi9cZs2B8HYMm34JLTYpatWC9kl1GV5j6pxUuLF.hFjMK_7_275Cq; _yfxkpy_ssid_10006654=%7B%22_yfxkpy_firsttime%22%3A%221752818262011%22%2C%22_yfxkpy_lasttime%22%3A%221752818262011%22%2C%22_yfxkpy_visittime%22%3A%221752818262011%22%2C%22_yfxkpy_cookie%22%3A%2220250718135742015352643484080141%22%7D; arialoadData=true; ariauseGraymode=false; ariaappid=e2dcc6e6e04fd7a68ae6f8b8a9be7f7d; 5uRo8RWcod0KP=0qCa4qYDjuCeiLs3gSJZHzOvpNA7VPz12bEaFjr9uFIjW5Hn0G79OztH4S4GEzUtlw3AzXuYYKEHT3RvbIUsWbfiLEELtrFllxGWweowAxOH2kLVu4kcN41IkKBsBqKsPJo0qBHWULVIC_fhWGFxZTY3DkFaxtXp.3quuzuIQiqV8.VMpgIzxT2Y7qcPcsPQgPmciQYZznNNPtdGly6EkNCsv4PElElzByPyjwDjUfN9J9t1XFVf2.iMAliaqgPHfnehXAKsSZeL5OzWrq6KSacdoz6DA204uGLGhuDG7dQpcqzmXe0D.lJitCYZl8SUjij.ooOyhJlTqq2eAroBS6XBk.VOwRX_3fXpkJlMYjanKKwjMb9JRpHtcPcFR.6Nk"
 
-type struct _yfxkpy_ssid_10006654{
+type yfxkpySsid10006654 struct {
+	Yfxkpy_firsttime string `json:"_yfxkpy_firsttime"`
+	Yfxkpy_lasttime  string `json:"_yfxkpy_lasttime"`
+	Yfxkpy_visittime string `json:"_yfxkpy_visittime"`
+	Yfxkpy_cookie    string `json:"_yfxkpy_cookie"`
+	//Yfxkpy_returncount string `json:"_yfxkpy_returncount"`
+}
+
+func create_yfxkpy_ssid() {
+	now_milliseconds := time.Now().UnixMilli()
+	// 将毫秒转换为纳秒
+	now_nanoseconds := now_milliseconds / 1000
+	t := time.Unix(now_nanoseconds, 0)
+	// 格式化日期和时间
+	now_day := t.Format("20060102150405")
+	yfxkpy_ssid_10006654 := yfxkpySsid10006654{
+		Yfxkpy_firsttime: strconv.Itoa(int(now_milliseconds)),
+		Yfxkpy_lasttime:  strconv.Itoa(int(now_milliseconds)),
+		Yfxkpy_visittime: strconv.Itoa(int(now_milliseconds)),
+		Yfxkpy_cookie:    now_day + "34962272829032799947",
+		//Yfxkpy_returncount: "1",
+	}
+	// 将结构体转换为JSON字节数组
+	yfxkpy_ssid_10006654_json_data, err := json.Marshal(yfxkpy_ssid_10006654)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	yfxkpy_ssid_10006654_json_data_string := string(yfxkpy_ssid_10006654_json_data)
+	yfxkpy_ssid_10006654_json_data_string = url.QueryEscape(yfxkpy_ssid_10006654_json_data_string)
+	fmt.Println(yfxkpy_ssid_10006654_json_data_string)
+
+	NhcGovCookie = fmt.Sprintf("5uRo8RWcod0KO=60TCvitvBLBpJ.NneNrtxj2tueZKlyI24gbWjpl854jkEZz3sSKw6Fj38Dsebktu.GtXtVNLfJPXDUX5oEP2eXWG; _yfxkpy_ssid_10006654=%s; arialoadData=true; ariauseGraymode=false; ariaappid=e2dcc6e6e04fd7a68ae6f8b8a9be7f7d; 5uRo8RWcod0KP=0wppx6pKHgHmzcaaFLzhBzJubKvmTBs6WFAqwUmIzmlA1pOIDwIcL2CL2FMlhn197kym19GvMt4Qti8H_gte3RV9l8SQurIKjPaH02OuPf9ido.mUeP2xF1B3MKdbArTCgVoEVlgR.WN7zuTO4p9in3QUXbDPYIdtE3wZ5I9BgSryi0cPHLn7iLLeOU3NEFICgZkYW.t6yUekcf3sFJnj6FqItzWQvosAurPwI5.ZbvhA_qvjJ1_QOHG5.gdBUwwFyXQ70SQV5AoDaz.oWrJOfRZZ0n4JdvBLWYwbxiYvAUA7714LNv5201kbA_bibfjdr5hZr69Q5_hShwXayd0f7hS6NL2kgPeiSrwgYRUVKrkosaBvyaI6RzZD4DDtkyVT1pZ1rPFSEE83aVPF03.H9q", yfxkpy_ssid_10006654_json_data_string)
+	fmt.Println(NhcGovCookie)
 }
 
 // 下载国家卫生标准文档
@@ -183,8 +215,8 @@ func main() {
 			break
 		}
 		fmt.Println("=======完成下载========")
-		//DownLoadNhcGovTimeSleep := 10
-		DownLoadNhcGovTimeSleep := rand.Intn(5)
+		DownLoadNhcGovTimeSleep := 10
+		//DownLoadNhcGovTimeSleep := rand.Intn(5)
 		for i := 1; i <= DownLoadNhcGovTimeSleep; i++ {
 			time.Sleep(time.Second)
 			fmt.Println("title="+title+"===========下载", title, "成功，暂停", DownLoadNhcGovTimeSleep, "秒，倒计时", i, "秒===========")
@@ -315,6 +347,8 @@ func NhcGovDetailDoc(requestUrl string, referer string) (doc *html.Node, err err
 	if err != nil {
 		return doc, err
 	}
+	// 初始化cookie
+	create_yfxkpy_ssid()
 	req.Header.Set("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7")
 	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
 	req.Header.Set("Connection", "keep-alive")
@@ -362,9 +396,12 @@ func downloadNhcGov(attachmentUrl string, referer string, filePath string) error
 	if err != nil {
 		return err
 	}
+	// 初始化cookie
+	create_yfxkpy_ssid()
 
 	req.Header.Set("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7")
 	req.Header.Set("Connection", "keep-alive")
+	req.Header.Set("Cookie", NhcGovCookie)
 	req.Header.Set("Host", "www.nhc.gov.cn")
 	req.Header.Set("Referer", referer)
 	req.Header.Set("sec-ch-ua", "\"Chromium\";v=\"110\", \"Not A(Brand\";v=\"24\", \"Google Chrome\";v=\"110\"")
