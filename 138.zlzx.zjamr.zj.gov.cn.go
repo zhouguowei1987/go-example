@@ -39,7 +39,7 @@ var ZjAmrCookie = "node_id=nginx_1; node_id=nginx_1; _d_id=30fbbb89f633bbccfddce
 // @Description http://zlzx.zjamr.zj.gov.cn/，获取浙江标准在线
 func main() {
 	maxPage := 3197
-	page := 495
+	page := 1
 	isPageListGo := true
 	for isPageListGo {
 		requestUrl := fmt.Sprintf("https://zlzx.zjamr.zj.gov.cn/bzzx/public/news/list/BZBP/ALL/%d.html", page)
@@ -59,6 +59,7 @@ func main() {
 			title := htmlquery.InnerText(htmlquery.FindOne(aNode, `./li/span[@class="news-title"]`))
 			titleArray := strings.Split(title, "  |  ")
 			title = strings.TrimSpace(titleArray[1])
+			title = strings.ReplaceAll(title, "/", "-")
 			fmt.Println(title)
 
 			code := strings.TrimSpace(titleArray[0])
