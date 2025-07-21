@@ -38,8 +38,8 @@ var ZjAmrCookie = "node_id=nginx_1; node_id=nginx_1; _d_id=30fbbb89f633bbccfddce
 // @Title 获取浙江标准在线
 // @Description http://zlzx.zjamr.zj.gov.cn/，获取浙江标准在线
 func main() {
-	maxPage := 3197
-	page := 2121
+	maxPage := 3199
+	page := 1
 	isPageListGo := true
 	for isPageListGo {
 		requestUrl := fmt.Sprintf("https://zlzx.zjamr.zj.gov.cn/bzzx/public/news/list/BZBP/ALL/%d.html", page)
@@ -92,7 +92,7 @@ func main() {
 
 				downloadText := htmlquery.InnerText(downloadNode)
 				downloadTextArray := strings.Split(downloadText, "\"")
-				// 				fmt.Println(downloadTextArray)
+				// fmt.Println(downloadTextArray)
 				downloadUrl := downloadTextArray[1]
 				downloadUrl = strings.ReplaceAll(downloadUrl, "\\/", "/")
 				fmt.Println(downloadUrl)
@@ -102,6 +102,12 @@ func main() {
 				if err != nil {
 					fmt.Println(err)
 					continue
+				}
+				//复制文件
+				tempFilePath := strings.ReplaceAll(filePath, "../zlzx.zjamr.zj.gov.cn", "../upload.doc88.com/zlzx.zjamr.zj.gov.cn")
+				err = copyZjAmrFile(filePath, tempFilePath)
+				if err != nil {
+					return err
 				}
 				fmt.Println("=======下载完成========")
 				//DownLoadZjAmrTimeSleep := 10
@@ -241,4 +247,31 @@ func downloadZjAmr(attachmentUrl string, referer string, filePath string) error 
 		return err
 	}
 	return nil
+}
+
+func copyZjAmrFile(src, dst string) (err error) {
+	in, err := os.Open(src)
+	if err != nil {
+		return
+	}
+	defer func(in *os.File) {
+		err := in.Close()
+		if err != nil {
+			return
+		}
+	}(in)
+
+	out, err := os.Create(dst)
+	if err != nil {
+		return
+	}
+	defer func(out *os.File) {
+		err := out.Close()
+		if err != nil {
+			return
+		}
+	}(out)
+
+	_, err = io.Copy(out, in)
+	return
 }
