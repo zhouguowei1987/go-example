@@ -107,7 +107,8 @@ func main() {
 				tempFilePath := strings.ReplaceAll(filePath, "../zlzx.zjamr.zj.gov.cn", "../upload.doc88.com/zlzx.zjamr.zj.gov.cn")
 				err = copyZjAmrFile(filePath, tempFilePath)
 				if err != nil {
-					return err
+					fmt.Println(err)
+					continue
 				}
 				fmt.Println("=======下载完成========")
 				//DownLoadZjAmrTimeSleep := 10
@@ -120,11 +121,11 @@ func main() {
 			}
 		}
 		DownLoadZjAmrPageTimeSleep := 10
-//         DownLoadZjAmrPageTimeSleep := rand.Intn(5)
-        for i := 1; i <= DownLoadZjAmrPageTimeSleep; i++ {
-            time.Sleep(time.Second)
-            fmt.Println("page="+strconv.Itoa(page)+"===========，暂停", DownLoadZjAmrPageTimeSleep, "秒，倒计时", i, "秒===========")
-        }
+		//         DownLoadZjAmrPageTimeSleep := rand.Intn(5)
+		for i := 1; i <= DownLoadZjAmrPageTimeSleep; i++ {
+			time.Sleep(time.Second)
+			fmt.Println("page="+strconv.Itoa(page)+"===========，暂停", DownLoadZjAmrPageTimeSleep, "秒，倒计时", i, "秒===========")
+		}
 		page++
 		if page > maxPage {
 			isPageListGo = false
