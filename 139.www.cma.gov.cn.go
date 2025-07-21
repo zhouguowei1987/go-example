@@ -87,6 +87,7 @@ func main() {
 				continue
 			}
 			code := strings.TrimSpace(htmlquery.InnerText(codeNode))
+			code = strings.ReplaceAll(code, " ", "-")
 			code = strings.ReplaceAll(code, "/", "-")
 			fmt.Println(code)
 
