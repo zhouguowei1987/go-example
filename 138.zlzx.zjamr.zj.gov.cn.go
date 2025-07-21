@@ -258,7 +258,7 @@ func copyZjAmrFile(src, dst string) (err error) {
 	defer func(in *os.File) {
 		err := in.Close()
 		if err != nil {
-			return err
+			return
 		}
 	}(in)
 
@@ -269,7 +269,7 @@ func copyZjAmrFile(src, dst string) (err error) {
 	defer func(out *os.File) {
 		err := out.Close()
 		if err != nil {
-			return err
+			return
 		}
 	}(out)
 
