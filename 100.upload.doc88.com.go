@@ -706,6 +706,11 @@ func main() {
 			pCid:    8371,
 			Price:   788,
 		},
+		{
+			dirName: "www.cma.gov.cn",
+			pCid:    8370,
+			Price:   788,
+		},
 	}
 	rootPath := "../upload.doc88.com/"
 	for _, childDir := range uploadChildDirArr {
