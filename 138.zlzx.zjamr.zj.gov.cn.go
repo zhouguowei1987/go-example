@@ -39,7 +39,7 @@ var ZjAmrCookie = "node_id=nginx_1; node_id=nginx_1; _d_id=30fbbb89f633bbccfddce
 // @Description http://zlzx.zjamr.zj.gov.cn/，获取浙江标准在线
 func main() {
 	maxPage := 3197
-	page := 1
+	page := 2121
 	isPageListGo := true
 	for isPageListGo {
 		requestUrl := fmt.Sprintf("https://zlzx.zjamr.zj.gov.cn/bzzx/public/news/list/BZBP/ALL/%d.html", page)
