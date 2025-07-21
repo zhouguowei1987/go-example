@@ -252,26 +252,26 @@ func downloadZjAmr(attachmentUrl string, referer string, filePath string) error 
 func copyZjAmrFile(src, dst string) (err error) {
 	in, err := os.Open(src)
 	if err != nil {
-		return
+		return err
 	}
 	defer func(in *os.File) {
 		err := in.Close()
 		if err != nil {
-			return
+			return err
 		}
 	}(in)
 
 	out, err := os.Create(dst)
 	if err != nil {
-		return
+		return err
 	}
 	defer func(out *os.File) {
 		err := out.Close()
 		if err != nil {
-			return
+			return err
 		}
 	}(out)
 
 	_, err = io.Copy(out, in)
-	return
+	return nil
 }
