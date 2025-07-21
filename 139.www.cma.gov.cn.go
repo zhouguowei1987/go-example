@@ -91,6 +91,7 @@ func main() {
 			}
 			code := strings.TrimSpace(htmlquery.InnerText(codeNode))
 			code = strings.ReplaceAll(code, "/", "-")
+			code = strings.ReplaceAll(code, "—", "-")
 			fmt.Println(code)
 
 			filePath := "../www.cma.gov.cn/" + title + "(" + code + ")" + ".pdf"
