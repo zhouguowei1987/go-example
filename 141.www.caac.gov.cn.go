@@ -80,6 +80,9 @@ func main() {
 			code = strings.ReplaceAll(code, "—", "-")
 
 			filePath := "../www.caac.gov.cn/" + title + "(" + code + ")" + ".pdf"
+			if len(code) <= 0 {
+				filePath = "../www.caac.gov.cn/" + title + ".pdf"
+			}
 			fmt.Println(filePath)
 			if _, err := os.Stat(filePath); err != nil {
 				detailDoc, err := htmlquery.LoadURL(detailUrl)
