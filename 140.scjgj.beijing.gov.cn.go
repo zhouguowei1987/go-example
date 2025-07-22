@@ -112,7 +112,7 @@ type QueryScJgjListFormData struct {
 	standardCode string
 	namecn       string
 	status       int
-	size       int
+	size         int
 }
 
 // 下载北京市市场监督局文档
@@ -121,9 +121,8 @@ type QueryScJgjListFormData struct {
 func main() {
 	pageListUrl := "https://cx.scjgj.beijing.gov.cn/shiyao/nosession/showall/bzh_api_standard"
 	fmt.Println(pageListUrl)
-	page := 1
+	page := 0
 	maxPage := 234
-	size := 30
 	isPageListGo := true
 	for isPageListGo {
 		if page > maxPage {
@@ -135,15 +134,12 @@ func main() {
 			standardCode: "",
 			namecn:       "",
 			status:       0,
-			size:size,
 		}
 		queryScJgjListResponseContent, err := QueryScJgjList(pageListUrl, queryScJgjListFormData)
 		if err != nil {
 			ScJgjHttpProxyUrl = ""
 			fmt.Println(err)
 		}
-		fmt.Println(queryScJgjListResponseContent)
-		os.Exit(1)
 		for _, scJgj := range queryScJgjListResponseContent {
 			fmt.Println("=====================开始处理数据 page = ", page, "=========================")
 			code := scJgj.StandardCode
@@ -252,7 +248,6 @@ func QueryScJgjList(requestUrl string, queryScJgjListFormData QueryScJgjListForm
 	postData.Add("standardCode", queryScJgjListFormData.standardCode)
 	postData.Add("namecn", queryScJgjListFormData.namecn)
 	postData.Add("status", strconv.Itoa(queryScJgjListFormData.status))
-	postData.Add("size", strconv.Itoa(queryScJgjListFormData.size))
 	req, err := http.NewRequest("POST", requestUrl, strings.NewReader(postData.Encode())) //建立连接
 
 	queryScJgjListResponse := QueryScJgjListResponse{}
