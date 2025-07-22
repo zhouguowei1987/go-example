@@ -120,7 +120,7 @@ type QueryScJgjListFormData struct {
 func main() {
 	pageListUrl := "https://cx.scjgj.beijing.gov.cn/shiyao/nosession/showall/bzh_api_standard"
 	fmt.Println(pageListUrl)
-	page := 1
+	page := 0
 	maxPage := 234
 	isPageListGo := true
 	for isPageListGo {
