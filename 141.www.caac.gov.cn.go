@@ -35,11 +35,11 @@ func CaAcSetHttpProxy() (httpclient *http.Client) {
 // @Title 获取中国民航航空局标准
 // @Description https://www.caac.gov.cn/ 获取中国民航航空局标准
 func main() {
-	maxPage := 108
+	maxPage := 132
 	page := 1
 	isPageListGo := true
 	for isPageListGo {
-		requestUrl := fmt.Sprintf("https://www.caac.gov.cn/was5/web/search?page=%d&channelid=211383&orderby=-fabuDate&was_custom_expr=+PARENTID%3D%2715%27+or+CLASSINFOID%3D%2715%27+&perpage=10&outlinepage=7&orderby=-fabuDate&selST=All&fl=15", page)
+		requestUrl := fmt.Sprintf("https://www.caac.gov.cn/was5/web/search?page=%d&channelid=238066&was_custom_expr=+PARENTID%3D%2714%27+or+CLASSINFOID%3D%2714%27+&perpage=10&outlinepage=7&orderby=-fabuDate%2C-DOC_ID&selST=All&fl=14", page)
 		fmt.Println(requestUrl)
 
 		pageDoc, err := htmlquery.LoadURL(requestUrl)
