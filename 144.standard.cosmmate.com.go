@@ -103,7 +103,7 @@ func main() {
 						downloadCoSmMatePdfSleep := rand.Intn(5)
 						for i := 1; i <= downloadCoSmMatePdfSleep; i++ {
 							time.Sleep(time.Second)
-							fmt.Println("title=", title, "成功，暂停", downloadCoSmMatePdfSleep, "秒，倒计时", i, "秒===========")
+							fmt.Println("page="+strconv.Itoa(category.page)+"=======", title, "成功，暂停", downloadCoSmMatePdfSleep, "秒，倒计时", i, "秒===========")
 						}
 					}
 				}
