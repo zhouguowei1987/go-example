@@ -165,9 +165,10 @@ func main() {
 
 			title := cqIs.BZName
 			title = strings.TrimSpace(title)
-			title = strings.ReplaceAll(title, "-", "")
-			title = strings.ReplaceAll(title, " ", "")
-			title = strings.ReplaceAll(title, "|", "-")
+			title = strings.ReplaceAll(title, " ", "-")
+			title = strings.ReplaceAll(title, "　", "-")
+			title = strings.ReplaceAll(title, "/", "-")
+			title = strings.ReplaceAll(title, "--", "-")
 			fmt.Println(title)
 
 			filePath := "../db.cqis.cn/" + title + "(" + code + ")" + ".pdf"
