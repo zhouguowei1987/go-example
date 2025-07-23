@@ -115,14 +115,18 @@ var HtSfWbCookie = "Hm_lvt_54db9897e5a65f7a7b00359d86015d8d=1752905161,175316834
 func main() {
 	page := 1
 	maxPage := 50
-	loc := true
+	// true:地方合同范本 false:部委合同范本
+	locHtSfWb := true
+	suffixHtSfWb := ".docx"
+	// 1:docx 2:pdf
+	typeHtSfWb := 1
 	isPageListGo := true
 	for isPageListGo {
 		if page > maxPage {
 			isPageListGo = false
 			break
 		}
-		pageListUrl := fmt.Sprintf("https://htsfwb.samr.gov.cn/api/content/SearchTemplates?loc=%t&p=%d&key=", loc, page)
+		pageListUrl := fmt.Sprintf("https://htsfwb.samr.gov.cn/api/content/SearchTemplates?loc=%t&p=%d&key=", locHtSfWb, page)
 		fmt.Println(pageListUrl)
 		queryHtSfWbListResponseData, err := QueryHtSfWbList(pageListUrl)
 		if err != nil {
@@ -145,7 +149,7 @@ func main() {
 			title = strings.ReplaceAll(title, "--", "-")
 			fmt.Println(title)
 
-			filePath := "../htsfwb.samr.gov.cn/" + title + ".pdf"
+			filePath := "../htsfwb.samr.gov.cn/" + title + suffixHtSfWb
 			fmt.Println(filePath)
 
 			_, err = os.Stat(filePath)
@@ -156,7 +160,7 @@ func main() {
 
 			fmt.Println("=======开始下载========")
 
-			downloadUrl := fmt.Sprintf("https://htsfwb.samr.gov.cn/api/File/DownTemplate?id=%s&type=2", htSfWb.Id)
+			downloadUrl := fmt.Sprintf("https://htsfwb.samr.gov.cn/api/File/DownTemplate?id=%s&type=%d", htSfWb.Id, typeHtSfWb)
 			fmt.Println(downloadUrl)
 
 			fmt.Println("=======开始下载" + title + "========")
