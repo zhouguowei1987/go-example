@@ -1,7 +1,7 @@
 package main
 
 import (
-    "crypto/tls"
+	"crypto/tls"
 	"errors"
 	"fmt"
 	"github.com/antchfx/htmlquery"
@@ -14,6 +14,8 @@ import (
 	"strings"
 	"time"
 )
+
+var TbzCookie = "safeline_bot_challenge=BAAAAAB3J80LAAAAAAAAAAAAAAAAfXNONpgBAAAKt2KoJi6id3iGtLcTK/8Du8h5oaMzsavQR/+ywAElNvW9nuJYxJjdKqn4XQL/ZO/RVpzD; __jsluid_s=b7d35d18c6c44705ce234044421b8f67; Hm_lvt_8c446e9fafe752e4975210bc30d7ab9d=1751983633,1752074026,1752916674,1753086531; HMACCOUNT=1CCD0111717619C6; ASP.NET_SessionId=qrbps0hdtrdmbdbbuucgxdw4; safeline_bot_token=AHBU3hMAAAAAAAAAAAAAAABNl0s2mAEAAB+zW2TQECzYDICJls6c36UnKVF1; sl_xxx_fig=8fedf973855416f2; Hm_lpvt_8c446e9fafe752e4975210bc30d7ab9d=1753257723; safeline_bot_challenge_ans=BAAAAAB3J80LAAAAAAAAAAAAAAAAfXNONpgBAAAKt2KoJi6id3iGtLcTK/8Du8h5oaMzsavQR/+ywAElNvW9nuJYxJjdKqn4XQL/ZO/RVpzD196"
 
 // TbzSpider 获取全国团体标准信息平台Pdf文档
 // @Title 获取全国团体标准信息平台Pdf文档
@@ -36,13 +38,13 @@ func main() {
 }
 
 func getTbz(url string) (doc *html.Node, err error) {
-    // 创建一个自定义的http.Transport
+	// 创建一个自定义的http.Transport
 	tr := &http.Transport{
 		TLSClientConfig: &tls.Config{
 			InsecureSkipVerify: true, // 忽略证书验证
 		},
 	}
-	client := &http.Client{Transport: tr}           //初始化客户端
+	client := &http.Client{Transport: tr}        //初始化客户端
 	req, err := http.NewRequest("GET", url, nil) //建立连接
 	if err != nil {
 		return doc, err
@@ -51,7 +53,7 @@ func getTbz(url string) (doc *html.Node, err error) {
 	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
 	req.Header.Set("Cache-Control", "no-cache")
 	req.Header.Set("Connection", "keep-alive")
-	req.Header.Set("Cookie", "__51cke__=; ASP.NET_SessionId=kztywruoejdlibymyizdhk0z; __jsluid_s=4e74def0a093311d3c09d1caf84e0fb9; __jsluid_h=746830dcf9977a07d36ede64b0d40169; __tins__18926186=%7B%22sid%22%3A%201738768582283%2C%20%22vd%22%3A%2016%2C%20%22expires%22%3A%201738770484135%7D; __51laig__=3428; _d_id=df16859d50768a3fa9abe40b478dd1")
+	req.Header.Set("Cookie", TbzCookie)
 	req.Header.Set("Content-Type", "text/html; charset=utf-8")
 	req.Header.Set("Host", "www.ttbz.org.cn")
 	req.Header.Set("Pragma", "no-cache")
@@ -90,7 +92,7 @@ func downloadPdf(pdfUrl string, filePath string) error {
 	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
 	req.Header.Set("Cache-Control", "no-cache")
 	req.Header.Set("Connection", "keep-alive")
-	req.Header.Set("Cookie", "__51cke__=; _gid=GA1.3.657608059.1670484462; ASP.NET_SessionId=3prbrx4xve3rhlmvwbexp3v5; __tins__18926186=%7B%22sid%22%3A%201670551578342%2C%20%22vd%22%3A%202%2C%20%22expires%22%3A%201670553390816%7D; __51laig__=73; _ga_34B604LFFQ=GS1.1.1670556735.6.1.1670558647.53.0.0; _ga=GA1.1.711340106.1670484462")
+	req.Header.Set("Cookie", TbzCookie)
 	req.Header.Set("Host", "www.ttbz.org.cn")
 	req.Header.Set("Pragma", "no-cache")
 	req.Header.Set("Upgrade-Insecure-Requests", "1")
