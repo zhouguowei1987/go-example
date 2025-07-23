@@ -22,11 +22,11 @@ import (
 	_ "golang.org/x/net/html"
 )
 
-var CqIsEnableHttpProxy = false
-var CqIsHttpProxyUrl = "111.225.152.186:8089"
-var CqIsHttpProxyUrlArr = make([]string, 0)
+var HtSfWbEnableHttpProxy = false
+var HtSfWbHttpProxyUrl = "111.225.152.186:8089"
+var HtSfWbHttpProxyUrlArr = make([]string, 0)
 
-func CqIsHttpProxy() error {
+func HtSfWbHttpProxy() error {
 	pageMax := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
 	for _, page := range pageMax {
 		freeProxyUrl := "https://www.beesproxy.com/free"
@@ -60,9 +60,9 @@ func CqIsHttpProxy() error {
 
 				switch protocol {
 				case "HTTP":
-					CqIsHttpProxyUrlArr = append(CqIsHttpProxyUrlArr, "http://"+ip+":"+port)
+					HtSfWbHttpProxyUrlArr = append(HtSfWbHttpProxyUrlArr, "http://"+ip+":"+port)
 				case "HTTPS":
-					CqIsHttpProxyUrlArr = append(CqIsHttpProxyUrlArr, "https://"+ip+":"+port)
+					HtSfWbHttpProxyUrlArr = append(HtSfWbHttpProxyUrlArr, "https://"+ip+":"+port)
 				}
 			}
 		}
@@ -70,24 +70,24 @@ func CqIsHttpProxy() error {
 	return nil
 }
 
-func CqIsSetHttpProxy() (httpclient *http.Client) {
-	if CqIsHttpProxyUrl == "" {
-		if len(CqIsHttpProxyUrlArr) <= 0 {
-			err := CqIsHttpProxy()
+func HtSfWbSetHttpProxy() (httpclient *http.Client) {
+	if HtSfWbHttpProxyUrl == "" {
+		if len(HtSfWbHttpProxyUrlArr) <= 0 {
+			err := HtSfWbHttpProxy()
 			if err != nil {
-				CqIsSetHttpProxy()
+				HtSfWbSetHttpProxy()
 			}
 		}
-		CqIsHttpProxyUrl = CqIsHttpProxyUrlArr[0]
-		if len(CqIsHttpProxyUrlArr) >= 2 {
-			CqIsHttpProxyUrlArr = CqIsHttpProxyUrlArr[1:]
+		HtSfWbHttpProxyUrl = HtSfWbHttpProxyUrlArr[0]
+		if len(HtSfWbHttpProxyUrlArr) >= 2 {
+			HtSfWbHttpProxyUrlArr = HtSfWbHttpProxyUrlArr[1:]
 		} else {
-			CqIsHttpProxyUrlArr = make([]string, 0)
+			HtSfWbHttpProxyUrlArr = make([]string, 0)
 		}
 	}
 
-	fmt.Println(CqIsHttpProxyUrl)
-	ProxyURL, _ := url.Parse(CqIsHttpProxyUrl)
+	fmt.Println(HtSfWbHttpProxyUrl)
+	ProxyURL, _ := url.Parse(HtSfWbHttpProxyUrl)
 	httpclient = &http.Client{
 		Transport: &http.Transport{
 			Proxy: http.ProxyURL(ProxyURL),
@@ -107,63 +107,31 @@ func CqIsSetHttpProxy() (httpclient *http.Client) {
 	return httpclient
 }
 
-type QueryCqIsListFormData struct {
-	page      int
-	rows      int
-	queryJson QueryCqIsJson
-}
+var HtSfWbCookie = "Hm_lvt_54db9897e5a65f7a7b00359d86015d8d=1752905161,1753168348; HMACCOUNT=1CCD0111717619C6; Hm_lpvt_54db9897e5a65f7a7b00359d86015d8d=1753254437; __jsluid_s=e2a3e160f8044ebe5131f1716a90b079; samr=isopen"
 
-type QueryCqIsJson struct {
-	FinishCode             string `json:"FinishCode"`
-	SourceName             string `json:"SourceName"`
-	BZName                 string `json:"BZName"`
-	ClassificationIndustry string `json:"ClassificationIndustry"`
-	StandardCategory       string `json:"StandardCategory"`
-	OtherCategory          string `json:"OtherCategory"`
-}
-
-var CqIsCookie = "__RequestVerificationToken=igF-mWhmVgvlECbsH8Lx3A7Kx9Zmv2zCM98q8cltHjNFPD2KOqFWd2jyRHc05oWowSVaK1oR1ksEYz6nG6c54Wms22jwhnO-YnbguZ9NeoQ1; userbrowse=4f074005-2472-97f0-f88e-0ad97d4b09a5"
-
-// 下载重庆市地方标准文档
-// @Title 下载重庆市地方标准文档
-// @Description http://db.cqis.cn/LocalStandard/Index/，下载重庆市地方标准文档
+// 下载地方合同示范文本
+// @Title 下载地方合同示范文本
+// @Description https://htsfwb.samr.gov.cn/Local/，下载地方合同示范文本
 func main() {
-	pageListUrl := "http://db.cqis.cn/LocalStandard/GetDB50ShareList"
-	fmt.Println(pageListUrl)
 	page := 1
-	maxPage := 136
-	rows := 15
+	maxPage := 50
 	isPageListGo := true
 	for isPageListGo {
 		if page > maxPage {
 			isPageListGo = false
 			break
 		}
-		queryCqIsListFormData := QueryCqIsListFormData{
-			page: page,
-			rows: rows,
-			queryJson: QueryCqIsJson{
-				FinishCode:             "",
-				SourceName:             "重庆",
-				BZName:                 "",
-				ClassificationIndustry: "",
-				StandardCategory:       "",
-				OtherCategory:          "",
-			},
-		}
-		queryCqIsListResponseRows, err := QueryCqIsList(pageListUrl, queryCqIsListFormData)
+		pageListUrl := fmt.Sprintf("https://htsfwb.samr.gov.cn/api/content/SearchTemplates?loc=true&p=%d&key=", page)
+		fmt.Println(pageListUrl)
+		queryHtSfWbListResponseData, err := QueryHtSfWbList(pageListUrl)
 		if err != nil {
-			CqIsHttpProxyUrl = ""
+			HtSfWbHttpProxyUrl = ""
 			fmt.Println(err)
 		}
-		for _, cqIs := range queryCqIsListResponseRows {
+		for _, htSfWb := range queryHtSfWbListResponseData {
 			fmt.Println("=====================开始处理数据 page = ", page, "=========================")
-			code := cqIs.Project_FinishCODE
-			code = strings.ReplaceAll(code, "/", "-")
-			code = strings.ReplaceAll(code, "—", "-")
-			fmt.Println(code)
 
-			title := cqIs.BZName
+			title := htSfWb.Title
 			title = strings.TrimSpace(title)
 			title = strings.ReplaceAll(title, " ", "-")
 			title = strings.ReplaceAll(title, "　", "-")
@@ -171,7 +139,7 @@ func main() {
 			title = strings.ReplaceAll(title, "--", "-")
 			fmt.Println(title)
 
-			filePath := "../db.cqis.cn/" + title + "(" + code + ")" + ".pdf"
+			filePath := "../htsfwb.samr.gov.cn/" + title + ".pdf"
 			fmt.Println(filePath)
 
 			_, err = os.Stat(filePath)
@@ -182,39 +150,39 @@ func main() {
 
 			fmt.Println("=======开始下载========")
 
-			downloadUrl := fmt.Sprintf("http://db.cqis.cn/LocalStandard/Download?keyValue=%s", cqIs.BZProjectPublicId)
+			downloadUrl := fmt.Sprintf("https://htsfwb.samr.gov.cn/api/File/DownTemplate?id=%s&type=2", htSfWb.Id)
 			fmt.Println(downloadUrl)
 
 			fmt.Println("=======开始下载" + title + "========")
 
-			detailUrl := fmt.Sprintf("http://db.cqis.cn/LocalStandard/ShowPdf?keyValue=%s", cqIs.BZProjectPublicId)
+			detailUrl := fmt.Sprintf("https://htsfwb.samr.gov.cn/View?id=%s", htSfWb.Id)
 			fmt.Println(detailUrl)
 
-			err = downloadCqIs(downloadUrl, detailUrl, filePath)
+			err = downloadHtSfWb(downloadUrl, detailUrl, filePath)
 			if err != nil {
 				fmt.Println(err)
 				continue
 			}
 			//复制文件
-			tempFilePath := strings.ReplaceAll(filePath, "../db.cqis.cn", "../upload.doc88.com/db.cqis.cn")
-			err = copyCqIsFile(filePath, tempFilePath)
+			tempFilePath := strings.ReplaceAll(filePath, "../htsfwb.samr.gov.cn", "../upload.doc88.com/htsfwb.samr.gov.cn")
+			err = copyHtSfWbFile(filePath, tempFilePath)
 			if err != nil {
 				fmt.Println(err)
 				continue
 			}
 			fmt.Println("=======下载完成========")
-			//DownLoadCqIsTimeSleep := 10
-			DownLoadCqIsTimeSleep := rand.Intn(5)
-			for i := 1; i <= DownLoadCqIsTimeSleep; i++ {
+			//DownLoadHtSfWbTimeSleep := 10
+			DownLoadHtSfWbTimeSleep := rand.Intn(5)
+			for i := 1; i <= DownLoadHtSfWbTimeSleep; i++ {
 				time.Sleep(time.Second)
-				fmt.Println("page="+strconv.Itoa(page)+",filePath="+filePath+"===========下载成功 暂停", DownLoadCqIsTimeSleep, "秒 倒计时", i, "秒===========")
+				fmt.Println("page="+strconv.Itoa(page)+",filePath="+filePath+"===========下载成功 暂停", DownLoadHtSfWbTimeSleep, "秒 倒计时", i, "秒===========")
 			}
 		}
-		DownLoadCqIsPageTimeSleep := 10
-		// DownLoadCqIsPageTimeSleep := rand.Intn(5)
-		for i := 1; i <= DownLoadCqIsPageTimeSleep; i++ {
+		DownLoadHtSfWbPageTimeSleep := 10
+		// DownLoadHtSfWbPageTimeSleep := rand.Intn(5)
+		for i := 1; i <= DownLoadHtSfWbPageTimeSleep; i++ {
 			time.Sleep(time.Second)
-			fmt.Println("page="+strconv.Itoa(page)+"=========== 暂停", DownLoadCqIsPageTimeSleep, "秒 倒计时", i, "秒===========")
+			fmt.Println("page="+strconv.Itoa(page)+"=========== 暂停", DownLoadHtSfWbPageTimeSleep, "秒 倒计时", i, "秒===========")
 		}
 		page++
 		if page > maxPage {
@@ -224,20 +192,19 @@ func main() {
 	}
 }
 
-type QueryCqIsListResponse struct {
-	Rows    []QueryCqIsListResponseRows `json:"rows"`
-	Page    int                         `json:"page"`
-	Records int                         `json:"records"`
-	Total   int                         `json:"total"`
+type QueryHtSfWbListResponse struct {
+	Data      []QueryHtSfWbListResponseData `json:"Data"`
+	Page      int                           `json:"Page"`
+	Total     int                           `json:"Total"`
+	TotalPage int                           `json:"TotalPage"`
 }
 
-type QueryCqIsListResponseRows struct {
-	BZProjectPublicId  string `json:"BZProjectPublicId"`
-	BZName             string `json:"BZName"`
-	Project_FinishCODE string `json:"Project_FinishCODE"`
+type QueryHtSfWbListResponseData struct {
+	Id    string `json:"Id"`
+	Title string `json:"Title"`
 }
 
-func QueryCqIsList(requestUrl string, queryCqIsListFormData QueryCqIsListFormData) (queryCqIsListResponseRows []QueryCqIsListResponseRows, err error) {
+func QueryHtSfWbList(requestUrl string) (queryHtSfWbListResponseData []QueryHtSfWbListResponseData, err error) {
 	// 初始化客户端
 	var client *http.Client = &http.Client{
 		Transport: &http.Transport{
@@ -254,54 +221,49 @@ func QueryCqIsList(requestUrl string, queryCqIsListFormData QueryCqIsListFormDat
 			ResponseHeaderTimeout: time.Second * 3,
 		},
 	}
-	if CqIsEnableHttpProxy {
-		client = CqIsSetHttpProxy()
+	if HtSfWbEnableHttpProxy {
+		client = HtSfWbSetHttpProxy()
 	}
-	postData := url.Values{}
-	postData.Add("page", strconv.Itoa(queryCqIsListFormData.page))
-	postData.Add("rows", strconv.Itoa(queryCqIsListFormData.rows))
-	queryJson, err := json.Marshal(queryCqIsListFormData.queryJson)
-	postData.Add("queryJson", string(queryJson))
-	req, err := http.NewRequest("POST", requestUrl, strings.NewReader(postData.Encode())) //建立连接
+	req, err := http.NewRequest("GET", requestUrl, nil) //建立连接
 
-	queryCqIsListResponse := QueryCqIsListResponse{}
+	queryHtSfWbListResponse := QueryHtSfWbListResponse{}
 	if err != nil {
-		return queryCqIsListResponseRows, err
+		return queryHtSfWbListResponseData, err
 	}
 
 	req.Header.Set("Accept", "*/*")
 	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
 	req.Header.Set("Connection", "keep-alive")
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")
-	req.Header.Set("Cookie", CqIsCookie)
-	req.Header.Set("Host", "db.cqis.cn")
-	req.Header.Set("Origin", "http://db.cqis.cn")
-	req.Header.Set("Referer", "http://db.cqis.cn/LocalStandard/Index")
+	req.Header.Set("Cookie", HtSfWbCookie)
+	req.Header.Set("Host", "htsfwb.samr.gov.cn")
+	req.Header.Set("Origin", "https://htsfwb.samr.gov.cn")
+	req.Header.Set("Referer", "https://htsfwb.samr.gov.cn/Local")
 	req.Header.Set("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36")
 	req.Header.Set("X-Requested-With", "XMLHttpRequest")
 	resp, err := client.Do(req) //拿到返回的内容
 	if err != nil {
 		fmt.Println(err)
-		return queryCqIsListResponseRows, err
+		return queryHtSfWbListResponseData, err
 	}
 	defer resp.Body.Close()
 	if resp.StatusCode != http.StatusOK {
-		return queryCqIsListResponseRows, errors.New("http status :" + strconv.Itoa(resp.StatusCode))
+		return queryHtSfWbListResponseData, errors.New("http status :" + strconv.Itoa(resp.StatusCode))
 	}
 	respBytes, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		fmt.Println(err)
-		return queryCqIsListResponseRows, err
+		return queryHtSfWbListResponseData, err
 	}
-	err = json.Unmarshal(respBytes, &queryCqIsListResponse)
+	err = json.Unmarshal(respBytes, &queryHtSfWbListResponse)
 	if err != nil {
-		return queryCqIsListResponseRows, err
+		return queryHtSfWbListResponseData, err
 	}
-	queryCqIsListResponseRows = queryCqIsListResponse.Rows
-	return queryCqIsListResponseRows, nil
+	queryHtSfWbListResponseData = queryHtSfWbListResponse.Data
+	return queryHtSfWbListResponseData, nil
 }
 
-func downloadCqIs(attachmentUrl string, referer string, filePath string) error {
+func downloadHtSfWb(attachmentUrl string, referer string, filePath string) error {
 	// 初始化客户端
 	var client *http.Client = &http.Client{
 		Transport: &http.Transport{
@@ -318,8 +280,8 @@ func downloadCqIs(attachmentUrl string, referer string, filePath string) error {
 			ResponseHeaderTimeout: time.Second * 3,
 		},
 	}
-	if CqIsEnableHttpProxy {
-		client = CqIsSetHttpProxy()
+	if HtSfWbEnableHttpProxy {
+		client = HtSfWbSetHttpProxy()
 	}
 	req, err := http.NewRequest("GET", attachmentUrl, nil) //建立连接
 	if err != nil {
@@ -330,9 +292,8 @@ func downloadCqIs(attachmentUrl string, referer string, filePath string) error {
 	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
 	req.Header.Set("Cache-Control", "no-cache")
 	req.Header.Set("Connection", "keep-alive")
-	req.Header.Set("Cookie", CqIsCookie)
-	req.Header.Set("Host", "db.cqis.cn")
-	//req.Header.Set("Referer", referer)
+	req.Header.Set("Cookie", HtSfWbCookie)
+	req.Header.Set("Host", "htsfwb.samr.gov.cn")
 	req.Header.Set("Upgrade-Insecure-Requests", "1")
 	req.Header.Set("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36")
 	resp, err := client.Do(req) //拿到返回的内容
@@ -366,7 +327,7 @@ func downloadCqIs(attachmentUrl string, referer string, filePath string) error {
 	return nil
 }
 
-func copyCqIsFile(src, dst string) (err error) {
+func copyHtSfWbFile(src, dst string) (err error) {
 	in, err := os.Open(src)
 	if err != nil {
 		return err
