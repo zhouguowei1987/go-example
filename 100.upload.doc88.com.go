@@ -672,7 +672,7 @@ func main() {
 			Price:   200,
 		},
 		{
-			dirName: "finish-down.foodmate.net",
+			dirName: "down.foodmate.net",
 			pCid:    8370,
 			Price:   788,
 		},
