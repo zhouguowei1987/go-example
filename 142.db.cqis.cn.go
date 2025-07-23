@@ -181,12 +181,14 @@ func main() {
 
 			fmt.Println("=======开始下载========")
 
-			downloadUrl := fmt.Sprintf("http://db.cqis.cn/LocalStandard/PdfShowPage?keyValue=%s", cqIs.BZProjectPublicId)
+			downloadUrl := fmt.Sprintf("http://db.cqis.cn/LocalStandard/Download?keyValue=%s", cqIs.BZProjectPublicId)
 			fmt.Println(downloadUrl)
 
 			fmt.Println("=======开始下载" + title + "========")
 
-			detailUrl := fmt.Sprintf("http://db.cqis.cn/LocalStandard/ShowPdf?keyValue=%s", cqIs.Project_FinishCODE)
+			detailUrl := fmt.Sprintf("http://db.cqis.cn/LocalStandard/ShowPdf?keyValue=%s", cqIs.BZProjectPublicId)
+			fmt.Println(detailUrl)
+
 			err = downloadCqIs(downloadUrl, detailUrl, filePath)
 			if err != nil {
 				fmt.Println(err)
@@ -323,19 +325,15 @@ func downloadCqIs(attachmentUrl string, referer string, filePath string) error {
 		return err
 	}
 	req.Header.Set("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7")
+	//req.Header.Set("Accept-Encoding", "gzip, deflate")
+	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
+	req.Header.Set("Cache-Control", "no-cache")
 	req.Header.Set("Connection", "keep-alive")
 	req.Header.Set("Cookie", CqIsCookie)
 	req.Header.Set("Host", "db.cqis.cn")
-	req.Header.Set("Referer", referer)
-	req.Header.Set("sec-ch-ua", "\"Chromium\";v=\"110\", \"Not A(Brand\";v=\"24\", \"Google Chrome\";v=\"110\"")
-	req.Header.Set("sec-ch-ua-mobile", "?0")
-	req.Header.Set("sec-ch-ua-platform", "\"macOS\"")
-	req.Header.Set("Sec-Fetch-Dest", "document")
-	req.Header.Set("Sec-Fetch-Mode", "navigate")
-	req.Header.Set("Sec-Fetch-Site", "same-origin")
-	req.Header.Set("Sec-Fetch-User", "?1")
+	//req.Header.Set("Referer", referer)
 	req.Header.Set("Upgrade-Insecure-Requests", "1")
-	req.Header.Set("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36")
+	req.Header.Set("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36")
 	resp, err := client.Do(req) //拿到返回的内容
 	if err != nil {
 		return err
