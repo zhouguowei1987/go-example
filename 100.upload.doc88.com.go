@@ -262,11 +262,6 @@ func main() {
 			Price:   200,
 		},
 		{
-			dirName: "finish.tikuvip（2023）.51test.net/高考",
-			pCid:    8244,
-			Price:   200,
-		},
-		{
 			dirName: "docx.topedu.ybep.com.cn/中考真题",
 			pCid:    8243,
 			Price:   200,
