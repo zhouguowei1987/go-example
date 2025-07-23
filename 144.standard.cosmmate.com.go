@@ -14,29 +14,31 @@ import (
 	"time"
 )
 
-type foodMateCategory struct {
-	id   int
-	name string
+type coSmMateCategory struct {
+	id      int
+	name    string
+	page    int
+	maxPage int
 }
 
-var FoodMateCookie = "Hm_lvt_2aeaa32e7cee3cfa6e2848083235da9f=1730957037; HMACCOUNT=2CEC63D57647BCA5; Hm_lvt_d4fdc0f0037bcbb9bf9894ffa5965f5e=1730957038; __51cke__=; u_rdown=1; __gads=ID=6aa7bb34097db0c7:T=1730957036:RT=1730959091:S=ALNI_MZhgP1VBSkrn0nQ9pKk7tqwWsBCYQ; __gpi=UID=00000f776c9d87c1:T=1730957036:RT=1730959091:S=ALNI_MY1D8W2UisKk_PnJOK-lAlbgDC9WA; __eoi=ID=893729db1a75d12c:T=1730957036:RT=1730959091:S=AA-AfjbZRPAyoYfpui6zt8_ejNPv; Hm_lpvt_d4fdc0f0037bcbb9bf9894ffa5965f5e=1730959786; Hm_lpvt_2aeaa32e7cee3cfa6e2848083235da9f=1730959786; __tins__1484185=%7B%22sid%22%3A%201730959092377%2C%20%22vd%22%3A%204%2C%20%22expires%22%3A%201730961585874%7D; __51laig__=37"
+var CoSmMateCookie = "__51cke__=; Hm_lvt_19bdc325c8a5619f4cb418e8ff68c903=1753260359; HMACCOUNT=1CCD0111717619C6; __tins__21340105=%7B%22sid%22%3A%201753269194345%2C%20%22vd%22%3A%2010%2C%20%22expires%22%3A%201753271272660%7D; __51laig__=24; Hm_lpvt_19bdc325c8a5619f4cb418e8ff68c903=1753269473"
 
-// foodMateSpider 获取标准库Pdf文档
-// @Title 获取标准库Pdf文档
-// @Description http://down.foodmate.net/，获取标准库Pdf文档
+// coSmMateSpider 获取化妆品标准
+// @Title 获取化妆品标准
+// @Description http://standard.cosmmate.com/，获取化妆品标准
 func main() {
 	// 国内标准列表
-	var allCategory = []foodMateCategory{
-		{id: 1, name: "国内标准"},
-		// 		{id: 2, name: "国外标准"},
+	var allCategory = []coSmMateCategory{
+		{id: 3, name: "国家标准", page: 1, maxPage: 17},
+		{id: 4, name: "行业标准", page: 1, maxPage: 21},
+		{id: 15, name: "地方标准", page: 1, maxPage: 3},
+		{id: 12, name: "团体标准", page: 1, maxPage: 30},
+		{id: 9, name: "其他标准", page: 1, maxPage: 1},
 	}
 	for _, category := range allCategory {
-		// 	    4000
-		page := 20
-		minPage := 1
 		isPageListGo := true
 		for isPageListGo {
-			listUrl := fmt.Sprintf("http://down.foodmate.net/standard/sort/%d/index-%d.html", category.id, page)
+			listUrl := fmt.Sprintf("http://standard.cosmmate.com/standard/sort/%d/index-%d.html", category.id, category.page)
 			fmt.Println(listUrl)
 			listDoc, err := htmlquery.LoadURL(listUrl)
 			if err != nil {
@@ -46,7 +48,7 @@ func main() {
 			liNodes := htmlquery.Find(listDoc, `//div[@class="bz_list"]/ul/li`)
 			if len(liNodes) >= 1 {
 				for _, liNode := range liNodes {
-					fmt.Println(category.id, page, category.name)
+					fmt.Println(category.id, category.page, category.name)
 					detailUrl := htmlquery.InnerText(htmlquery.FindOne(liNode, `./div[@class="bz_listl"]/ul[1]/a/@href`))
 					fmt.Println(detailUrl)
 					detailDoc, err := htmlquery.LoadURL(detailUrl)
@@ -66,15 +68,11 @@ func main() {
 					title = strings.ReplaceAll(title, "\r", "")
 					title = strings.ReplaceAll(title, " ", "")
 					fmt.Println(title)
-					if strings.Index(title, "DB") != -1 {
-						fmt.Println("地方标准，跳过")
-						continue
-					}
 
 					authUrl := htmlquery.InnerText(htmlquery.FindOne(downNode, `./@href`))
 					fmt.Println(authUrl)
 					// 获取请求Location
-					downloadUrl, err := getFoodMateDownloadUrl(authUrl, detailUrl)
+					downloadUrl, err := getCoSmMateDownloadUrl(authUrl, detailUrl)
 					if len(downloadUrl) == 0 {
 						fmt.Println(err)
 						continue
@@ -85,49 +83,48 @@ func main() {
 						continue
 					}
 					fmt.Println(downloadUrl)
-					filePath := "../down.foodmate.net/" + title + ".pdf"
+					filePath := "../standard.cosmmate.com/" + title + ".pdf"
 					fmt.Println(filePath)
 					if _, err := os.Stat(filePath); err != nil {
 						fmt.Println("=======开始下载========")
-						err = downloadFoodMatePdf(downloadUrl, filePath, detailUrl)
+						err = downloadCoSmMatePdf(downloadUrl, filePath, detailUrl)
 						if err != nil {
 							fmt.Println(err)
 						}
-
 						//复制文件
-						tempFilePath := strings.ReplaceAll(filePath, "down.foodmate.net", "temp-down.foodmate.net")
-						err = FoodMateCopyFile(filePath, tempFilePath)
+						tempFilePath := strings.ReplaceAll(filePath, "../standard.cosmmate.com", "../upload.doc88.com/standard.cosmmate.com")
+						err = CoSmMateCopyFile(filePath, tempFilePath)
 						if err != nil {
 							fmt.Println(err)
 							continue
 						}
 
 						fmt.Println("=======下载完成========")
-						downloadFoodMatePdfSleep := rand.Intn(5)
-						for i := 1; i <= downloadFoodMatePdfSleep; i++ {
+						downloadCoSmMatePdfSleep := rand.Intn(5)
+						for i := 1; i <= downloadCoSmMatePdfSleep; i++ {
 							time.Sleep(time.Second)
-							fmt.Println("page="+strconv.Itoa(page)+"===========更新", title, "成功，暂停", downloadFoodMatePdfSleep, "秒，倒计时", i, "秒===========")
+							fmt.Println("title=", title, "成功，暂停", downloadCoSmMatePdfSleep, "秒，倒计时", i, "秒===========")
 						}
 					}
 				}
-				if page > minPage {
-					page--
-				} else {
+				DownLoadCoSmMatePageTimeSleep := 10
+				// DownLoadCoSmMatePageTimeSleep := rand.Intn(5)
+				for i := 1; i <= DownLoadCoSmMatePageTimeSleep; i++ {
+					time.Sleep(time.Second)
+					fmt.Println("page="+strconv.Itoa(category.page)+"=========== 暂停", DownLoadCoSmMatePageTimeSleep, "秒 倒计时", i, "秒===========")
+				}
+				category.page++
+				if category.page > category.maxPage {
 					isPageListGo = false
-					page = 1
 					break
 				}
-			} else {
-				isPageListGo = false
-				page = 1
-				break
 			}
 		}
 	}
 }
 
 // 获取请求Location
-func getFoodMateDownloadUrl(authUrl string, referer string) (downloadUrl string, err error) {
+func getCoSmMateDownloadUrl(authUrl string, referer string) (downloadUrl string, err error) {
 	// 初始化客户端
 	client := &http.Client{
 		CheckRedirect: func(req *http.Request, via []*http.Request) error {
@@ -143,8 +140,8 @@ func getFoodMateDownloadUrl(authUrl string, referer string) (downloadUrl string,
 	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
 	req.Header.Set("Cache-Control", "no-cache")
 	req.Header.Set("Connection", "keep-alive")
-	req.Header.Set("Cookie", FoodMateCookie)
-	req.Header.Set("Host", "down.foodmate.net")
+	req.Header.Set("Cookie", CoSmMateCookie)
+	req.Header.Set("Host", "standard.cosmmate.com")
 	req.Header.Set("Pragma", "no-cache")
 	req.Header.Set("Referer", referer)
 	req.Header.Set("Upgrade-Insecure-Requests", "1")
@@ -163,7 +160,7 @@ func getFoodMateDownloadUrl(authUrl string, referer string) (downloadUrl string,
 	return downloadUrl, nil
 }
 
-func downloadFoodMatePdf(pdfUrl string, filePath string, referer string) error {
+func downloadCoSmMatePdf(pdfUrl string, filePath string, referer string) error {
 	// 初始化客户端
 	var client http.Client
 	req, err := http.NewRequest("GET", pdfUrl, nil) //建立连接
@@ -176,8 +173,8 @@ func downloadFoodMatePdf(pdfUrl string, filePath string, referer string) error {
 	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
 	req.Header.Set("Cache-Control", "no-cache")
 	req.Header.Set("Connection", "keep-alive")
-	req.Header.Set("Cookie", FoodMateCookie)
-	req.Header.Set("Host", "down.foodmate.net")
+	req.Header.Set("Cookie", CoSmMateCookie)
+	req.Header.Set("Host", "standard.cosmmate.com")
 	req.Header.Set("Pragma", "no-cache")
 	req.Header.Set("Referer", referer)
 	req.Header.Set("Upgrade-Insecure-Requests", "1")
@@ -213,7 +210,7 @@ func downloadFoodMatePdf(pdfUrl string, filePath string, referer string) error {
 	return nil
 }
 
-func FoodMateCopyFile(src, dst string) (err error) {
+func CoSmMateCopyFile(src, dst string) (err error) {
 	in, err := os.Open(src)
 	if err != nil {
 		return
