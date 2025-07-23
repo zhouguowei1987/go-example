@@ -15,28 +15,26 @@ import (
 )
 
 type foodMateCategory struct {
-	id   int
-	name string
+	id      int
+	name    string
+	page    int
+	maxPage int
 }
 
 var FoodMateCookie = "Hm_lvt_2aeaa32e7cee3cfa6e2848083235da9f=1730957037; HMACCOUNT=2CEC63D57647BCA5; Hm_lvt_d4fdc0f0037bcbb9bf9894ffa5965f5e=1730957038; __51cke__=; u_rdown=1; __gads=ID=6aa7bb34097db0c7:T=1730957036:RT=1730959091:S=ALNI_MZhgP1VBSkrn0nQ9pKk7tqwWsBCYQ; __gpi=UID=00000f776c9d87c1:T=1730957036:RT=1730959091:S=ALNI_MY1D8W2UisKk_PnJOK-lAlbgDC9WA; __eoi=ID=893729db1a75d12c:T=1730957036:RT=1730959091:S=AA-AfjbZRPAyoYfpui6zt8_ejNPv; Hm_lpvt_d4fdc0f0037bcbb9bf9894ffa5965f5e=1730959786; Hm_lpvt_2aeaa32e7cee3cfa6e2848083235da9f=1730959786; __tins__1484185=%7B%22sid%22%3A%201730959092377%2C%20%22vd%22%3A%204%2C%20%22expires%22%3A%201730961585874%7D; __51laig__=37"
 
-// foodMateSpider 获取标准库Pdf文档
-// @Title 获取标准库Pdf文档
-// @Description http://down.foodmate.net/，获取标准库Pdf文档
+// foodMateSpider 获取食品伙伴网文档
+// @Title 获取食品伙伴网文档
+// @Description http://down.foodmate.net/，获取食品伙伴网文档
 func main() {
 	// 国内标准列表
 	var allCategory = []foodMateCategory{
-		{id: 1, name: "国内标准"},
-		// 		{id: 2, name: "国外标准"},
+		{id: 1, name: "国内标准", page: 1, maxPage: 5196},
 	}
 	for _, category := range allCategory {
-		// 	    4000
-		page := 20
-		minPage := 1
 		isPageListGo := true
 		for isPageListGo {
-			listUrl := fmt.Sprintf("http://down.foodmate.net/standard/sort/%d/index-%d.html", category.id, page)
+			listUrl := fmt.Sprintf("http://down.foodmate.net/standard/sort/%d/index-%d.html", category.id, category.page)
 			fmt.Println(listUrl)
 			listDoc, err := htmlquery.LoadURL(listUrl)
 			if err != nil {
@@ -46,7 +44,7 @@ func main() {
 			liNodes := htmlquery.Find(listDoc, `//div[@class="bz_list"]/ul/li`)
 			if len(liNodes) >= 1 {
 				for _, liNode := range liNodes {
-					fmt.Println(category.id, page, category.name)
+					fmt.Println(category.id, category.page, category.name)
 					detailUrl := htmlquery.InnerText(htmlquery.FindOne(liNode, `./div[@class="bz_listl"]/ul[1]/a/@href`))
 					fmt.Println(detailUrl)
 					detailDoc, err := htmlquery.LoadURL(detailUrl)
@@ -66,10 +64,6 @@ func main() {
 					title = strings.ReplaceAll(title, "\r", "")
 					title = strings.ReplaceAll(title, " ", "")
 					fmt.Println(title)
-					if strings.Index(title, "DB") != -1 {
-						fmt.Println("地方标准，跳过")
-						continue
-					}
 
 					authUrl := htmlquery.InnerText(htmlquery.FindOne(downNode, `./@href`))
 					fmt.Println(authUrl)
@@ -93,9 +87,8 @@ func main() {
 						if err != nil {
 							fmt.Println(err)
 						}
-
 						//复制文件
-						tempFilePath := strings.ReplaceAll(filePath, "down.foodmate.net", "temp-down.foodmate.net")
+						tempFilePath := strings.ReplaceAll(filePath, "../down.foodmate.net", "../upload.doc88.com/down.foodmate.net")
 						err = FoodMateCopyFile(filePath, tempFilePath)
 						if err != nil {
 							fmt.Println(err)
@@ -106,21 +99,21 @@ func main() {
 						downloadFoodMatePdfSleep := rand.Intn(5)
 						for i := 1; i <= downloadFoodMatePdfSleep; i++ {
 							time.Sleep(time.Second)
-							fmt.Println("page="+strconv.Itoa(page)+"===========更新", title, "成功，暂停", downloadFoodMatePdfSleep, "秒，倒计时", i, "秒===========")
+							fmt.Println("page="+strconv.Itoa(category.page)+"=======", title, "成功，暂停", downloadFoodMatePdfSleep, "秒，倒计时", i, "秒===========")
 						}
 					}
 				}
-				if page > minPage {
-					page--
-				} else {
+				DownLoadFoodMatePageTimeSleep := 10
+				// DownLoadFoodMatePageTimeSleep := rand.Intn(5)
+				for i := 1; i <= DownLoadFoodMatePageTimeSleep; i++ {
+					time.Sleep(time.Second)
+					fmt.Println("page="+strconv.Itoa(category.page)+"====category_name="+category.name+"====== 暂停", DownLoadFoodMatePageTimeSleep, "秒 倒计时", i, "秒===========")
+				}
+				category.page++
+				if category.page > category.maxPage {
 					isPageListGo = false
-					page = 1
 					break
 				}
-			} else {
-				isPageListGo = false
-				page = 1
-				break
 			}
 		}
 	}
