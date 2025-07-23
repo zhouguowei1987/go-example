@@ -115,18 +115,24 @@ var HtSfWbCookie = "Hm_lvt_54db9897e5a65f7a7b00359d86015d8d=1752905161,175316834
 func main() {
 	page := 1
 	maxPage := 50
+	loc := true
 	isPageListGo := true
 	for isPageListGo {
 		if page > maxPage {
 			isPageListGo = false
 			break
 		}
-		pageListUrl := fmt.Sprintf("https://htsfwb.samr.gov.cn/api/content/SearchTemplates?loc=true&p=%d&key=", page)
+		pageListUrl := fmt.Sprintf("https://htsfwb.samr.gov.cn/api/content/SearchTemplates?loc=%t&p=%d&key=", loc, page)
 		fmt.Println(pageListUrl)
 		queryHtSfWbListResponseData, err := QueryHtSfWbList(pageListUrl)
 		if err != nil {
 			HtSfWbHttpProxyUrl = ""
 			fmt.Println(err)
+			break
+		}
+		if len(queryHtSfWbListResponseData) <= 0 {
+			fmt.Println("没有更多数据，停止")
+			break
 		}
 		for _, htSfWb := range queryHtSfWbListResponseData {
 			fmt.Println("=====================开始处理数据 page = ", page, "=========================")

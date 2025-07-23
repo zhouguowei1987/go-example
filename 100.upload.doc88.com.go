@@ -729,7 +729,7 @@ func main() {
 		{
 			dirName: "htsfwb.samr.gov.cn",
 			pCid:    8131,
-			Price:   788,
+			Price:   200,
 		},
 	}
 	rootPath := "../upload.doc88.com/"
