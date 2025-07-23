@@ -99,7 +99,7 @@ func main() {
 						downloadFoodMatePdfSleep := rand.Intn(5)
 						for i := 1; i <= downloadFoodMatePdfSleep; i++ {
 							time.Sleep(time.Second)
-							fmt.Println("page="+strconv.Itoa(category.page)+"=======", title, "成功，暂停", downloadFoodMatePdfSleep, "秒，倒计时", i, "秒===========")
+							fmt.Println("page="+strconv.Itoa(category.page)+"=======", title, "成功，category_name="+category.name+"====== 暂停", downloadFoodMatePdfSleep, "秒，倒计时", i, "秒===========")
 						}
 					}
 				}
