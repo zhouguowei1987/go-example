@@ -111,7 +111,7 @@ func main() {
 				// DownLoadCoSmMatePageTimeSleep := rand.Intn(5)
 				for i := 1; i <= DownLoadCoSmMatePageTimeSleep; i++ {
 					time.Sleep(time.Second)
-					fmt.Println("page="+strconv.Itoa(category.page)+"=========== 暂停", DownLoadCoSmMatePageTimeSleep, "秒 倒计时", i, "秒===========")
+					fmt.Println("page="+strconv.Itoa(category.page)+"====category_name="+category.name+"====== 暂停", DownLoadCoSmMatePageTimeSleep, "秒 倒计时", i, "秒===========")
 				}
 				category.page++
 				if category.page > category.maxPage {
