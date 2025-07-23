@@ -130,7 +130,7 @@ var CqIsCookie = "__RequestVerificationToken=igF-mWhmVgvlECbsH8Lx3A7Kx9Zmv2zCM98
 func main() {
 	pageListUrl := "http://db.cqis.cn/LocalStandard/GetDB50ShareList"
 	fmt.Println(pageListUrl)
-	page := 38
+	page := 1
 	maxPage := 136
 	rows := 15
 	isPageListGo := true
