@@ -29,7 +29,7 @@ var FoodMateCookie = "Hm_lvt_2aeaa32e7cee3cfa6e2848083235da9f=1730957037; HMACCO
 func main() {
 	// 国内标准列表
 	var allCategory = []foodMateCategory{
-		{id: 1, name: "国内标准", page: 1, maxPage: 5196},
+		{id: 1, name: "国内标准", page: 584, maxPage: 5196},
 	}
 	for _, category := range allCategory {
 		isPageListGo := true
@@ -81,27 +81,32 @@ func main() {
 					fmt.Println(downloadUrl)
 					filePath := "../down.foodmate.net/" + title + ".pdf"
 					fmt.Println(filePath)
-					if _, err := os.Stat(filePath); err != nil {
-						fmt.Println("=======开始下载========")
-						err = downloadFoodMatePdf(downloadUrl, filePath, detailUrl)
-						if err != nil {
-							fmt.Println(err)
-						}
-						//复制文件
-						tempFilePath := strings.ReplaceAll(filePath, "../down.foodmate.net", "../upload.doc88.com/down.foodmate.net")
-						err = FoodMateCopyFile(filePath, tempFilePath)
-						if err != nil {
-							fmt.Println(err)
-							continue
-						}
 
-						fmt.Println("=======下载完成========")
-						downloadFoodMatePdfSleep := rand.Intn(5)
-						for i := 1; i <= downloadFoodMatePdfSleep; i++ {
-							time.Sleep(time.Second)
-							fmt.Println("page="+strconv.Itoa(category.page)+"=======", title, "成功，category_name="+category.name+"====== 暂停", downloadFoodMatePdfSleep, "秒，倒计时", i, "秒===========")
-						}
-					}
+					_, err = os.Stat(filePath)
+                    if err == nil {
+                        fmt.Println("文档已下载过，跳过")
+                        continue
+                    }
+
+					fmt.Println("=======开始下载========")
+                    err = downloadFoodMatePdf(downloadUrl, filePath, detailUrl)
+                    if err != nil {
+                        fmt.Println(err)
+                    }
+                    //复制文件
+                    tempFilePath := strings.ReplaceAll(filePath, "../down.foodmate.net", "../upload.doc88.com/down.foodmate.net")
+                    err = FoodMateCopyFile(filePath, tempFilePath)
+                    if err != nil {
+                        fmt.Println(err)
+                        continue
+                    }
+
+                    fmt.Println("=======下载完成========")
+                    downloadFoodMatePdfSleep := rand.Intn(5)
+                    for i := 1; i <= downloadFoodMatePdfSleep; i++ {
+                        time.Sleep(time.Second)
+                        fmt.Println("page="+strconv.Itoa(category.page)+"=======", title, "成功，category_name="+category.name+"====== 暂停", downloadFoodMatePdfSleep, "秒，倒计时", i, "秒===========")
+                    }
 				}
 				DownLoadFoodMatePageTimeSleep := 10
 				// DownLoadFoodMatePageTimeSleep := rand.Intn(5)

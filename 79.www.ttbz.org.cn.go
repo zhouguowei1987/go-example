@@ -15,14 +15,14 @@ import (
 	"time"
 )
 
-var TbzCookie = "safeline_bot_token=AG8+lRQAAAAAAAAAAAAAAAAa7q02mAEAAG4SzO1xkkO5pPxKx0xR2XpjfI5g; __51cke__=; ASP.NET_SessionId=kztywruoejdlibymyizdhk0z; __jsluid_s=4e74def0a093311d3c09d1caf84e0fb9; __jsluid_h=746830dcf9977a07d36ede64b0d40169; __51vcke__undefined=a3421553-a204-5f6a-8013-82062b198471; __51vuft__undefined=1745827959239; CCKF_visitor_id_830188=1404949643; _d_id=ce2e43c6bc70d5759609bc8d782ec0; __51uvsct__undefined=309; __vtins__undefined=%7B%22sid%22%3A%20%22cb421605-3c6f-5575-b7b6-0cf53a807703%22%2C%20%22vd%22%3A%205%2C%20%22stt%22%3A%202855225%2C%20%22dr%22%3A%201186%2C%20%22expires%22%3A%201751441809494%2C%20%22ct%22%3A%201751440009494%7D; __tins__18926186=%7B%22sid%22%3A%201751602316401%2C%20%22vd%22%3A%202%2C%20%22expires%22%3A%201751605017483%7D; __51laig__=5193; Hm_lvt_8c446e9fafe752e4975210bc30d7ab9d=1751681868; HMACCOUNT=00EDEFEA78E0441D; safeline_bot_challenge_ans=BAAAAABvPpUUAAAAAAAAAAAAAAAAOHGtNpgBAACIHEVDwJH3VnPrt5MgZqKj6byGo+8p13wdb1kZpxwOpkkBHZKsRgfjRP7tad0Jc/j45l7I169; Hm_lpvt_8c446e9fafe752e4975210bc30d7ab9d=1753264054"
+var TbzCookie = "safeline_bot_token=AHBU3g8AAAAAAAAAAAAAAAAIzTs5mAEAAB23gXxJY8INsR/h6HvklfUkHjC7; __jsluid_s=3a36791cf70fd9f13dbcb2343308cbdf; Hm_lvt_8c446e9fafe752e4975210bc30d7ab9d=1751681868; HMACCOUNT=4E5B3419A3141A8E; safeline_bot_challenge_ans=BAAAAABwVN4TAAAAAAAAAAAAAAAAke87OZgBAACE42Q+nWnR+ivwsWt3qy5+fgF+MTSUjG1v/72UOVVtgXnZ4+wV9yTI9cy6oaFbV8jH88y666; Hm_lpvt_8c446e9fafe752e4975210bc30d7ab9d=1753306919"
 
 // TbzSpider 获取全国团体标准信息平台Pdf文档
 // @Title 获取全国团体标准信息平台Pdf文档
 // @Description https://www.ttbz.org.cn/，将全国团体标准信息平台Pdf文档入库
 func main() {
 	var startId = 141900
-	var endId = 141990
+	var endId = 141999
 	goCh := make(chan int, endId-startId)
 	for id := startId; id <= endId; id++ {
 		go func(id int) {

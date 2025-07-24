@@ -29,11 +29,11 @@ var CoSmMateCookie = "__51cke__=; Hm_lvt_19bdc325c8a5619f4cb418e8ff68c903=175326
 func main() {
 	// 国内标准列表
 	var allCategory = []coSmMateCategory{
-		{id: 3, name: "国家标准", page: 1, maxPage: 17},
-		{id: 4, name: "行业标准", page: 1, maxPage: 21},
-		{id: 15, name: "地方标准", page: 1, maxPage: 3},
-		{id: 12, name: "团体标准", page: 1, maxPage: 30},
-		{id: 9, name: "其他标准", page: 1, maxPage: 1},
+		{id: 3, name: "国家标准", page: 1, maxPage: 3},//17
+		{id: 4, name: "行业标准", page: 1, maxPage: 3},//21
+		{id: 15, name: "地方标准", page: 1, maxPage: 3},//3
+		{id: 12, name: "团体标准", page: 1, maxPage: 3},//30
+		{id: 9, name: "其他标准", page: 1, maxPage: 3},//1
 	}
 	for _, category := range allCategory {
 		isPageListGo := true
@@ -85,27 +85,32 @@ func main() {
 					fmt.Println(downloadUrl)
 					filePath := "../standard.cosmmate.com/" + title + ".pdf"
 					fmt.Println(filePath)
-					if _, err := os.Stat(filePath); err != nil {
-						fmt.Println("=======开始下载========")
-						err = downloadCoSmMatePdf(downloadUrl, filePath, detailUrl)
-						if err != nil {
-							fmt.Println(err)
-						}
-						//复制文件
-						tempFilePath := strings.ReplaceAll(filePath, "../standard.cosmmate.com", "../upload.doc88.com/standard.cosmmate.com")
-						err = CoSmMateCopyFile(filePath, tempFilePath)
-						if err != nil {
-							fmt.Println(err)
-							continue
-						}
 
-						fmt.Println("=======下载完成========")
-						downloadCoSmMatePdfSleep := rand.Intn(5)
-						for i := 1; i <= downloadCoSmMatePdfSleep; i++ {
-							time.Sleep(time.Second)
-							fmt.Println("page="+strconv.Itoa(category.page)+"=======", title, "成功，category_name="+category.name+"====== 暂停", downloadCoSmMatePdfSleep, "秒，倒计时", i, "秒===========")
-						}
-					}
+					_, err = os.Stat(filePath)
+                    if err == nil {
+                        fmt.Println("文档已下载过，跳过")
+                        continue
+                    }
+
+					fmt.Println("=======开始下载========")
+                    err = downloadCoSmMatePdf(downloadUrl, filePath, detailUrl)
+                    if err != nil {
+                        fmt.Println(err)
+                    }
+                    //复制文件
+                    tempFilePath := strings.ReplaceAll(filePath, "../standard.cosmmate.com", "../upload.doc88.com/standard.cosmmate.com")
+                    err = CoSmMateCopyFile(filePath, tempFilePath)
+                    if err != nil {
+                        fmt.Println(err)
+                        continue
+                    }
+
+                    fmt.Println("=======下载完成========")
+                    downloadCoSmMatePdfSleep := rand.Intn(5)
+                    for i := 1; i <= downloadCoSmMatePdfSleep; i++ {
+                        time.Sleep(time.Second)
+                        fmt.Println("page="+strconv.Itoa(category.page)+"=======", title, "成功，category_name="+category.name+"====== 暂停", downloadCoSmMatePdfSleep, "秒，倒计时", i, "秒===========")
+                    }
 				}
 				DownLoadCoSmMatePageTimeSleep := 10
 				// DownLoadCoSmMatePageTimeSleep := rand.Intn(5)
