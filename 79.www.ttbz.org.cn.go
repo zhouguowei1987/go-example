@@ -15,14 +15,14 @@ import (
 	"time"
 )
 
-var TbzCookie = "safeline_bot_token=AHBU3g8AAAAAAAAAAAAAAAAIzTs5mAEAAB23gXxJY8INsR/h6HvklfUkHjC7; __jsluid_s=3a36791cf70fd9f13dbcb2343308cbdf; Hm_lvt_8c446e9fafe752e4975210bc30d7ab9d=1751681868; HMACCOUNT=4E5B3419A3141A8E; safeline_bot_challenge_ans=BAAAAABwVN4TAAAAAAAAAAAAAAAAke87OZgBAACE42Q+nWnR+ivwsWt3qy5+fgF+MTSUjG1v/72UOVVtgXnZ4+wV9yTI9cy6oaFbV8jH88y666; Hm_lpvt_8c446e9fafe752e4975210bc30d7ab9d=1753306919"
+var TbzCookie = "safeline_bot_token=AG8+lRIAAAAAAAAAAAAAAAC38H8/mAEAABWYvwjMu4hIzBirHL5yQ6xBdu7b; __jsluid_s=3a36791cf70fd9f13dbcb2343308cbdf; Hm_lvt_8c446e9fafe752e4975210bc30d7ab9d=1751681868; HMACCOUNT=4E5B3419A3141A8E; Hm_lpvt_8c446e9fafe752e4975210bc30d7ab9d=1753412036"
 
 // TbzSpider 获取全国团体标准信息平台Pdf文档
 // @Title 获取全国团体标准信息平台Pdf文档
 // @Description https://www.ttbz.org.cn/，将全国团体标准信息平台Pdf文档入库
 func main() {
 	var startId = 141900
-	var endId = 141999
+	var endId = 142107
 	goCh := make(chan int, endId-startId)
 	for id := startId; id <= endId; id++ {
 		go func(id int) {

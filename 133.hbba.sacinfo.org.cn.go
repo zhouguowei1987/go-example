@@ -7,6 +7,7 @@ import (
 	"github.com/antchfx/htmlquery"
 	"github.com/otiai10/gosseract/v2"
 	"io"
+	"math/rand"
 	"io/ioutil"
 	"net"
 	"net/http"
@@ -60,7 +61,7 @@ type HdBaResponseValidateCaptcha struct {
 	Msg  string `json:"msg"`
 }
 
-const HbBaCookie = "HMACCOUNT=487EF362690A1D5D; Hm_lvt_bc6f61eace617162b31b982f796830e6=1752287986; Hm_lpvt_bc6f61eace617162b31b982f796830e6=1753179449; JSESSIONID=4A4CC30260B28BCB040EBBF1B8C34EBF"
+const HbBaCookie = "HMACCOUNT=487EF362690A1D5D; Hm_lvt_bc6f61eace617162b31b982f796830e6=1752287986; Hm_lpvt_bc6f61eace617162b31b982f796830e6=1753456700; JSESSIONID=4C19E0F8C0EB78753A3511C5C525BC19"
 
 // ychEduSpider 获取行业标准文档
 // @Title 获取行业标准文档
@@ -68,13 +69,13 @@ const HbBaCookie = "HMACCOUNT=487EF362690A1D5D; Hm_lvt_bc6f61eace617162b31b982f7
 func main() {
 	requestUrl := "https://hbba.sacinfo.org.cn/stdQueryList"
 	// 	5699
-	current := 10
-	minCurrent := 1
+	current := 1
+	maxCurrent := 10
 	size := 15
 	status := "现行"
 	isPageListGo := true
 	for isPageListGo {
-		if current < minCurrent {
+		if current > maxCurrent {
 			isPageListGo = false
 			break
 		}
@@ -101,34 +102,34 @@ func main() {
 					fileName := chName + "(" + code + ")"
 					fmt.Println(fileName)
 
-					stdDetailUrl := fmt.Sprintf("https://hbba.sacinfo.org.cn/stdDetail/%s", records.Pk)
-					stdDetailDoc, err := htmlquery.LoadURL(stdDetailUrl)
-					if err != nil {
-						fmt.Println(err)
-						continue
-					}
-					// 是否有查看文本按钮
-					downloadButtonNode := htmlquery.FindOne(stdDetailDoc, `//div[@class="container main-body"]/div[@class="sidebar sidebar-left"]/div[@class="sidebar-tabs"]/a`)
-					if downloadButtonNode == nil {
-						fmt.Println("没有下载按钮跳过")
-						continue
-					}
-
-					portalOnlineUrl := fmt.Sprintf("https://hbba.sacinfo.org.cn/portal/online/%s", records.Pk)
-					portalOnlineDoc, err := htmlquery.LoadURL(portalOnlineUrl)
-					if err != nil {
-						fmt.Println(err)
-						continue
-					}
-					// 是否有验证码窗口
-					captchaModalDialogNode := htmlquery.FindOne(portalOnlineDoc, `//div[@class="container main-body"]/div[@class="row"]/div[@class="col-sm-12"]/div[@class="modal"]/div[@class="modal-dialog"]`)
-					if captchaModalDialogNode == nil {
-						fmt.Println("没有输入验证码窗口")
-						continue
-					}
-
 					filePath := "../hbba.sacinfo.org.cn/" + fileName + ".pdf"
 					if _, err := os.Stat(filePath); err != nil {
+
+					    stdDetailUrl := fmt.Sprintf("https://hbba.sacinfo.org.cn/stdDetail/%s", records.Pk)
+                        stdDetailDoc, err := htmlquery.LoadURL(stdDetailUrl)
+                        if err != nil {
+                            fmt.Println(err)
+                            continue
+                        }
+                        // 是否有查看文本按钮
+                        downloadButtonNode := htmlquery.FindOne(stdDetailDoc, `//div[@class="container main-body"]/div[@class="sidebar sidebar-left"]/div[@class="sidebar-tabs"]/a`)
+                        if downloadButtonNode == nil {
+                            fmt.Println("没有下载按钮跳过")
+                            continue
+                        }
+
+                        portalOnlineUrl := fmt.Sprintf("https://hbba.sacinfo.org.cn/portal/online/%s", records.Pk)
+                        portalOnlineDoc, err := htmlquery.LoadURL(portalOnlineUrl)
+                        if err != nil {
+                            fmt.Println(err)
+                            continue
+                        }
+                        // 是否有验证码窗口
+                        captchaModalDialogNode := htmlquery.FindOne(portalOnlineDoc, `//div[@class="container main-body"]/div[@class="row"]/div[@class="col-sm-12"]/div[@class="modal"]/div[@class="modal-dialog"]`)
+                        if captchaModalDialogNode == nil {
+                            fmt.Println("没有输入验证码窗口")
+                            continue
+                        }
 					ValidateCaptchaGoTo:
 						// 获取验证码图片
 						// 获取当前时间的纳秒级时间戳
@@ -139,7 +140,7 @@ func main() {
 						validateCodeUrl := fmt.Sprintf("https://hbba.sacinfo.org.cn/portal/validate-code?pk=%s&t=%d", records.Pk, millis)
 						fmt.Println(validateCodeUrl)
 						validateCodeFilePath := "./hbba-validate-code/validate-code.png"
-						err := downloadValidateCodeHbBa(validateCodeUrl, validateCodeFilePath)
+						err = downloadValidateCodeHbBa(validateCodeUrl, validateCodeFilePath)
 						if err != nil {
 							fmt.Println(err)
 							continue
@@ -177,39 +178,34 @@ func main() {
 							continue
 						}
 						//复制文件
-						tempFilePath := strings.ReplaceAll(filePath, "hbba.sacinfo.org.cn", "temp-hbba.sacinfo.org.cn")
-						err = DbBaCopyHbBaFile(filePath, tempFilePath)
-						if err != nil {
-							fmt.Println(err)
-							continue
-						}
+                        tempFilePath := strings.ReplaceAll(filePath, "../hbba.sacinfo.org.cn", "../upload.doc88.com/hbba.sacinfo.org.cn")
+                        err = HbBaCopyFile(filePath, tempFilePath)
+                        if err != nil {
+                            fmt.Println(err)
+                            continue
+                        }
 						fmt.Println("=======下载完成========")
-					}
 
-					// 查看文件大小，如果是空文件，则删除
-					fi, err := os.Stat(filePath)
-					if err == nil && fi.Size() == 0 {
-						err := os.Remove(filePath)
-						if err != nil {
-							continue
-						}
+						downloadHbBaPdfSleep := rand.Intn(5)
+                        for i := 1; i <= downloadHbBaPdfSleep; i++ {
+                            time.Sleep(time.Second)
+                            fmt.Println("page="+strconv.Itoa(current)+"=======chName=", chName, "成功，====== 暂停", downloadHbBaPdfSleep, "秒，倒计时", i, "秒===========")
+                        }
 					}
-
-					time.Sleep(time.Millisecond * 100)
 				}
 			}
 
-			if current > minCurrent {
-				current--
-			} else {
-				isPageListGo = false
-				current = 1
-				break
-			}
-		} else {
-			isPageListGo = false
-			current = 1
-			break
+			DownLoadHbBaPageTimeSleep := 10
+            // DownLoadHbBaPageTimeSleep := rand.Intn(5)
+            for i := 1; i <= DownLoadHbBaPageTimeSleep; i++ {
+                time.Sleep(time.Second)
+                fmt.Println("page="+strconv.Itoa(current)+"====== 暂停", DownLoadHbBaPageTimeSleep, "秒 倒计时", i, "秒===========")
+            }
+            current++
+            if current > maxCurrent {
+                isPageListGo = false
+                break
+            }
 		}
 	}
 }
@@ -521,7 +517,7 @@ func downloadHbBa(attachmentUrl string, referer string, filePath string) error {
 	return nil
 }
 
-func DbBaCopyHbBaFile(src, dst string) (err error) {
+func HbBaCopyFile(src, dst string) (err error) {
 	in, err := os.Open(src)
 	if err != nil {
 		return
