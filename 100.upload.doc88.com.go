@@ -252,7 +252,7 @@ func main() {
 			Price:   200,
 		},
 		{
-			dirName: "finish-dbba.sacinfo.org.cn",
+			dirName: "dbba.sacinfo.org.cn",
 			pCid:    8371,
 			Price:   200,
 		},
