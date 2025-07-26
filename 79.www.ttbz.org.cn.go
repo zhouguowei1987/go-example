@@ -15,24 +15,28 @@ import (
 	"time"
 )
 
-var TbzCookie = "safeline_bot_token=AG8+lRIAAAAAAAAAAAAAAAC38H8/mAEAABWYvwjMu4hIzBirHL5yQ6xBdu7b; __jsluid_s=3a36791cf70fd9f13dbcb2343308cbdf; Hm_lvt_8c446e9fafe752e4975210bc30d7ab9d=1751681868; HMACCOUNT=4E5B3419A3141A8E; Hm_lpvt_8c446e9fafe752e4975210bc30d7ab9d=1753412036"
+var TbzCookie = "safeline_bot_token=AHcnzQQAAAAAAAAAAAAAAABIE0ZEmAEAAFKPVI5r7+yqarwC09KQS1SQelFB; __jsluid_s=3a36791cf70fd9f13dbcb2343308cbdf; Hm_lvt_8c446e9fafe752e4975210bc30d7ab9d=1751681868; HMACCOUNT=4E5B3419A3141A8E; safeline_bot_challenge_ans=BAAAAAB3J80EAAAAAAAAAAAAAAAAHARGRJgBAAAb53gVAyLKK47dlbZeYiqOvA5jUln/rFEsa0mOQJ0UlHu+ybnhm/pDmjAqQKqV+mXNMKVt107; Hm_lpvt_8c446e9fafe752e4975210bc30d7ab9d=1753492131"
+// safeline_bot_token=AHcnzQUAAAAAAAAAAAAAAABTQEtCmAEAAHQpxqjvgjlNQzb1AuahYSm1enKS; __jsluid_s=3a36791cf70fd9f13dbcb2343308cbdf; Hm_lvt_8c446e9fafe752e4975210bc30d7ab9d=1751681868; HMACCOUNT=4E5B3419A3141A8E; safeline_bot_challenge_ans=BAAAAAB3J80FAAAAAAAAAAAAAAAA4i5LQpgBAADbFq0SY7mwlirW05KNZvqT548rrEVUPQgUW1NJPdaCcv7OLONPif4YSm8oboPUAfAaG+Lb126; Hm_lpvt_8c446e9fafe752e4975210bc30d7ab9d=1753458916
+// safeline_bot_token=AHcnzWMAAAAAAAAAAAAAAABUeExCmAEAAGYsI5vd1prETA7Q7EZTLi6r1diO; __jsluid_s=3a36791cf70fd9f13dbcb2343308cbdf; Hm_lvt_8c446e9fafe752e4975210bc30d7ab9d=1751681868; HMACCOUNT=4E5B3419A3141A8E; safeline_bot_challenge_ans=BAAAAAB3J81jAAAAAAAAAAAAAAAA22hMQpgBAAALcbpXLkszLFExcUuPCO7uFoVt50XOlhqycHVak3GeuhN0DtmNLIUbbXBot/qHjzHGhWQX64; Hm_lpvt_8c446e9fafe752e4975210bc30d7ab9d=1753458995
 
 // TbzSpider 获取全国团体标准信息平台Pdf文档
 // @Title 获取全国团体标准信息平台Pdf文档
 // @Description https://www.ttbz.org.cn/，将全国团体标准信息平台Pdf文档入库
 func main() {
-	var startId = 141900
-	var endId = 142107
-	goCh := make(chan int, endId-startId)
+	var startId = 141997
+	var endId = 142201
 	for id := startId; id <= endId; id++ {
-		go func(id int) {
-			err := tbzSpider(id)
-			if err != nil {
-				fmt.Println(err)
-			}
-			goCh <- id
-		}(id)
-		fmt.Println(<-goCh)
+		err := tbzSpider(id)
+        if err != nil {
+            fmt.Println(err)
+        }
+
+		// 设置倒计时
+        DownLoadTTbzTimeSleep := 10
+        for i := 1; i <= DownLoadTTbzTimeSleep; i++ {
+            time.Sleep(time.Second)
+            fmt.Println("id="+strconv.Itoa(id)+"===========操作完成，", "暂停", DownLoadTTbzTimeSleep, "秒，倒计时", i, "秒===========")
+        }
 	}
 	//tbzSpider(132099)
 }
@@ -235,13 +239,6 @@ func tbzSpider(id int) error {
 					return err
 				}
 				fmt.Println("=======完成下载========")
-
-				// 设置下载倒计时
-				DownLoadTTbzTimeSleep := 10
-				for i := 1; i <= DownLoadTTbzTimeSleep; i++ {
-					time.Sleep(time.Second)
-					fmt.Println("id="+strconv.Itoa(id)+"===========操作完成，", "暂停", DownLoadTTbzTimeSleep, "秒，倒计时", i, "秒===========")
-				}
 			}
 		}
 	}
