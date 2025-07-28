@@ -215,7 +215,7 @@ func main() {
 				DownLoadQxTjBzTimeSleep := rand.Intn(5)
 				for i := 1; i <= DownLoadQxTjBzTimeSleep; i++ {
 					time.Sleep(time.Second)
-					fmt.Println("title="+title+"===========下载", title, "成功，暂停", DownLoadQxTjBzTimeSleep, "秒，倒计时", i, "秒===========")
+					fmt.Println("title="+title+"===========下载", title, "成功 startIndex="+strconv.Itoa(startIndex)+"====，暂停", DownLoadQxTjBzTimeSleep, "秒，倒计时", i, "秒===========")
 				}
 			}
 			DownLoadQxTjBzPageTimeSleep := 10
