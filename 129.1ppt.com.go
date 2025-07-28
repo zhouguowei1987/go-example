@@ -170,14 +170,14 @@ func getPptDownloadDetailDoc(url string, referer string) (doc *html.Node, err er
 	if err != nil {
 		return doc, err
 	}
-	doc, err = decodeAndParseHTML(string(bodyBytes))
+	doc, err = decodeAndParseHTMLPpt(string(bodyBytes))
 	if err != nil {
 		return doc, err
 	}
 	return doc, nil
 }
 
-func decodeAndParseHTML(gb2312Content string) (*html.Node, error) {
+func decodeAndParseHTMLPpt(gb2312Content string) (*html.Node, error) {
 	// 使用GB2312解码器解码内容
 	decoder := simplifiedchinese.GBK.NewDecoder() // 注意：通常GB2312在Go中对应的是GBK，而非直接使用GB2312，因为GB2312不是一个广泛支持的编码标准，而是GBK的一个子集。
 	decodedContent, _, err := transform.Bytes(decoder, []byte(gb2312Content))
