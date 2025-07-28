@@ -25,11 +25,11 @@ import (
 	_ "golang.org/x/net/html"
 )
 
-var QxTjBzEnableHttpProxy = false
-var QxTjBzHttpProxyUrl = "111.225.152.186:8089"
-var QxTjBzHttpProxyUrlArr = make([]string, 0)
+var YlQxEnableHttpProxy = false
+var YlQxHttpProxyUrl = "111.225.152.186:8089"
+var YlQxHttpProxyUrlArr = make([]string, 0)
 
-func QxTjBzHttpProxy() error {
+func YlQxHttpProxy() error {
 	pageMax := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
 	for _, page := range pageMax {
 		freeProxyUrl := "https://www.beesproxy.com/free"
@@ -63,9 +63,9 @@ func QxTjBzHttpProxy() error {
 
 				switch protocol {
 				case "HTTP":
-					QxTjBzHttpProxyUrlArr = append(QxTjBzHttpProxyUrlArr, "http://"+ip+":"+port)
+					YlQxHttpProxyUrlArr = append(YlQxHttpProxyUrlArr, "http://"+ip+":"+port)
 				case "HTTPS":
-					QxTjBzHttpProxyUrlArr = append(QxTjBzHttpProxyUrlArr, "https://"+ip+":"+port)
+					YlQxHttpProxyUrlArr = append(YlQxHttpProxyUrlArr, "https://"+ip+":"+port)
 				}
 			}
 		}
@@ -73,24 +73,24 @@ func QxTjBzHttpProxy() error {
 	return nil
 }
 
-func QxTjBzSetHttpProxy() (httpclient *http.Client) {
-	if QxTjBzHttpProxyUrl == "" {
-		if len(QxTjBzHttpProxyUrlArr) <= 0 {
-			err := QxTjBzHttpProxy()
+func YlQxSetHttpProxy() (httpclient *http.Client) {
+	if YlQxHttpProxyUrl == "" {
+		if len(YlQxHttpProxyUrlArr) <= 0 {
+			err := YlQxHttpProxy()
 			if err != nil {
-				QxTjBzSetHttpProxy()
+				YlQxSetHttpProxy()
 			}
 		}
-		QxTjBzHttpProxyUrl = QxTjBzHttpProxyUrlArr[0]
-		if len(QxTjBzHttpProxyUrlArr) >= 2 {
-			QxTjBzHttpProxyUrlArr = QxTjBzHttpProxyUrlArr[1:]
+		YlQxHttpProxyUrl = YlQxHttpProxyUrlArr[0]
+		if len(YlQxHttpProxyUrlArr) >= 2 {
+			YlQxHttpProxyUrlArr = YlQxHttpProxyUrlArr[1:]
 		} else {
-			QxTjBzHttpProxyUrlArr = make([]string, 0)
+			YlQxHttpProxyUrlArr = make([]string, 0)
 		}
 	}
 
-	fmt.Println(QxTjBzHttpProxyUrl)
-	ProxyURL, _ := url.Parse(QxTjBzHttpProxyUrl)
+	fmt.Println(YlQxHttpProxyUrl)
+	ProxyURL, _ := url.Parse(YlQxHttpProxyUrl)
 	httpclient = &http.Client{
 		Transport: &http.Transport{
 			Proxy: http.ProxyURL(ProxyURL),
@@ -110,40 +110,40 @@ func QxTjBzSetHttpProxy() (httpclient *http.Client) {
 	return httpclient
 }
 
-type QueryQxTjBzListFormData struct {
+type QueryYlQxListFormData struct {
 	index1 int
 	index2 int
 }
 
-type ViewQxTjBzFormData struct {
+type ViewYlQxFormData struct {
 	type1 string
 	id    string
 }
 
-var QxTjBzCookie = "JSESSIONID=20236F201F459E82C745953D125A3767; Hm_lvt_538f18182ca76c3c0acf71dbed622e93=1753434014; HMACCOUNT=1CCD0111717619C6; Hm_lpvt_538f18182ca76c3c0acf71dbed622e93=1753682828"
+var YlQxCookie = "JSESSIONID=20236F201F459E82C745953D125A3767; Hm_lvt_538f18182ca76c3c0acf71dbed622e93=1753434014; HMACCOUNT=1CCD0111717619C6; Hm_lpvt_538f18182ca76c3c0acf71dbed622e93=1753682828"
 
-// 下载中国食品药品检定研究院-器械非采标推荐性行业标准文档
-// @Title 下载中国食品药品检定研究院-器械非采标推荐性行业标准文档
-// @Description http://app.nifdc.org.cn/jianybz/jybzTwoGj.do?formAction=listQxtjbz/，下载中国食品药品检定研究院-器械非采标推荐性行业标准文档
+// 下载中国食品药品检定研究院-器械强制性行业标准
+// @Title 下载中国食品药品检定研究院-器械强制性行业标准
+// @Description http://app.nifdc.org.cn/jianybz/jybzTwoGj.do?formAction=listYlqx/，下载中国食品药品检定研究院-器械强制性行业标准
 func main() {
-	pageListUrl := "http://app.nifdc.org.cn/jianybz/jybzTwoGj.do?formAction=listQxtjbz"
+	pageListUrl := "http://app.nifdc.org.cn/jianybz/jybzTwoGj.do?formAction=listYlqx"
 	fmt.Println(pageListUrl)
 	startIndex := 0
 	isPageListGo := true
 	for isPageListGo {
-		queryQxTjBzListFormData := QueryQxTjBzListFormData{}
+		queryYlQxListFormData := QueryYlQxListFormData{}
 		if startIndex > 0 {
-			queryQxTjBzListFormData.index1 = startIndex
-			queryQxTjBzListFormData.index2 = startIndex - 1
+			queryYlQxListFormData.index1 = startIndex
+			queryYlQxListFormData.index2 = startIndex - 1
 		}
 
-		queryQxTjBzListDoc, err := QueryQxTjBzList(pageListUrl, queryQxTjBzListFormData)
+		queryYlQxListDoc, err := QueryYlQxList(pageListUrl, queryYlQxListFormData)
 		if err != nil {
 			fmt.Println(err)
 			break
 		}
 		// /html/body/div[2]/div[2]/div/div/div[2]/table/tbody/tr[1]
-		trNodes := htmlquery.Find(queryQxTjBzListDoc, `//html/body/div[2]/div[2]/div/div/div[2]/table/tbody/tr`)
+		trNodes := htmlquery.Find(queryYlQxListDoc, `//html/body/div[2]/div[2]/div/div/div[2]/table/tbody/tr`)
 		if len(trNodes) >= 1 {
 			for _, trNode := range trNodes {
 				fmt.Println("=====================开始处理数据=========================")
@@ -173,56 +173,56 @@ func main() {
 				fmt.Println("=======开始下载========")
 
 				buttonNode := htmlquery.FindOne(trNode, `./td[5]/div/button`)
-				// ckbz('jybzTwoGj.do?formAction=viewBzpdfjs&type=qxtjbz&id=2c9048cc981213f901982c1d26bc4578')
+				// ckbz('jybzTwoGj.do?formAction=viewBzpdfjs&type=ylqx&id=2c9048cc981213f901982c1d26bc4578')
 				clickText := htmlquery.SelectAttr(buttonNode, "onclick")
 				clickTextArray := strings.Split(clickText, "id=")
 				id := strings.ReplaceAll(clickTextArray[1], "')", "")
 				//fmt.Println(id)
 
-				viewQxTjBzUrl := "http://app.nifdc.org.cn/jianybz/jybzTwoGj.do?formAction=viewBzpdfjs"
-				//fmt.Println(viewQxTjBzUrl)
-				viewQxTjBzFormData := ViewQxTjBzFormData{
-					type1: "qxtjbz",
+				viewYlQxUrl := "http://app.nifdc.org.cn/jianybz/jybzTwoGj.do?formAction=viewBzpdfjs"
+				//fmt.Println(viewYlQxUrl)
+				viewYlQxFormData := ViewYlQxFormData{
+					type1: "ylqx",
 					id:    id,
 				}
 
-				viewQxTjBzDoc, err := viewQxTjBz(viewQxTjBzUrl, viewQxTjBzFormData)
+				viewYlQxDoc, err := viewYlQx(viewYlQxUrl, viewYlQxFormData)
 				if err != nil {
 					fmt.Println(err)
 					continue
 				}
 
 				// /html/body/iframe
-				downloadQxTjBzUrlNode := htmlquery.FindOne(viewQxTjBzDoc, `//html/body/iframe/@src`)
-				downloadQxTjBzUrlText := htmlquery.InnerText(downloadQxTjBzUrlNode)
-				downloadQxTjBzUrl := strings.ReplaceAll(downloadQxTjBzUrlText, "js/pdfjs2.12.313/web/viewer.html?file=", "")
-				downloadQxTjBzUrl = strings.ReplaceAll(downloadQxTjBzUrl, "\\", "/")
-				fmt.Println(downloadQxTjBzUrl)
-				err = downloadQxTjBz(downloadQxTjBzUrl, filePath)
+				downloadYlQxUrlNode := htmlquery.FindOne(viewYlQxDoc, `//html/body/iframe/@src`)
+				downloadYlQxUrlText := htmlquery.InnerText(downloadYlQxUrlNode)
+				downloadYlQxUrl := strings.ReplaceAll(downloadYlQxUrlText, "js/pdfjs2.12.313/web/viewer.html?file=", "")
+				downloadYlQxUrl = strings.ReplaceAll(downloadYlQxUrl, "\\", "/")
+				fmt.Println(downloadYlQxUrl)
+				err = downloadYlQx(downloadYlQxUrl, filePath)
 				if err != nil {
 					fmt.Println(err)
 					continue
 				}
 				//复制文件
 				tempFilePath := strings.ReplaceAll(filePath, "../app.nifdc.org.cn", "../upload.doc88.com/app.nifdc.org.cn")
-				err = QxTjBzCopyFile(filePath, tempFilePath)
+				err = YlQxCopyFile(filePath, tempFilePath)
 				if err != nil {
 					fmt.Println(err)
 					continue
 				}
 				fmt.Println("=======完成下载========")
-				//DownLoadQxTjBzTimeSleep := 10
-				DownLoadQxTjBzTimeSleep := rand.Intn(5)
-				for i := 1; i <= DownLoadQxTjBzTimeSleep; i++ {
+				//DownLoadYlQxTimeSleep := 10
+				DownLoadYlQxTimeSleep := rand.Intn(5)
+				for i := 1; i <= DownLoadYlQxTimeSleep; i++ {
 					time.Sleep(time.Second)
-					fmt.Println("title="+title+"===========下载", title, "成功，暂停", DownLoadQxTjBzTimeSleep, "秒，倒计时", i, "秒===========")
+					fmt.Println("title="+title+"===========下载", title, "成功，暂停", DownLoadYlQxTimeSleep, "秒，倒计时", i, "秒===========")
 				}
 			}
-			DownLoadQxTjBzPageTimeSleep := 10
-			// DownLoadQxTjBzPageTimeSleep := rand.Intn(5)
-			for i := 1; i <= DownLoadQxTjBzPageTimeSleep; i++ {
+			DownLoadYlQxPageTimeSleep := 10
+			// DownLoadYlQxPageTimeSleep := rand.Intn(5)
+			for i := 1; i <= DownLoadYlQxPageTimeSleep; i++ {
 				time.Sleep(time.Second)
-				fmt.Println("startIndex="+strconv.Itoa(startIndex)+"========= 暂停", DownLoadQxTjBzPageTimeSleep, "秒 倒计时", i, "秒===========")
+				fmt.Println("startIndex="+strconv.Itoa(startIndex)+"========= 暂停", DownLoadYlQxPageTimeSleep, "秒 倒计时", i, "秒===========")
 			}
 			startIndex++
 		} else {
@@ -233,7 +233,7 @@ func main() {
 	}
 }
 
-func QueryQxTjBzList(requestUrl string, queryQxTjBzListFormData QueryQxTjBzListFormData) (doc *html.Node, err error) {
+func QueryYlQxList(requestUrl string, queryYlQxListFormData QueryYlQxListFormData) (doc *html.Node, err error) {
 	// 初始化客户端
 	var client *http.Client = &http.Client{
 		Transport: &http.Transport{
@@ -250,12 +250,12 @@ func QueryQxTjBzList(requestUrl string, queryQxTjBzListFormData QueryQxTjBzListF
 			ResponseHeaderTimeout: time.Second * 3,
 		},
 	}
-	if QxTjBzEnableHttpProxy {
-		client = QxTjBzSetHttpProxy()
+	if YlQxEnableHttpProxy {
+		client = YlQxSetHttpProxy()
 	}
 	postData := url.Values{}
-	postData.Add("index", strconv.Itoa(queryQxTjBzListFormData.index1))
-	postData.Add("index", strconv.Itoa(queryQxTjBzListFormData.index2))
+	postData.Add("index", strconv.Itoa(queryYlQxListFormData.index1))
+	postData.Add("index", strconv.Itoa(queryYlQxListFormData.index2))
 	req, err := http.NewRequest("POST", requestUrl, strings.NewReader(postData.Encode())) //建立连接
 
 	if err != nil {
@@ -266,10 +266,10 @@ func QueryQxTjBzList(requestUrl string, queryQxTjBzListFormData QueryQxTjBzListF
 	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
 	req.Header.Set("Connection", "keep-alive")
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
-	req.Header.Set("Cookie", QxTjBzCookie)
+	req.Header.Set("Cookie", YlQxCookie)
 	req.Header.Set("Host", "app.nifdc.org.cn")
 	req.Header.Set("Origin", "http://app.nifdc.org.cn")
-	req.Header.Set("Referer", "http://app.nifdc.org.cn/jianybz/jybzTwoGj.do?formAction=listQxtjbz")
+	req.Header.Set("Referer", "http://app.nifdc.org.cn/jianybz/jybzTwoGj.do?formAction=listYlqx")
 	req.Header.Set("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36")
 	req.Header.Set("X-Requested-With", "XMLHttpRequest")
 	resp, err := client.Do(req) //拿到返回的内容
@@ -285,14 +285,14 @@ func QueryQxTjBzList(requestUrl string, queryQxTjBzListFormData QueryQxTjBzListF
 	if err != nil {
 		return doc, err
 	}
-	doc, err = decodeAndParseHTMLQxTjBz(string(bodyBytes))
+	doc, err = decodeAndParseHTMLYlQx(string(bodyBytes))
 	if err != nil {
 		return doc, err
 	}
 	return doc, nil
 }
 
-func viewQxTjBz(requestUrl string, viewQxTjBzFormData ViewQxTjBzFormData) (doc *html.Node, err error) {
+func viewYlQx(requestUrl string, viewYlQxFormData ViewYlQxFormData) (doc *html.Node, err error) {
 	// 初始化客户端
 	var client *http.Client = &http.Client{
 		Transport: &http.Transport{
@@ -309,12 +309,12 @@ func viewQxTjBz(requestUrl string, viewQxTjBzFormData ViewQxTjBzFormData) (doc *
 			ResponseHeaderTimeout: time.Second * 3,
 		},
 	}
-	if QxTjBzEnableHttpProxy {
-		client = QxTjBzSetHttpProxy()
+	if YlQxEnableHttpProxy {
+		client = YlQxSetHttpProxy()
 	}
 	postData := url.Values{}
-	postData.Add("type", viewQxTjBzFormData.type1)
-	postData.Add("id", viewQxTjBzFormData.id)
+	postData.Add("type", viewYlQxFormData.type1)
+	postData.Add("id", viewYlQxFormData.id)
 	req, err := http.NewRequest("POST", requestUrl, strings.NewReader(postData.Encode())) //建立连接
 	if err != nil {
 		return doc, err
@@ -323,10 +323,10 @@ func viewQxTjBz(requestUrl string, viewQxTjBzFormData ViewQxTjBzFormData) (doc *
 	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
 	req.Header.Set("Connection", "keep-alive")
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
-	req.Header.Set("Cookie", QxTjBzCookie)
+	req.Header.Set("Cookie", YlQxCookie)
 	req.Header.Set("Host", "app.nifdc.org.cn")
 	req.Header.Set("Origin", "http://app.nifdc.org.cn")
-	req.Header.Set("Referer", "http://app.nifdc.org.cn/jianybz/jybzTwoGj.do?formAction=listQxtjbz")
+	req.Header.Set("Referer", "http://app.nifdc.org.cn/jianybz/jybzTwoGj.do?formAction=listYlqx")
 	req.Header.Set("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36")
 	req.Header.Set("X-Requested-With", "XMLHttpRequest")
 	resp, err := client.Do(req) //拿到返回的内容
@@ -342,14 +342,14 @@ func viewQxTjBz(requestUrl string, viewQxTjBzFormData ViewQxTjBzFormData) (doc *
 	if err != nil {
 		return doc, err
 	}
-	doc, err = decodeAndParseHTMLQxTjBz(string(bodyBytes))
+	doc, err = decodeAndParseHTMLYlQx(string(bodyBytes))
 	if err != nil {
 		return doc, err
 	}
 	return doc, nil
 }
 
-func decodeAndParseHTMLQxTjBz(gb2312Content string) (*html.Node, error) {
+func decodeAndParseHTMLYlQx(gb2312Content string) (*html.Node, error) {
 	// 使用GB2312解码器解码内容
 	decoder := simplifiedchinese.GBK.NewDecoder() // 注意：通常GB2312在Go中对应的是GBK，而非直接使用GB2312，因为GB2312不是一个广泛支持的编码标准，而是GBK的一个子集。
 	decodedContent, _, err := transform.Bytes(decoder, []byte(gb2312Content))
@@ -366,7 +366,7 @@ func decodeAndParseHTMLQxTjBz(gb2312Content string) (*html.Node, error) {
 	return doc, nil
 }
 
-func downloadQxTjBz(requestUrl string, filePath string) error {
+func downloadYlQx(requestUrl string, filePath string) error {
 	// 初始化客户端
 	var client *http.Client = &http.Client{
 		Transport: &http.Transport{
@@ -383,8 +383,8 @@ func downloadQxTjBz(requestUrl string, filePath string) error {
 			ResponseHeaderTimeout: time.Second * 3,
 		},
 	}
-	if QxTjBzEnableHttpProxy {
-		client = QxTjBzSetHttpProxy()
+	if YlQxEnableHttpProxy {
+		client = YlQxSetHttpProxy()
 	}
 	req, err := http.NewRequest("GET", requestUrl, nil) //建立连接
 	if err != nil {
@@ -394,10 +394,10 @@ func downloadQxTjBz(requestUrl string, filePath string) error {
 	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
 	req.Header.Set("Connection", "keep-alive")
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
-	req.Header.Set("Cookie", QxTjBzCookie)
+	req.Header.Set("Cookie", YlQxCookie)
 	req.Header.Set("Host", "app.nifdc.org.cn")
 	req.Header.Set("Origin", "http://app.nifdc.org.cn")
-	req.Header.Set("Referer", "http://app.nifdc.org.cn/jianybz/jybzTwoGj.do?formAction=listQxtjbz")
+	req.Header.Set("Referer", "http://app.nifdc.org.cn/jianybz/jybzTwoGj.do?formAction=listYlqx")
 	req.Header.Set("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36")
 	req.Header.Set("X-Requested-With", "XMLHttpRequest")
 	resp, err := client.Do(req) //拿到返回的内容
@@ -431,7 +431,7 @@ func downloadQxTjBz(requestUrl string, filePath string) error {
 	return nil
 }
 
-func QxTjBzCopyFile(src, dst string) (err error) {
+func YlQxCopyFile(src, dst string) (err error) {
 	in, err := os.Open(src)
 	if err != nil {
 		return
