@@ -682,7 +682,7 @@ func main() {
 			Price:   788,
 		},
 		{
-			dirName: "zlzx.zjamr.zj.gov.cn/地方标准",
+			dirName: "zlzx.zjamr.zj.gov.cn",
 			pCid:    8371,
 			Price:   788,
 		},

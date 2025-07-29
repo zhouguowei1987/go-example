@@ -66,7 +66,7 @@ func main() {
 			code = strings.ReplaceAll(code, "/", "-")
 			fmt.Println(code)
 
-			filePath := "../zlzx.zjamr.zj.gov.cn/地方标准/" + title + "(" + code + ")" + ".pdf"
+			filePath := "../zlzx.zjamr.zj.gov.cn/" + title + "(" + code + ")" + ".pdf"
 			fmt.Println(filePath)
 			if _, err := os.Stat(filePath); err != nil {
 
