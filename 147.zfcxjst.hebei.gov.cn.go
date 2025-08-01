@@ -23,7 +23,7 @@ type zfCxJstCategory struct {
 	maxPage int
 }
 
-var ZfCxJstCookie = "_idx_count=1; qspJd7aG3Y1XO=60LmhrkWM1FhfMfU7OQkkwFk6AmyCMNj2ayQECCdks2RR4JKIIfWUnCQ3azaRH2B_5pGQRXrJZk9bUQir0NiopQa; qspJd7aG3Y1XP=0vx5f_WnnlCPzXkI_ZIV6EI0wBfaKVgKIZwU2_LTvUewFFXFUYvDML.hFeh7VHODtkdxBUeonmbWj6cCVdjur3p1wZJ6AWigBD5nyuv5ONBOvtc9DNa.c5zlWgkoPgSLNMvu1QyeUV6UDcg438k85jLrliQJqkGT.HixqJ46uwEdZ_nfRNxIOpPCE1TiUHT78DSy_6_xBHxCMYSz3cmjguInRu27n8XeESCep5xcjQOuJizBMYIE6H57BiF..dMt6H9QstZMcXaNuvAHIni2YKlPJ1frDweYRFNyS0_PtfW.Wnz_6cHpyhHWBrhR4CCVjFGemOpe.0Skjvxj8SlaxbvHuEUXxg0MSY3TJwUelAT6j5puRftf.3Kt6mb5mk9Cwdt.7BMiVyBlUWxetedEMFzJv_cjr6zUYdTiu8eUdls9US63LMv0jxtr45yiMXXJU"
+var ZfCxJstCookie = "qspJd7aG3Y1XO=60fUHO9ocKVEtR8xeDuxT.qFr5J7jn5RfHlXxJP7md0y65aCBzcwx2z5Qr7cdOFg2rDD4j8V4_9YIAsUyvxlCGlG; qspJd7aG3Y1XP=0iPjgelfCeW5yTTCKflfL_a6u8.ZOd7MVpIK9Jl5U9N.wyFkJ1N19iCfu6zIzA7bcRwsWR3ZmDL6dXsLWun6hoLtDVve8ZHXtNssPNBeGuT_bXVU2G3sYHRA99KlnaojaaL0_JWDk2.VmgVfOniVWGOojAohcRU9c3uJiRf_gtSbXoUEkUQwC7pSjxYioNsqBSbOZ.3N2QceqDFM6y_03rCiz4LO2LIVxanQXSE2aEF6TN1KhUzy8LiCaUz_b4XYwxbAdH0oBdVKj4J3CGHZBFhKc4Z2hKKf1nVC8B8dYpt_rEtcZRX6awfK7jiY_nKu5gimQihSV_OXXCIlQQvgE_C9DDCelK5s.az3XKdaCMTWfkj7GJkp4cHtdPZgJ6l.WCWUk5_RJwfiSrNJjoWX2wq"
 
 // zfCxJstSpider 获取河北省住房和城乡建设厅标准
 // @Title 获取河北省住房和城乡建设厅标准
@@ -123,8 +123,8 @@ func main() {
 						fmt.Println("page="+strconv.Itoa(category.page)+"=======", title, "成功，category_name="+category.name+"====== 暂停", downloadZfCxJstPdfSleep, "秒，倒计时", i, "秒===========")
 					}
 				}
-				DownLoadZfCxJstPageTimeSleep := 10
-				// DownLoadZfCxJstPageTimeSleep := rand.Intn(5)
+				// DownLoadZfCxJstPageTimeSleep := 10
+				DownLoadZfCxJstPageTimeSleep := rand.Intn(5)
 				for i := 1; i <= DownLoadZfCxJstPageTimeSleep; i++ {
 					time.Sleep(time.Second)
 					fmt.Println("page="+strconv.Itoa(category.page)+"====category_name="+category.name+"====== 暂停", DownLoadZfCxJstPageTimeSleep, "秒 倒计时", i, "秒===========")
