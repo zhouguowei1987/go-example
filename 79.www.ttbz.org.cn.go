@@ -15,7 +15,7 @@ import (
 	"time"
 )
 
-var TbzCookie = "safeline_bot_token=AHcnzQUAAAAAAAAAAAAAAABjR3lOmAEAAIYoLxcNzov9AuxBAsDrPKdiU4KR; __jsluid_s=3a36791cf70fd9f13dbcb2343308cbdf; Hm_lvt_8c446e9fafe752e4975210bc30d7ab9d=1751681868; HMACCOUNT=4E5B3419A3141A8E; safeline_bot_challenge_ans=BAAAAAB3J80FAAAAAAAAAAAAAAAAnzd5TpgBAAC93G8ylHilCcl3mXDrjBylOjCeHS+ZnOdn5HKrQsAhxuACd10B9NeYrF1LUfSOKygMugk0182; Hm_lpvt_8c446e9fafe752e4975210bc30d7ab9d=1753663261"
+var TbzCookie = "safeline_bot_token=AHcnzQcAAAAAAAAAAAAAAABKQSVjmAEAANHv/9X566JBkWKRTNGkjHq6wffw; __jsluid_s=3a36791cf70fd9f13dbcb2343308cbdf; Hm_lvt_8c446e9fafe752e4975210bc30d7ab9d=1751681868; HMACCOUNT=4E5B3419A3141A8E; ASP.NET_SessionId=ocqozseqhqrtjo4rbdl3sdqe; safeline_bot_challenge_ans=BAAAAAB3J80HAAAAAAAAAAAAAAAAKRglY5gBAABvN+PkR6F4Q3Zc+4fRtOSNbBxYWxo4RQEy5qPTzoaAF5YR2kJaHEsQVWeh1aSrfWVz2bYv39; Hm_lpvt_8c446e9fafe752e4975210bc30d7ab9d=1754010080"
 // safeline_bot_token=AHcnzQUAAAAAAAAAAAAAAABTQEtCmAEAAHQpxqjvgjlNQzb1AuahYSm1enKS; __jsluid_s=3a36791cf70fd9f13dbcb2343308cbdf; Hm_lvt_8c446e9fafe752e4975210bc30d7ab9d=1751681868; HMACCOUNT=4E5B3419A3141A8E; safeline_bot_challenge_ans=BAAAAAB3J80FAAAAAAAAAAAAAAAA4i5LQpgBAADbFq0SY7mwlirW05KNZvqT548rrEVUPQgUW1NJPdaCcv7OLONPif4YSm8oboPUAfAaG+Lb126; Hm_lpvt_8c446e9fafe752e4975210bc30d7ab9d=1753458916
 // safeline_bot_token=AHcnzWMAAAAAAAAAAAAAAABUeExCmAEAAGYsI5vd1prETA7Q7EZTLi6r1diO; __jsluid_s=3a36791cf70fd9f13dbcb2343308cbdf; Hm_lvt_8c446e9fafe752e4975210bc30d7ab9d=1751681868; HMACCOUNT=4E5B3419A3141A8E; safeline_bot_challenge_ans=BAAAAAB3J81jAAAAAAAAAAAAAAAA22hMQpgBAAALcbpXLkszLFExcUuPCO7uFoVt50XOlhqycHVak3GeuhN0DtmNLIUbbXBot/qHjzHGhWQX64; Hm_lpvt_8c446e9fafe752e4975210bc30d7ab9d=1753458995
 
@@ -24,7 +24,7 @@ var TbzCookie = "safeline_bot_token=AHcnzQUAAAAAAAAAAAAAAABjR3lOmAEAAIYoLxcNzov9
 // @Description https://www.ttbz.org.cn/，将全国团体标准信息平台Pdf文档入库
 func main() {
 	var startId = 141997
-	var endId = 142222
+	var endId = 142548
 	for id := startId; id <= endId; id++ {
 		err := tbzSpider(id)
         if err != nil {
@@ -38,7 +38,7 @@ func main() {
             fmt.Println("id="+strconv.Itoa(id)+"===========操作完成，", "暂停", DownLoadTTbzTimeSleep, "秒，倒计时", i, "秒===========")
         }
 	}
-	//tbzSpider(132099)
+ 	// tbzSpider(142323)
 }
 
 func getTbz(url string) (doc *html.Node, err error) {
