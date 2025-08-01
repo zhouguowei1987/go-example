@@ -82,9 +82,7 @@ func main() {
 					}
 
 					detailUrl := htmlquery.InnerText(htmlquery.FindOne(liNode, `./div[@class="mingcheng"]/a/@href`))
-					if strings.Index(detailUrl, "zfcxjst.hebei.gov.cn") == -1 {
-						detailUrl = "https://zfcxjst.hebei.gov.cn" + detailUrl
-					}
+					detailUrl = "https://zfcxjst.hebei.gov.cn" + detailUrl
 					fmt.Println(detailUrl)
 					detailDoc, err := QueryZfCxJstHtml(detailUrl, listUrl)
 					if err != nil {
@@ -97,7 +95,10 @@ func main() {
 						continue
 					}
 
-					downloadUrl := "https://zfcxjst.hebei.gov.cn" + htmlquery.InnerText(downNode)
+					downloadUrl := htmlquery.InnerText(downNode)
+					if strings.Index(downloadUrl, "zfcxjst.hebei.gov.cn") == -1 {
+						downloadUrl = "https://zfcxjst.hebei.gov.cn" + detailUrl
+					}
 					// 只下载pdf文件
 					if strings.Index(downloadUrl, ".pdf") == -1 {
 						fmt.Println("不是pdf文件")
