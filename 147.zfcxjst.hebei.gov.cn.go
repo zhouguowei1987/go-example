@@ -82,7 +82,9 @@ func main() {
 					}
 
 					detailUrl := htmlquery.InnerText(htmlquery.FindOne(liNode, `./div[@class="mingcheng"]/a/@href`))
-					detailUrl = "https://zfcxjst.hebei.gov.cn" + detailUrl
+					if strings.Index(detailUrl, "zfcxjst.hebei.gov.cn") == -1 {
+						detailUrl = "https://zfcxjst.hebei.gov.cn" + detailUrl
+					}
 					fmt.Println(detailUrl)
 					detailDoc, err := QueryZfCxJstHtml(detailUrl, listUrl)
 					if err != nil {
