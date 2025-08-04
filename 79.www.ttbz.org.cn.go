@@ -22,7 +22,7 @@ var TbzCookie = "__jsluid_s=b7d35d18c6c44705ce234044421b8f67; Hm_lvt_8c446e9fafe
 // @Title 获取全国团体标准信息平台Pdf文档
 // @Description https://www.ttbz.org.cn/，将全国团体标准信息平台Pdf文档入库
 func main() {
-	var startId = 141997
+	var startId = 142350
 	var endId = 142713
 	for id := startId; id <= endId; id++ {
 		fmt.Println(id)
@@ -33,6 +33,10 @@ func main() {
 			continue
 		}
 		iframeSrcNode := htmlquery.FindOne(pdfsDoc, `//iframe[@id="myiframe"]/@src`)
+		if iframeSrcNode == nil{
+		    fmt.Println("页面不存在")
+			continue
+		}
 		iframeSrc := htmlquery.InnerText(iframeSrcNode)
 		fmt.Println(iframeSrc)
 
@@ -52,11 +56,11 @@ func main() {
 		fileInfo, err := os.Stat(filePath)
 		if err == nil && fileInfo.Size() == 0 {
 			fmt.Println("空文件删除")
-			err := os.Remove(filePath)
-			if err != nil {
-				continue
-			}
+			err = os.Remove(filePath)
 		}
+		if err != nil {
+            continue
+        }
 		//复制文件
 		tempFilePath := strings.ReplaceAll(filePath, "www.ttbz.org.cn", "temp-www.ttbz.org.cn")
 		err = copyTbzFile(filePath, tempFilePath)
