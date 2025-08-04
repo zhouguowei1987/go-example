@@ -48,13 +48,14 @@ func main() {
 			fmt.Println(err)
 			continue
 		}
-		// 查看文件大小
+		// 查看文件大小，如果是空文件，则删除
 		fileInfo, err := os.Stat(filePath)
-		fmt.Println(fileInfo)
-		if err != nil {
-			fmt.Println("删除文件", err)
-			os.Remove(filePath)
-			continue
+		if err == nil && fileInfo.Size() == 0 {
+			fmt.Println("空文件删除")
+			err := os.Remove(filePath)
+			if err != nil {
+				continue
+			}
 		}
 		//复制文件
 		tempFilePath := strings.ReplaceAll(filePath, "www.ttbz.org.cn", "temp-www.ttbz.org.cn")
