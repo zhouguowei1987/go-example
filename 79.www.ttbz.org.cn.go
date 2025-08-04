@@ -48,6 +48,14 @@ func main() {
 			fmt.Println(err)
 			continue
 		}
+		// 查看文件大小
+		fileInfo, err := os.Stat(filePath)
+		fmt.Println(fileInfo)
+		if err != nil {
+			fmt.Println("删除文件", err)
+			os.Remove(filePath)
+			continue
+		}
 		//复制文件
 		tempFilePath := strings.ReplaceAll(filePath, "www.ttbz.org.cn", "temp-www.ttbz.org.cn")
 		err = copyTbzFile(filePath, tempFilePath)
