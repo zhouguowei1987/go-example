@@ -2488,7 +2488,10 @@ func main() {
 		code = strings.ReplaceAll(code, "/", "-")
 		fmt.Println(code)
 
-		filePath := "../zfcxjs.tj.gov.cn/" + title + "(" + code + ")" + ".pdf"
+		filePath := "../zfcxjs.tj.gov.cn/" + title + ".pdf"
+		if len(code) > 0 {
+			filePath = "../zfcxjs.tj.gov.cn/" + title + "(" + code + ")" + ".pdf"
+		}
 		fmt.Println(filePath)
 
 		_, err := os.Stat(filePath)
