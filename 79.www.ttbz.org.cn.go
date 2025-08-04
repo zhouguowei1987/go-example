@@ -16,6 +16,8 @@ import (
 	"time"
 )
 
+var TbzCookie = "__jsluid_s=b7d35d18c6c44705ce234044421b8f67; Hm_lvt_8c446e9fafe752e4975210bc30d7ab9d=1752074026,1752916674,1753086531,1754059674; HMACCOUNT=1CCD0111717619C6; ASP.NET_SessionId=smepcq3yb0e4tp525qc2521i; Hm_lpvt_8c446e9fafe752e4975210bc30d7ab9d=1754298876"
+
 // TbzSpider 获取全国团体标准信息平台Pdf文档
 // @Title 获取全国团体标准信息平台Pdf文档
 // @Description https://www.ttbz.org.cn/，将全国团体标准信息平台Pdf文档入库
@@ -80,6 +82,7 @@ func TbzPdfsDoc(url string) (doc *html.Node, err error) {
 	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
 	req.Header.Set("Cache-Control", "no-cache")
 	req.Header.Set("Connection", "keep-alive")
+	req.Header.Set("Cookie", TbzCookie)
 	req.Header.Set("Content-Type", "text/html; charset=utf-8")
 	req.Header.Set("Host", "www.ttbz.org.cn")
 	req.Header.Set("Pragma", "no-cache")
