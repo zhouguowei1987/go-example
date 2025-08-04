@@ -24,8 +24,8 @@ import (
 // @Title 获取第一ppt文档
 // @Description https://1ppt.com/，将第一ppt文档入库
 func main() {
-	var startId = 133290
-	var endId = 134882
+	var startId = 134882
+	var endId = 135762
 	for id := startId; id <= endId; id++ {
 		err := pptSpider(id)
 		if err != nil {
@@ -35,7 +35,7 @@ func main() {
 	//pptSpider(130283)
 }
 
-var pptCookie = "mizToken=202501191741290.5355677329169450.001375657287244314; __gads=ID=c512d724a4b5b5ea:T=1741349812:RT=1741349812:S=ALNI_MZ5p1yz2C_ItGi5c2W4GgQgRmARoQ; __gpi=UID=00001058097c48ec:T=1741349812:RT=1741349812:S=ALNI_MYmcO8ZrD5P_i4FuEnm8oc6mQFZIQ; __eoi=ID=af749bf93c7fe49a:T=1741349812:RT=1741349812:S=AA-AfjZY2x4EF51SPh3sn0uGvR6v; acw_tc=ac11000117518771602361397e006ace3134f53bbe7e354bb8e03dd1df0969; Hm_lvt_087ceb5ea69d10fb5bbb6bc49c209fa2=1750771327,1751877162; HMACCOUNT=1CCD0111717619C6; acw_sc__v2=686b8675fcb81dbb53c9f09bc3cb7cae7840eceb; Hm_lpvt_087ceb5ea69d10fb5bbb6bc49c209fa2=1751877358"
+var pptCookie = "__gads=ID=c512d724a4b5b5ea:T=1741349812:RT=1741349812:S=ALNI_MZ5p1yz2C_ItGi5c2W4GgQgRmARoQ; __gpi=UID=00001058097c48ec:T=1741349812:RT=1741349812:S=ALNI_MYmcO8ZrD5P_i4FuEnm8oc6mQFZIQ; __eoi=ID=af749bf93c7fe49a:T=1741349812:RT=1741349812:S=AA-AfjZY2x4EF51SPh3sn0uGvR6v; acw_tc=0a27a9e517541368524572961e0054254927a0992dba220984e2f43115db23; Hm_lvt_087ceb5ea69d10fb5bbb6bc49c209fa2=1751877162,1752120595,1754136853; HMACCOUNT=1CCD0111717619C6; Hm_lpvt_087ceb5ea69d10fb5bbb6bc49c209fa2=1754136857"
 
 func pptSpider(id int) error {
 	detailUrl := fmt.Sprintf("https://www.1ppt.com/article/%d.html", id)
