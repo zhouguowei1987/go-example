@@ -22,8 +22,8 @@ var TbzCookie = "__jsluid_s=b7d35d18c6c44705ce234044421b8f67; Hm_lvt_8c446e9fafe
 // @Title 获取全国团体标准信息平台Pdf文档
 // @Description https://www.ttbz.org.cn/，将全国团体标准信息平台Pdf文档入库
 func main() {
-	var startId = 142350
-	var endId = 142713
+	var startId = 142800
+	var endId = 142820
 	for id := startId; id <= endId; id++ {
 		fmt.Println(id)
 		pdfsUrl := fmt.Sprintf("https://www.ttbz.org.cn/Pdfs/Index/?ftype=st&pms=%d", id)
@@ -161,13 +161,23 @@ func downloadTbzPdf(pdfUrl string, pdfId int) (filePath string, err error) {
 	contentDispositionUnescape = strings.Replace(contentDispositionUnescape, "_", "-", 1)
 	contentDispositionUnescapeArray := strings.Split(contentDispositionUnescape, "_")
 	code := contentDispositionUnescapeArray[0]
+	code = strings.ReplaceAll(code, "/", "-")
 	fmt.Println(code)
-	title := contentDispositionUnescapeArray[1]
+
+	titleArray := contentDispositionUnescapeArray[1:]
+	title := strings.Join(titleArray,"-")
 	title = strings.ReplaceAll(title, " ", "")
+	title = strings.ReplaceAll(title, "/", "-")
+	title = strings.ReplaceAll(title, "--", "-")
 	title = strings.ReplaceAll(title, ".pdf", "")
 	fmt.Println(title)
 	filePath = "../www.ttbz.org.cn/" + strconv.Itoa(pdfId) + "-" + title + "(" + code + ").pdf"
 	fmt.Println(filePath)
+
+	_, err = os.Stat(filePath)
+    if err == nil {
+        return filePath, errors.New("文档已下载过，跳过")
+    }
 
 	// 创建一个文件用于保存
 	fileDiv := filepath.Dir(filePath)
