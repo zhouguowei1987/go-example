@@ -129,7 +129,7 @@ var Bz100Cookie = "JSESSIONID=F1B22DE16B52CBC0A1A151DA191B8D10.z"
 func main() {
 	pageListUrl := "https://www.bz100.cn/member/standard/standard!getfreedb.action"
 	fmt.Println(pageListUrl)
-	startPage := 1
+	startPage := 68
 	isPageListGo := true
 	for isPageListGo {
 		queryBz100ListFormData := QueryBz100ListFormData{
@@ -204,7 +204,7 @@ func main() {
 					continue
 				}
 				//复制文件
-				tempFilePath := strings.ReplaceAll(filePath, "../www.bz100.cn", "../upload.doc88.com/www.bz100.cn")
+				tempFilePath := strings.ReplaceAll(filePath, "../www.bz100.cn", "../temp-www.bz100.cn")
 				err = Bz100CopyFile(filePath, tempFilePath)
 				if err != nil {
 					fmt.Println(err)
