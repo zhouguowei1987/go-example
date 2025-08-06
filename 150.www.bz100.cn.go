@@ -141,6 +141,8 @@ func main() {
 		}
 
 		queryBz100ListDoc, err := QueryBz100List(pageListUrl, queryBz100ListFormData)
+		//fmt.Println(htmlquery.InnerText(queryBz100ListDoc))
+		//os.Exit(1)
 		if err != nil {
 			fmt.Println(err)
 			break
@@ -254,9 +256,9 @@ func QueryBz100List(requestUrl string, queryBz100ListFormData QueryBz100ListForm
 	postData := url.Values{}
 	postData.Add("searchBtnTJ", queryBz100ListFormData.searchBtnTJ)
 	postData.Add("a200", queryBz100ListFormData.a200)
-	postData.Add("pager_pageNumber", strconv.Itoa(queryBz100ListFormData.pager_pageNumber))
-	postData.Add("pager_orderBy", queryBz100ListFormData.pager_orderBy)
-	postData.Add("pager_orderType", queryBz100ListFormData.pager_orderType)
+	postData.Add("pager.pageNumber", strconv.Itoa(queryBz100ListFormData.pager_pageNumber))
+	postData.Add("pager.orderBy", queryBz100ListFormData.pager_orderBy)
+	postData.Add("pager.orderType", queryBz100ListFormData.pager_orderType)
 	req, err := http.NewRequest("POST", requestUrl, strings.NewReader(postData.Encode())) //建立连接
 
 	if err != nil {
