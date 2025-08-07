@@ -112,18 +112,19 @@ type QueryHnBzwListFormData struct {
 	EVENTTARGET        string
 	EVENTARGUMENT      int
 	EVENTVALIDATION    string
-	txtKey               string
-	txtNo                string
-	drpState             int
-	drpType              string
-	txtIcs               string
-	txtCnClass           string
-	drpYear              int
-	txtDrafter           string
-	txtDrafterMan        string
+	txtKey             string
+	txtNo              string
+	drpState           int
+	drpType            string
+	txtIcs             string
+	txtCnClass         string
+	drpYear            int
+	txtDrafter         string
+	txtDrafterMan      string
 }
 
 var HnBzwCookie = "ASP.NET_SessionId=s3ubburyp1cfifdu2sixxmnu"
+var HnBzwPdfCookie = "ASP.NET_SessionId=04gnax45h42x5uzmleajxgzf"
 
 // 下载湖南省标准信息公共服务平台文档
 // @Title 下载湖南省标准信息公共服务平台文档
@@ -131,7 +132,7 @@ var HnBzwCookie = "ASP.NET_SessionId=s3ubburyp1cfifdu2sixxmnu"
 func main() {
 	pageListUrl := "https://www.hnbzw.com/Standard/StdSearch.aspx"
 	fmt.Println(pageListUrl)
-	startPage := 2
+	startPage := 1
 	isPageListGo := true
 	for isPageListGo {
 		queryHnBzwListFormData := QueryHnBzwListFormData{
@@ -140,19 +141,17 @@ func main() {
 			EVENTTARGET:        "AspNetPager1",
 			EVENTARGUMENT:      startPage,
 			EVENTVALIDATION:    "XTWceu9k/K3bWia/pIZ/LO0pLzq01j4rsn557A2ubsUyjrRhJTOxajlM5YbF6Oe6/mRB8FXbeiuXiqhHpB3u6Xixu6rqmjRMkM7HDzFhLsAJ0DADyBrcqzMrivxrlrgQMvD12Cy8KcKL5uhcYmYynQUQyxt1dNaz++P9bodggEDacSlTrF456nEw0FhYxpjPKgpVTTUR+d6OAG5VT2cV0wPy6PQ/0ciZ1VQW0EvTaaJGSit8NyHPcgWErqjgWX9hy3MyLJiFXNDf9iyKqVThlNTdp6f1vS0Gwy6aUN//FvbI418dSaNc58A+TsdCt8i/AWBm3mhWXxqmGaEZQ7h2fqfbYjgTFZ5On5Y8NcodzE9OxaYFCgLV2yAQURGaPkJQnfChaBky6leoMaTdtDUS+f6BHtofygzeG7Hl+DHk1tDImpViwxZ/suuQlVlzJxhiIOzvosn4k3PN1wPC+pMhfcAVW5luaMx/gVh6ffeYLm8joiYUc/WCWKtInibEvsNeq7sn+iC/OC8NVcX4J1X44JnT9MMtMcNshM/SJp5ltz3tjwG9lPU5hcjGck/GeF5Cm9kuW9CZpdymU7EGsew4UkszPqP2PZrUMxdK44BIHgtDoSBJ2Oz1qzTmv5kmb3HZbDVaykA6Ygbb3onL/TsqoXEYyiFVIgtYLwTA6O/zrOjxrjenCt1kmMdIsztOjsPhT5iS47nZ0ObN4LWJTZXfcKaBUOYpHlXWdiyQDCUZf9FecakDmaYpVJJclWvRupQvM5FpozpPbJbG2i0TQkHe8dma/EjSYqs1OWl0MvNc+ODtML4ZhzsQYpVmAYrXkIgyGD/pQWtXuXl12jODnQf2Z1A9sMOCOEZXR+7vSYDGu6KeRCl6rxUxn32C9XC58l/uQo0BGzZpuCgbDp+A2Xksu2kenm3HDs/Mx15Ot+6xCV+Vqsr5yidWMgWjRmq1Vfj2Ap/9oJFSfUQ0nPFL00Sdavjh2uXFIaz+V5Qr/lBMUzJx3Shb45sTWERl1ONyKaX78vkZ5/iF7u6UdqpzUbHK8PskNu5UoK38M7aKAUweWkfml5MCcCejgJs1Xw6ldARCMqiFKJ7rumSLt98IXNBHzwdSvu7PySwCk7aVYmWUsNR9fvJoBc9waYOZ5wLxi5MvHYIBKzDg0q7yWXA7bCDggjctDfKf6kOnZPgpt/r+rGYSYvUeSB628XoSg4C1LhyFO3U1C32sjm6TmiXxAXnH4cXzBqLnt8Z9zmQoUw8SHNLQlC1O87XbZGMfCga91SuPBU2Ffo39ja1ADduHjgwsP+0CRlj2Xai8ZmnsSjB+7tntXOgmdco/D2eq4/fy05Wnb3gqVqni/qKSWStK27AcBkEsDyXYaYQOBtqftQJKVN4MnbaILh6PxupM+wCf7YI9Spg46fzQIIt+yqJAhGgUHvUVfg0OFz9tDJvKl0oBPfw/doIOWl7xBiMc1MyI+HGqNL+gtld2jdu77eVcBJUdxtGu2/oSud8iQnnMLeQz+N9P172F5aTuSUoeYBmyJMNOgLdB28qMwqCRKEMgGRRYgV3r3u6im8oFp73x00fyfcEonr6iuyssHnmAM2bObK9zCRf2Lr04W2xJOGtb6LXVDRIpIoCKHmTv9ZMLXV/iNow8/P+DXW5Wa6Uvcar5xfddmEQHyw+ODHQfXvi1TcNhByiMGsMHZ2c6mKhrkU9HiJV+hoHIMHZYHxeQga1tUyJg2beMLZecbaISZJ0cyl6/fI2AH9azZHSzFQ5CnmsL6R97rINpAFmqAJN73XuYOK7uWfTHh+MH4cewaM6aaD2LdSjEZnJCo2KQnMDzq6WLHiK/njV024yCHspNgErpTZSlLobRSaMDxp7FoMk6Db9GkfYuQZlHrI5Ed1JSUqI77q1Vd6cKn4WDovmq9XCN9u/82LWsYLgZkrIXJjj895PlI2skwjjsJEmBKoIf6lh4aHRIZbZgorbNbYs8lp61tmY+FSad+wjnyLbrNoWFYhXPg++W+v4ULCSzpobM8IIt/GcEqw1wnEJ6V6WYtDHl4+DSuifL6dpAeYYAfpbTBxXBohx+WF638HxXY1pcp+FIU/QoGVTiN63Tyzwcw0mikPjNt3r/x8MutMF4isWqlBYblC67F5wLgZ0lb4Ytn1Mi1purZYcOQRH1Z2KmrdYa0y+Cf6pLbbQOym/b1n5nVtmffW0l/KfPMB0dAs22Bz55WFL3XNNp38PfLgKPPs0HWjFQZDubd4YFodVdf2Bh1FXyKtYWGKj0OnKJbn8cjd6nU+AL1akWTHt0CGGJkeTmMrrxbQkZZHmA28/SLn5LEO5FPjEI/EowJuotwcVTAhl/stHODYQCoocUHn0HktE6qLF0Onz/qyJc8/R9GisCzk34gax2zO077eGL0QJ/NVV8f2j6+OoPdLH7SrLkIoCVPQCoYcvYq+zoH9rPLNvcudEOSjjZeqGmz0bydxK6+UD2id/Yqilwb5GgFQeSnbJmIOZT9r+JisrFRuFB0eCRLLoGC5gY5Xqdu+reBkGgNG8g1xXsS4ulmWp0GqelU3p3q5/2QlgH/iRBNpc+Vk34LC2Pt3SzBownIdiSepTS0rZvZ6sVH5qrQbrxtnAO98LEfHe9/OqfSm8DCzLLYMMgwpPrAAC+AXI87unHGUHnHYDoR10nRJHtsF4A3l9dImbo6HNpO0dfbNy+KWQMuwMs98nd0ElaoDktGTkyyEzR3O7WaMpkk5tSPCbZTKUXFrWEl7QOr1VLw14ePqcOdclzSGsOE5+PTB0oJLRva9BYgpMWC9e5ND4cCusE248Gk28bD3fDCrORVaFTFN6lgvcK0HKbN8yrn7w/0oCL8bR8RRq1Md8GPp0XDLElOtGNH5DG9nvcIfe8UaBzm2CauTQhuNGEdh/QfYOcgaJVxX1uVXMC8sPYs+78PkP2gbjB1uTC5j/Am6aIPKKWVI0+DKwv7lCoUHFKqO7epiMgoHkfm3DZ/Qu/aaXF8Xsu6YBC1HBNg3AmbE1wqQdzFl184I505hjnsAItDxQ43EgxfkJFXglHrD3Jrmw75KeA0+oZKnW0lI1cmUhud0EngHnkgAxr3LhbUhibSvEQ7U6R28URgo2S7dso/4c9Frnu+SWTNdBI2Quf5ailKJCrr5jkdZNEF0qTNfCkKBhMcqbrpRFoBaHDibIcqO+DwGpDKxTSgk3HTxr6gDX7Ck7P9L06jDbsQYgApNCuhsl/CrGeorM+5YrH+c8h7bD1ngwd7nbkZRJrp1MYpUW7RetyxXf96VnZoLE5gQEbp9KXgSQZ+F92EOAF64cVM6gTjXeRMJce+fEfsPMEZbpz6s/ytQROy1kalfPg5ijB+SIk1AHpxDAzjrXGYfoS9D69wfZkC1nlTN9SldPdCy51YJN/Km8bne0lvlJyoDhuel7/rbgr93axzwDDJWObT0ilHpr9jV1DM7TkVG0IljW4DKO7wpEcv71orsQXTcjZ/zae1gpDD7VNQGdmTJQ/8ov5EApG1+CLDzybIjKFgVtaxZloIisc9R7GvYjyvtQDWmi7a/XawUo7+MmWJVlRJ99S1zp/Seig9O15iHf+2/sZS7SZKUattdzH/MEoS5mM17Z64hiIsft+5zuir6g9nljI7DQYqRsNsC2j4KFhZ/EYFObHydxAV9ein5cat1kJGxj/6PaDTlXMI8jUDu6NGS37VVTd9o4jvzrDQLOxq7SOvqqRb2Y9MN1aJyg34bYj0TY/uOJq1Ut5/NxrigQT+/Le/+SEJAg46zScX+bN0NkpWX4xOnJS3wvtXpByz+a1lX+edNZwDaojdwTwqJgW+9oFVrgus2RdritjpOEFENMBbJ341QZiHI5N00VHK2HbFtId0//6DmsRO8O/WaUp2J8JQIbfY2yLHWcOwuwoq2ku8tOgWZChL71YJ1NwcgIWJtUq1uHoAUB6so265wyiFJasXvUn7PjvsA6h0GptGJ9NMLpIr6nJuhpl7rQBUIB96cuaxkOGwoR6GsEWccpWTHM00TaGdwdnlqJ8iQ50l54hiGv1CTaCn8OCvxA1/NDu9oTEerrrd4jASKxDIPDQbNNNOvIEd8i1xICPmQkMh/U1D65cVy7csUv/HJ6F6UsrYXV4k54gt/okqEQx15FCbUwjVFff43izUD50f0POF4QcRzPQwTefrAjMoYgCkyPW/BcPcekJVdz3pEzE18DvFTMyr7FbxFaLd7hEug3i3ruOUHCWHqZed1pyljOWsUWvXC8Vb6vBx/KNcOyXC3EWx7pdMbIxsZMAo0s75xFtmBq6Ep/XYywArX8FNN44PUUSAd/OvHSN7fKvftVnxk6dM/FYUQz0gGbUZ+O0YiDYqmzpMhVBsIBA9JtJXk1wCVzaDWeXanbmEQRaiTuFlXzOgLWYQB9RwWZELxtxYlAsh+CxavH2MAdrDKzstAxdI72I+VBs0qc8nifNKSLZ6UEa9GbJU4T6K2A48fItJn95dYdQTHjNKZTzCjpmUaAdhEvp2rTxAm8EzDqr5V9qK2CAuIZ0qUY6/98pXSaflHJ0jL28z67VYsNtJzYnAZQl0jqMOXhiKaxbPCTuVxz/ROA3J4kGvsNvSMPW4YdXwaquSG3+qyZilCa0s3iWgSx8lC32wZ3zsM1vtAyMVchcLtM/C6hP6SZVlNOK48jz4NBkWqanPGjPT3rhfFZNjRE6J8OBLPYPbD87ctZWtHQljg3f1EKilyPUQ+KAs+IBs/aAlSS8HXrjp5Vnt/Y9A/mw4o2P1VivHbi4oi0XwLQ4rX2xPeQ4K8BvAsCnO32iJg9HZcHnBd3rD+IRlx0vYDQpKc6nM4Ef/29tqH1B7rg17Htq4nJQdFY6ZdE3WScE1yFpeeXwX5qgpXHXGp8Ryj3wDD4HctpuRvxZ5anRdk8Hf4G53qCBccS308m2Bxv8k6deXvM6IEO6P/CuHQeIm+XfYBsGD61gUUstWjQmOoFq0zzuzdu1cR2x2SBt4aUJ6Upef3J1JXrIixeHiRE2gqnwjBwP880l96MQ2ftc2Dr9NZuP5YpArJ4CJrrdEQDaBCYEdCUiXCxC/lAAtqgpyOeTTIl+nWDFZH+DW2LhDjeaeE6jFycNeGFJmg55cZxGPrq8poXodlFIGSqyl8fV6VWeXkg26pQFuZIyXGUhncTeswA4V0OUJ3dwgScRaQvyqEpk0s0s19X3lARZ0vqFQp9tP0U9z5IhCkmr6NGfURgKjoaRd5GID0fioohLAVuloHYmeh8lBzbizZniCWimkaEq3Ed0M8OKvqkYzmpoSqVue/uCjYPOHw11ffuPXGCVGVuT/bistxPJnNjJow2nyNOtxcySYPN6uDaYJfUoGNjgYOvR6uPKuyZlKFXcg+Tz5jDqaRej1oYBuWy7a58x7egG2yApEac51reWtd5PkV968wdrxuRq17+FVA19wz/inG+VGMyVFETB9gD91BfXE+mU073s5X0kgQq0RY6c/I/6NnOm4x2Hjp2FgaMsS14J8o+btGVKlRgXpoEBI2DQHtf0K3KKV1wQhSvG7L2/SZpGnqeiUefcoEeu/kRLakLji4fPLIFYcm78sdfk8ITxA8duiHZayAboPZfaIkyAGN/loBZ/NpOAiR4akWw8C1Xnmb074XMNes7qXSVER2vwladjuxswObAc//+1q9aqqHbqFeD19TeZXQVOAZUgRFsxWfieNK/z/3hLBiA1F9/DOVScnL9SuRtSUEW7FJZ2C5Qvc9qSZEpv8km1Ronst6Wy6fM7q3tcFBPwDPM9Shevq9w8DrATGXq8P5WUfzx6LrbQdXgpyLWr4sI8Q0jpro32oVVseYmfW4KiE3WNrCGeDvA6CYkHZZyPMpgSnzNIkhn0bqApDQyEVWupiYU+3q119y8Wp1x+RgwQZRJMiHnkWpfBuqj/fGDj+ofISxDC8qlkhIzK+2OX/fHZI02BKbc39jNKTgRO9gdwG6WS8nmBitWePNFHkBgwEreT7dWf8XOwDpSBwdAOIq7dNCiDgZKE3PjWL9Yv7I9l8ZHBcFhhHOPzskYn57v6/k+kbslQedpLO5CU+TLuxwLPUefhI0MuFMtRymkJSQWV9iUc7C7TIWthkU6pWa65suPYRtDe3et5ZsmsqvZqm2filCFp7+YRuHbMCKTF8a4FoD6hXEAsGXa5IwciOmAAq+g21lp66CVGPapkwZRnU1fjL33t3E/46SLVHDGSImN/5yga+1fUrTG9jDfsogDud4eQ56zYNNGFvctwNhmiLWfnQx5ooG0AozrKeFTx7UJb+8Ot+g63GwM5XVjfaE1mWY+Ax2lcGZx7Ul422HxinIsR5LIo4VfkFYJ5jpMizEAxSyHRRNwz8bibvd7u62QzCj70Z7pDn7OfwEawLPDk3Kdig1ceGnVkQ7IVqGPIJOVrwxgM4VAz66gN2OVvbc+IzXDDCuA4RxN5R+gxj4VQhVi4LbHmqWQIk30x6jXzQEms9/Aq+2OgADDIYilSCwgjTam02IXPI3LBWsRMWSGx2lNH7UawGGJdhlH50jGWFHaIC3Ywga6eiXHKzppGckO5Hkaa7/e3WnHRBAAtBwYds8bG0XrzQSvWnNHziTh4PeKWYRMhBXJNwucLG5qAO8GREtsf/dHdmqTQpmTLLH0JXgPaw499qsxXEqTei8aqw4neCgUB8lHbZbMDLUef010lctiM/g3JvoSgh06r5TyPtrr0unPSUNVFrrnvC9NPpXJsrn27MYygS1p2IbyBc2CzqG9KKOBbE/vQn6Ax6qMJb9/w17VNAP4Fi1o6WBSXwXeD2SVzBWTN4vh6evft/gM9hqzaRUJYBkIQoi0bVFoAd3cxlKgHziEhMYQx5Xhezt8nkDunV1v7RXMeJssrmBhgIaH0natIoGjQprj3PyYeF5eWWyx6sBilA8rEVBx44XxTTNm/my3ratgggdaaGe86b8Tj0iOBtYypdR/uLzieJZdIxcEWdJzSTLZvYwxvckeWfp1/HGLRtbKaTE/K8DkPQdT/GB0lDc5oWOPKsweX5RmZfT/1q2lpfCf2SspnR+IFYaacQmiDhaKw6lXUTUoFL0emS5n5OSMnt2xyk0y/7vt0PU40Izyxm6GLC44pcSt13DA6mEzvhIDwpSeHoPwiTlUvBTb+h21Qc/nI4UvPR5t+J0sg5t/w3Yl38JklnIzu1/TaBv3tbAyaKu4q2wYXgyVf97PNjn4QcgiEihY9kMnHZjfKB+ovnszbv90tDldZYaqLY97uxm7DmzAayGTpGCDc76s646WWiVRGM8azV9FPhjx6VOUL+g+dPI4JZ08ZDPF9D8zzbeRmFM4RAdfyq0Q2mX1FBXfny/C+pNbwyCxI/79YsLzZj4/phtyKHIZjqkUors6SmjARFkWcHGQvtLk1Vyr3J6EHWodpNuyUP1t1GoEw1JZnsQXBFogwkUyKYsAyUE/ttE0i9rwtgB33WydxHz2gGE2SxyL7VQ+QV5piz+b7KH5ZLFehgdwApIWQZoglXDX1E0hwZniNTxvP3cLu7uw9E1W6M9nsdY1GA47VsZ+WZUIaNFul6LR1SGe7TtzNd/Q142y4eKSrQZvTxJFm4F/mX2WIEGJxIukG3gP5ne06SdbN2Gvu89lDwYLc6y6l45+BD5XmLwT7wFHVOPuK0rJUULIiqcEXTuEaXa7SHJQX43YabtwFsuKUb45+9bejgjAVPe86MeeOMM+JQEr5qP72iHvTUL33KKNLJf0PsOnu/z4D/Oh2Du53J+HMd07Lj9p3AHvf2PCel66ZdnGeO0v/rSBuh0oKxVM8WbyH92PXqFrKHR+bVfFeQIjwDggdxNKamdFlKY+9N3rMKOisDaIoFRfTSmkhECppSCo4u2rNGBVNFwa52rNenEUDwwRzNx+wvzbOqv4CeXzmSoBYmNH+qS69tLXxqxQgqs/qsJSkfOgG1GvO4eieHaYXP4C8g/Yf4LebmdzeG2saX5meQla8BIzqe+jBMECGtnUHpw0W9TFukFX6++DXkdmz23uYfT5CUGrVHX8gQaMT+PsHJVEnH6QhVoNuyUx5XvyOzFwJZxP7HMmaAWhMSPdZpeAdzFwtJ7LLDB224XRDvP1dTzU8IRdXtzx76moqt9+DMByy9w0opPYOfaypbdWFZlLCoMKdwJVizzcRbXcFUyg/CCbEX1vV9w5uaau1SxHEhHSGHXc4eDrOuMLnmbBLeKReuEB4VNU4YTjv2ZNAq4ldPTA4WS2XqQ9ZYCtsBVoTCoLbiV+JXdC4ZjYynbdHtJpUkhTL+gtg5a/NIJLFCCAyQE9bSelW1sdMZrCj8f+KYk4jwMCMIaL3vtmMPEljMxK+nPQFfQNZch0WnNbsg5O/fPTvv3Iku0QfJYLxQhZoEZPYYhbIljIJ4DxEUSw+FoCau87LiRFrcX2Lp1yn68oaWzle3WxurBhIHe8h6W2D9RUpaQohgOOksTws1C1GJSg/qsEfjUKN+AAvAwQy3g/nWSpXqrhyai4Wag6yC2sUH8eKu5kYuKbW5wJdHkXSNgPIlbVCyeeOvcM/4JnbAWBgVzIQpr/3TZ2yVcV/a3isWF1CUBnBEyklRexiuX2SUncs/oigaSar+kGrbrBFrxqvkzCMA3bc3hVEaUkSd4oV1X3T+M+APvdcyVzOXV9Le7SL3Uk9pBR4CN6XaVTWwz0CBam1YkU6sA7zobJb2JcVPJkdHxrXLx09/CW1NH7lt/rrlmZhg3gFXpGQJ2bH+CqMeHvok3q+bgRiBqKBmIewJid6krK1tYsDEGSfUr3CFjnMzHPqNfsxiPxSzAmGZnAxACdU8mG5qop5B4uL4ouVYoYNiyQTlIBJlxLA3aCbS2PtsmWU0ZmuXJHiGZ81KsGnS7FAgB1NyZp7UtrDH9ej3yBBogUkSJKQV0k1kmnqjaAt9yPQonO+T2f+SJG8TKv0Va/rl5H2ZSocp6q2e9clqGqtQk5SzxP7AXbckv5CeZzJoTtrsYWeN+yjkqVq+jR01tk7stxqqVDlQDSJsoRTtdo00ffG0G7o2CRksiZlahgsAbobY432GLGgx6OqhKmsS5vUe//EFUuz5bEbpxF2YeXAo9gMs6QyHUWak5XPQ2cCAidr6EdBywXjUgLxa/aOz2PWPaclzh7wW25tUPlYVrQzsg3FtmTcP+0JML9NZhx6LZVHyFfEZnu7nO20WjfJkwfnR8c6Tz2ZeHu0FvtXHllfHBlOPsYAFfZZrAdED/mqfsG3lVaM/b9laQmQfb5H8ufq7/Qu4OQ=",
-			txtKey:               "",
-			txtNo:                "",
-			drpState:             1,
-			drpType:              "all",
-			txtIcs:               "",
-			txtCnClass:           "",
-			drpYear:              0,
-			txtDrafter:           "",
-			txtDrafterMan:        "",
+			txtKey:             "",
+			txtNo:              "",
+			drpState:           1,
+			drpType:            "all",
+			txtIcs:             "",
+			txtCnClass:         "",
+			drpYear:            0,
+			txtDrafter:         "",
+			txtDrafterMan:      "",
 		}
 		queryHnBzwListDoc, err := QueryHnBzwList(pageListUrl, queryHnBzwListFormData)
-		fmt.Println(htmlquery.InnerText(queryHnBzwListDoc))
-		os.Exit(1)
 		if err != nil {
 			fmt.Println(err)
 			break
@@ -173,6 +172,8 @@ func main() {
 				title = strings.TrimSpace(title)
 				title = strings.ReplaceAll(title, " ", "-")
 				title = strings.ReplaceAll(title, "　", "-")
+				title = strings.ReplaceAll(title, "中文名：", "")
+				title = strings.ReplaceAll(title, ":", "-")
 				title = strings.ReplaceAll(title, "/", "-")
 				title = strings.ReplaceAll(title, "--", "-")
 				fmt.Println(title)
@@ -186,18 +187,32 @@ func main() {
 					continue
 				}
 
+				// 查看是否有下载按钮
+				buttonNode := htmlquery.FindOne(ulNode, `./li[1]/span[@class="lisy-xq"]/a[1]`)
+				hrefText := htmlquery.SelectAttr(buttonNode, "href")
+				previewHref := "https://www.hnbzw.com" + hrefText
+				fmt.Println(previewHref)
+
+				previewDoc, err := previewHnBzwDoc(previewHref)
+				if err != nil {
+					fmt.Println("获取文档详情失败，跳过")
+					continue
+				}
+				// /html/body/form/div[4]/div/div/div/ul/table/tbody/tr[2]/td/input
+				downloadButtonNode := htmlquery.FindOne(previewDoc, `//form[@id="form1"]/div[@class="gj-cx-b"]/div[@class="con-gj"]/div[@class="gj-cx-goods"]/div[@class="gj-zd"]/ul[@class="gj-bts"]/table/tbody/tr[2]/td/input`)
+				if downloadButtonNode == nil {
+					fmt.Println("没有下载按钮，跳过")
+					continue
+				}
 				fmt.Println("=======开始下载========")
 
-				buttonNode := htmlquery.FindOne(ulNode, `./li[1]/span[@class="lisy-xq"]/a[1]`)
-				// dropdownlanguage(this, event, 'anylinkmenu11','2759063')
-				clickText := htmlquery.SelectAttr(buttonNode, "onmouseover")
-				clickText = strings.ReplaceAll(clickText, "dropdownlanguage(this, event, 'anylinkmenu11',", "")
-				clickText = strings.ReplaceAll(clickText, ")", "")
-				FileID := strings.ReplaceAll(clickText, "'", "")
-				fmt.Println(FileID)
-				os.Exit(1)
-
-				downloadUrl := fmt.Sprintf("https://pdf.hnbzw.com/DownLoad.aspx?FileID=%d&UserID=0", FileID)
+				// /html/body/form/input
+				downloadNode := htmlquery.FindOne(previewDoc, `//html/body/form/input/@value`)
+				if downloadNode == nil {
+					fmt.Println("获取下载链接失败，跳过")
+					continue
+				}
+				downloadUrl := htmlquery.InnerText(downloadNode)
 				fmt.Println(downloadUrl)
 
 				fmt.Println("=======开始下载" + title + "========")
@@ -251,7 +266,7 @@ func QueryHnBzwList(requestUrl string, queryHnBzwListFormData QueryHnBzwListForm
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if HnBzwEnableHttpProxy {
@@ -296,8 +311,69 @@ func QueryHnBzwList(requestUrl string, queryHnBzwListFormData QueryHnBzwListForm
 	req.Header.Set("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36")
 	req.Header.Set("X-Requested-With", "XMLHttpRequest")
 	resp, err := client.Do(req) //拿到返回的内容
-	fmt.Println(resp.StatusCode)
-	os.Exit(1)
+	if err != nil {
+		return doc, err
+	}
+	defer func(Body io.ReadCloser) {
+		err := Body.Close()
+		if err != nil {
+			fmt.Println(err)
+		}
+	}(resp.Body)
+	// 如果访问失败，就打印当前状态码
+	if resp.StatusCode != http.StatusOK {
+		return doc, errors.New("http status :" + strconv.Itoa(resp.StatusCode))
+	}
+	doc, err = htmlquery.Parse(resp.Body)
+	if err != nil {
+		return doc, err
+	}
+	return doc, nil
+}
+
+func previewHnBzwDoc(requestUrl string) (doc *html.Node, err error) {
+	// 初始化客户端
+	var client *http.Client = &http.Client{
+		Transport: &http.Transport{
+			Dial: func(netw, addr string) (net.Conn, error) {
+				c, err := net.DialTimeout(netw, addr, time.Second*3)
+				if err != nil {
+					fmt.Println("dail timeout", err)
+					return nil, err
+				}
+				return c, nil
+
+			},
+			MaxIdleConnsPerHost:   10,
+			ResponseHeaderTimeout: time.Second * 30,
+		},
+	}
+	if HnBzwEnableHttpProxy {
+		client = HnBzwSetHttpProxy()
+	}
+	req, err := http.NewRequest("GET", requestUrl, nil) //建立连接
+
+	if err != nil {
+		return doc, err
+	}
+
+	req.Header.Set("Accept", "*/*")
+	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
+	req.Header.Set("Connection", "keep-alive")
+	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+	req.Header.Set("Cookie", HnBzwCookie)
+	req.Header.Set("Host", "www.hnbzw.com")
+	req.Header.Set("Origin", "https://www.hnbzw.com")
+	req.Header.Set("Referer", "https://www.hnbzw.com/Standard/StdSearch.aspx")
+	req.Header.Set("Sec-Ch-Ua", "\"Not.A/Brand\";v=\"8\", \"Chromium\";v=\"114\", \"Google Chrome\";v=\"114\"")
+	req.Header.Set("Sec-Ch-Ua-Mobile", "?0")
+	req.Header.Set("Sec-Ch-Ua-Platform", "\"macOS\"")
+	req.Header.Set("Sec-Fetch-Dest", "empty")
+	req.Header.Set("Sec-Fetch-Mode", "cors")
+	req.Header.Set("Sec-Fetch-Site", "same-origin")
+	req.Header.Set("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36")
+	req.Header.Set("X-Requested-With", "XMLHttpRequest")
+	resp, err := client.Do(req) //拿到返回的内容
 	if err != nil {
 		return doc, err
 	}
@@ -332,7 +408,7 @@ func downloadHnBzw(attachmentUrl string, filePath string) error {
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if HnBzwEnableHttpProxy {
@@ -342,14 +418,20 @@ func downloadHnBzw(attachmentUrl string, filePath string) error {
 	if err != nil {
 		return err
 	}
-	req.Header.Set("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7")
-	//req.Header.Set("Accept-Encoding", "gzip, deflate")
+	req.Header.Set("Accept", "*/*")
+	//req.Header.Set("Accept-Encoding", "gzip, deflate, br, zstd")
 	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
-	req.Header.Set("Cache-Control", "no-cache")
+	req.Header.Set("Cache-Control", "max-age=0")
 	req.Header.Set("Connection", "keep-alive")
-	req.Header.Set("Cookie", HnBzwCookie)
-	req.Header.Set("Host", "www.hnbzw.com")
-	req.Header.Set("Referer", "https://www.hnbzw.com/public/StandardPermitManager2.jsp?bzbh=&bzname=")
+	req.Header.Set("Cookie", HnBzwPdfCookie)
+	req.Header.Set("Host", "pdf.hnbzw.com")
+	req.Header.Set("Referer", "https://www.hnbzw.com/")
+	req.Header.Set("Sec-Ch-Ua", "\"Chromium\";v=\"124\", \"Google Chrome\";v=\"124\", \"Not-A.Brand\";v=\"99\"")
+	req.Header.Set("Sec-Ch-Ua-Mobile", "?0")
+	req.Header.Set("Sec-Ch-Ua-Platform", "\"macOS\"")
+	req.Header.Set("Sec-Fetch-Dest", "document")
+	req.Header.Set("Sec-Fetch-Mode", "navigate")
+	req.Header.Set("Sec-Fetch-Site", "same-origin")
 	req.Header.Set("Upgrade-Insecure-Requests", "1")
 	req.Header.Set("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36")
 	resp, err := client.Do(req) //拿到返回的内容
