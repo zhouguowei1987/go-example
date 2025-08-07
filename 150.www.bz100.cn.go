@@ -108,7 +108,6 @@ func Bz100SetHttpProxy() (httpclient *http.Client) {
 
 type QueryBz100ListFormData struct {
 	searchBtnTJ      string
-	a200             string
 	pager_pageNumber int
 	pager_orderBy    string
 	pager_orderType  string
@@ -129,12 +128,11 @@ var Bz100Cookie = "JSESSIONID=F1B22DE16B52CBC0A1A151DA191B8D10.z"
 func main() {
 	pageListUrl := "https://www.bz100.cn/member/standard/standard!getfreedb.action"
 	fmt.Println(pageListUrl)
-	startPage := 68
+	startPage := 141
 	isPageListGo := true
 	for isPageListGo {
 		queryBz100ListFormData := QueryBz100ListFormData{
 			searchBtnTJ:      "no",
-			a200:             "现行",
 			pager_pageNumber: startPage,
 			pager_orderBy:    "t_order",
 			pager_orderType:  "asc",
@@ -255,7 +253,9 @@ func QueryBz100List(requestUrl string, queryBz100ListFormData QueryBz100ListForm
 	}
 	postData := url.Values{}
 	postData.Add("searchBtnTJ", queryBz100ListFormData.searchBtnTJ)
-	postData.Add("a200", queryBz100ListFormData.a200)
+	postData.Add("a200", "现行")
+	postData.Add("a200", "未生效")
+	postData.Add("a200", "废止")
 	postData.Add("pager.pageNumber", strconv.Itoa(queryBz100ListFormData.pager_pageNumber))
 	postData.Add("pager.orderBy", queryBz100ListFormData.pager_orderBy)
 	postData.Add("pager.orderType", queryBz100ListFormData.pager_orderType)
