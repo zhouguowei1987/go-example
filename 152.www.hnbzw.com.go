@@ -190,6 +190,10 @@ func main() {
 				// 查看是否有下载按钮
 				buttonNode := htmlquery.FindOne(ulNode, `./li[1]/span[@class="lisy-xq"]/a[1]`)
 				hrefText := htmlquery.SelectAttr(buttonNode, "href")
+				if len(hrefText) <= 0 {
+					fmt.Println("没有预览按钮，跳过")
+					continue
+				}
 				previewHref := "https://www.hnbzw.com" + hrefText
 				fmt.Println(previewHref)
 
