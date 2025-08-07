@@ -128,7 +128,7 @@ var Bz100Cookie = "JSESSIONID=F1B22DE16B52CBC0A1A151DA191B8D10.z"
 func main() {
 	pageListUrl := "https://www.bz100.cn/member/standard/standard!getfreedb.action"
 	fmt.Println(pageListUrl)
-	startPage := 141
+	startPage := 296
 	isPageListGo := true
 	for isPageListGo {
 		queryBz100ListFormData := QueryBz100ListFormData{
