@@ -129,7 +129,7 @@ var HnBzwPdfCookie = "ASP.NET_SessionId=04gnax45h42x5uzmleajxgzf"
 func main() {
 	pageListUrl := "https://www.hnbzw.com/Standard/LocalStdSeach.aspx"
 	fmt.Println(pageListUrl)
-	startPage := 1
+	startPage := 310
 	isPageListGo := true
 	for isPageListGo {
 		queryHnBzwListFormData := QueryHnBzwListFormData{

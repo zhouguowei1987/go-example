@@ -94,7 +94,7 @@ func main() {
                         fmt.Println(err)
                     }
                     //复制文件
-                    tempFilePath := strings.ReplaceAll(filePath, "../down.foodmate.net", "../upload.doc88.com/down.foodmate.net")
+                    tempFilePath := strings.ReplaceAll(filePath, "../down.foodmate.net", "../temp-down.foodmate.net")
                     err = FoodMateCopyFile(filePath, tempFilePath)
                     if err != nil {
                         fmt.Println(err)
