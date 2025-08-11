@@ -112,7 +112,7 @@ var ZlZxCookie = "node_id=nginx_1; cna=MYMPIfeeTQACAf////+VQMz4; arialoadData=fa
 // @Title 下载浙江标准在线文档
 // @Description https://zlzx.zjamr.zj.gov.cn/LocalStandard/Index/，下载浙江标准在线文档
 func main() {
-	page := 1599
+	page := 1
 	maxPage := 3206
 	isPageListGo := true
 	for isPageListGo {
