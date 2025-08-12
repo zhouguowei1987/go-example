@@ -160,7 +160,7 @@ func main() {
 									continue
 								}
 								//复制文件
-								tempFilePath := strings.ReplaceAll(filePath, "www.mee.gov.cn", "../upload.doc88.com/www.mee.gov.cn")
+								tempFilePath := strings.ReplaceAll(filePath, "../www.mee.gov.cn", "../upload.doc88.com/www.mee.gov.cn")
 								err = copyMeeFile(filePath, tempFilePath)
 								if err != nil {
 									fmt.Println(err)
