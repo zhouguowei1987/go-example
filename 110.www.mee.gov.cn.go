@@ -37,37 +37,37 @@ type MeeCategory struct {
 }
 
 var meecategory = []MeeCategory{
-	//{name: "水环境质量标准", url: "https://www.mee.gov.cn/ywgz/fgbz/bz/bzwb/shjbh/shjzlbz/"},
+	{name: "水环境质量标准", url: "https://www.mee.gov.cn/ywgz/fgbz/bz/bzwb/shjbh/shjzlbz/"},
 	{name: "水污染物排放标准", url: "https://www.mee.gov.cn/ywgz/fgbz/bz/bzwb/shjbh/swrwpfbz/"},
-	//{name: "相关标准", url: "https://www.mee.gov.cn/ywgz/fgbz/bz/bzwb/shjbh/xgbzh/"},
-	//{name: "大气环境质量标准", url: "https://www.mee.gov.cn/ywgz/fgbz/bz/bzwb/dqhjbh/dqhjzlbz/"},
-	//{name: "大气固定源污染物排放标准", url: "https://www.mee.gov.cn/ywgz/fgbz/bz/bzwb/dqhjbh/dqgdwrywrwpfbz/"},
-	//{name: "大气移动源污染物排放标准", url: "https://www.mee.gov.cn/ywgz/fgbz/bz/bzwb/dqhjbh/dqydywrwpfbz/"},
-	//{name: "相关标准", url: "https://www.mee.gov.cn/ywgz/fgbz/bz/bzwb/dqhjbh/xgbz/"},
-	//{name: "声环境质量标准", url: "https://www.mee.gov.cn/ywgz/fgbz/bz/bzwb/wlhj/shjzlbz/"},
-	//{name: "环境噪声排放标准", url: "https://www.mee.gov.cn/ywgz/fgbz/bz/bzwb/wlhj/hjzspfbz/"},
-	//{name: "土壤环境保护", url: "https://www.mee.gov.cn/ywgz/fgbz/bz/bzwb/trhj/"},
-	//{name: "固体废物污染控制标准", url: "https://www.mee.gov.cn/ywgz/fgbz/bz/bzwb/gthw/gtfwwrkzbz/"},
-	//{name: "危险废物鉴别方法标准", url: "https://www.mee.gov.cn/ywgz/fgbz/bz/bzwb/gthw/wxfwjbffbz/"},
-	//{name: "其他相关标准", url: "https://www.mee.gov.cn/ywgz/fgbz/bz/bzwb/gthw/qtxgbz/"},
-	//{name: "电磁辐射标准", url: "https://www.mee.gov.cn/ywgz/fgbz/bz/bzwb/hxxhj/dcfsbz/"},
-	//{name: "放射性环境标准", url: "https://www.mee.gov.cn/ywgz/fgbz/bz/bzwb/hxxhj/fsxhjbz/"},
-	//{name: "相关监测方法标准", url: "https://www.mee.gov.cn/ywgz/fgbz/bz/bzwb/hxxhj/xgjcffbz/"},
-	//{name: "相关标准", url: "https://www.mee.gov.cn/ywgz/fgbz/bz/bzwb/hxxhj/xgbz/"},
-	//{name: "生态环境保护", url: "https://www.mee.gov.cn/ywgz/fgbz/bz/bzwb/stzl/"},
-	//{name: "环境影响评价", url: "https://www.mee.gov.cn/ywgz/fgbz/bz/bzwb/hp/"},
-	//{name: "排污许可", url: "https://www.mee.gov.cn/ywgz/fgbz/bz/bzwb/pwxk/"},
-	//{name: "清洁生产标准", url: "https://www.mee.gov.cn/ywgz/fgbz/bz/bzwb/other/qjscbz/"},
-	//{name: "环境影响评价技术导则", url: "https://www.mee.gov.cn/ywgz/fgbz/bz/bzwb/other/pjjsdz/"},
-	//{name: "环保验收技术规范", url: "https://www.mee.gov.cn/ywgz/fgbz/bz/bzwb/other/hbysjsgf/"},
-	//{name: "环境标志产品标准", url: "https://www.mee.gov.cn/ywgz/fgbz/bz/bzwb/other/hjbz/"},
-	//{name: "环保产品技术要求", url: "https://www.mee.gov.cn/ywgz/fgbz/bz/bzwb/other/hbcpjsyq/"},
-	//{name: "环境保护工程技术规范", url: "https://www.mee.gov.cn/ywgz/fgbz/bz/bzwb/other/hjbhgc/"},
-	//{name: "环境保护信息标准", url: "https://www.mee.gov.cn/ywgz/fgbz/bz/bzwb/other/xxbz/"},
-	//{name: "其他", url: "https://www.mee.gov.cn/ywgz/fgbz/bz/bzwb/other/qt/"},
-	//{name: "污染防治技术政策", url: "https://www.mee.gov.cn/ywgz/fgbz/bz/bzwb/wrfzjszc/"},
-	//{name: "可行技术指南", url: "https://www.mee.gov.cn/ywgz/fgbz/bz/bzwb/kxxjszn/"},
-	//{name: "环境监测方法标准及监测规范", url: "https://www.mee.gov.cn/ywgz/fgbz/bz/bzwb/jcffbz/"},
+	{name: "相关标准", url: "https://www.mee.gov.cn/ywgz/fgbz/bz/bzwb/shjbh/xgbzh/"},
+	{name: "大气环境质量标准", url: "https://www.mee.gov.cn/ywgz/fgbz/bz/bzwb/dqhjbh/dqhjzlbz/"},
+	{name: "大气固定源污染物排放标准", url: "https://www.mee.gov.cn/ywgz/fgbz/bz/bzwb/dqhjbh/dqgdwrywrwpfbz/"},
+	{name: "大气移动源污染物排放标准", url: "https://www.mee.gov.cn/ywgz/fgbz/bz/bzwb/dqhjbh/dqydywrwpfbz/"},
+	{name: "相关标准", url: "https://www.mee.gov.cn/ywgz/fgbz/bz/bzwb/dqhjbh/xgbz/"},
+	{name: "声环境质量标准", url: "https://www.mee.gov.cn/ywgz/fgbz/bz/bzwb/wlhj/shjzlbz/"},
+	{name: "环境噪声排放标准", url: "https://www.mee.gov.cn/ywgz/fgbz/bz/bzwb/wlhj/hjzspfbz/"},
+	{name: "土壤环境保护", url: "https://www.mee.gov.cn/ywgz/fgbz/bz/bzwb/trhj/"},
+	{name: "固体废物污染控制标准", url: "https://www.mee.gov.cn/ywgz/fgbz/bz/bzwb/gthw/gtfwwrkzbz/"},
+	{name: "危险废物鉴别方法标准", url: "https://www.mee.gov.cn/ywgz/fgbz/bz/bzwb/gthw/wxfwjbffbz/"},
+	{name: "其他相关标准", url: "https://www.mee.gov.cn/ywgz/fgbz/bz/bzwb/gthw/qtxgbz/"},
+	{name: "电磁辐射标准", url: "https://www.mee.gov.cn/ywgz/fgbz/bz/bzwb/hxxhj/dcfsbz/"},
+	{name: "放射性环境标准", url: "https://www.mee.gov.cn/ywgz/fgbz/bz/bzwb/hxxhj/fsxhjbz/"},
+	{name: "相关监测方法标准", url: "https://www.mee.gov.cn/ywgz/fgbz/bz/bzwb/hxxhj/xgjcffbz/"},
+	{name: "相关标准", url: "https://www.mee.gov.cn/ywgz/fgbz/bz/bzwb/hxxhj/xgbz/"},
+	{name: "生态环境保护", url: "https://www.mee.gov.cn/ywgz/fgbz/bz/bzwb/stzl/"},
+	{name: "环境影响评价", url: "https://www.mee.gov.cn/ywgz/fgbz/bz/bzwb/hp/"},
+	{name: "排污许可", url: "https://www.mee.gov.cn/ywgz/fgbz/bz/bzwb/pwxk/"},
+	{name: "清洁生产标准", url: "https://www.mee.gov.cn/ywgz/fgbz/bz/bzwb/other/qjscbz/"},
+	{name: "环境影响评价技术导则", url: "https://www.mee.gov.cn/ywgz/fgbz/bz/bzwb/other/pjjsdz/"},
+	{name: "环保验收技术规范", url: "https://www.mee.gov.cn/ywgz/fgbz/bz/bzwb/other/hbysjsgf/"},
+	{name: "环境标志产品标准", url: "https://www.mee.gov.cn/ywgz/fgbz/bz/bzwb/other/hjbz/"},
+	{name: "环保产品技术要求", url: "https://www.mee.gov.cn/ywgz/fgbz/bz/bzwb/other/hbcpjsyq/"},
+	{name: "环境保护工程技术规范", url: "https://www.mee.gov.cn/ywgz/fgbz/bz/bzwb/other/hjbhgc/"},
+	{name: "环境保护信息标准", url: "https://www.mee.gov.cn/ywgz/fgbz/bz/bzwb/other/xxbz/"},
+	{name: "其他", url: "https://www.mee.gov.cn/ywgz/fgbz/bz/bzwb/other/qt/"},
+	{name: "污染防治技术政策", url: "https://www.mee.gov.cn/ywgz/fgbz/bz/bzwb/wrfzjszc/"},
+	{name: "可行技术指南", url: "https://www.mee.gov.cn/ywgz/fgbz/bz/bzwb/kxxjszn/"},
+	{name: "环境监测方法标准及监测规范", url: "https://www.mee.gov.cn/ywgz/fgbz/bz/bzwb/jcffbz/"},
 }
 
 var MeeCookie = "wdcid=64862962cf36ab44; viewsid=cadd60a6aab2440a82303c462edd5ace; Hm_lvt_0f50400dd25408cef4f1afb556ccb34f=1752848883,1753166984,1754291464,1754466973; HMACCOUNT=1CCD0111717619C6; wdses=0560791540ecb60d; arialoadData=true; ariaappid=ca7cdadfe5c5be7aa82dd83cdf2639b6; ariauseGraymode=false; wdlast=1754970794; Hm_lpvt_0f50400dd25408cef4f1afb556ccb34f=1754970794"
@@ -78,7 +78,7 @@ var MeeCookie = "wdcid=64862962cf36ab44; viewsid=cadd60a6aab2440a82303c462edd5ac
 func main() {
 	for _, category := range meecategory {
 		fmt.Println(category.name, category.url)
-		page := 1
+		page := 0
 		isPageListGo := true
 		for isPageListGo {
 			requestListUrl := category.url + "index.shtml"
