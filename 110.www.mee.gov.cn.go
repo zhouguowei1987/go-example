@@ -103,8 +103,9 @@ func main() {
 						fmt.Println("没有文档详情链接，跳过")
 						continue
 					}
-					detailUrl := category.url + strings.Replace(htmlquery.InnerText(detailUrlNode), "./", "", 1)
+					detailUrl := category.url + htmlquery.InnerText(detailUrlNode)
 					fmt.Println(detailUrl)
+					//os.Exit(1)
 
 					meeDetailDoc, err := MeeBzHtmlDoc(detailUrl, requestListUrl)
 					if err != nil {
