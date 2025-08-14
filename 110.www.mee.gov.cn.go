@@ -113,7 +113,7 @@ func main() {
 						continue
 					}
 
-					bzDetailANodes := htmlquery.Find(meeDetailDoc, `//div[@class="neiright_Content"]/div[@class="neiright_JPZ_GK_CP"]//a`)
+					bzDetailANodes := htmlquery.Find(meeDetailDoc, `//div[@class="neiright_Content"]/div[@class="neiright_JPZ_GK_CP"]/a`)
 					if len(bzDetailANodes) > 0 {
 						for _, bzDetailANode := range bzDetailANodes {
 							bzDownloadHrefNode := htmlquery.FindOne(bzDetailANode, `./@href`)
