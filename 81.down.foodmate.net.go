@@ -65,6 +65,11 @@ func main() {
 					title = strings.ReplaceAll(title, " ", "")
 					fmt.Println(title)
 
+					if strings.Index(title, "Q-") != -1 {
+						fmt.Println("是企业标准，跳过")
+						continue
+					}
+
 					authUrl := htmlquery.InnerText(htmlquery.FindOne(downNode, `./@href`))
 					fmt.Println(authUrl)
 					// 获取请求Location
