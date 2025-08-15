@@ -57,6 +57,36 @@ func main() {
 		liNodes := htmlquery.Find(JstListDoc, `//html/body/div[3]/ul/li`)
 		if len(liNodes) >= 1 {
 			for _, liNode := range liNodes {
+				// 中文标题
+				chineseTitleNode := htmlquery.FindOne(liNode, `./a/@title`)
+				if chineseTitleNode == nil {
+					fmt.Println("标题不存在，跳过")
+					continue
+				}
+				chineseTitle := htmlquery.InnerText(chineseTitleNode)
+				chineseTitle = strings.TrimSpace(chineseTitle)
+				chineseTitle = strings.ReplaceAll(chineseTitle, "已废止", "")
+				chineseTitle = strings.ReplaceAll(chineseTitle, "/", "-")
+				chineseTitle = strings.ReplaceAll(chineseTitle, "／", "-")
+				chineseTitle = strings.ReplaceAll(chineseTitle, "　", "")
+				chineseTitle = strings.ReplaceAll(chineseTitle, " ", "")
+				chineseTitle = strings.ReplaceAll(chineseTitle, "：", ":")
+				chineseTitle = strings.ReplaceAll(chineseTitle, "—", "-")
+				chineseTitle = strings.ReplaceAll(chineseTitle, "－", "-")
+				chineseTitle = strings.ReplaceAll(chineseTitle, "（", "(")
+				chineseTitle = strings.ReplaceAll(chineseTitle, "）", ")")
+				chineseTitle = strings.ReplaceAll(chineseTitle, "《", "")
+				chineseTitle = strings.ReplaceAll(chineseTitle, "》", "")
+				chineseTitle = strings.ReplaceAll(chineseTitle, "()", "")
+				fmt.Println(chineseTitle)
+
+				filePath := "../jst.jl.gov.cn/" + chineseTitle + ".pdf"
+				_, err = os.Stat(filePath)
+				if err == nil {
+					fmt.Println("文档已下载过，跳过")
+					continue
+				}
+
 				detailUrlNode := htmlquery.FindOne(liNode, `./a/@href`)
 				if detailUrlNode == nil {
 					fmt.Println("没有文档详情链接，跳过")
@@ -88,26 +118,6 @@ func main() {
 					fmt.Println("附件不是pdf文件，跳过")
 					continue
 				}
-				// 中文标题
-				chineseTitleNode := htmlquery.FindOne(liNode, `./a/@title`)
-				if chineseTitleNode == nil {
-					fmt.Println("标题不存在，跳过")
-					continue
-				}
-				chineseTitle := htmlquery.InnerText(chineseTitleNode)
-				chineseTitle = strings.TrimSpace(chineseTitle)
-				chineseTitle = strings.ReplaceAll(chineseTitle, "/", "-")
-				chineseTitle = strings.ReplaceAll(chineseTitle, "／", "-")
-				chineseTitle = strings.ReplaceAll(chineseTitle, "　", "")
-				chineseTitle = strings.ReplaceAll(chineseTitle, " ", "")
-				chineseTitle = strings.ReplaceAll(chineseTitle, "：", ":")
-				chineseTitle = strings.ReplaceAll(chineseTitle, "—", "-")
-				chineseTitle = strings.ReplaceAll(chineseTitle, "－", "-")
-				chineseTitle = strings.ReplaceAll(chineseTitle, "（", "(")
-				chineseTitle = strings.ReplaceAll(chineseTitle, "）", ")")
-				chineseTitle = strings.ReplaceAll(chineseTitle, "《", "")
-				chineseTitle = strings.ReplaceAll(chineseTitle, "》", "")
-				fmt.Println(chineseTitle)
 
 				// 下载文档URL
 				downLoadUrl := bzDownloadHref
@@ -119,13 +129,6 @@ func main() {
 					downLoadUrl = detailUrl[:bzDetailRequestUrlBiasTIndex] + bzDownloadHref
 				}
 				fmt.Println(downLoadUrl)
-
-				filePath := "../jst.jl.gov.cn/" + chineseTitle + ".pdf"
-				_, err = os.Stat(filePath)
-				if err == nil {
-					fmt.Println("文档已下载过，跳过")
-					continue
-				}
 
 				// 开始下载
 				fmt.Println("=======开始下载========")
