@@ -2514,7 +2514,7 @@ func main() {
 			fmt.Println(err)
 		}
 		//复制文件
-		tempFilePath := strings.ReplaceAll(filePath, "../zfcxjs.tj.gov.cn", "../upload.doc88.com/zfcxjs.tj.gov.cn")
+		tempFilePath := strings.ReplaceAll(filePath, "../zfcxjs.tj.gov.cn", "../upload.doc88.com/dbba.sacinfo.org.cn")
 		err = ZfCxJsCopyFile(filePath, tempFilePath)
 		if err != nil {
 			fmt.Println(err)
