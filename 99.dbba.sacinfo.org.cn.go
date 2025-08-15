@@ -7,8 +7,8 @@ import (
 	"github.com/antchfx/htmlquery"
 	"github.com/otiai10/gosseract/v2"
 	"io"
-	"math/rand"
 	"io/ioutil"
+	"math/rand"
 	"net"
 	"net/http"
 	"net/url"
@@ -34,15 +34,15 @@ func DbBaSetHttpProxy() (httpclient *http.Client) {
 	return httpclient
 }
 
-type HdBaResponseData struct {
+type DbBaResponseData struct {
 	Current     int                       `json:"current"`
 	Pages       int                       `json:"pages"`
-	Records     []HdBaResponseDataRecords `json:"records"`
+	Records     []DbBaResponseDataRecords `json:"records"`
 	SearchCount bool                      `json:"searchCount"`
 	Size        int                       `json:"size"`
 	Total       int                       `json:"total"`
 }
-type HdBaResponseDataRecords struct {
+type DbBaResponseDataRecords struct {
 	ActDate    int    `json:"actDate"`
 	ChName     string `json:"chName"`
 	ChargeDept string `json:"chargeDept"`
@@ -56,7 +56,7 @@ type HdBaResponseDataRecords struct {
 	Status     string `json:"status"`
 }
 
-type HdBaResponseValidateCaptcha struct {
+type DbBaResponseValidateCaptcha struct {
 	Code int    `json:"code"`
 	Msg  string `json:"msg"`
 }
@@ -104,116 +104,116 @@ func main() {
 
 					filePath := "../dbba.sacinfo.org.cn/" + fileName + ".pdf"
 					_, err = os.Stat(filePath)
-                    if err == nil {
-                        fmt.Println("文档已下载过，跳过")
-                        continue
-                    }
+					if err == nil {
+						fmt.Println("文档已下载过，跳过")
+						continue
+					}
 
 					stdDetailUrl := fmt.Sprintf("https://dbba.sacinfo.org.cn/stdDetail/%s", records.Pk)
-                    stdDetailDoc, err := htmlquery.LoadURL(stdDetailUrl)
-                    if err != nil {
-                        fmt.Println(err)
-                        continue
-                    }
-                    // 是否有查看文本按钮
-                    downloadButtonNode := htmlquery.FindOne(stdDetailDoc, `//div[@class="container main-body"]/div[@class="sidebar sidebar-left"]/div[@class="sidebar-tabs"]/a`)
-                    if downloadButtonNode == nil {
-                        fmt.Println("没有下载按钮跳过")
-                        continue
-                    }
+					stdDetailDoc, err := htmlquery.LoadURL(stdDetailUrl)
+					if err != nil {
+						fmt.Println(err)
+						continue
+					}
+					// 是否有查看文本按钮
+					downloadButtonNode := htmlquery.FindOne(stdDetailDoc, `//div[@class="container main-body"]/div[@class="sidebar sidebar-left"]/div[@class="sidebar-tabs"]/a`)
+					if downloadButtonNode == nil {
+						fmt.Println("没有下载按钮跳过")
+						continue
+					}
 
-                    portalOnlineUrl := fmt.Sprintf("https://dbba.sacinfo.org.cn/portal/online/%s", records.Pk)
-                    portalOnlineDoc, err := htmlquery.LoadURL(portalOnlineUrl)
-                    if err != nil {
-                        fmt.Println(err)
-                        continue
-                    }
-                    // 是否有验证码窗口
-                    captchaModalDialogNode := htmlquery.FindOne(portalOnlineDoc, `//div[@class="container main-body"]/div[@class="row"]/div[@class="col-sm-12"]/div[@class="modal"]/div[@class="modal-dialog"]`)
-                    if captchaModalDialogNode == nil {
-                        fmt.Println("没有输入验证码窗口")
-                        continue
-                    }
-                ValidateCaptchaGoTo:
-                    // 获取验证码图片
-                    // 获取当前时间的纳秒级时间戳
-                    nanoTimestamp := time.Now().UnixNano()
-                    // 将纳秒级时间戳转换为毫秒级
-                    millis := nanoTimestamp / 1e6 // 或者 nanoTimestamp / 1000000
-                    fmt.Println("当前时间的毫秒级时间戳:", millis)
-                    validateCodeUrl := fmt.Sprintf("https://dbba.sacinfo.org.cn/portal/validate-code?pk=%s&t=%d", records.Pk, millis)
-                    fmt.Println(validateCodeUrl)
-                    validateCodeFilePath := "./dbba-validate-code/validate-code.png"
-                    err = downloadValidateCodeDbBa(validateCodeUrl, validateCodeFilePath)
-                    if err != nil {
-                        fmt.Println(err)
-                        continue
-                    }
-                    // 获取验证码文字信息
-                    captcha, err := TesseractValidateCodeDbBa(validateCodeFilePath)
-                    captcha = strings.TrimSpace(captcha)
-                    fmt.Println("识别的验证码：", captcha)
-                    if len(captcha) != 4 {
-                        goto ValidateCaptchaGoTo
-                    }
+					portalOnlineUrl := fmt.Sprintf("https://dbba.sacinfo.org.cn/portal/online/%s", records.Pk)
+					portalOnlineDoc, err := htmlquery.LoadURL(portalOnlineUrl)
+					if err != nil {
+						fmt.Println(err)
+						continue
+					}
+					// 是否有验证码窗口
+					captchaModalDialogNode := htmlquery.FindOne(portalOnlineDoc, `//div[@class="container main-body"]/div[@class="row"]/div[@class="col-sm-12"]/div[@class="modal"]/div[@class="modal-dialog"]`)
+					if captchaModalDialogNode == nil {
+						fmt.Println("没有输入验证码窗口")
+						continue
+					}
+				ValidateCaptchaGoTo:
+					// 获取验证码图片
+					// 获取当前时间的纳秒级时间戳
+					nanoTimestamp := time.Now().UnixNano()
+					// 将纳秒级时间戳转换为毫秒级
+					millis := nanoTimestamp / 1e6 // 或者 nanoTimestamp / 1000000
+					fmt.Println("当前时间的毫秒级时间戳:", millis)
+					validateCodeUrl := fmt.Sprintf("https://dbba.sacinfo.org.cn/portal/validate-code?pk=%s&t=%d", records.Pk, millis)
+					fmt.Println(validateCodeUrl)
+					validateCodeFilePath := "./dbba-validate-code/validate-code.png"
+					err = downloadValidateCodeDbBa(validateCodeUrl, validateCodeFilePath)
+					if err != nil {
+						fmt.Println(err)
+						continue
+					}
+					// 获取验证码文字信息
+					captcha, err := TesseractValidateCodeDbBa(validateCodeFilePath)
+					captcha = strings.TrimSpace(captcha)
+					fmt.Println("识别的验证码：", captcha)
+					if len(captcha) != 4 {
+						goto ValidateCaptchaGoTo
+					}
 
-                    // 获取下载地址
-                    validateCaptchaReferer := fmt.Sprintf("https://dbba.sacinfo.org.cn/portal/online/%s", records.Pk)
-                    responseValidateCaptcha, err := validateCaptchaDbBa(captcha, records.Pk, validateCaptchaReferer)
-                    fmt.Println(responseValidateCaptcha, err)
-                    if err != nil {
-                        fmt.Println(err)
-                        continue
-                    }
-                    if responseValidateCaptcha.Code != 0 {
-                        fmt.Println(responseValidateCaptcha.Msg)
-                        goto ValidateCaptchaGoTo
-                    }
-                    downLoadUrl := fmt.Sprintf("https://dbba.sacinfo.org.cn/portal/download/%s", responseValidateCaptcha.Msg)
-                    fmt.Println(downLoadUrl)
+					// 获取下载地址
+					validateCaptchaReferer := fmt.Sprintf("https://dbba.sacinfo.org.cn/portal/online/%s", records.Pk)
+					responseValidateCaptcha, err := validateCaptchaDbBa(captcha, records.Pk, validateCaptchaReferer)
+					fmt.Println(responseValidateCaptcha, err)
+					if err != nil {
+						fmt.Println(err)
+						continue
+					}
+					if responseValidateCaptcha.Code != 0 {
+						fmt.Println(responseValidateCaptcha.Msg)
+						goto ValidateCaptchaGoTo
+					}
+					downLoadUrl := fmt.Sprintf("https://dbba.sacinfo.org.cn/portal/download/%s", responseValidateCaptcha.Msg)
+					fmt.Println(downLoadUrl)
 
-                    detailUrl := fmt.Sprintf("https://dbba.sacinfo.org.cn/stdDetail/%s", records.Pk)
-                    fmt.Println(detailUrl)
+					detailUrl := fmt.Sprintf("https://dbba.sacinfo.org.cn/stdDetail/%s", records.Pk)
+					fmt.Println(detailUrl)
 
-                    fmt.Println("=======开始下载" + strconv.Itoa(current) + "========")
-                    err = downloadDbBa(downLoadUrl, detailUrl, filePath)
-                    if err != nil {
-                        fmt.Println(err)
-                        continue
-                    }
-                    //复制文件
-                    tempFilePath := strings.ReplaceAll(filePath, "../dbba.sacinfo.org.cn", "../upload.doc88.com/dbba.sacinfo.org.cn")
-                    err = DbBaCopyFile(filePath, tempFilePath)
-                    if err != nil {
-                        fmt.Println(err)
-                        continue
-                    }
-                    fmt.Println("=======下载完成========")
+					fmt.Println("=======开始下载" + strconv.Itoa(current) + "========")
+					err = downloadDbBa(downLoadUrl, detailUrl, filePath)
+					if err != nil {
+						fmt.Println(err)
+						continue
+					}
+					//复制文件
+					tempFilePath := strings.ReplaceAll(filePath, "../dbba.sacinfo.org.cn", "../upload.doc88.com/dbba.sacinfo.org.cn")
+					err = DbBaCopyFile(filePath, tempFilePath)
+					if err != nil {
+						fmt.Println(err)
+						continue
+					}
+					fmt.Println("=======下载完成========")
 
-                    downloadDbBaPdfSleep := rand.Intn(5)
-                    for i := 1; i <= downloadDbBaPdfSleep; i++ {
-                        time.Sleep(time.Second)
-                        fmt.Println("page="+strconv.Itoa(current)+"=======chName=", chName, "成功，====== 暂停", downloadDbBaPdfSleep, "秒，倒计时", i, "秒===========")
-                    }
+					downloadDbBaPdfSleep := rand.Intn(5)
+					for i := 1; i <= downloadDbBaPdfSleep; i++ {
+						time.Sleep(time.Second)
+						fmt.Println("page="+strconv.Itoa(current)+"=======chName=", chName, "成功，====== 暂停", downloadDbBaPdfSleep, "秒，倒计时", i, "秒===========")
+					}
 				}
 			}
 
 			DownLoadDbBaPageTimeSleep := 10
-            // DownLoadDbBaPageTimeSleep := rand.Intn(5)
-            for i := 1; i <= DownLoadDbBaPageTimeSleep; i++ {
-                time.Sleep(time.Second)
-                fmt.Println("page="+strconv.Itoa(current)+"====== 暂停", DownLoadDbBaPageTimeSleep, "秒 倒计时", i, "秒===========")
-            }
-            current++
-            if current > maxCurrent {
-                isPageListGo = false
-                break
-            }
+			// DownLoadDbBaPageTimeSleep := rand.Intn(5)
+			for i := 1; i <= DownLoadDbBaPageTimeSleep; i++ {
+				time.Sleep(time.Second)
+				fmt.Println("page="+strconv.Itoa(current)+"====== 暂停", DownLoadDbBaPageTimeSleep, "秒 倒计时", i, "秒===========")
+			}
+			current++
+			if current > maxCurrent {
+				isPageListGo = false
+				break
+			}
 		}
 	}
 }
 
-func DbBaGetStdQueryList(requestUrl string, current int, size int, status string) (responseData HdBaResponseData, err error) {
+func DbBaGetStdQueryList(requestUrl string, current int, size int, status string) (responseData DbBaResponseData, err error) {
 	// 初始化客户端
 	var client *http.Client = &http.Client{
 		Transport: &http.Transport{
@@ -233,7 +233,7 @@ func DbBaGetStdQueryList(requestUrl string, current int, size int, status string
 	if DbBaEnableHttpProxy {
 		client = DbBaSetHttpProxy()
 	}
-	responseData = HdBaResponseData{}
+	responseData = DbBaResponseData{}
 	postData := url.Values{}
 	postData.Add("current", strconv.Itoa(current))
 	postData.Add("size", strconv.Itoa(size))
@@ -374,7 +374,7 @@ func TesseractValidateCodeDbBa(imagePath string) (codeText string, err error) {
 	return text, nil
 }
 
-func validateCaptchaDbBa(captcha string, pk string, referer string) (responseValidateCaptcha HdBaResponseValidateCaptcha, err error) {
+func validateCaptchaDbBa(captcha string, pk string, referer string) (responseValidateCaptcha DbBaResponseValidateCaptcha, err error) {
 	// 初始化客户端
 	var client *http.Client = &http.Client{
 		Transport: &http.Transport{
@@ -397,7 +397,7 @@ func validateCaptchaDbBa(captcha string, pk string, referer string) (responseVal
 	// 	fmt.Print("Enter an captcha and press enter: ")
 	// 	fmt.Scanln(&captcha) // 等待用户按下回车键后继续执行
 	// 	fmt.Println("You entered captcha:", captcha)
-	responseValidateCaptcha = HdBaResponseValidateCaptcha{}
+	responseValidateCaptcha = DbBaResponseValidateCaptcha{}
 	requestUrl := fmt.Sprintf("https://dbba.sacinfo.org.cn/portal/validate-captcha/down?captcha=%s&pk=%s", captcha, pk)
 	req, err := http.NewRequest("POST", requestUrl, nil) //建立连接
 	if err != nil {

@@ -30,7 +30,6 @@ const Doc88Cookie = "__root_domain_v=.doc88.com; _qddaz=QD.155181178889683; cdb_
 // Doc88Cookie 15803889687
 // const Doc88Cookie = "cdb_sys_sid=oojq5k1eldqc8n34n5l26n6mn0; PHPSESSID=oojq5k1eldqc8n34n5l26n6mn0; cdb_change_message=1; cdb_msg_num=0; cdb_msg_time=1747313418; show_index=1; siftState=1; cdb_token=5176691bb4a2b7d65cd02416684e41acd8ba6dc2254cdb9894b2aadcafd923504e80bdf0056db2beff5e6fbc35a92e0cd0ec8fdcaa62ec98abd403dbd75510af6d186f19a3268e3ecd8bfa6b77986342a1377e35140ea18b4ee9abce72d19a5f798b304d4e9a12e31ccbe15180e283f8fc7a3b40ae5647a0; cdb_tokenid=f689zJn3GBsq7kh5CtStipWzkN3SC7t%2FfraMd4OYBS9URbeDoOAaWVB0m0UL%2B0ZP%2BM%2BLdvCmqRZHU6sMYuNvWTHt2P3KEZA1x14Iq47AmIkiQGI7HN%2FdJFzHbKFfzkHeFoyK; cdb_login_if=1; cdb_logined=1; cdb_uid=113085378; doc88_lt=wx"
 
-
 func getKey() (uploadKey string, err error) {
 	client := &http.Client{} //初始化客户端
 	getKeyUrl := "https://www.doc88.com/uc/index.php?act=getkey"
@@ -718,16 +717,6 @@ func main() {
 		},
 		{
 			dirName: "app.nifdc.org.cn",
-			pCid:    8370,
-			Price:   788,
-		},
-		{
-			dirName: "zfcxjst.hebei.gov.cn",
-			pCid:    8370,
-			Price:   788,
-		},
-		{
-			dirName: "zfcxjs.tj.gov.cn",
 			pCid:    8370,
 			Price:   788,
 		},

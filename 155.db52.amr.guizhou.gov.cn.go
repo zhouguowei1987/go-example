@@ -192,7 +192,7 @@ func main() {
 				continue
 			}
 			//复制文件
-			tempFilePath := strings.ReplaceAll(filePath, "../db52.amr.guizhou.gov.cn", "../temp-db52.amr.guizhou.gov.cn")
+			tempFilePath := strings.ReplaceAll(filePath, "../db52.amr.guizhou.gov.cn", "../upload.doc88.com/dbba.sacinfo.org.cn")
 			err = copyDb52File(filePath, tempFilePath)
 			if err != nil {
 				fmt.Println(err)

@@ -32,9 +32,9 @@ func main() {
 	// 国内标准列表
 	var allCategory = []zfCxJstCategory{
 		{url: "https://zfcxjst.hebei.gov.cn/hbzjt/ztzl/jj/gcjsgf/fwjz", name: "房屋建筑", page: 1, maxPage: 2},  //14
-		{url: "https://zfcxjst.hebei.gov.cn/hbzjt/ztzl/jj/gcjsgf/szgc", name: "市政工程", page: 1, maxPage: 2},   //7
-		{url: "https://zfcxjst.hebei.gov.cn/hbzjt/ztzl/jj/gcjsgf/czjs", name: "村镇建设", page: 1, maxPage: 2},   //3
-		{url: "https://zfcxjst.hebei.gov.cn/hbzjt/ztzl/jj/gcjsgf/sxjs", name: "四新技术", page: 1, maxPage: 2},   //7
+		{url: "https://zfcxjst.hebei.gov.cn/hbzjt/ztzl/jj/gcjsgf/szgc", name: "市政工程", page: 1, maxPage: 2},  //7
+		{url: "https://zfcxjst.hebei.gov.cn/hbzjt/ztzl/jj/gcjsgf/czjs", name: "村镇建设", page: 1, maxPage: 2},  //3
+		{url: "https://zfcxjst.hebei.gov.cn/hbzjt/ztzl/jj/gcjsgf/sxjs", name: "四新技术", page: 1, maxPage: 2},  //7
 		{url: "https://zfcxjst.hebei.gov.cn/hbzjt/ztzl/jj/gcjsgf/zjbz", name: "消耗量标准", page: 1, maxPage: 2}, //2
 	}
 	for _, category := range allCategory {
@@ -112,7 +112,7 @@ func main() {
 						fmt.Println(err)
 					}
 					//复制文件
-					tempFilePath := strings.ReplaceAll(filePath, "../zfcxjst.hebei.gov.cn", "../upload.doc88.com/zfcxjst.hebei.gov.cn")
+					tempFilePath := strings.ReplaceAll(filePath, "../zfcxjst.hebei.gov.cn", "upload.doc88.com/dbba.sacinfo.org.cn")
 					err = ZfCxJstCopyFile(filePath, tempFilePath)
 					if err != nil {
 						fmt.Println(err)
