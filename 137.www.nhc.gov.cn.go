@@ -17,6 +17,7 @@ import (
 	"strconv"
 	"strings"
 	"time"
+	"math/rand"
 
 	"github.com/antchfx/htmlquery"
 	_ "golang.org/x/net/html"
@@ -101,7 +102,7 @@ func NhcGovSetHttpProxy() (httpclient *http.Client) {
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	return httpclient
@@ -142,10 +143,10 @@ func create_yfxkpy_ssid() {
 
 	yfxkpy_ssid_10006654_json_data_string := string(yfxkpy_ssid_10006654_json_data)
 	yfxkpy_ssid_10006654_json_data_string = url.QueryEscape(yfxkpy_ssid_10006654_json_data_string)
-	fmt.Println(yfxkpy_ssid_10006654_json_data_string)
+// 	fmt.Println(yfxkpy_ssid_10006654_json_data_string)
 
 	NhcGovCookie = fmt.Sprintf("5uRo8RWcod0KO=60TCvitvBLBpJ.NneNrtxj2tueZKlyI24gbWjpl854jkEZz3sSKw6Fj38Dsebktu.GtXtVNLfJPXDUX5oEP2eXWG; _yfxkpy_ssid_10006654=%s; arialoadData=true; ariauseGraymode=false; ariaappid=e2dcc6e6e04fd7a68ae6f8b8a9be7f7d; 5uRo8RWcod0KP=0wppx6pKHgHmzcaaFLzhBzJubKvmTBs6WFAqwUmIzmlA1pOIDwIcL2CL2FMlhn197kym19GvMt4Qti8H_gte3RV9l8SQurIKjPaH02OuPf9ido.mUeP2xF1B3MKdbArTCgVoEVlgR.WN7zuTO4p9in3QUXbDPYIdtE3wZ5I9BgSryi0cPHLn7iLLeOU3NEFICgZkYW.t6yUekcf3sFJnj6FqItzWQvosAurPwI5.ZbvhA_qvjJ1_QOHG5.gdBUwwFyXQ70SQV5AoDaz.oWrJOfRZZ0n4JdvBLWYwbxiYvAUA7714LNv5201kbA_bibfjdr5hZr69Q5_hShwXayd0f7hS6NL2kgPeiSrwgYRUVKrkosaBvyaI6RzZD4DDtkyVT1pZ1rPFSEE83aVPF03.H9q", yfxkpy_ssid_10006654_json_data_string)
-	fmt.Println(NhcGovCookie)
+// 	fmt.Println(NhcGovCookie)
 }
 
 // 下载国家卫生标准文档
@@ -167,22 +168,38 @@ func main() {
 		title = strings.TrimSpace(title)
 		title = strings.ReplaceAll(title, "-", "")
 		title = strings.ReplaceAll(title, " ", "")
+		title = strings.ReplaceAll(title, "（", "(")
+		title = strings.ReplaceAll(title, "）", ")")
+		title = strings.ReplaceAll(title, "）", ")")
+		title = strings.ReplaceAll(title, "<span>", "")
+		title = strings.ReplaceAll(title, "<-span>", ")")
+		title = strings.ReplaceAll(title, "《", "")
+		title = strings.ReplaceAll(title, "》", "")
+		title = strings.ReplaceAll(title, "/", "-")
+		title = strings.ReplaceAll(title, ":", "-")
+		title = strings.ReplaceAll(title, "：", "-")
+		title = strings.ReplaceAll(title, "　", "-")
 		title = strings.ReplaceAll(title, "|", "-")
 		fmt.Println(title)
 
 		nhcGovDetailUrl := nhcGovResult.Url
 		fmt.Println(nhcGovDetailUrl)
+// 		os.Exit(1)
 
 		nhcGovDetailDoc, err := NhcGovDetailDoc(nhcGovDetailUrl, "https://www.nhc.gov.cn/wjw/wsbzxx/wsbz.shtml")
 		if err != nil {
 			fmt.Println(err)
-			break
+			continue
 		}
+// 		fmt.Println(htmlquery.InnerText(nhcGovDetailDoc))
+// 		os.Exit(1)
 
 		codeNode := htmlquery.FindOne(nhcGovDetailDoc, `//div[@class="w1140 bgfff p20"]/div[@class="list"]/table[@class="mt20 mb20"]/tbody/tr[1]/td[@class="zhupei"]`)
+// 		fmt.Println(htmlquery.InnerText(codeNode))
+// 		os.Exit(1)
 		if codeNode == nil {
 			fmt.Println("没有code节点，跳过")
-			break
+			continue
 		}
 
 		code := htmlquery.InnerText(codeNode)
@@ -190,10 +207,27 @@ func main() {
 		code = strings.ReplaceAll(code, "/", "-")
 		code = strings.ReplaceAll(code, "\n", "")
 		code = strings.ReplaceAll(code, "\r", "")
+		code = strings.ReplaceAll(code, "\r\n", "")
 		fmt.Println(code)
 
-		nhcGovDownloadHrefNode := htmlquery.FindOne(nhcGovDetailDoc, `//div[@class="w1140 bgfff p20"]/div[@class="list"]/div[@class="con"]/p/a/@href`)
-		nhcGovDownloadHref := htmlquery.InnerText(nhcGovDownloadHrefNode)
+		nhcGovDownloadHrefNode1 := htmlquery.FindOne(nhcGovDetailDoc, `//div[@class="w1140 bgfff p20"]/div[@class="list"]/div[@class="con"]/p/a/@href`)
+		nhcGovDownloadHrefNode2 := htmlquery.FindOne(nhcGovDetailDoc, `//div[@class="w1140 bgfff p20"]/div[@class="list"]/div[@class="con"]/a/@href`)
+		if nhcGovDownloadHrefNode1 == nil && nhcGovDownloadHrefNode2 == nil{
+		    fmt.Println("没有下载地址节点，跳过")
+			continue
+		}
+		nhcGovDownloadHref := ""
+		if nhcGovDownloadHrefNode1 == nil{
+		    nhcGovDownloadHref = htmlquery.InnerText(nhcGovDownloadHrefNode2)
+		}
+		if nhcGovDownloadHrefNode2 == nil{
+		    nhcGovDownloadHref = htmlquery.InnerText(nhcGovDownloadHrefNode1)
+		}
+		if len(nhcGovDownloadHref) <= 0{
+		    fmt.Println("没有下载地址，跳过")
+			continue
+		}
+
 		nhcGovDetailUrlHandleArray := strings.Split(nhcGovDetailUrl, "/")
 		nhcGovDetailUrlHandleArray = nhcGovDetailUrlHandleArray[:len(nhcGovDetailUrlHandleArray)-1]
 		nhcGovDownloadHref = strings.Join(nhcGovDetailUrlHandleArray, "/") + "/" + nhcGovDownloadHref
@@ -205,18 +239,25 @@ func main() {
 		_, err = os.Stat(filePath)
 		if err == nil {
 			fmt.Println("文档已下载过，跳过")
-			break
+			continue
 		}
 
 		fmt.Println("=======开始下载========")
 		err = downloadNhcGov(nhcGovDownloadHref, nhcGovDetailUrl, filePath)
 		if err != nil {
 			fmt.Println(err)
-			break
+			continue
 		}
+		//复制文件
+        tempFilePath := strings.ReplaceAll(filePath, "../www.nhc.gov.cn", "../temp-www.nhc.gov.cn")
+        err = NhcGovCopyFile(filePath, tempFilePath)
+        if err != nil {
+            fmt.Println(err)
+            continue
+        }
 		fmt.Println("=======完成下载========")
-		DownLoadNhcGovTimeSleep := 10
-		//DownLoadNhcGovTimeSleep := rand.Intn(5)
+// 		DownLoadNhcGovTimeSleep := 10
+		DownLoadNhcGovTimeSleep := rand.Intn(5)
 		for i := 1; i <= DownLoadNhcGovTimeSleep; i++ {
 			time.Sleep(time.Second)
 			fmt.Println("title="+title+"===========下载", title, "成功，暂停", DownLoadNhcGovTimeSleep, "秒，倒计时", i, "秒===========")
@@ -273,7 +314,7 @@ func QueryNhcGovList(requestUrl string) (queryNhcGovListResponseDataResults []Qu
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if NhcGovEnableHttpProxy {
@@ -336,7 +377,7 @@ func NhcGovDetailDoc(requestUrl string, referer string) (doc *html.Node, err err
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if NhcGovEnableHttpProxy {
@@ -386,7 +427,7 @@ func downloadNhcGov(attachmentUrl string, referer string, filePath string) error
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if NhcGovEnableHttpProxy {
@@ -442,4 +483,31 @@ func downloadNhcGov(attachmentUrl string, referer string, filePath string) error
 		return err
 	}
 	return nil
+}
+
+func NhcGovCopyFile(src, dst string) (err error) {
+	in, err := os.Open(src)
+	if err != nil {
+		return
+	}
+	defer func(in *os.File) {
+		err := in.Close()
+		if err != nil {
+			return
+		}
+	}(in)
+
+	out, err := os.Create(dst)
+	if err != nil {
+		return
+	}
+	defer func(out *os.File) {
+		err := out.Close()
+		if err != nil {
+			return
+		}
+	}(out)
+
+	_, err = io.Copy(out, in)
+	return
 }
