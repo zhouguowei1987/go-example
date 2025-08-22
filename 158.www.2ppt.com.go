@@ -4,8 +4,6 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/antchfx/htmlquery"
-	"golang.org/x/net/html"
 	"io"
 	"io/ioutil"
 	"net"
@@ -16,6 +14,9 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/antchfx/htmlquery"
+	"golang.org/x/net/html"
 )
 
 const (
@@ -46,10 +47,10 @@ func main() {
 	page := 1
 	isPageListGo := true
 	for isPageListGo {
-		requestListUrl := fmt.Sprintf("https://www.2ppt.com/ppt/p%d.html", page)
-		referUrl := "https://www.2ppt.com/ppt.html"
+		requestListUrl := fmt.Sprintf("https://www.2ppt.com/ppt/511/%d.html", page)
+		referUrl := "https://www.2ppt.com/ppt/511/1.html"
 		if page >= 2 {
-			referUrl = fmt.Sprintf("https://www.2ppt.com/ppt/p%d.html", page-1)
+			referUrl = fmt.Sprintf("https://www.2ppt.com/ppt/488/%d.html", page-1)
 		}
 		fmt.Println(requestListUrl)
 		Ppt2ListDoc, err := Ppt2HtmlDoc(requestListUrl, referUrl)
@@ -68,6 +69,7 @@ func main() {
 				title := htmlquery.InnerText(titleNode)
 				title = strings.TrimSpace(title)
 				title = strings.ReplaceAll(title, "/", "-")
+				title = strings.ReplaceAll(title, " ", "")
 				fmt.Println(title)
 
 				filePath := "F:\\workspace\\www.2ppt.com\\www.2ppt.com\\" + title + ".pptx"
