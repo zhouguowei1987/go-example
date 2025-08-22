@@ -17,8 +17,8 @@ import (
 // @Title 获取广西标准化协会Pdf文档
 // @Description http://www.guangxibiaoxie.com/，将广西标准化协会Pdf文档入库
 func main() {
-	var startId = 2580
-	var endId = 4180
+	var startId = 300
+	var endId = 4467
 	goCh := make(chan int, endId-startId)
 	for id := startId; id <= endId; id++ {
 		go func(id int) {
@@ -63,19 +63,12 @@ func guangXiBiaoXieSpider(id int) error {
 	title = strings.ReplaceAll(title, "发布稿", "")
 	title = strings.ReplaceAll(title, "TGXAS", "T-GXAS")
 	title = strings.ReplaceAll(title, "T/GXAS", "T-GXAS")
-	flagIndex := strings.Index(title, "团体标准")
-	if flagIndex == -1 {
-		return errors.New("不含有团体标准字样，跳过")
-	}
-	titleSplit := strings.Split(title, "团体标准")
-	title = strings.ReplaceAll(titleSplit[1], " ", "")
+	title = strings.ReplaceAll(title, "团体标准", "-")
 	title = strings.ReplaceAll(title, "《", "")
 	title = strings.ReplaceAll(title, "》", "")
 	title = strings.ReplaceAll(title, "()", "")
 	title = strings.ReplaceAll(title, "（)", "")
 	title = strings.TrimSpace(title)
-	standardNo := strings.TrimSpace(titleSplit[0])
-	title = title + "(" + standardNo + ")"
 
 	filePath := "../www.guangxibiaoxie.com/" + title + ".pdf"
 	if _, err := os.Stat(filePath); err != nil {
