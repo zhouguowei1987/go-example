@@ -18,6 +18,8 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	"rsc.io/pdf"
 )
 
 // Doc88Cookie 15238369929
