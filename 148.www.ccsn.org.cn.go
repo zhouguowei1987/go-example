@@ -220,7 +220,7 @@ func main() {
 					continue
 				}
 				//复制文件
-				tempFilePath := strings.ReplaceAll(filePath, "../www.ccsn.org.cn", "../upload.doc88.com/www.ccsn.org.cn")
+				tempFilePath := strings.ReplaceAll(filePath, "../www.ccsn.org.cn", "../upload.doc88.com/hbba.sacinfo.org.cn")
 				err = copyCcSnFile(filePath, tempFilePath)
 				if err != nil {
 					fmt.Println(err)

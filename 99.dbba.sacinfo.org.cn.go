@@ -61,7 +61,7 @@ type DbBaResponseValidateCaptcha struct {
 	Msg  string `json:"msg"`
 }
 
-const DbBaCookie = "HMACCOUNT=487EF362690A1D5D; Hm_lvt_36f2f0446e1c2cda8410befc24743a9b=1754459717; Hm_lpvt_36f2f0446e1c2cda8410befc24743a9b=1755853357; JSESSIONID=45D339DA8B2A231C7994A61BE160C06A"
+const DbBaCookie = "HMACCOUNT=487EF362690A1D5D; Hm_lvt_36f2f0446e1c2cda8410befc24743a9b=1754459717; Hm_lpvt_36f2f0446e1c2cda8410befc24743a9b=1755881208; JSESSIONID=6BAB7A4BCF1E7E3606DCEC70CEB81681"
 
 // ychEduSpider 获取地方标准文档
 // @Title 获取地方标准文档
@@ -70,8 +70,8 @@ func main() {
 	requestUrl := "https://dbba.sacinfo.org.cn/stdQueryList"
 	// 	5699
 	current := 1
-	maxCurrent := 10
-	size := 15
+	maxCurrent := 751
+	size := 100
 	status := "现行"
 	isPageListGo := true
 	for isPageListGo {
@@ -181,6 +181,17 @@ func main() {
 						fmt.Println(err)
 						continue
 					}
+
+					// 查看文件大小，如果是空文件，则删除
+                    fileInfo, err := os.Stat(filePath)
+                    if err == nil && fileInfo.Size() == 0 {
+                        fmt.Println("空文件删除")
+                        err = os.Remove(filePath)
+                    }
+                    if err != nil {
+                        continue
+                    }
+
 					//复制文件
 					tempFilePath := strings.ReplaceAll(filePath, "../dbba.sacinfo.org.cn", "../upload.doc88.com/dbba.sacinfo.org.cn")
 					err = DbBaCopyFile(filePath, tempFilePath)
