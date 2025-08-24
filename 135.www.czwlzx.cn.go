@@ -111,7 +111,7 @@ var CzWlZxCookie = "Hm_lvt_43bc53ae85afc8f10b75f500b7f506b6=1751030895; ASP.NET_
 // @Title 获取初中物理在线文档
 // @Description http://www.czwlzx.cn/，获取初中物理在线文档
 func main() {
-	// 154373
+	// 154563
 	var startId = 22162
 	var endId = 8254
 	for id := startId; id >= endId; id-- {
