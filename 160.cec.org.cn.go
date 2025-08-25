@@ -39,6 +39,7 @@ func main() {
 		title = strings.ReplaceAll(title, "—", "-")
 		title = strings.ReplaceAll(title, " ", "-")
 		title = strings.ReplaceAll(title, "　", "-")
+		title = strings.ReplaceAll(title, "	", "-")
 		title = strings.ReplaceAll(title, "/", "-")
 		title = strings.ReplaceAll(title, "：", "-")
 		title = strings.ReplaceAll(title, "--", "-")
