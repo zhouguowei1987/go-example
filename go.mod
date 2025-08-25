@@ -1,8 +1,6 @@
 module gobyexample
 
-go 1.23.0
-
-toolchain go1.23.6
+go 1.23
 
 require (
 	github.com/antchfx/htmlquery v1.3.4
