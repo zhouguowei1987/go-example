@@ -47,10 +47,10 @@ func main() {
 		filePath := "../cec.org.cn/" + title + ".pdf"
 		if _, err := os.Stat(filePath); err != nil {
 			fmt.Println("=======开始下载========")
-			reg := regexp.MustCompile("target=\"_blank\" href=\"(.*?)\">")
+			reg := regexp.MustCompile("href=\"(.*?)\">")
 			path2 := reg.Find([]byte(queryCecDetailResponseData.ArticleContent))
 			path2Str := string(path2)
-			path2StrHandle := strings.ReplaceAll(path2Str, "target=\"_blank\" href=\"", "")
+			path2StrHandle := strings.ReplaceAll(path2Str, "href=\"", "")
 			path2StrHandle = strings.ReplaceAll(path2StrHandle, "\">", "")
 
 			downloadUrl := "https://cec.org.cn" + path2StrHandle
@@ -62,7 +62,7 @@ func main() {
 				continue
 			}
 			//复制文件
-			tempFilePath := strings.ReplaceAll(filePath, "cec.org.cn", "../upload.doc88.com/hbba.sacinfo.org.cn")
+			tempFilePath := strings.ReplaceAll(filePath, "../cec.org.cn", "../upload.doc88.com/hbba.sacinfo.org.cn")
 			err = copyCecFile(filePath, tempFilePath)
 			if err != nil {
 				fmt.Println(err)
