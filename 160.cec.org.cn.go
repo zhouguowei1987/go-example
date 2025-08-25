@@ -46,7 +46,7 @@ func main() {
 
 		filePath := "../cec.org.cn/" + title + ".pdf"
 		if _, err := os.Stat(filePath); err != nil {
-			fmt.Println(queryCecDetailResponseData.ArticleContent)
+			//fmt.Println(queryCecDetailResponseData.ArticleContent)
 			fmt.Println("=======开始下载========")
 			reg := regexp.MustCompile("href=\"(.*?).pdf\">")
 			path2 := reg.Find([]byte(queryCecDetailResponseData.ArticleContent))
