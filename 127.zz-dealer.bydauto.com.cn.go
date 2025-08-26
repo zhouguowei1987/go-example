@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/antchfx/htmlquery"
 	"io/ioutil"
 	"math/rand"
 	"net"
@@ -14,6 +13,8 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/antchfx/htmlquery"
 )
 
 var EditBydAutoEnableHttpProxy = false
@@ -209,6 +210,7 @@ func main() {
 				}
 				// randIntN默认值是1-5
 				randIntN = randIntN * (2 * 24 * 60 * 60)
+				//randIntN = 1 * 24 * 60 * 60
 				// 				activityDate := queryEditBydAutoResponseListData.ActivityDate + randIntN + 1
 				todayNow := time.Now()
 				todayNowSeconds := todayNow.Unix()
