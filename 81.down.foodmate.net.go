@@ -29,7 +29,7 @@ var FoodMateCookie = "Hm_lvt_2aeaa32e7cee3cfa6e2848083235da9f=1730957037; HMACCO
 func main() {
 	// 国内标准列表
 	var allCategory = []foodMateCategory{
-		{id: 1, name: "国内标准", page: 1, maxPage: 10},
+		{id: 1, name: "国内标准", page: 1, maxPage: 5000},
 	}
 	for _, category := range allCategory {
 		isPageListGo := true
@@ -113,8 +113,8 @@ func main() {
                         fmt.Println("page="+strconv.Itoa(category.page)+"=======", title, "成功，category_name="+category.name+"====== 暂停", downloadFoodMatePdfSleep, "秒，倒计时", i, "秒===========")
                     }
 				}
-				DownLoadFoodMatePageTimeSleep := 10
-				// DownLoadFoodMatePageTimeSleep := rand.Intn(5)
+// 				DownLoadFoodMatePageTimeSleep := 10
+				DownLoadFoodMatePageTimeSleep := rand.Intn(5)
 				for i := 1; i <= DownLoadFoodMatePageTimeSleep; i++ {
 					time.Sleep(time.Second)
 					fmt.Println("page="+strconv.Itoa(category.page)+"====category_name="+category.name+"====== 暂停", DownLoadFoodMatePageTimeSleep, "秒 倒计时", i, "秒===========")
