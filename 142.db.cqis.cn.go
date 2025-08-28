@@ -196,7 +196,7 @@ func main() {
 				continue
 			}
 			//复制文件
-			tempFilePath := strings.ReplaceAll(filePath, "../db.cqis.cn", "../upload.doc88.com/db.cqis.cn")
+			tempFilePath := strings.ReplaceAll(filePath, "../db.cqis.cn", "../upload.doc88.com/dbba.sacinfo.org.cn")
 			err = copyCqIsFile(filePath, tempFilePath)
 			if err != nil {
 				fmt.Println(err)

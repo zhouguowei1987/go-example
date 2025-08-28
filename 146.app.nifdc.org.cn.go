@@ -159,6 +159,7 @@ func main() {
 				title = strings.ReplaceAll(title, "-", "")
 				title = strings.ReplaceAll(title, " ", "")
 				title = strings.ReplaceAll(title, "|", "-")
+				title = strings.ReplaceAll(title, "/", "-")
 				fmt.Println(title)
 
 				filePath := "../app.nifdc.org.cn/" + title + "(" + code + ")" + ".pdf"
@@ -204,7 +205,7 @@ func main() {
 					continue
 				}
 				//复制文件
-				tempFilePath := strings.ReplaceAll(filePath, "../app.nifdc.org.cn", "../upload.doc88.com/app.nifdc.org.cn")
+				tempFilePath := strings.ReplaceAll(filePath, "../app.nifdc.org.cn", "../upload.doc88.com/hbba.sacinfo.org.cn")
 				err = YlQxCopyFile(filePath, tempFilePath)
 				if err != nil {
 					fmt.Println(err)
