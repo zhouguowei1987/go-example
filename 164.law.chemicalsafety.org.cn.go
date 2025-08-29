@@ -263,8 +263,8 @@ func main() {
 			fmt.Println(err)
 			break
 		}
-		for _, law := range queryLawListResponseDataRecords {
-			fmt.Println("=====================开始处理数据 catrgory_name = ", lawListCategory.name, "=========================")
+		for id_index, law := range queryLawListResponseDataRecords {
+			fmt.Println("=========开始处理数据id_index==="+id_index+" =====catrgory_name = ", lawListCategory.name, "==============")
 
 			code := law.FileNo
 			code = strings.ReplaceAll(code, "/", "-")
