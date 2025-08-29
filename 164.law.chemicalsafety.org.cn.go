@@ -264,7 +264,7 @@ func main() {
 			break
 		}
 		for id_index, law := range queryLawListResponseDataRecords {
-			fmt.Println("=========开始处理数据id_index==="+id_index+" =====catrgory_name = ", lawListCategory.name, "==============")
+			fmt.Println("=========开始处理数据id_index==="+strconv.Itoa(id_index)+" =====catrgory_name = ", lawListCategory.name, "==============")
 
 			code := law.FileNo
 			code = strings.ReplaceAll(code, "/", "-")
