@@ -269,7 +269,6 @@ func main() {
 			code := law.FileNo
 			code = strings.ReplaceAll(code, "/", "-")
 			code = strings.ReplaceAll(code, "—", "-")
-			code = strings.ReplaceAll(code, "()", "")
 			fmt.Println(code)
 
 			title := law.Title
@@ -281,6 +280,7 @@ func main() {
 			fmt.Println(title)
 
 			filePath := "../law.chemicalsafety.org.cn/" + title + "(" + code + ")" + ".pdf"
+			filePath = strings.ReplaceAll(filePath, "()", "")
 			fmt.Println(filePath)
 
 			_, err = os.Stat(filePath)
