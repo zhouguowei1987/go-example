@@ -294,7 +294,6 @@ func main() {
 			fmt.Println(lawBaseInfoUrl)
 
 			lawBaseInfoRefererUrl := fmt.Sprintf("https://law.chemicalsafety.org.cn/law/info/%s", law.FileId)
-			fmt.Println(lawBaseInfoUrl)
 			queryLawBaseInfoResponseData, err := QueryLawBaseInfoUrl(lawBaseInfoUrl, lawBaseInfoRefererUrl)
 			if err != nil {
 				fmt.Println(err)
