@@ -269,6 +269,7 @@ func main() {
 			code := law.FileNo
 			code = strings.ReplaceAll(code, "/", "-")
 			code = strings.ReplaceAll(code, "—", "-")
+			code = strings.ReplaceAll(code, "()", "")
 			fmt.Println(code)
 
 			title := law.Title
