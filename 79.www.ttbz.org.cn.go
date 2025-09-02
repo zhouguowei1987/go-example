@@ -14,6 +14,7 @@ import (
 	"strconv"
 	"strings"
 	"time"
+	"math/rand"
 )
 
 var TbzCookie = "__jsluid_s=b7d35d18c6c44705ce234044421b8f67; Hm_lvt_8c446e9fafe752e4975210bc30d7ab9d=1752074026,1752916674,1753086531,1754059674; HMACCOUNT=1CCD0111717619C6; ASP.NET_SessionId=smepcq3yb0e4tp525qc2521i; Hm_lpvt_8c446e9fafe752e4975210bc30d7ab9d=1754298876"
@@ -23,8 +24,8 @@ var TbzCookie = "__jsluid_s=b7d35d18c6c44705ce234044421b8f67; Hm_lvt_8c446e9fafe
 // @Description https://www.ttbz.org.cn/，将全国团体标准信息平台Pdf文档入库
 func main() {
 //     144758
-	var startId = 145300
-	var endId = 145326
+	var startId = 145400
+	var endId = 145515
 	for id := startId; id <= endId; id++ {
 		fmt.Println(id)
 		pdfsUrl := fmt.Sprintf("https://www.ttbz.org.cn/Pdfs/Index/?ftype=st&pms=%d", id)
@@ -72,7 +73,8 @@ func main() {
 		fmt.Println("=======完成下载========")
 
 		// 设置倒计时
-		DownLoadTTbzTimeSleep := 10
+		// DownLoadTTbzTimeSleep := 10
+		DownLoadTTbzTimeSleep := rand.Intn(5)
 		for i := 1; i <= DownLoadTTbzTimeSleep; i++ {
 			time.Sleep(time.Second)
 			fmt.Println("id="+strconv.Itoa(id)+"===========操作完成，", "暂停", DownLoadTTbzTimeSleep, "秒，倒计时", i, "秒===========")
