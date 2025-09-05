@@ -118,7 +118,7 @@ type QueryBjJsListFormData struct {
 	OrderByDesc              string
 }
 
-var BjJsCookie = "JSESSIONID=BB2E476658D59EB2D06117C807C5445B; history={title:\"ä¸œåŸŽåŒºé\u009D©æ–°é‡Œ26ã€\u008128å\u008F·ä½\u008Få®…é¡¹ç›®å»ºè®¾æ–¹æ¡ˆ\",id:\"53613709\",url:\"/bjjs/sy/zwfw66/cxzx-sjzt/gcjsl/xmjsfa/dcqxmjsfags/53613709/index.shtml\",date:\"2025-08-22\"}"
+var BjJsCookie = "JSESSIONID=FB5FB9626CDB4EA358EE6E52981553BC"
 
 // 下载北京市住房和城乡建设委员会文档
 // @Title 下载北京市住房和城乡建设委员会文档

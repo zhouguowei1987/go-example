@@ -111,7 +111,7 @@ func NhcGovSetHttpProxy() (httpclient *http.Client) {
 // _yfxkpy_firsttime 1737352968986 2025-01-20 14:02:48
 // _yfxkpy_lasttime 1752595494940 2025-07-16 00:04:54
 // _yfxkpy_visittime 1752675674051 2025-07-16 22:21:14
-var NhcGovCookie = "5uRo8RWcod0KO=60gn6YSStIhgQLrerVuRPZIDrs2BFmduflPNi9cZs2B8HYMm34JLTYpatWC9kl1GV5j6pxUuLF.hFjMK_7_275Cq; _yfxkpy_ssid_10006654=%7B%22_yfxkpy_firsttime%22%3A%221752818262011%22%2C%22_yfxkpy_lasttime%22%3A%221752818262011%22%2C%22_yfxkpy_visittime%22%3A%221752818262011%22%2C%22_yfxkpy_cookie%22%3A%2220250718135742015352643484080141%22%7D; arialoadData=true; ariauseGraymode=false; ariaappid=e2dcc6e6e04fd7a68ae6f8b8a9be7f7d; 5uRo8RWcod0KP=0qCa4qYDjuCeiLs3gSJZHzOvpNA7VPz12bEaFjr9uFIjW5Hn0G79OztH4S4GEzUtlw3AzXuYYKEHT3RvbIUsWbfiLEELtrFllxGWweowAxOH2kLVu4kcN41IkKBsBqKsPJo0qBHWULVIC_fhWGFxZTY3DkFaxtXp.3quuzuIQiqV8.VMpgIzxT2Y7qcPcsPQgPmciQYZznNNPtdGly6EkNCsv4PElElzByPyjwDjUfN9J9t1XFVf2.iMAliaqgPHfnehXAKsSZeL5OzWrq6KSacdoz6DA204uGLGhuDG7dQpcqzmXe0D.lJitCYZl8SUjij.ooOyhJlTqq2eAroBS6XBk.VOwRX_3fXpkJlMYjanKKwjMb9JRpHtcPcFR.6Nk"
+var NhcGovCookie = "5uRo8RWcod0KO=603Se6al8mCmIyKI6qz89CLPxYBjv3jLkOmQKaig.o_VoxTKUs7u5.GLBoQZqQI8wKJkls3kv0n2fjI_ZRWBNuJa; enable_5uRo8RWcod0K=true; JSESSIONID=9A0FFE8B7C12DA49DC46A89E907F4E24; _yfxkpy_ssid_10006654=%7B%22_yfxkpy_firsttime%22%3A%221753431366046%22%2C%22_yfxkpy_lasttime%22%3A%221756871484612%22%2C%22_yfxkpy_visittime%22%3A%221756871484612%22%2C%22_yfxkpy_cookie%22%3A%2220250725161606048834284966558828%22%2C%22_yfxkpy_returncount%22%3A%225%22%7D; arialoadData=true; ariauseGraymode=false; 5uRo8RWcod0KP=0J7kXMoEtnoI3wXlgKUXJyFTl1EC4hEjlxCiYCzKLGsq2N277IMt8K91msNNyj08MAl1da0sJqCmX2ur7H5ooYn_pgA6Bmg3PgA308gFCr_NYXsWdQOkbHEva8OtY2i994yyfGOAlEjNxuQ0e5xaGyulB.pw9Pd0OOXwyyj8epLWwT88aUtxqVnMyqRDz2iykJqnz2rolBus4zWoCZkQQ6avliH8aGSzrb4H7qKzRNsJ5U3eA3GTOeHBe3B4by1t79DcRu3lhauCgh4BTExDSnJLYYSl0i5McJA_qrtLKi6K3BHo83gPPG2_H4iQzTgUjMwlbTqwN4mQJS2fZV2P3citl78G6OmyATJQTRMHR2QVvNKrFiXrZyG0WE1OCTpiSaZBVUl7SwTJjwpxYDkFGnq"
 
 type yfxkpySsid10006654 struct {
 	Yfxkpy_firsttime string `json:"_yfxkpy_firsttime"`
@@ -133,7 +133,7 @@ func create_yfxkpy_ssid() {
 		Yfxkpy_lasttime:  strconv.Itoa(int(now_milliseconds)),
 		Yfxkpy_visittime: strconv.Itoa(int(now_milliseconds)),
 		Yfxkpy_cookie:    now_day + "34962272829032799947",
-		//Yfxkpy_returncount: "1",
+// 		Yfxkpy_returncount: "1",
 	}
 	// 将结构体转换为JSON字节数组
 	yfxkpy_ssid_10006654_json_data, err := json.Marshal(yfxkpy_ssid_10006654)
@@ -145,7 +145,7 @@ func create_yfxkpy_ssid() {
 	yfxkpy_ssid_10006654_json_data_string = url.QueryEscape(yfxkpy_ssid_10006654_json_data_string)
 // 	fmt.Println(yfxkpy_ssid_10006654_json_data_string)
 
-	NhcGovCookie = fmt.Sprintf("5uRo8RWcod0KO=60TCvitvBLBpJ.NneNrtxj2tueZKlyI24gbWjpl854jkEZz3sSKw6Fj38Dsebktu.GtXtVNLfJPXDUX5oEP2eXWG; _yfxkpy_ssid_10006654=%s; arialoadData=true; ariauseGraymode=false; ariaappid=e2dcc6e6e04fd7a68ae6f8b8a9be7f7d; 5uRo8RWcod0KP=0wppx6pKHgHmzcaaFLzhBzJubKvmTBs6WFAqwUmIzmlA1pOIDwIcL2CL2FMlhn197kym19GvMt4Qti8H_gte3RV9l8SQurIKjPaH02OuPf9ido.mUeP2xF1B3MKdbArTCgVoEVlgR.WN7zuTO4p9in3QUXbDPYIdtE3wZ5I9BgSryi0cPHLn7iLLeOU3NEFICgZkYW.t6yUekcf3sFJnj6FqItzWQvosAurPwI5.ZbvhA_qvjJ1_QOHG5.gdBUwwFyXQ70SQV5AoDaz.oWrJOfRZZ0n4JdvBLWYwbxiYvAUA7714LNv5201kbA_bibfjdr5hZr69Q5_hShwXayd0f7hS6NL2kgPeiSrwgYRUVKrkosaBvyaI6RzZD4DDtkyVT1pZ1rPFSEE83aVPF03.H9q", yfxkpy_ssid_10006654_json_data_string)
+	NhcGovCookie = fmt.Sprintf("5uRo8RWcod0KO=603Se6al8mCmIyKI6qz89CLPxYBjv3jLkOmQKaig.o_VoxTKUs7u5.GLBoQZqQI8wKJkls3kv0n2fjI_ZRWBNuJa; enable_5uRo8RWcod0K=true; JSESSIONID=9A0FFE8B7C12DA49DC46A89E907F4E24; _yfxkpy_ssid_10006654=%s; arialoadData=true; ariauseGraymode=false; 5uRo8RWcod0KP=0J7kXMoEtnoI3wXlgKUXJyFTl1EC4hEjlxCiYCzKLGsq2N277IMt8K91msNNyj08MAl1da0sJqCmX2ur7H5ooYn_pgA6Bmg3PgA308gFCr_NYXsWdQOkbHEva8OtY2i994yyfGOAlEjNxuQ0e5xaGyulB.pw9Pd0OOXwyyj8epLWwT88aUtxqVnMyqRDz2iykJqnz2rolBus4zWoCZkQQ6avliH8aGSzrb4H7qKzRNsJ5U3eA3GTOeHBe3B4by1t79DcRu3lhauCgh4BTExDSnJLYYSl0i5McJA_qrtLKi6K3BHo83gPPG2_H4iQzTgUjMwlbTqwN4mQJS2fZV2P3citl78G6OmyATJQTRMHR2QVvNKrFiXrZyG0WE1OCTpiSaZBVUl7SwTJjwpxYDkFGnq", yfxkpy_ssid_10006654_json_data_string)
 // 	fmt.Println(NhcGovCookie)
 }
 
