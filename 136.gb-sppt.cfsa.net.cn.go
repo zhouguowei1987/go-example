@@ -22,11 +22,11 @@ import (
 	_ "golang.org/x/net/html"
 )
 
-var SpPtCfSaEnableHttpProxy = false
-var SpPtCfSaHttpProxyUrl = "111.225.152.186:8089"
-var SpPtCfSaHttpProxyUrlArr = make([]string, 0)
+var GbSpPtEnableHttpProxy = false
+var GbSpPtHttpProxyUrl = "111.225.152.186:8089"
+var GbSpPtHttpProxyUrlArr = make([]string, 0)
 
-func SpPtCfSaHttpProxy() error {
+func GbSpPtHttpProxy() error {
 	pageMax := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
 	for _, page := range pageMax {
 		freeProxyUrl := "https://www.beesproxy.com/free"
@@ -60,9 +60,9 @@ func SpPtCfSaHttpProxy() error {
 
 				switch protocol {
 				case "HTTP":
-					SpPtCfSaHttpProxyUrlArr = append(SpPtCfSaHttpProxyUrlArr, "http://"+ip+":"+port)
+					GbSpPtHttpProxyUrlArr = append(GbSpPtHttpProxyUrlArr, "http://"+ip+":"+port)
 				case "HTTPS":
-					SpPtCfSaHttpProxyUrlArr = append(SpPtCfSaHttpProxyUrlArr, "https://"+ip+":"+port)
+					GbSpPtHttpProxyUrlArr = append(GbSpPtHttpProxyUrlArr, "https://"+ip+":"+port)
 				}
 			}
 		}
@@ -70,24 +70,24 @@ func SpPtCfSaHttpProxy() error {
 	return nil
 }
 
-func SpPtCfSaSetHttpProxy() (httpclient *http.Client) {
-	if SpPtCfSaHttpProxyUrl == "" {
-		if len(SpPtCfSaHttpProxyUrlArr) <= 0 {
-			err := SpPtCfSaHttpProxy()
+func GbSpPtSetHttpProxy() (httpclient *http.Client) {
+	if GbSpPtHttpProxyUrl == "" {
+		if len(GbSpPtHttpProxyUrlArr) <= 0 {
+			err := GbSpPtHttpProxy()
 			if err != nil {
-				SpPtCfSaSetHttpProxy()
+				GbSpPtSetHttpProxy()
 			}
 		}
-		SpPtCfSaHttpProxyUrl = SpPtCfSaHttpProxyUrlArr[0]
-		if len(SpPtCfSaHttpProxyUrlArr) >= 2 {
-			SpPtCfSaHttpProxyUrlArr = SpPtCfSaHttpProxyUrlArr[1:]
+		GbSpPtHttpProxyUrl = GbSpPtHttpProxyUrlArr[0]
+		if len(GbSpPtHttpProxyUrlArr) >= 2 {
+			GbSpPtHttpProxyUrlArr = GbSpPtHttpProxyUrlArr[1:]
 		} else {
-			SpPtCfSaHttpProxyUrlArr = make([]string, 0)
+			GbSpPtHttpProxyUrlArr = make([]string, 0)
 		}
 	}
 
-	fmt.Println(SpPtCfSaHttpProxyUrl)
-	ProxyURL, _ := url.Parse(SpPtCfSaHttpProxyUrl)
+	fmt.Println(GbSpPtHttpProxyUrl)
+	ProxyURL, _ := url.Parse(GbSpPtHttpProxyUrl)
 	httpclient = &http.Client{
 		Transport: &http.Transport{
 			Proxy: http.ProxyURL(ProxyURL),
@@ -107,14 +107,14 @@ func SpPtCfSaSetHttpProxy() (httpclient *http.Client) {
 	return httpclient
 }
 
-type QuerySpPtCfSaListFormData struct {
+type QueryGbSpPtListFormData struct {
 	isLength      int
 	num_tn        int
 	standard_type string
 	keyword       string
 }
 
-type DownloadSpPtCfSaFormData struct {
+type DownloadGbSpPtFormData struct {
 	task       string
 	accessData string
 	bzlb       string
@@ -123,7 +123,7 @@ type DownloadSpPtCfSaFormData struct {
 	keyword    string
 }
 
-var SpPtCfSaCookie = "name=value; cookieName=cookieValue; JSESSIONID=1939457719D7E496EDAAB20F581FA15F"
+var GbSpPtCookie = "name=value; cookieName=cookieValue; JSESSIONID=1939457719D7E496EDAAB20F581FA15F"
 
 // 下载食品安全国家标准数据文档
 // @Title 下载食品安全国家标准数据文档
@@ -131,34 +131,34 @@ var SpPtCfSaCookie = "name=value; cookieName=cookieValue; JSESSIONID=1939457719D
 func main() {
 	pageListUrl := "https://sppt.cfsa.net.cn:8086/db?task=indexSearch"
 	fmt.Println(pageListUrl)
-	querySpPtCfSaListFormData := QuerySpPtCfSaListFormData{
+	queryGbSpPtListFormData := QueryGbSpPtListFormData{
 		isLength:      9999,
 		num_tn:        2,
 		standard_type: "",
 		keyword:       "",
 	}
-	querySpPtCfSaListResponse, err := QuerySpPtCfSaList(pageListUrl, querySpPtCfSaListFormData)
+	queryGbSpPtListResponse, err := QueryGbSpPtList(pageListUrl, queryGbSpPtListFormData)
 	if err != nil {
-		SpPtCfSaHttpProxyUrl = ""
+		GbSpPtHttpProxyUrl = ""
 		fmt.Println(err)
 	}
-	for id_index, spPtCfSa := range querySpPtCfSaListResponse {
+	for id_index, gbSpPt := range queryGbSpPtListResponse {
 		fmt.Println("=====================开始处理数据 id_index = ", id_index, "=========================")
-		code := spPtCfSa.CODE
+		code := gbSpPt.CODE
 		fmt.Println(code)
 
-		title := spPtCfSa.TITLE
+		title := gbSpPt.TITLE
 		title = strings.TrimSpace(title)
 		title = strings.ReplaceAll(title, "-", "")
 		title = strings.ReplaceAll(title, " ", "")
 		title = strings.ReplaceAll(title, "|", "-")
 		fmt.Println(title)
 
-		if len(spPtCfSa.FJ) <= 0 {
+		if len(gbSpPt.FJ) <= 0 {
 			fmt.Println("数据不完整，跳过")
 			continue
 		}
-		id_f := spPtCfSa.FJ[0].ID_F
+		id_f := gbSpPt.FJ[0].ID_F
 		fmt.Println(id_f)
 
 		filePath := "../sppt.cfsa.net.cn/" + title + "(" + code + ")" + ".pdf"
@@ -172,9 +172,9 @@ func main() {
 
 		fmt.Println("=======开始下载========")
 
-		downloadSpPtCfSaUrl := "https://sppt.cfsa.net.cn:8086/cfsa_aiguo"
-		fmt.Println(downloadSpPtCfSaUrl)
-		downloadSpPtCfSaFormData := DownloadSpPtCfSaFormData{
+		downloadGbSpPtUrl := "https://sppt.cfsa.net.cn:8086/cfsa_aiguo"
+		fmt.Println(downloadGbSpPtUrl)
+		downloadGbSpPtFormData := DownloadGbSpPtFormData{
 			task:       "d_p",
 			accessData: "gj",
 			bzlb:       "",
@@ -182,37 +182,44 @@ func main() {
 			file_guid:  id_f,
 			keyword:    "",
 		}
-		err := downloadSpPtCfSa(downloadSpPtCfSaUrl, downloadSpPtCfSaFormData, filePath)
+		err := downloadGbSpPt(downloadGbSpPtUrl, downloadGbSpPtFormData, filePath)
+		if err != nil {
+			fmt.Println(err)
+			continue
+		}
+		//复制文件
+		tempFilePath := strings.ReplaceAll(filePath, "../sppt.cfsa.net.cn", "../upload.doc88.com/hbba.sacinfo.org.cn")
+		err = copyGbSpPtFile(filePath, tempFilePath)
 		if err != nil {
 			fmt.Println(err)
 			continue
 		}
 		fmt.Println("=======完成下载========")
-		//DownLoadSpPtCfSaTimeSleep := 10
-		DownLoadSpPtCfSaTimeSleep := rand.Intn(5)
-		for i := 1; i <= DownLoadSpPtCfSaTimeSleep; i++ {
+		//DownLoadGbSpPtTimeSleep := 10
+		DownLoadGbSpPtTimeSleep := rand.Intn(5)
+		for i := 1; i <= DownLoadGbSpPtTimeSleep; i++ {
 			time.Sleep(time.Second)
-			fmt.Println("title="+title+"===========下载", title, "成功，暂停", DownLoadSpPtCfSaTimeSleep, "秒，倒计时", i, "秒===========")
+			fmt.Println("title="+title+"===========下载", title, "成功，暂停", DownLoadGbSpPtTimeSleep, "秒，倒计时", i, "秒===========")
 		}
 	}
 }
 
-type QuerySpPtCfSaListResponse struct {
-	CODE      string                `json:"CODE"`
-	FJ        []QuerySpPtCfSaListFJ `json:"FJ"`
-	ID        string                `json:"ID"`
-	PDATE     string                `json:"PDATE"`
-	SSRQ      string                `json:"SSRQ"`
-	TABLENAME string                `json:"TABLENAME"`
-	TITLE     string                `json:"TITLE"`
+type QueryGbSpPtListResponse struct {
+	CODE      string              `json:"CODE"`
+	FJ        []QueryGbSpPtListFJ `json:"FJ"`
+	ID        string              `json:"ID"`
+	PDATE     string              `json:"PDATE"`
+	SSRQ      string              `json:"SSRQ"`
+	TABLENAME string              `json:"TABLENAME"`
+	TITLE     string              `json:"TITLE"`
 }
 
-type QuerySpPtCfSaListFJ struct {
+type QueryGbSpPtListFJ struct {
 	FACT_NAME string `json:"FACT_NAME"`
 	ID_F      string `json:"ID_F"`
 }
 
-func QuerySpPtCfSaList(requestUrl string, querySpPtCfSaListFormData QuerySpPtCfSaListFormData) (querySpPtCfSaListResponse []QuerySpPtCfSaListResponse, err error) {
+func QueryGbSpPtList(requestUrl string, queryGbSpPtListFormData QueryGbSpPtListFormData) (queryGbSpPtListResponse []QueryGbSpPtListResponse, err error) {
 	// 初始化客户端
 	var client *http.Client = &http.Client{
 		Transport: &http.Transport{
@@ -229,26 +236,26 @@ func QuerySpPtCfSaList(requestUrl string, querySpPtCfSaListFormData QuerySpPtCfS
 			ResponseHeaderTimeout: time.Second * 3,
 		},
 	}
-	if SpPtCfSaEnableHttpProxy {
-		client = SpPtCfSaSetHttpProxy()
+	if GbSpPtEnableHttpProxy {
+		client = GbSpPtSetHttpProxy()
 	}
 	postData := url.Values{}
-	postData.Add("isLength", strconv.Itoa(querySpPtCfSaListFormData.isLength))
-	postData.Add("num_tn", strconv.Itoa(querySpPtCfSaListFormData.num_tn))
-	postData.Add("standard_type", querySpPtCfSaListFormData.standard_type)
-	postData.Add("keyword", querySpPtCfSaListFormData.keyword)
+	postData.Add("isLength", strconv.Itoa(queryGbSpPtListFormData.isLength))
+	postData.Add("num_tn", strconv.Itoa(queryGbSpPtListFormData.num_tn))
+	postData.Add("standard_type", queryGbSpPtListFormData.standard_type)
+	postData.Add("keyword", queryGbSpPtListFormData.keyword)
 	req, err := http.NewRequest("POST", requestUrl, strings.NewReader(postData.Encode())) //建立连接
 
-	querySpPtCfSaListResponse = []QuerySpPtCfSaListResponse{}
+	queryGbSpPtListResponse = []QueryGbSpPtListResponse{}
 	if err != nil {
-		return querySpPtCfSaListResponse, err
+		return queryGbSpPtListResponse, err
 	}
 
 	req.Header.Set("Accept", "*/*")
 	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
 	req.Header.Set("Connection", "keep-alive")
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")
-	req.Header.Set("Cookie", SpPtCfSaCookie)
+	req.Header.Set("Cookie", GbSpPtCookie)
 	req.Header.Set("Host", "sppt.cfsa.net.cn:8086")
 	req.Header.Set("Origin", "https://sppt.cfsa.net.cn:8086")
 	req.Header.Set("Referer", "https://sppt.cfsa.net.cn:8086/db")
@@ -257,25 +264,25 @@ func QuerySpPtCfSaList(requestUrl string, querySpPtCfSaListFormData QuerySpPtCfS
 	resp, err := client.Do(req) //拿到返回的内容
 	if err != nil {
 		fmt.Println(err)
-		return querySpPtCfSaListResponse, err
+		return queryGbSpPtListResponse, err
 	}
 	defer resp.Body.Close()
 	if resp.StatusCode != http.StatusOK {
-		return querySpPtCfSaListResponse, errors.New("http status :" + strconv.Itoa(resp.StatusCode))
+		return queryGbSpPtListResponse, errors.New("http status :" + strconv.Itoa(resp.StatusCode))
 	}
 	respBytes, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		fmt.Println(err)
-		return querySpPtCfSaListResponse, err
+		return queryGbSpPtListResponse, err
 	}
-	err = json.Unmarshal(respBytes, &querySpPtCfSaListResponse)
+	err = json.Unmarshal(respBytes, &queryGbSpPtListResponse)
 	if err != nil {
-		return querySpPtCfSaListResponse, err
+		return queryGbSpPtListResponse, err
 	}
-	return querySpPtCfSaListResponse, nil
+	return queryGbSpPtListResponse, nil
 }
 
-func downloadSpPtCfSa(requestUrl string, downloadSpPtCfSaFormData DownloadSpPtCfSaFormData, filePath string) error {
+func downloadGbSpPt(requestUrl string, downloadGbSpPtFormData DownloadGbSpPtFormData, filePath string) error {
 	// 初始化客户端
 	var client *http.Client = &http.Client{
 		Transport: &http.Transport{
@@ -292,16 +299,16 @@ func downloadSpPtCfSa(requestUrl string, downloadSpPtCfSaFormData DownloadSpPtCf
 			ResponseHeaderTimeout: time.Second * 3,
 		},
 	}
-	if SpPtCfSaEnableHttpProxy {
-		client = SpPtCfSaSetHttpProxy()
+	if GbSpPtEnableHttpProxy {
+		client = GbSpPtSetHttpProxy()
 	}
 	postData := url.Values{}
-	postData.Add("task", downloadSpPtCfSaFormData.task)
-	postData.Add("accessData", downloadSpPtCfSaFormData.accessData)
-	postData.Add("bzlb", downloadSpPtCfSaFormData.bzlb)
-	postData.Add("fact_name", downloadSpPtCfSaFormData.fact_name)
-	postData.Add("file_guid", downloadSpPtCfSaFormData.file_guid)
-	postData.Add("keyword", downloadSpPtCfSaFormData.keyword)
+	postData.Add("task", downloadGbSpPtFormData.task)
+	postData.Add("accessData", downloadGbSpPtFormData.accessData)
+	postData.Add("bzlb", downloadGbSpPtFormData.bzlb)
+	postData.Add("fact_name", downloadGbSpPtFormData.fact_name)
+	postData.Add("file_guid", downloadGbSpPtFormData.file_guid)
+	postData.Add("keyword", downloadGbSpPtFormData.keyword)
 	req, err := http.NewRequest("POST", requestUrl, strings.NewReader(postData.Encode())) //建立连接
 	if err != nil {
 		return err
@@ -310,7 +317,7 @@ func downloadSpPtCfSa(requestUrl string, downloadSpPtCfSaFormData DownloadSpPtCf
 	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
 	req.Header.Set("Connection", "keep-alive")
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")
-	req.Header.Set("Cookie", SpPtCfSaCookie)
+	req.Header.Set("Cookie", GbSpPtCookie)
 	req.Header.Set("Host", "sppt.cfsa.net.cn:8086")
 	req.Header.Set("Origin", "https://sppt.cfsa.net.cn:8086")
 	req.Header.Set("Referer", "https://sppt.cfsa.net.cn:8086/db")
@@ -344,5 +351,32 @@ func downloadSpPtCfSa(requestUrl string, downloadSpPtCfSaFormData DownloadSpPtCf
 	if err != nil {
 		return err
 	}
+	return nil
+}
+
+func copyGbSpPtFile(src, dst string) (err error) {
+	in, err := os.Open(src)
+	if err != nil {
+		return err
+	}
+	defer func(in *os.File) {
+		err := in.Close()
+		if err != nil {
+			return
+		}
+	}(in)
+
+	out, err := os.Create(dst)
+	if err != nil {
+		return err
+	}
+	defer func(out *os.File) {
+		err := out.Close()
+		if err != nil {
+			return
+		}
+	}(out)
+
+	_, err = io.Copy(out, in)
 	return nil
 }
