@@ -116,10 +116,10 @@ func main() {
 	page := 1
 	maxPage := 50
 	// true:地方合同范本 false:部委合同范本
-	locHtSfWb := false
-	suffixHtSfWb := ".docx"
+	locHtSfWb := true
+	suffixHtSfWb := ".pdf"
 	// 1:docx 2:pdf
-	typeHtSfWb := 1
+	typeHtSfWb := 2
 	isPageListGo := true
 	for isPageListGo {
 		if page > maxPage {
@@ -188,8 +188,8 @@ func main() {
 				fmt.Println("page="+strconv.Itoa(page)+",filePath="+filePath+"===========下载成功 暂停", DownLoadHtSfWbTimeSleep, "秒 倒计时", i, "秒===========")
 			}
 		}
-		DownLoadHtSfWbPageTimeSleep := 10
-		// DownLoadHtSfWbPageTimeSleep := rand.Intn(5)
+		// DownLoadHtSfWbPageTimeSleep := 10
+		DownLoadHtSfWbPageTimeSleep := rand.Intn(5)
 		for i := 1; i <= DownLoadHtSfWbPageTimeSleep; i++ {
 			time.Sleep(time.Second)
 			fmt.Println("page="+strconv.Itoa(page)+"=========== 暂停", DownLoadHtSfWbPageTimeSleep, "秒 倒计时", i, "秒===========")

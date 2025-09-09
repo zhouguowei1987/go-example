@@ -166,8 +166,8 @@ func main() {
                     fmt.Println("page="+strconv.Itoa(current)+"=======fileName=", fileName, "成功，====== 暂停", downloadWebFreePdfSleep, "秒，倒计时", i, "秒===========")
                 }
 			}
-			DownLoadWebFreePageTimeSleep := 10
-            // DownLoadWebFreePageTimeSleep := rand.Intn(5)
+			// DownLoadWebFreePageTimeSleep := 10
+            DownLoadWebFreePageTimeSleep := rand.Intn(5)
             for i := 1; i <= DownLoadWebFreePageTimeSleep; i++ {
                 time.Sleep(time.Second)
                 fmt.Println("page="+strconv.Itoa(current)+"======标准类别="+webfree.name+"====== 暂停", DownLoadWebFreePageTimeSleep, "秒 倒计时", i, "秒===========")
