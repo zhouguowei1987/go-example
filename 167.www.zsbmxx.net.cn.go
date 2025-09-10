@@ -38,12 +38,12 @@ var ZsBmXxCookie = "PUBLICCMS_ANALYTICS_ID=f51aa4cd-45db-427f-bfff-bc7b20a12e3a"
 // @Title 获取中山市地方标准文档
 // @Description http://www.zsbmxx.net.cn/，获取中山市地方标准文档
 func main() {
-	page := 0
+	page := 1
 	isPageListGo := true
 	for isPageListGo {
 		requestListUrl := "http://www.zsbmxx.net.cn/localstandard/"
 		referUrl := "http://www.zsbmxx.net.cn/localstandard/"
-		if page > 0 {
+		if page > 1 {
 			requestListUrl = fmt.Sprintf("http://www.zsbmxx.net.cn/localstandard/index_%d.html", page)
 		}
 		if page >= 2 {
