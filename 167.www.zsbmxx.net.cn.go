@@ -12,7 +12,7 @@ import (
 	"strconv"
 	"strings"
 	"time"
-
+	"math/rand"
 	"github.com/antchfx/htmlquery"
 	"golang.org/x/net/html"
 )
@@ -139,14 +139,14 @@ func main() {
 				fmt.Println("=======完成下载========")
 
 				// 设置倒计时
-				DownLoadTZsBmXxTimeSleep := 10
+				DownLoadTZsBmXxTimeSleep := rand.Intn(5)
 				for i := 1; i <= DownLoadTZsBmXxTimeSleep; i++ {
 					time.Sleep(time.Second)
 					fmt.Println("page = "+strconv.Itoa(page)+"===title="+chineseTitle+"===========操作完成，", "暂停", DownLoadTZsBmXxTimeSleep, "秒，倒计时", i, "秒===========")
 				}
 			}
-			DownLoadZsBmXxPageTimeSleep := 10
-			// DownLoadZsBmXxPageTimeSleep := rand.Intn(5)
+			// DownLoadZsBmXxPageTimeSleep := 10
+			DownLoadZsBmXxPageTimeSleep := rand.Intn(5)
 			for i := 1; i <= DownLoadZsBmXxPageTimeSleep; i++ {
 				time.Sleep(time.Second)
 				fmt.Println("page = "+strconv.Itoa(page)+"========= 暂停", DownLoadZsBmXxPageTimeSleep, "秒 倒计时", i, "秒===========")
