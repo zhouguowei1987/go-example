@@ -112,7 +112,7 @@ func main() {
 					continue
 				}
 				bzDownloadHref := htmlquery.SelectAttr(bzDetailANode, "href")
-				fmt.Println(bzDownloadHref)
+// 				fmt.Println(bzDownloadHref)
 				if strings.Contains(bzDownloadHref, ".pdf") == false {
 					fmt.Println("附件不是pdf文件，跳过")
 					continue
