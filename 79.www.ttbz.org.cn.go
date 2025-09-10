@@ -25,7 +25,7 @@ var TbzCookie = "__jsluid_s=b7d35d18c6c44705ce234044421b8f67; Hm_lvt_8c446e9fafe
 func main() {
 //     144758
 	var startId = 145900
-	var endId = 145986
+	var endId = 145989
 	for id := startId; id <= endId; id++ {
 		fmt.Println(id)
 		pdfsUrl := fmt.Sprintf("https://www.ttbz.org.cn/Pdfs/Index/?ftype=st&pms=%d", id)
