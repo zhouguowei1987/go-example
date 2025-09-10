@@ -35,40 +35,49 @@ func SjFgSetHttpProxy() (httpclient *http.Client) {
 
 type SjFgCategory struct {
 	validLevel string
+	validLevelChild string
 	departDuty int
 }
 
 var sjFgCategory = []SjFgCategory{
 	{
 		validLevel: "法律",
+		validLevelChild: "以市场监管部门为主要执行部门",
 		departDuty: 4001,
 	},
 	{
 		validLevel: "法律",
+		validLevelChild: "其他涉及市场监管部门职能",
 		departDuty: 4002,
 	},
 	{
 		validLevel: "法律",
+		validLevelChild: "行政执法普遍适用",
 		departDuty: 4003,
 	},
 	{
 		validLevel: "行政法规",
+		validLevelChild: "以市场监管部门为主要执行部门",
 		departDuty: 4001,
 	},
 	{
 		validLevel: "行政法规",
+		validLevelChild: "其他涉及市场监管部门职能",
 		departDuty: 4002,
 	},
 	{
 		validLevel: "行政法规",
+		validLevelChild: "行政执法普遍适用",
 		departDuty: 4003,
 	},
 	{
 		validLevel: "规章",
+		validLevelChild: "总局公布的规章",
 		departDuty: 5001,
 	},
 	{
 		validLevel: "规章",
+		validLevelChild: "总局参与的联合规章",
 		departDuty: 5003,
 	},
 }
@@ -101,7 +110,6 @@ func main() {
 	for _, sjfg := range sjFgCategory {
 		pageNo := 1
 		pageSize := 10
-		maxPageNo := 10
 		isPageListGo := true
 		requestUrl := "https://sjfg.samr.gov.cn/law/law_search/getLawStore.do"
 		for isPageListGo {
@@ -119,19 +127,20 @@ func main() {
 				startTime:   "",
 				pubTime:     "",
 			}
+			fmt.Println(sjFgListFormData)
 			sjFgListResponsePage, err := SjFgList(requestUrl, sjFgListFormData)
 			if err != nil {
 				fmt.Println(err)
 				break
 			}
-			maxPageNo = (sjFgListResponsePage.Count % pageSize) + 1
+			maxPageNo := (sjFgListResponsePage.Count / pageSize) + 1
 			if pageNo >= maxPageNo {
 				isPageListGo = false
 				break
 			}
 			for _, result := range sjFgListResponsePage.Result {
 				fmt.Println("============================================================================")
-				fmt.Println("=======当前页为：" + strconv.Itoa(pageNo) + "========类别=" + sjfg.validLevel)
+				fmt.Println("=======当前页为：" + strconv.Itoa(pageNo) + "========类别=" + sjfg.validLevel + "-" + sjfg.validLevelChild)
 
 				lawId := result[0]
 				fmt.Println(lawId)
@@ -162,7 +171,7 @@ func main() {
 						fmt.Println("pdf文档已下载过，跳过")
 						continue
 					}
-					fmt.Println("=======开始下载" + strconv.Itoa(pageNo) + "========")
+					fmt.Println("=======开始下载doc文件========")
 					downLoadUrl := fmt.Sprintf("https://sjfg.samr.gov.cn/law/file%s", docName)
 					err = downloadSjFg(downLoadUrl, docFilePath)
 					if err != nil {
@@ -198,7 +207,7 @@ func main() {
 						fmt.Println("pdf文档已下载过，跳过")
 						continue
 					}
-					fmt.Println("=======开始下载" + strconv.Itoa(pageNo) + "========")
+					fmt.Println("=======开始下载pdf文件========")
 					downLoadUrl := fmt.Sprintf("https://sjfg.samr.gov.cn/law/file%s", pdfName)
 					err = downloadSjFg(downLoadUrl, pdfFilePath)
 					if err != nil {
@@ -222,11 +231,11 @@ func main() {
 					}
 				}
 			}
-			DownLoadSjFgPageTimeSleep := 10
-			// DownLoadSjFgPageTimeSleep := rand.Intn(5)
+			// DownLoadSjFgPageTimeSleep := 10
+			DownLoadSjFgPageTimeSleep := rand.Intn(5)
 			for i := 1; i <= DownLoadSjFgPageTimeSleep; i++ {
 				time.Sleep(time.Second)
-				fmt.Println("page="+strconv.Itoa(pageNo)+"======标准类别="+sjfg.validLevel+"====== 暂停", DownLoadSjFgPageTimeSleep, "秒 倒计时", i, "秒===========")
+				fmt.Println("page="+strconv.Itoa(pageNo)+"======标准类别=" + sjfg.validLevel + "-" + sjfg.validLevelChild+"====== 暂停", DownLoadSjFgPageTimeSleep, "秒 倒计时", i, "秒===========")
 			}
 			pageNo++
 			if pageNo > maxPageNo {
