@@ -186,7 +186,7 @@ func main() {
 			fmt.Println("=======开始下载========")
 
 			requestFlkDownloadUrl := fmt.Sprintf("https://flk.npc.gov.cn/law-search/download/pc?format=docx&bbbs=%s", flk.Bbbs)
-			fmt.Println(requestFlkDownloadUrl)
+			// fmt.Println(requestFlkDownloadUrl)
 			requestFlkDownloadReferer := fmt.Sprintf("https://flk.npc.gov.cn/detail?id=%s&fileId=&type=&title=%s", flk.Bbbs, flk.Title)
 			queryFlkDownloadUrlResponseData, err := QueryFlkDownloadUrl(requestFlkDownloadUrl, requestFlkDownloadReferer)
 			if err != nil {
@@ -195,7 +195,7 @@ func main() {
 			}
 
 			downloadUrl := queryFlkDownloadUrlResponseData.Url
-			fmt.Println(downloadUrl)
+			// fmt.Println(downloadUrl)
 
 			fmt.Println("=======开始下载" + title + "========")
 

@@ -716,6 +716,11 @@ func main() {
 			pCid:    8095,
 			Price:   200,
 		},
+		{
+			dirName: "flk.npc.gov.cn",
+			pCid:    8095,
+			Price:   200,
+		},
 	}
 	rootPath := "../upload.doc88.com/"
 	for _, childDir := range uploadChildDirArr {
