@@ -221,8 +221,8 @@ func main() {
 				fmt.Println("page="+strconv.Itoa(page)+",filePath="+filePath+"===========下载成功 暂停", DownLoadFlkTimeSleep, "秒 倒计时", i, "秒===========")
 			}
 		}
-		DownLoadFlkPageTimeSleep := 10
-		// DownLoadFlkPageTimeSleep := rand.Intn(5)
+		// DownLoadFlkPageTimeSleep := 10
+		DownLoadFlkPageTimeSleep := rand.Intn(5)
 		for i := 1; i <= DownLoadFlkPageTimeSleep; i++ {
 			time.Sleep(time.Second)
 			fmt.Println("page="+strconv.Itoa(page)+"=========== 暂停", DownLoadFlkPageTimeSleep, "秒 倒计时", i, "秒===========")
