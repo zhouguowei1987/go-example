@@ -174,7 +174,7 @@ func main() {
 			title = strings.ReplaceAll(title, "--", "-")
 			fmt.Println(title)
 
-			filePath := "../flk.npc.gov.cn/" + title + "-" + flk.Flxz + "(" + gbrq + ")" + ".docx"
+			filePath := "../flk.npc.gov.cn/flk.npc.gov.cn/" + title + "-" + flk.Flxz + "(" + gbrq + ")" + ".docx"
 			fmt.Println(filePath)
 
 			_, err = os.Stat(filePath)
