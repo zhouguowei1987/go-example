@@ -206,13 +206,6 @@ func main() {
 				fmt.Println(err)
 				continue
 			}
-			//复制文件
-			tempFilePath := strings.ReplaceAll(filePath, "../flk.npc.gov.cn", "../upload.doc88.com/flk.npc.gov.cn")
-			err = copyFlkFile(filePath, tempFilePath)
-			if err != nil {
-				fmt.Println(err)
-				continue
-			}
 			fmt.Println("=======下载完成========")
 			//DownLoadFlkTimeSleep := 10
 			DownLoadFlkTimeSleep := rand.Intn(5)
@@ -465,32 +458,5 @@ func downloadFlk(attachmentUrl string, referer string, filePath string) error {
 	if err != nil {
 		return err
 	}
-	return nil
-}
-
-func copyFlkFile(src, dst string) (err error) {
-	in, err := os.Open(src)
-	if err != nil {
-		return err
-	}
-	defer func(in *os.File) {
-		err := in.Close()
-		if err != nil {
-			return
-		}
-	}(in)
-
-	out, err := os.Create(dst)
-	if err != nil {
-		return err
-	}
-	defer func(out *os.File) {
-		err := out.Close()
-		if err != nil {
-			return
-		}
-	}(out)
-
-	_, err = io.Copy(out, in)
 	return nil
 }
