@@ -102,7 +102,7 @@ func FlkSetHttpProxy() (httpclient *http.Client) {
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	return httpclient
@@ -131,9 +131,9 @@ var FlkCookie = "Hm_lvt_54434aa6770b6d9fef104d146430b53b=1754290987; wzws_sessio
 func main() {
 	pageListUrl := "https://flk.npc.gov.cn/law-search/search/list"
 	fmt.Println(pageListUrl)
-	page := 1
-	maxPage := 500
-	rows := 20
+	page := 46
+	maxPage := 100
+	rows := 100
 	isPageListGo := true
 	for isPageListGo {
 		if page > maxPage {
@@ -206,6 +206,14 @@ func main() {
 				fmt.Println(err)
 				continue
 			}
+
+			//复制文件
+			tempFilePath := strings.ReplaceAll(filePath, "../flk.npc.gov.cn/flk.npc.gov.cn", "../flk.npc.gov.cn/temp-flk.npc.gov.cn")
+			err = copyFlkFile(filePath, tempFilePath)
+			if err != nil {
+				fmt.Println(err)
+				continue
+			}
 			fmt.Println("=======下载完成========")
 			//DownLoadFlkTimeSleep := 10
 			DownLoadFlkTimeSleep := rand.Intn(5)
@@ -260,7 +268,7 @@ func QueryFlkList(requestUrl string, queryFlkListRequestPayload QueryFlkListRequ
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if FlkEnableHttpProxy {
@@ -346,7 +354,7 @@ func QueryFlkDownloadUrl(requestUrl string, referer string) (queryFlkDownloadUrl
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if FlkEnableHttpProxy {
@@ -411,7 +419,7 @@ func downloadFlk(attachmentUrl string, referer string, filePath string) error {
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if FlkEnableHttpProxy {
@@ -459,4 +467,31 @@ func downloadFlk(attachmentUrl string, referer string, filePath string) error {
 		return err
 	}
 	return nil
+}
+
+func copyFlkFile(src, dst string) (err error) {
+	in, err := os.Open(src)
+	if err != nil {
+		return
+	}
+	defer func(in *os.File) {
+		err := in.Close()
+		if err != nil {
+			return
+		}
+	}(in)
+
+	out, err := os.Create(dst)
+	if err != nil {
+		return
+	}
+	defer func(out *os.File) {
+		err := out.Close()
+		if err != nil {
+			return
+		}
+	}(out)
+
+	_, err = io.Copy(out, in)
+	return
 }
