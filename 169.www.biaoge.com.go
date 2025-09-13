@@ -19,7 +19,7 @@ import (
 // @Title 获取表格网文档
 // @Description https://www.biaoge.com/，将表格网文档入库
 func main() {
-	var startId = 3417
+	var startId = 3430
 	var endId = 20949
 	for id := startId; id <= endId; id++ {
 		detailUrl := fmt.Sprintf("https://www.biaoge.com/cat/%d.html", id)
@@ -40,8 +40,9 @@ func main() {
 		fileType = strings.TrimSpace(fileType)
 		fileType = strings.ReplaceAll(fileType, "文件格式：", "")
 		fileType = strings.ToLower(fileType)
-		if strings.Index(fileType, "doc") == -1 {
-			fmt.Println("不是doc文档")
+		fmt.Println(fileType)
+		if strings.Index(fileType, "doc") == -1 && strings.Index(fileType, "xls") == -1 && strings.Index(fileType, "pdf") == -1 {
+			fmt.Println("不是doc、xls、pdf文档，跳过")
 			continue
 		}
 
@@ -61,6 +62,7 @@ func main() {
 		fmt.Println(cat)
 
 		filePath := "../www.biaoge.com/www.biaoge.com/" + title + "(" + cat + ")" + "." + fileType
+		fmt.Println(filePath)
 		_, err = os.Stat(filePath)
 		if err == nil {
 			fmt.Println("文档已下载过，跳过")
