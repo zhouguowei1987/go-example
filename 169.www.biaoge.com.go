@@ -41,8 +41,8 @@ func main() {
 		fileType = strings.ReplaceAll(fileType, "文件格式：", "")
 		fileType = strings.ToLower(fileType)
 		fmt.Println(fileType)
-		if strings.Index(fileType, "doc") == -1 && strings.Index(fileType, "xls") == -1 && strings.Index(fileType, "pdf") == -1 {
-			fmt.Println("不是doc、xls、pdf文档，跳过")
+		if strings.Index(fileType, "doc") == -1 && strings.Index(fileType, "xls") == -1 {
+			fmt.Println("不是doc、xls文档，跳过")
 			continue
 		}
 
@@ -62,6 +62,10 @@ func main() {
 		fmt.Println(cat)
 
 		filePath := "../www.biaoge.com/www.biaoge.com/" + title + "(" + cat + ")" + "." + fileType
+		if strings.Index(filePath, "会计学堂软件") != -1 {
+			fmt.Println("含有“会计学堂软件”字样，跳过")
+			continue
+		}
 		fmt.Println(filePath)
 		_, err = os.Stat(filePath)
 		if err == nil {
