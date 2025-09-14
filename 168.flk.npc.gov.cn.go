@@ -131,7 +131,7 @@ var FlkCookie = "Hm_lvt_54434aa6770b6d9fef104d146430b53b=1754290987; wzws_sessio
 func main() {
 	pageListUrl := "https://flk.npc.gov.cn/law-search/search/list"
 	fmt.Println(pageListUrl)
-	page := 46
+	page := 1
 	maxPage := 100
 	rows := 100
 	isPageListGo := true
