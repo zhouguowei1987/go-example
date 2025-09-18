@@ -18,6 +18,7 @@ import (
 	"strconv"
 	"strings"
 	"time"
+	"rsc.io/pdf"
 )
 
 // Doc88Cookie 15238369929
@@ -794,33 +795,33 @@ func main() {
 				pDocFormat = "PPTX"
 			}
 
-			//filePageNum := 0
-			//if fileExt == ".pdf" {
-			//	// 获取PDF文件，获取总页数
-			//	if pdfFile, err := pdf.Open(filePath); err == nil {
-			//		filePageNum = pdfFile.NumPage()
-			//	}
-			//}
-			////根据页数设置价格
-			//if filePageNum > 0 {
-			//	if filePageNum > 0 && filePageNum <= 5 {
-			//		price = 288
-			//	} else if filePageNum > 5 && filePageNum <= 10 {
-			//		price = 388
-			//	} else if filePageNum > 10 && filePageNum <= 15 {
-			//		price = 488
-			//	} else if filePageNum > 15 && filePageNum <= 20 {
-			//		price = 588
-			//	} else if filePageNum > 20 && filePageNum <= 25 {
-			//		price = 688
-			//	} else if filePageNum > 25 && filePageNum <= 30 {
-			//		price = 788
-			//	} else if filePageNum > 30 && filePageNum <= 35 {
-			//		price = 888
-			//	} else {
-			//		price = 988
-			//	}
-			//}
+			filePageNum := 0
+			if fileExt == ".pdf" {
+				// 获取PDF文件，获取总页数
+				if pdfFile, err := pdf.Open(filePath); err == nil {
+					filePageNum = pdfFile.NumPage()
+				}
+			}
+			//根据页数设置价格
+			if filePageNum > 0 {
+				if filePageNum > 0 && filePageNum <= 5 {
+					price = 288
+				} else if filePageNum > 5 && filePageNum <= 10 {
+					price = 388
+				} else if filePageNum > 10 && filePageNum <= 15 {
+					price = 488
+				} else if filePageNum > 15 && filePageNum <= 20 {
+					price = 588
+				} else if filePageNum > 20 && filePageNum <= 25 {
+					price = 688
+				} else if filePageNum > 25 && filePageNum <= 30 {
+					price = 788
+				} else if filePageNum > 30 && filePageNum <= 35 {
+					price = 888
+				} else {
+					price = 988
+				}
+			}
 
 			// 将已上传的文件转移到指定文件夹
 			// 将上传过文件移动到"../final-upload.doc88.com/"
