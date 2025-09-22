@@ -77,7 +77,7 @@ type DownLoadWebFreeResponse struct {
 func main() {
 	for _, webfree := range webfrees {
 		current := 1
-		maxCurrent := 10
+		maxCurrent := 5
 		isPageListGo := true
 		for isPageListGo {
 			if current >= maxCurrent {
@@ -195,7 +195,7 @@ func DownLoadWebFreeUrl(downLoadWebFreeFormData DownLoadWebFreeFormData) (downLo
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if WebFreeEnableHttpProxy {
@@ -268,7 +268,7 @@ func downloadWebFree(attachmentUrl string, filePath string) error {
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if WebFreeEnableHttpProxy {
