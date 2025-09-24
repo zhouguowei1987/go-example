@@ -3,7 +3,6 @@ package main
 import (
 	"errors"
 	"fmt"
-	"github.com/antchfx/htmlquery"
 	"io"
 	"math/rand"
 	"net"
@@ -14,6 +13,8 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/antchfx/htmlquery"
 )
 
 const (
@@ -50,6 +51,8 @@ var AllTopEduSubject = []TopEduSubject{
 	},
 }
 
+var topEduCookie = "__51vcke__JnUuVbB1pNBuOI9J=7a1ac260-d305-5b5d-b8ff-d2650e75d779; __51vuft__JnUuVbB1pNBuOI9J=1716949675665; PHPSESSID=jq61a9p953v8jie4hppb7nd4cg; __51uvsct__JnUuVbB1pNBuOI9J=35; __vtins__JnUuVbB1pNBuOI9J=%7B%22sid%22%3A%20%227d8cab99-6cec-5870-9502-d2cd0b075810%22%2C%20%22vd%22%3A%2027%2C%20%22stt%22%3A%20687880%2C%20%22dr%22%3A%2011585%2C%20%22expires%22%3A%201758254476389%2C%20%22ct%22%3A%201758252676389%7D"
+
 // ychEduSpider 获取鼎尖资源网文档
 // @Title 获取鼎尖资源网文档
 // @Description http://topedu.ybep.com.cn/，获取鼎尖资源网文档
@@ -85,7 +88,7 @@ func main() {
 					fileName = strings.ReplaceAll(fileName, "_", "")
 					fileName = strings.ReplaceAll(fileName, " ", "")
 					fmt.Println(fileName)
-					if !strings.Contains(fileName, "doc") {
+					if !strings.Contains(fileName, "doc") && !strings.Contains(fileName, "pdf") {
 						continue
 					}
 
@@ -103,13 +106,19 @@ func main() {
 						fmt.Println(err)
 						continue
 					}
-					attachmentUrl := fmt.Sprintf("http://topedu.ybep.com.cn/new_x/project/clouddown.php?pg=really&id=%s&tp=%s&opt=0&n=%s", urlParam.Get("id"), subject.tp, urlParam.Get("n"))
-					fmt.Println(attachmentUrl)
+					cloudDownUrl := fmt.Sprintf("http://topedu.ybep.com.cn/new_x/project/clouddown.php?pg=really&id=%s&tp=%s&opt=0&n=%s", urlParam.Get("id"), subject.tp, urlParam.Get("n"))
+					fmt.Println(cloudDownUrl)
 
 					filePath := "../topedu.ybep.com.cn/topedu.ybep.com.cn/" + subject.name + "/" + fileName
 					if _, err := os.Stat(filePath); err != nil {
 						fmt.Println("=======开始下载========")
-						err = downloadTopEdu(attachmentUrl, detailUrl, filePath)
+						downloadUrl, err := getTopEduDownloadUrl(cloudDownUrl, detailUrl)
+						fmt.Println(downloadUrl)
+						if err != nil {
+							fmt.Println("获取下载地址失败")
+							continue
+						}
+						err = downloadTopEdu(downloadUrl, detailUrl, filePath)
 						if err != nil {
 							fmt.Println(err)
 							continue
@@ -134,6 +143,43 @@ func main() {
 			}
 		}
 	}
+}
+
+// 获取请求Location
+func getTopEduDownloadUrl(cloudDownUrl string, referer string) (downloadUrl string, err error) {
+	// 初始化客户端
+	client := &http.Client{
+		CheckRedirect: func(req *http.Request, via []*http.Request) error {
+			return http.ErrUseLastResponse
+		},
+	}
+	req, err := http.NewRequest("GET", cloudDownUrl, nil) //建立连接
+	if err != nil {
+		return "", err
+	}
+	req.Header.Set("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7")
+	req.Header.Set("Accept-Encoding", "gzip, deflate")
+	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
+	req.Header.Set("Cache-Control", "no-cache")
+	req.Header.Set("Connection", "keep-alive")
+	req.Header.Set("Cookie", topEduCookie)
+	req.Header.Set("Host", "topedu.ybep.com.cn")
+	req.Header.Set("Pragma", "no-cache")
+	req.Header.Set("Referer", referer)
+	req.Header.Set("Upgrade-Insecure-Requests", "1")
+	req.Header.Set("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36")
+	resp, err := client.Do(req) //拿到返回的内容
+	if err != nil {
+		return downloadUrl, err
+	}
+	defer resp.Body.Close()
+	// 如果访问失败，就打印当前状态码
+	if resp.StatusCode == http.StatusOK {
+		downloadUrl = cloudDownUrl
+	} else if resp.StatusCode == http.StatusFound {
+		downloadUrl = resp.Header.Get("Location")
+	}
+	return downloadUrl, nil
 }
 
 func downloadTopEdu(attachmentUrl string, referer string, filePath string) error {
@@ -165,10 +211,7 @@ func downloadTopEdu(attachmentUrl string, referer string, filePath string) error
 	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
 	req.Header.Set("Cache-Control", "no-cache")
 	req.Header.Set("Connection", "keep-alive")
-	req.Header.Set("Cookie", "__51vcke__JnUuVbB1pNBuOI9J=7a1ac260-d305-5b5d-b8ff-d2650e75d779; __51vuft__JnUuVbB1pNBuOI9J=1716949675665; PHPSESSID=cvbi2rkq2ua8a3l3gcqfehp11l; __51uvsct__JnUuVbB1pNBuOI9J=3; __vtins__JnUuVbB1pNBuOI9J=%7B%22sid%22%3A%20%226025d880-da35-5d23-8302-7bafb55f6519%22%2C%20%22vd%22%3A%2036%2C%20%22stt%22%3A%20495709%2C%20%22dr%22%3A%2044058%2C%20%22expires%22%3A%201735098428534%2C%20%22ct%22%3A%201735096628534%7D")
-	req.Header.Set("Host", "opedu.ybep.com.cn")
 	req.Header.Set("Pragma", "no-cache")
-	req.Header.Set("Referer", referer)
 	req.Header.Set("Upgrade-Insecure-Requests", "1")
 	req.Header.Set("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36")
 	resp, err := client.Do(req) //拿到返回的内容
