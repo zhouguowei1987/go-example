@@ -97,7 +97,7 @@ func ChinaZPptSetHttpProxy() (httpclient *http.Client) {
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	return httpclient
@@ -202,7 +202,7 @@ func ListChinaZPpt(requestUrl string, referer string) (doc *html.Node, err error
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if ChinaZPptEnableHttpProxy {
@@ -265,7 +265,7 @@ func ViewChinaZPpt(requestUrl string, referer string) (doc *html.Node, err error
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if ChinaZPptEnableHttpProxy {
@@ -328,7 +328,7 @@ func DownLoadChinaZPpt(attachmentUrl string, referer string, filePath string) er
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 30,
+			ResponseHeaderTimeout: time.Second * 300,
 		},
 	}
 	if ChinaZPptEnableHttpProxy {
