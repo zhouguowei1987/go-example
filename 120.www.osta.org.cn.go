@@ -115,7 +115,7 @@ func main() {
 	page := 1
 	isPageListGo := true
 	for isPageListGo {
-		requestUrl := fmt.Sprintf("https://www.osta.org.cn/api/public/skillStandardList?pageSize=20&pageNum=%d", page)
+		requestUrl := fmt.Sprintf("https://www.osta.org.cn/api/public/skillStandardList?pageSize=500&pageNum=%d", page)
 		osTaListResponseBodyList, err := OsTaList(requestUrl)
 		if err != nil {
 			fmt.Println(err)
