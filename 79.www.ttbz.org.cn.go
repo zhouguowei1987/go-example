@@ -23,9 +23,9 @@ var TbzCookie = "__jsluid_s=b7d35d18c6c44705ce234044421b8f67; Hm_lvt_8c446e9fafe
 // @Title 获取全国团体标准信息平台Pdf文档
 // @Description https://www.ttbz.org.cn/，将全国团体标准信息平台Pdf文档入库
 func main() {
-//     144758
-	var startId = 145619
-	var endId = 146773
+//     147356
+	var startId = 147600
+	var endId = 147625
 	for id := startId; id <= endId; id++ {
 		fmt.Println(id)
 		pdfsUrl := fmt.Sprintf("https://www.ttbz.org.cn/Pdfs/Index/?ftype=st&pms=%d", id)

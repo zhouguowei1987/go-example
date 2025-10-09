@@ -725,6 +725,11 @@ func main() {
 			pCid:    8131,
 			Price:   200,
 		},
+		{
+			dirName: "www.osta.org.cn",
+			pCid:    8368,
+			Price:   200,
+		},
 	}
 	rootPath := "../upload.doc88.com/"
 	for _, childDir := range uploadChildDirArr {
@@ -770,8 +775,13 @@ func main() {
 				fmt.Println(uploadResponseData.Message)
 				break
 			}
-			fmt.Println("==========上传2秒后编辑文件所属类别和下载积分==============")
-			time.Sleep(time.Second * 2)
+			// 设置倒计时
+//          UploadDoc88TimeSleep := 30
+            UploadDoc88TimeSleep := rand.Intn(5)
+            for i := 1; i <= UploadDoc88TimeSleep; i++ {
+                time.Sleep(time.Second)
+                fmt.Println("暂停", UploadDoc88TimeSleep, "秒后编辑文件所属类别和下载积分，倒计时", i, "秒===========")
+            }
 
 			// 处理编辑文件时所需参数值
 			docCode := uploadResponseData.DocCode
