@@ -47,6 +47,10 @@ func main() {
 		title = strings.ReplaceAll(title, "()", "")
 		title = strings.ReplaceAll(title, "（)", "")
 		title = strings.TrimSpace(title)
+		if strings.Index(title, ".pdf") == -1 && strings.Index(title, ".doc") == -1 {
+			fmt.Println("不是pdf、doc文档")
+			continue
+		}
 		fmt.Println(title)
 
 		filePath := "../www.fire114.cn/" + title
