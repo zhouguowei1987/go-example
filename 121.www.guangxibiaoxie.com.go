@@ -11,7 +11,7 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
-
+    "time"
 	"github.com/antchfx/htmlquery"
 )
 
@@ -47,7 +47,8 @@ func main() {
 		title := htmlquery.InnerText(titleNode)
 		releaseIndex := strings.Index(title, "发布稿")
 		if releaseIndex == -1 {
-			return errors.New("没有发布稿字样，跳过")
+			fmt.Println("没有发布稿字样，跳过")
+			continue
 		}
 		title = strings.ReplaceAll(title, "（发布稿）", "")
 		title = strings.ReplaceAll(title, "发布稿", "")
