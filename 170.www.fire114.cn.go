@@ -16,7 +16,7 @@ import (
 	"golang.org/x/net/html"
 )
 
-var Fire114Cookie = "PHPSESSID=sgeiq3i8ut557f35o4mnur1p83; UM_distinctid=199997a7ccd1070-0a26c6e829008b-26001d51-1fa400-199997a7cce577; sessionid=sgeiq3i8ut557f35o4mnur1p83; CNZZDATA1978074=cnzz_eid%3D843923194-1759216565-https%253A%252F%252Fnew.fire114.cn%252F%26ntime%3D1759985872"
+var Fire114Cookie = "PHPSESSID=sgeiq3i8ut557f35o4mnur1p83; UM_distinctid=199997a7ccd1070-0a26c6e829008b-26001d51-1fa400-199997a7cce577; sessionid=sgeiq3i8ut557f35o4mnur1p83; CNZZDATA1978074=cnzz_eid%3D843923194-1759216565-https%253A%252F%252Fnew.fire114.cn%252F%26ntime%3D1759992324"
 
 // Fire114Spider 获取消防百事通文档
 // @Title 获取消防百事通文档
