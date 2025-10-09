@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"math/rand"
+	"net"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -44,6 +45,8 @@ func main() {
 
 		title = strings.ReplaceAll(title, "《", "")
 		title = strings.ReplaceAll(title, "》", "")
+		title = strings.ReplaceAll(title, "【", "")
+		title = strings.ReplaceAll(title, "】", "")
 		title = strings.ReplaceAll(title, "()", "")
 		title = strings.ReplaceAll(title, "（)", "")
 		title = strings.TrimSpace(title)
@@ -67,10 +70,12 @@ func main() {
 			continue
 		}
 		downLoadUrl := htmlquery.InnerText(iframeSrcNode)
-		if strings.Index(downLoadUrl, "new.fire114.cn") != -1 {
+		if strings.Index(downLoadUrl, "https://new.fire114.cn") != -1 {
 			downLoadUrl = strings.ReplaceAll(downLoadUrl, "/Cms/widget/pdfjs/web/viewer-2.html?cwgpdfsrcurl=", "")
-		} else if strings.Index(downLoadUrl, "oss.fire114.cn") != -1 {
+		} else if strings.Index(downLoadUrl, "https://oss.fire114.cn") != -1 {
 			downLoadUrl = strings.ReplaceAll(downLoadUrl, "https://oss.fire114.cn", "https://new.fire114.cn/uploads")
+		} else if strings.Index(downLoadUrl, "https://view.officeapps.live.com") != -1 {
+			downLoadUrl = strings.ReplaceAll(downLoadUrl, "https://view.officeapps.live.com/op/view.aspx?src=", "https://")
 		}
 		fmt.Println(downLoadUrl)
 		err = downFire114(downLoadUrl, filePath)
@@ -98,7 +103,22 @@ func main() {
 }
 
 func Fire114Doc(requestUrl string, refererUrl string) (doc *html.Node, err error) {
-	client := &http.Client{}                            //初始化客户端
+	// 初始化客户端
+	var client *http.Client = &http.Client{
+		Transport: &http.Transport{
+			Dial: func(netw, addr string) (net.Conn, error) {
+				c, err := net.DialTimeout(netw, addr, time.Second*3)
+				if err != nil {
+					fmt.Println("dail timeout", err)
+					return nil, err
+				}
+				return c, nil
+
+			},
+			MaxIdleConnsPerHost:   10,
+			ResponseHeaderTimeout: time.Second * 30,
+		},
+	}
 	req, err := http.NewRequest("GET", requestUrl, nil) //建立连接
 	if err != nil {
 		return doc, err
@@ -136,7 +156,22 @@ func Fire114Doc(requestUrl string, refererUrl string) (doc *html.Node, err error
 }
 
 func downFire114(pdfUrl string, filePath string) error {
-	client := &http.Client{}                        //初始化客户端
+	// 初始化客户端
+	var client *http.Client = &http.Client{
+		Transport: &http.Transport{
+			Dial: func(netw, addr string) (net.Conn, error) {
+				c, err := net.DialTimeout(netw, addr, time.Second*3)
+				if err != nil {
+					fmt.Println("dail timeout", err)
+					return nil, err
+				}
+				return c, nil
+
+			},
+			MaxIdleConnsPerHost:   10,
+			ResponseHeaderTimeout: time.Second * 30,
+		},
+	}
 	req, err := http.NewRequest("GET", pdfUrl, nil) //建立连接
 	if err != nil {
 		return err
