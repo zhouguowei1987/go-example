@@ -3,14 +3,16 @@ package main
 import (
 	"errors"
 	"fmt"
-	"github.com/antchfx/htmlquery"
 	"io"
+	"math/rand"
 	"net/http"
 	"os"
 	"path/filepath"
 	"regexp"
 	"strconv"
 	"strings"
+
+	"github.com/antchfx/htmlquery"
 )
 
 // TbzSpider 获取广西标准化协会Pdf文档
@@ -19,67 +21,75 @@ import (
 func main() {
 	var startId = 4467
 	var endId = 4528
-	goCh := make(chan int, endId-startId)
 	for id := startId; id <= endId; id++ {
-		go func(id int) {
-			err := guangXiBiaoXieSpider(id)
-			if err != nil {
-				fmt.Println(err)
-			}
-			goCh <- id
-		}(id)
-		fmt.Println(<-goCh)
-	}
-	//guangXiBiaoXieSpider(3702)
-}
+		detailUrl := fmt.Sprintf("http://www.guangxibiaoxie.com/a/%d.html", id)
+		fmt.Println(detailUrl)
+		detailDoc, err := htmlquery.LoadURL(detailUrl)
+		if err != nil {
+			fmt.Println(err)
+			continue
+		}
+		// 查看是否有下载链接
+		detailDocText := htmlquery.OutputHTML(detailDoc, true)
+		regFile := regexp.MustCompile(`<a href="http(.*?)://guangxibiaoxie.com/(.*?)uploads/(.*?)"`)
+		regFindStingMatch := regFile.FindStringSubmatch(detailDocText)
+		if len(regFindStingMatch) < 2 {
+			fmt.Println("没有文档下载链接")
+			continue
+		}
 
-func guangXiBiaoXieSpider(id int) error {
-	detailUrl := fmt.Sprintf("http://www.guangxibiaoxie.com/a/%d.html", id)
-	fmt.Println(detailUrl)
-	detailDoc, err := htmlquery.LoadURL(detailUrl)
-	if err != nil {
-		return err
-	}
-	// 查看是否有下载链接
-	detailDocText := htmlquery.OutputHTML(detailDoc, true)
-	regFile := regexp.MustCompile(`<a href="http(.*?)://guangxibiaoxie.com/(.*?)uploads/(.*?)"`)
-	regFindStingMatch := regFile.FindStringSubmatch(detailDocText)
-	if len(regFindStingMatch) < 2 {
-		return errors.New("没有文档下载链接")
-	}
+		// 下载文档URL
+		downLoadUrl := "http://guangxibiaoxie.com/uploads/" + regFindStingMatch[3]
+		fmt.Println(downLoadUrl)
 
-	// 下载文档URL
-	downLoadUrl := "http://guangxibiaoxie.com/uploads/" + regFindStingMatch[3]
-	fmt.Println(downLoadUrl)
+		// 文档名称
+		titleNode := htmlquery.FindOne(detailDoc, `//div[@class="panel-body"]/div[@class="article-metas"]/h1[@class="metas-title"]`)
+		title := htmlquery.InnerText(titleNode)
+		releaseIndex := strings.Index(title, "发布稿")
+		if releaseIndex == -1 {
+			return errors.New("没有发布稿字样，跳过")
+		}
+		title = strings.ReplaceAll(title, "（发布稿）", "")
+		title = strings.ReplaceAll(title, "发布稿", "")
+		title = strings.ReplaceAll(title, "TGXAS", "T-GXAS")
+		title = strings.ReplaceAll(title, "T/GXAS", "T-GXAS")
+		title = strings.ReplaceAll(title, "团体标准", "-")
+		title = strings.ReplaceAll(title, "《", "")
+		title = strings.ReplaceAll(title, "》", "")
+		title = strings.ReplaceAll(title, "()", "")
+		title = strings.ReplaceAll(title, "（)", "")
+		title = strings.TrimSpace(title)
 
-	// 文档名称
-	titleNode := htmlquery.FindOne(detailDoc, `//div[@class="panel-body"]/div[@class="article-metas"]/h1[@class="metas-title"]`)
-	title := htmlquery.InnerText(titleNode)
-	releaseIndex := strings.Index(title, "发布稿")
-	if releaseIndex == -1 {
-		return errors.New("没有发布稿字样，跳过")
-	}
-	title = strings.ReplaceAll(title, "（发布稿）", "")
-	title = strings.ReplaceAll(title, "发布稿", "")
-	title = strings.ReplaceAll(title, "TGXAS", "T-GXAS")
-	title = strings.ReplaceAll(title, "T/GXAS", "T-GXAS")
-	title = strings.ReplaceAll(title, "团体标准", "-")
-	title = strings.ReplaceAll(title, "《", "")
-	title = strings.ReplaceAll(title, "》", "")
-	title = strings.ReplaceAll(title, "()", "")
-	title = strings.ReplaceAll(title, "（)", "")
-	title = strings.TrimSpace(title)
-
-	filePath := "../www.guangxibiaoxie.com/" + title + ".pdf"
-	if _, err := os.Stat(filePath); err != nil {
+		filePath := "../www.guangxibiaoxie.com/" + title + ".pdf"
+		fmt.Println(filePath)
+		_, err = os.Stat(filePath)
+		if err == nil {
+			fmt.Println("文档已下载过，跳过")
+			continue
+		}
 		fmt.Println("=======开始下载========")
 		err = downGuangXiBiaoXiePdf(downLoadUrl, filePath)
 		if err != nil {
-			return err
+			fmt.Println(err)
+			continue
 		}
 		fmt.Println("=======完成下载========")
+
+		//复制文件
+		tempFilePath := strings.ReplaceAll(filePath, "../www.guangxibiaoxie.com", "../upload.doc88.com/hbba.sacinfo.org.cn")
+		err = copyGuangXiBiaoXieFile(filePath, tempFilePath)
+		if err != nil {
+			fmt.Println(err)
+			continue
+		}
+		// 设置倒计时
+		// DownLoadGuangXiBiaoXieTimeSleep := 10
+		DownLoadGuangXiBiaoXieTimeSleep := rand.Intn(5)
+		for i := 1; i <= DownLoadGuangXiBiaoXieTimeSleep; i++ {
+			time.Sleep(time.Second)
+			fmt.Println("id="+strconv.Itoa(id)+"===========操作完成，", "暂停", DownLoadGuangXiBiaoXieTimeSleep, "秒，倒计时", i, "秒===========")
+		}
 	}
-	return nil
 }
 
 func downGuangXiBiaoXiePdf(pdfUrl string, filePath string) error {
@@ -127,4 +137,30 @@ func downGuangXiBiaoXiePdf(pdfUrl string, filePath string) error {
 		return err
 	}
 	return nil
+}
+func copyGuangXiBiaoXieFile(src, dst string) (err error) {
+	in, err := os.Open(src)
+	if err != nil {
+		return
+	}
+	defer func(in *os.File) {
+		err := in.Close()
+		if err != nil {
+			return
+		}
+	}(in)
+
+	out, err := os.Create(dst)
+	if err != nil {
+		return
+	}
+	defer func(out *os.File) {
+		err := out.Close()
+		if err != nil {
+			return
+		}
+	}(out)
+
+	_, err = io.Copy(out, in)
+	return
 }

@@ -101,7 +101,6 @@ func main() {
 			fmt.Println(err)
 			continue
 		}
-		fmt.Println("=======完成下载========")
 
 		// 设置倒计时
 		// DownLoadBiaoGeTimeSleep := 10
