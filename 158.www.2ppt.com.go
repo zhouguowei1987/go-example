@@ -47,10 +47,10 @@ func main() {
 	page := 1
 	isPageListGo := true
 	for isPageListGo {
-		requestListUrl := fmt.Sprintf("https://www.2ppt.com/ppt/511/%d.html", page)
-		referUrl := "https://www.2ppt.com/ppt/511/1.html"
+		requestListUrl := fmt.Sprintf("https://www.2ppt.com/ppt/p%d.html", page)
+		referUrl := "https://www.2ppt.com/ppt/p1.html"
 		if page >= 2 {
-			referUrl = fmt.Sprintf("https://www.2ppt.com/ppt/488/%d.html", page-1)
+			referUrl = fmt.Sprintf("https://www.2ppt.com/ppt/p%d.html", page-1)
 		}
 		fmt.Println(requestListUrl)
 		Ppt2ListDoc, err := Ppt2HtmlDoc(requestListUrl, referUrl)

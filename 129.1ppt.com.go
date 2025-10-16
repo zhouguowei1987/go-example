@@ -24,8 +24,8 @@ import (
 // @Title 获取第一ppt文档
 // @Description https://1ppt.com/，将第一ppt文档入库
 func main() {
-	var startId = 135762
-	var endId = 136042
+	var startId = 136042
+	var endId = 137833
 	for id := startId; id <= endId; id++ {
 		err := pptSpider(id)
 		if err != nil {
@@ -35,7 +35,7 @@ func main() {
 	//pptSpider(130283)
 }
 
-var pptCookie = "mizToken=202501191741290.5355677329169450.001375657287244314; __gads=ID=c512d724a4b5b5ea:T=1741349812:RT=1741349812:S=ALNI_MZ5p1yz2C_ItGi5c2W4GgQgRmARoQ; __gpi=UID=00001058097c48ec:T=1741349812:RT=1741349812:S=ALNI_MYmcO8ZrD5P_i4FuEnm8oc6mQFZIQ; __eoi=ID=af749bf93c7fe49a:T=1741349812:RT=1741349812:S=AA-AfjZY2x4EF51SPh3sn0uGvR6v; acw_tc=0a27a99b17549742484373437e56a7d158c9c5933f6033ea8bb147e8f21ba9; Hm_lvt_087ceb5ea69d10fb5bbb6bc49c209fa2=1754136853,1754974249; HMACCOUNT=1CCD0111717619C6; Hm_lpvt_087ceb5ea69d10fb5bbb6bc49c209fa2=1754974296; acw_sc__v2=689ac88107993fa04dd3ba7ff90cd2882917ce38"
+var pptCookie = "mizToken=202501191741290.5355677329169450.001375657287244314; __gads=ID=c512d724a4b5b5ea:T=1741349812:RT=1759215037:S=ALNI_MZ5p1yz2C_ItGi5c2W4GgQgRmARoQ; __gpi=UID=00001058097c48ec:T=1741349812:RT=1759215037:S=ALNI_MYmcO8ZrD5P_i4FuEnm8oc6mQFZIQ; __eoi=ID=e81342e514f1eb07:T=1759215037:RT=1759215037:S=AA-Afjb3c51CNniOVdzi8-7cKfVB; acw_tc=1a0c640d17605020553852577edb77dba316fe1d1c3ece8d586edb0956fc05; Hm_lvt_087ceb5ea69d10fb5bbb6bc49c209fa2=1758763800,1759215004,1760502056; HMACCOUNT=1CCD0111717619C6; Hm_lpvt_087ceb5ea69d10fb5bbb6bc49c209fa2=1760502067; acw_sc__v2=197d84838-b8c85f662f02d0dd84bcd3a0725dc2f22e107f77266a752b04"
 
 func pptSpider(id int) error {
 	detailUrl := fmt.Sprintf("https://www.1ppt.com/article/%d.html", id)
@@ -64,33 +64,33 @@ func pptSpider(id int) error {
 	title := htmlquery.InnerText(titleNode)
 	fmt.Println(title)
 	// 过滤文件名中含有“图”字样文件
-	if strings.Index(title, "图") != -1 {
-		return errors.New("过滤文件名中含有“图”字样文件")
-	}
-	// 过滤文件名中含有“张”字样文件
-	if strings.Index(title, "张") != -1 {
-		return errors.New("过滤文件名中含有“张”字样文件")
-	}
-	// 过滤文件名中含有“套”字样文件
-	if strings.Index(title, "套") != -1 {
-		return errors.New("过滤文件名中含有“套”字样文件")
-	}
-	// 过滤文件名中含有“个”字样文件
-	if strings.Index(title, "个") != -1 {
-		return errors.New("过滤文件名中含有“个”字样文件")
-	}
-	// 过滤文件名中含有“页”字样文件
-	if strings.Index(title, "页") != -1 {
-		return errors.New("过滤文件名中含有“页”字样文件")
-	}
-	// 过滤文件名中含有“年”字样文件
-	if strings.Index(title, "年") != -1 {
-		return errors.New("过滤文件名中含有“年”字样文件")
-	}
-	// 过滤文件名中含有“素材”字样文件
-	if strings.Index(title, "素材") != -1 {
-		return errors.New("过滤文件名中含有“素材”字样文件")
-	}
+	// if strings.Index(title, "图") != -1 {
+	// 	return errors.New("过滤文件名中含有“图”字样文件")
+	// }
+	// // 过滤文件名中含有“张”字样文件
+	// if strings.Index(title, "张") != -1 {
+	// 	return errors.New("过滤文件名中含有“张”字样文件")
+	// }
+	// // 过滤文件名中含有“套”字样文件
+	// if strings.Index(title, "套") != -1 {
+	// 	return errors.New("过滤文件名中含有“套”字样文件")
+	// }
+	// // 过滤文件名中含有“个”字样文件
+	// if strings.Index(title, "个") != -1 {
+	// 	return errors.New("过滤文件名中含有“个”字样文件")
+	// }
+	// // 过滤文件名中含有“页”字样文件
+	// if strings.Index(title, "页") != -1 {
+	// 	return errors.New("过滤文件名中含有“页”字样文件")
+	// }
+	// // 过滤文件名中含有“年”字样文件
+	// if strings.Index(title, "年") != -1 {
+	// 	return errors.New("过滤文件名中含有“年”字样文件")
+	// }
+	// // 过滤文件名中含有“素材”字样文件
+	// if strings.Index(title, "素材") != -1 {
+	// 	return errors.New("过滤文件名中含有“素材”字样文件")
+	// }
 
 	// 查看是否有下载按钮
 	downloadButtonNode := htmlquery.FindOne(downloadDetailDoc, `//ul[@class="downloadlist"]/li[@class="c1"]/a`)
