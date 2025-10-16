@@ -18,7 +18,7 @@ import (
 // @Description http://hltb.kxj.org.cn/，将中华护理协会Pdf文档入库
 func main() {
 	var startId = 1
-	var endId = 55
+	var endId = 63
 	goCh := make(chan int, endId-startId)
 	for id := startId; id <= endId; id++ {
 		go func(id int) {

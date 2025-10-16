@@ -61,7 +61,7 @@ type HdBaResponseValidateCaptcha struct {
 	Msg  string `json:"msg"`
 }
 
-const HbBaCookie = "HMACCOUNT=487EF362690A1D5D; Hm_lvt_bc6f61eace617162b31b982f796830e6=1757485748; Hm_lpvt_bc6f61eace617162b31b982f796830e6=1760067786; JSESSIONID=1AC7FE4B60501D0DC74E783F523D9BC0"
+const HbBaCookie = "HMACCOUNT=487EF362690A1D5D; Hm_lvt_bc6f61eace617162b31b982f796830e6=1760084216; Hm_lpvt_bc6f61eace617162b31b982f796830e6=1760517458; JSESSIONID=778577AE2620E01ABB64361A6C6D63C5"
 
 // ychEduSpider 获取行业标准文档
 // @Title 获取行业标准文档
@@ -70,7 +70,7 @@ func main() {
 	requestUrl := "https://hbba.sacinfo.org.cn/stdQueryList"
 	// 	5699
 	current := 1
-	maxCurrent := 860
+	maxCurrent := 867
 	size := 100
 	status := "现行"
 	isPageListGo := true
