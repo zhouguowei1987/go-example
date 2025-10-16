@@ -23,10 +23,11 @@ var Fire114Cookie = "PHPSESSID=sgeiq3i8ut557f35o4mnur1p83; UM_distinctid=199997a
 // @Title 获取消防百事通文档
 // @Description http://www.fire114.cn/，将消防百事通文档入库
 func main() {
-	// 19966
-	var startId = 135128
-	var endId = 139164
-	for id := startId; id <= endId; id++ {
+	// 139345
+	var startId = 139345
+    // 19966
+	var endId = 139300
+	for id := startId; id >= endId; id-- {
 		detailUrl := fmt.Sprintf("https://www.fire114.cn/islibd/%d.html", id)
 		fmt.Println(detailUrl)
 		refererUrl := fmt.Sprintf("https://www.fire114.cn/islibd/%d.html", id-1)
@@ -49,9 +50,14 @@ func main() {
 		title = strings.ReplaceAll(title, "】", "")
 		title = strings.ReplaceAll(title, "()", "")
 		title = strings.ReplaceAll(title, "（)", "")
+		title = strings.ReplaceAll(title, "‘", "")
 		title = strings.TrimSpace(title)
 		if strings.Index(title, ".pdf") == -1 && strings.Index(title, ".doc") == -1 {
 			fmt.Println("不是pdf、doc文档")
+			continue
+		}
+		if strings.Index(title, "检验报告") != -1{
+		    fmt.Println("标题含有‘检验报告’字样，跳过")
 			continue
 		}
 		fmt.Println(title)

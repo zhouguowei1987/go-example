@@ -29,7 +29,7 @@ var FoodMateCookie = "Hm_lvt_2aeaa32e7cee3cfa6e2848083235da9f=1730957037; HMACCO
 func main() {
 	// 国内标准列表
 	var allCategory = []foodMateCategory{
-		{id: 1, name: "国内标准", page: 1, maxPage: 1000},
+		{id: 1, name: "国内标准", page: 1, maxPage: 2000},
 	}
 	for _, category := range allCategory {
 		isPageListGo := true
