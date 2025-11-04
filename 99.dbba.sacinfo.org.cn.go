@@ -61,7 +61,7 @@ type DbBaResponseValidateCaptcha struct {
 	Msg  string `json:"msg"`
 }
 
-const DbBaCookie = "HMACCOUNT=487EF362690A1D5D; Hm_lvt_36f2f0446e1c2cda8410befc24743a9b=1759925510; Hm_lpvt_36f2f0446e1c2cda8410befc24743a9b=1761630427; JSESSIONID=219B2796825C6BAFE93AB153A2BCD665"
+const DbBaCookie = "HMACCOUNT=487EF362690A1D5D; Hm_lvt_36f2f0446e1c2cda8410befc24743a9b=1759925510; Hm_lpvt_36f2f0446e1c2cda8410befc24743a9b=1762227456; JSESSIONID=560F0D6635CB1EDEBD67B348642B7DB6"
 
 // ychEduSpider 获取地方标准文档
 // @Title 获取地方标准文档
@@ -238,7 +238,7 @@ func DbBaGetStdQueryList(requestUrl string, current int, size int, status string
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if DbBaEnableHttpProxy {
@@ -302,7 +302,7 @@ func downloadValidateCodeDbBa(validateCodeUrl string, filePath string) error {
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if DbBaEnableHttpProxy {
@@ -399,7 +399,7 @@ func validateCaptchaDbBa(captcha string, pk string, referer string) (responseVal
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if DbBaEnableHttpProxy {
@@ -467,7 +467,7 @@ func downloadDbBa(attachmentUrl string, referer string, filePath string) error {
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if DbBaEnableHttpProxy {
