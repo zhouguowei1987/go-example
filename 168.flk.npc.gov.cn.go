@@ -132,7 +132,7 @@ func main() {
 	pageListUrl := "https://flk.npc.gov.cn/law-search/search/list"
 	fmt.Println(pageListUrl)
 	page := 1
-	maxPage := 100
+	maxPage := 281
 	rows := 100
 	isPageListGo := true
 	for isPageListGo {
