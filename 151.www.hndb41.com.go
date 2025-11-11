@@ -116,7 +116,7 @@ type QueryHnDb41ListFormData struct {
 	pageSize  int
 }
 
-var HnDb41Cookie = "SESSIONID=4151517F5CEC91301C4BC202BA5BB5B0"
+var HnDb41Cookie = "JSESSIONID=6C11F77E72904076A2BF8AF27A7A5E35"
 
 // 下载河南省地方标准文档
 // @Title 下载河南省地方标准文档
@@ -125,7 +125,7 @@ func main() {
 	pageListUrl := "http://www.hndb41.com/bzsp_getStandardPermitList.action?type=1&acc=1"
 	fmt.Println(pageListUrl)
 	page := 0
-	maxPage := 289
+	maxPage := 300
 	isPageListGo := true
 	for isPageListGo {
 		if page > maxPage {
