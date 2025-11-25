@@ -181,6 +181,15 @@ func main() {
 				fmt.Println(err)
 				continue
 			}
+			// 查看文件大小，如果是空文件，则删除
+			fileInfo, err := os.Stat(filePath)
+			if err == nil && fileInfo.Size() == 0 {
+				fmt.Println("空文件删除")
+				err = os.Remove(filePath)
+			}
+			if err != nil {
+				continue
+			}
 			//复制文件
 			tempFilePath := strings.ReplaceAll(filePath, "std.miit.gov.cn", "temp-std.miit.gov.cn")
 			err = copyStdMiItFile(filePath, tempFilePath)
