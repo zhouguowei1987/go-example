@@ -123,13 +123,6 @@ type QueryStdMiItListRequestPayload struct {
 // @Title 下载工业和信息化标准信息服务平台文档
 // @Description https://std.miit.gov.cn/，下载工业和信息化标准信息服务平台文档
 func main() {
-	fmt.Println("=======开始下载========")
-	downloadUrl := "https://std.miit.gov.cn/kjsStandproject/front/project/pdf?bzNo=FZ/T 96021-2025"
-	fmt.Println(downloadUrl)
-	filePath := "../std.miit.gov.cn/倍捻机(FZ-T 96021-2025).pdf"
-	fmt.Println(filePath)
-	downloadStdMiIt(downloadUrl, filePath)
-	os.Exit(1)
 	pageListUrl := "https://std.miit.gov.cn/kjsStandproject/front/project/queryStandardsByPage"
 	fmt.Println(pageListUrl)
 	page := 1
@@ -179,17 +172,11 @@ func main() {
 				continue
 			}
 
-			StartDownLoadStdMiItTimeSleep := 15
-			for i := 1; i <= StartDownLoadStdMiItTimeSleep; i++ {
-				time.Sleep(time.Second)
-				fmt.Println("开始下载前暂停准备", StartDownLoadStdMiItTimeSleep, "秒 倒计时", i, "秒===========")
-			}
-
 			fmt.Println("=======开始下载========")
 			downloadUrl := fmt.Sprintf("https://std.miit.gov.cn/kjsStandproject/front/project/pdf?bzNo=%s", stdMiIt.BpiBzno)
+			downloadUrl = strings.ReplaceAll(downloadUrl, " ", "%20")
 			fmt.Println(downloadUrl)
 			err = downloadStdMiIt(downloadUrl, filePath)
-			os.Exit(1)
 			if err != nil {
 				fmt.Println(err)
 				continue
@@ -339,9 +326,8 @@ func downloadStdMiIt(attachmentUrl string, filePath string) error {
 	req.Header.Set("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7")
 	req.Header.Set("Accept-Encoding", "gzip, deflate, br, zstd")
 	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
-	req.Header.Set("cache-control", "max-age=0")
+	req.Header.Set("Cache-Control", "max-age=0")
 	req.Header.Set("Cookie", StdMiItCookie)
-	req.Header.Set("Cache-Control", "no-cache")
 	req.Header.Set("Connection", "keep-alive")
 	req.Header.Set("Host", "std.miit.gov.cn")
 	req.Header.Set("Sec-Ch-Ua", "\"Not.A/Brand\";v=\"8\", \"Chromium\";v=\"114\", \"Google Chrome\";v=\"114\"")
@@ -358,9 +344,6 @@ func downloadStdMiIt(attachmentUrl string, filePath string) error {
 		return err
 	}
 	defer resp.Body.Close()
-	// 如果访问失败 就打印当前状态码
-	fmt.Println(resp.StatusCode)
-	os.Exit(1)
 	if resp.StatusCode != http.StatusOK {
 		return errors.New("http status :" + strconv.Itoa(resp.StatusCode))
 	}
