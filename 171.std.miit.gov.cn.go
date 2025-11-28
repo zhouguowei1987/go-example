@@ -125,6 +125,7 @@ type QueryStdMiItListRequestPayload struct {
 func main() {
 	pageListUrl := "https://std.miit.gov.cn/kjsStandproject/front/project/queryStandardsByPage"
 	fmt.Println(pageListUrl)
+	//page := 550
 	page := 1
 	maxPage := 2611
 	rows := 15
@@ -163,7 +164,7 @@ func main() {
 			title = strings.ReplaceAll(title, "--", "-")
 			fmt.Println(title)
 
-			filePath := "../std.miit.gov.cn/" + title + "(" + code + ")" + ".pdf"
+			filePath := "../std.miit.gov.cn/" + "(" + code + ")" + title + ".pdf"
 			fmt.Println(filePath)
 
 			_, err = os.Stat(filePath)
