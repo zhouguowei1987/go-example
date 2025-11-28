@@ -151,8 +151,9 @@ var LawListCookie = "home_page2=https://law.chemicalsafety.org.cn:443/compliance
 // @Description https://law.chemicalsafety.org.cn/，下载化学品安全法规标准文档
 func main() {
 	pageListUrl := "https://law.chemicalsafety.org.cn/compliance/global/callService.action"
-	page := 0
-	maxPage := 1440
+	page := 1
+	maxPage := 288
+	count := 50
 	isPageListGo := true
 	for isPageListGo {
 		queryLawListRequestFormData := QueryLawListRequestFormData{
@@ -160,8 +161,8 @@ func main() {
 			ContentType: "json",
 			Args: []QueryLawListRequestFormDataArgsMap{
 				{
-					Index:           page,
-					Count:           10,
+					Index:           (page - 1) * count,
+					Count:           count,
 					SortName:        "",
 					SortOrder:       "",
 					ModuleId:        2,
