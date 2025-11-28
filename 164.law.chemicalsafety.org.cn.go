@@ -152,8 +152,8 @@ var LawListCookie = "home_page2=https://law.chemicalsafety.org.cn:443/compliance
 func main() {
 	pageListUrl := "https://law.chemicalsafety.org.cn/compliance/global/callService.action"
 	page := 1
-	maxPage := 288
-	count := 50
+	maxPage := 72
+	count := 200
 	isPageListGo := true
 	for isPageListGo {
 		queryLawListRequestFormData := QueryLawListRequestFormData{
@@ -223,10 +223,15 @@ func main() {
 				continue
 			}
 
-			fmt.Println("=======开始下载========")
-			downloadRefererUrl := fmt.Sprintf("https://law.chemicalsafety.org.cn/compliance/guild/tech/TechBrowse.jsp?moduleId=2&recordId=%s&libraryId=%s&attachmentId=%s", law.RecordId, law.LibraryId, law.AttachmentId)
-			//fmt.Println(downloadRefererUrl)
-			downloadUrl := fmt.Sprintf("https://law.chemicalsafety.org.cn/compliance/rmm/function/record/downloadFile.action?attachmentId=%s", law.AttachmentId)
+			// 类型断言
+			attachmentId, ok := law.AttachmentId.(string)
+			if !ok {
+				fmt.Println("AttachmentId字段不是字符串，跳过")
+				continue
+			}
+
+			downloadRefererUrl := fmt.Sprintf("https://law.chemicalsafety.org.cn/compliance/guild/tech/TechBrowse.jsp?moduleId=2&recordId=%s&libraryId=%s&attachmentId=%s", law.RecordId, law.LibraryId, attachmentId)
+			downloadUrl := fmt.Sprintf("https://law.chemicalsafety.org.cn/compliance/rmm/function/record/downloadFile.action?attachmentId=%s", attachmentId)
 			fmt.Println(downloadUrl)
 
 			fmt.Println("=======开始下载" + title + "========")
@@ -248,14 +253,14 @@ func main() {
 			DownLoadLawTimeSleep := rand.Intn(5)
 			for i := 1; i <= DownLoadLawTimeSleep; i++ {
 				time.Sleep(time.Second)
-				fmt.Println("filePath="+filePath+"===========下载成功 暂停", DownLoadLawTimeSleep, "秒 倒计时", i, "秒===========")
+				fmt.Println("page="+strconv.Itoa(page)+"====== 暂停,filePath="+filePath+"===========下载成功 暂停", DownLoadLawTimeSleep, "秒 倒计时", i, "秒===========")
 			}
 		}
 		DownLoadLawCategoryTimeSleep := 10
 		// DownLoadLawCategoryTimeSleep := rand.Intn(5)
 		for i := 1; i <= DownLoadLawCategoryTimeSleep; i++ {
 			time.Sleep(time.Second)
-			fmt.Println("=========== 暂停", DownLoadLawCategoryTimeSleep, "秒 倒计时", i, "秒===========")
+			fmt.Println("page="+strconv.Itoa(page)+"====== 暂停", DownLoadLawCategoryTimeSleep, "秒 倒计时", i, "秒===========")
 		}
 		page++
 		if page > maxPage {
@@ -272,11 +277,11 @@ type QueryLawListResponse struct {
 }
 
 type QueryLawListResponseRows struct {
-	AttachmentId string `json:"attId"`
-	RecordId     string `json:"id"`
-	LibraryId    string `json:"libraryId"`
-	Number       string `json:"number"`
-	Title        string `json:"title"`
+	AttachmentId interface{} `json:"attId"`
+	RecordId     string      `json:"id"`
+	LibraryId    string      `json:"libraryId"`
+	Number       string      `json:"number"`
+	Title        string      `json:"title"`
 }
 
 func QueryLawList(requestUrl string, queryLawListRequestFormData QueryLawListRequestFormData) (queryLawListResponseRows []QueryLawListResponseRows, err error) {
