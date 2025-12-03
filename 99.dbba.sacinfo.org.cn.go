@@ -4,8 +4,6 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/antchfx/htmlquery"
-	"github.com/otiai10/gosseract/v2"
 	"io"
 	"io/ioutil"
 	"math/rand"
@@ -17,6 +15,9 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/antchfx/htmlquery"
+	"github.com/otiai10/gosseract/v2"
 )
 
 const (
@@ -61,7 +62,7 @@ type DbBaResponseValidateCaptcha struct {
 	Msg  string `json:"msg"`
 }
 
-const DbBaCookie = "HMACCOUNT=487EF362690A1D5D; Hm_lvt_36f2f0446e1c2cda8410befc24743a9b=1762608423; Hm_lpvt_36f2f0446e1c2cda8410befc24743a9b=1764305374; JSESSIONID=A84A3B4CCF92BAF70468ACD8C5EC01F9"
+const DbBaCookie = "HMACCOUNT=487EF362690A1D5D; Hm_lvt_36f2f0446e1c2cda8410befc24743a9b=1762608423; Hm_lpvt_36f2f0446e1c2cda8410befc24743a9b=1764747366; JSESSIONID=B370AE8EEA1F24D1FCC9A0147F9369B2"
 
 // ychEduSpider 获取地方标准文档
 // @Title 获取地方标准文档
