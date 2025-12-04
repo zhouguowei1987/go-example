@@ -4,9 +4,8 @@ import (
 	"crypto/tls"
 	"errors"
 	"fmt"
-	"github.com/antchfx/htmlquery"
-	"golang.org/x/net/html"
 	"io"
+	"math/rand"
 	"net/http"
 	"net/url"
 	"os"
@@ -14,7 +13,9 @@ import (
 	"strconv"
 	"strings"
 	"time"
-	"math/rand"
+
+	"github.com/antchfx/htmlquery"
+	"golang.org/x/net/html"
 )
 
 var TbzCookie = "__jsluid_s=b7d35d18c6c44705ce234044421b8f67; Hm_lvt_8c446e9fafe752e4975210bc30d7ab9d=1752074026,1752916674,1753086531,1754059674; HMACCOUNT=1CCD0111717619C6; ASP.NET_SessionId=smepcq3yb0e4tp525qc2521i; Hm_lpvt_8c446e9fafe752e4975210bc30d7ab9d=1754298876"
@@ -23,9 +24,9 @@ var TbzCookie = "__jsluid_s=b7d35d18c6c44705ce234044421b8f67; Hm_lvt_8c446e9fafe
 // @Title 获取全国团体标准信息平台Pdf文档
 // @Description https://www.ttbz.org.cn/，将全国团体标准信息平台Pdf文档入库
 func main() {
-//     147356
-	var startId = 150200
-	var endId = 150268
+	//     147356
+	var startId = 152500
+	var endId = 152602
 	for id := startId; id <= endId; id++ {
 		fmt.Println(id)
 		pdfsUrl := fmt.Sprintf("https://www.ttbz.org.cn/Pdfs/Index/?ftype=st&pms=%d", id)
@@ -35,8 +36,8 @@ func main() {
 			continue
 		}
 		iframeSrcNode := htmlquery.FindOne(pdfsDoc, `//iframe[@id="myiframe"]/@src`)
-		if iframeSrcNode == nil{
-		    fmt.Println("页面不存在")
+		if iframeSrcNode == nil {
+			fmt.Println("页面不存在")
 			continue
 		}
 		iframeSrc := htmlquery.InnerText(iframeSrcNode)
@@ -61,8 +62,8 @@ func main() {
 			err = os.Remove(filePath)
 		}
 		if err != nil {
-            continue
-        }
+			continue
+		}
 		//复制文件
 		tempFilePath := strings.ReplaceAll(filePath, "www.ttbz.org.cn", "temp-www.ttbz.org.cn")
 		err = copyTbzFile(filePath, tempFilePath)
@@ -168,7 +169,7 @@ func downloadTbzPdf(pdfUrl string, pdfId int) (filePath string, err error) {
 	fmt.Println(code)
 
 	titleArray := contentDispositionUnescapeArray[1:]
-	title := strings.Join(titleArray,"-")
+	title := strings.Join(titleArray, "-")
 	title = strings.ReplaceAll(title, " ", "")
 	title = strings.ReplaceAll(title, "　", "")
 	title = strings.ReplaceAll(title, "/", "-")
@@ -179,9 +180,9 @@ func downloadTbzPdf(pdfUrl string, pdfId int) (filePath string, err error) {
 	fmt.Println(filePath)
 
 	_, err = os.Stat(filePath)
-    if err == nil {
-        return filePath, errors.New("文档已下载过，跳过")
-    }
+	if err == nil {
+		return filePath, errors.New("文档已下载过，跳过")
+	}
 
 	// 创建一个文件用于保存
 	fileDiv := filepath.Dir(filePath)

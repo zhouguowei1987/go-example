@@ -116,7 +116,7 @@ func main() {
 	page := 1
 	maxPage := 50
 	// true:地方合同范本 false:部委合同范本
-	locHtSfWb := true
+	locHtSfWb := false
 	suffixHtSfWb := ".pdf"
 	// 1:docx 2:pdf
 	typeHtSfWb := 2

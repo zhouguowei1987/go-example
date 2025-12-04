@@ -1,7 +1,6 @@
 package main
 
 import (
-	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -108,165 +107,100 @@ func LawSetHttpProxy() (httpclient *http.Client) {
 	return httpclient
 }
 
-type QueryLawListRequestPayload struct {
-	NONCE         string                            `json:"NONCE"`
-	SIGN          string                            `json:"SIGN"`
-	SIGN_TYPE     string                            `json:"SIGN_TYPE"`
-	TIMESTAMP     string                            `json:"TIMESTAMP"`
-	Current       int                               `json:"current"`
-	FileType      int                               `json:"fileType"`
-	IsLikeSearch  int                               `json:"isLikeSearch"`
-	LevelCodes    []string                          `json:"levelCodes"`
-	NeedHighLight bool                              `json:"needHighLight"`
-	Orders        []QueryLawListRequestPayloadOrder `json:"orders"`
-	SearchType    int                               `json:"searchType"`
-	Size          int                               `json:"size"`
+type QueryLawListRequestFormData struct {
+	Command     string                               `json:"_command"`
+	ContentType string                               `json:"_contentType"`
+	Args        []QueryLawListRequestFormDataArgsMap `json:"_args"`
 }
 
-type QueryLawListRequestPayloadOrder struct {
-	Column string `json:"column"`
-	Asc    bool   `json:"asc"`
+type QueryLawListRequestFormDataArgsMap struct {
+	Index           int      `json:"index"`
+	Count           int      `json:"count"`
+	SortName        string   `json:"sortName"`
+	SortOrder       string   `json:"sortOrder"`
+	ModuleId        int      `json:"moduleId"`
+	NodeId          int      `json:"nodeId"`
+	KeyContent      string   `json:"keyContent"`
+	Type            string   `json:"type"`
+	Status1         string   `json:"status1"`
+	Status2         string   `json:"status2"`
+	Status3         string   `json:"status3"`
+	RegulationType1 string   `json:"regulationType1"`
+	RegulationType2 string   `json:"regulationType2"`
+	RegulationType3 string   `json:"regulationType3"`
+	RegulationType4 string   `json:"regulationType4"`
+	RegulationType5 string   `json:"regulationType5"`
+	TechType1       string   `json:"techType1"`
+	TechType2       string   `json:"techType2"`
+	TechType3       string   `json:"techType3"`
+	TechType4       string   `json:"techType4"`
+	Group           []string `json:"group"`
+	Industry        []string `json:"industry"`
+	Local           string   `json:"local"`
+	StartDate       string   `json:"startDate"`
+	EndDate         string   `json:"endDate"`
+	ScStartDate     string   `json:"scStartDate"`
+	ScEndDate       string   `json:"scEndDate"`
+	SearchType      string   `json:"searchType"`
 }
 
-type LawListCategory struct {
-	name           string
-	url            string
-	requestPayload QueryLawListRequestPayload
-}
-
-var lawListCategorys = []LawListCategory{
-	{
-		name: "法律法规",
-		url:  "https://law.chemicalsafety.org.cn/laws/100",
-		requestPayload: QueryLawListRequestPayload{
-			NONCE:         "9gj7s5olrnh",
-			SIGN:          "13953322E474A26679B4CC5BECC86C6893C477ECCB55C3C07E16C536EAF29F53",
-			SIGN_TYPE:     "SHA256",
-			TIMESTAMP:     "20250829160907",
-			Current:       1,
-			FileType:      0,
-			IsLikeSearch:  0,
-			NeedHighLight: true,
-			Orders: []QueryLawListRequestPayloadOrder{
-				{
-					Column: "exeDate",
-					Asc:    false,
-				},
-			},
-			SearchType: 0,
-			Size:       9999,
-		},
-	},
-	{
-		name: "国家标准",
-		url:  "https://law.chemicalsafety.org.cn/laws/200100",
-		requestPayload: QueryLawListRequestPayload{
-			NONCE:         "9gj7s5olrnh",
-			SIGN:          "13953322E474A26679B4CC5BECC86C6893C477ECCB55C3C07E16C536EAF29F53",
-			SIGN_TYPE:     "SHA256",
-			TIMESTAMP:     "20250829160907",
-			Current:       1,
-			FileType:      1,
-			IsLikeSearch:  0,
-			LevelCodes:    []string{"200100"},
-			NeedHighLight: true,
-			Orders: []QueryLawListRequestPayloadOrder{
-				{
-					Column: "exeDate",
-					Asc:    false,
-				},
-			},
-			SearchType: 0,
-			Size:       9999,
-		},
-	},
-	{
-		name: "行业标准",
-		url:  "https://law.chemicalsafety.org.cn/laws/200200",
-		requestPayload: QueryLawListRequestPayload{
-			NONCE:         "9gj7s5olrnh",
-			SIGN:          "13953322E474A26679B4CC5BECC86C6893C477ECCB55C3C07E16C536EAF29F53",
-			SIGN_TYPE:     "SHA256",
-			TIMESTAMP:     "20250829160907",
-			Current:       1,
-			FileType:      1,
-			IsLikeSearch:  0,
-			LevelCodes:    []string{"200200"},
-			NeedHighLight: true,
-			Orders: []QueryLawListRequestPayloadOrder{
-				{
-					Column: "exeDate",
-					Asc:    false,
-				},
-			},
-			SearchType: 0,
-			Size:       9999,
-		},
-	},
-	{
-		name: "地方标准",
-		url:  "https://law.chemicalsafety.org.cn/laws/200300",
-		requestPayload: QueryLawListRequestPayload{
-			NONCE:         "9gj7s5olrnh",
-			SIGN:          "13953322E474A26679B4CC5BECC86C6893C477ECCB55C3C07E16C536EAF29F53",
-			SIGN_TYPE:     "SHA256",
-			TIMESTAMP:     "20250829160907",
-			Current:       1,
-			FileType:      1,
-			IsLikeSearch:  0,
-			LevelCodes:    []string{"200300"},
-			NeedHighLight: true,
-			Orders: []QueryLawListRequestPayloadOrder{
-				{
-					Column: "exeDate",
-					Asc:    false,
-				},
-			},
-			SearchType: 0,
-			Size:       9999,
-		},
-	},
-	{
-		name: "团体标准",
-		url:  "https://law.chemicalsafety.org.cn/laws/200400",
-		requestPayload: QueryLawListRequestPayload{
-			NONCE:         "9gj7s5olrnh",
-			SIGN:          "13953322E474A26679B4CC5BECC86C6893C477ECCB55C3C07E16C536EAF29F53",
-			SIGN_TYPE:     "SHA256",
-			TIMESTAMP:     "20250829160907",
-			Current:       1,
-			FileType:      1,
-			IsLikeSearch:  0,
-			LevelCodes:    []string{"200400"},
-			NeedHighLight: true,
-			Orders: []QueryLawListRequestPayloadOrder{
-				{
-					Column: "exeDate",
-					Asc:    false,
-				},
-			},
-			SearchType: 0,
-			Size:       9999,
-		},
-	},
-}
+var LawListCookie = "home_page2=https://law.chemicalsafety.org.cn:443/compliance/guild/main/Main.jsp; JSESSIONID=778FAFBB43A113496FA464B506C141A0; Hm_lvt_8f8c4c4dbc9ac98f44dcd28c17e60d71=1756479886"
 
 // 下载化学品安全法规标准文档
 // @Title 下载化学品安全法规标准文档
 // @Description https://law.chemicalsafety.org.cn/，下载化学品安全法规标准文档
 func main() {
-	for _, lawListCategory := range lawListCategorys {
-		pageListUrl := "https://law.chemicalsafety.org.cn/api/lan/file/search"
-		queryLawListRequestPayload := lawListCategory.requestPayload
-		queryLawListResponseDataRecords, err := QueryLawList(pageListUrl, lawListCategory.url, queryLawListRequestPayload)
+	pageListUrl := "https://law.chemicalsafety.org.cn/compliance/global/callService.action"
+	page := 1
+	maxPage := 72
+	count := 200
+	isPageListGo := true
+	for isPageListGo {
+		queryLawListRequestFormData := QueryLawListRequestFormData{
+			Command:     "CMMF70EDB9F095022BA2F04F37BA700898DA00E2FD4BC353A49FC4211D223FF93C584B02D4B2C8572F6DAC5426E89D38FD0D09DA370F23625E2",
+			ContentType: "json",
+			Args: []QueryLawListRequestFormDataArgsMap{
+				{
+					Index:           (page - 1) * count,
+					Count:           count,
+					SortName:        "",
+					SortOrder:       "",
+					ModuleId:        2,
+					NodeId:          0,
+					KeyContent:      "",
+					Type:            "全部",
+					Status1:         "",
+					Status2:         "",
+					Status3:         "",
+					RegulationType1: "",
+					RegulationType2: "",
+					RegulationType3: "",
+					RegulationType4: "",
+					RegulationType5: "",
+					TechType1:       "",
+					TechType2:       "",
+					TechType3:       "",
+					TechType4:       "",
+					Group:           []string{},
+					Industry:        []string{},
+					Local:           "",
+					StartDate:       "",
+					EndDate:         "",
+					ScStartDate:     "",
+					ScEndDate:       "",
+					SearchType:      "精确",
+				},
+			},
+		}
+		queryLawListResponseRows, err := QueryLawList(pageListUrl, queryLawListRequestFormData)
 		if err != nil {
 			fmt.Println(err)
 			break
 		}
-		for id_index, law := range queryLawListResponseDataRecords {
-			fmt.Println("=========开始处理数据id_index==="+strconv.Itoa(id_index)+" =====catrgory_name = ", lawListCategory.name, "==============")
+		for _, law := range queryLawListResponseRows {
+			fmt.Println("=========开始处理数据==============")
 
-			code := law.FileNo
+			code := law.Number
 			code = strings.ReplaceAll(code, "/", "-")
 			code = strings.ReplaceAll(code, "—", "-")
 			fmt.Println(code)
@@ -289,23 +223,20 @@ func main() {
 				continue
 			}
 
-			fmt.Println("=======开始下载========")
-
-			lawBaseInfoUrl := fmt.Sprintf("https://law.chemicalsafety.org.cn/api/lan/file/baseInfo/%s", law.FileId)
-			fmt.Println(lawBaseInfoUrl)
-
-			lawBaseInfoRefererUrl := fmt.Sprintf("https://law.chemicalsafety.org.cn/law/info/%s", law.FileId)
-			queryLawBaseInfoResponseData, err := QueryLawBaseInfoUrl(lawBaseInfoUrl, lawBaseInfoRefererUrl)
-			if err != nil {
-				fmt.Println(err)
-				break
+			// 类型断言
+			attachmentId, ok := law.AttachmentId.(string)
+			if !ok {
+				fmt.Println("AttachmentId字段不是字符串，跳过")
+				continue
 			}
 
-			downloadUrl := queryLawBaseInfoResponseData.PdfUrl
+			downloadRefererUrl := fmt.Sprintf("https://law.chemicalsafety.org.cn/compliance/guild/tech/TechBrowse.jsp?moduleId=2&recordId=%s&libraryId=%s&attachmentId=%s", law.RecordId, law.LibraryId, attachmentId)
+			downloadUrl := fmt.Sprintf("https://law.chemicalsafety.org.cn/compliance/rmm/function/record/downloadFile.action?attachmentId=%s", attachmentId)
 			fmt.Println(downloadUrl)
 
 			fmt.Println("=======开始下载" + title + "========")
-			err = downloadLaw(downloadUrl, lawBaseInfoUrl, filePath)
+
+			err = downloadLaw(downloadUrl, downloadRefererUrl, filePath)
 			if err != nil {
 				fmt.Println(err)
 				continue
@@ -322,41 +253,38 @@ func main() {
 			DownLoadLawTimeSleep := rand.Intn(5)
 			for i := 1; i <= DownLoadLawTimeSleep; i++ {
 				time.Sleep(time.Second)
-				fmt.Println("catrgory_name="+lawListCategory.name+",filePath="+filePath+"===========下载成功 暂停", DownLoadLawTimeSleep, "秒 倒计时", i, "秒===========")
+				fmt.Println("page="+strconv.Itoa(page)+"====== 暂停,filePath="+filePath+"===========下载成功 暂停", DownLoadLawTimeSleep, "秒 倒计时", i, "秒===========")
 			}
 		}
 		DownLoadLawCategoryTimeSleep := 10
 		// DownLoadLawCategoryTimeSleep := rand.Intn(5)
 		for i := 1; i <= DownLoadLawCategoryTimeSleep; i++ {
 			time.Sleep(time.Second)
-			fmt.Println("catrgory_name="+lawListCategory.name+"=========== 暂停", DownLoadLawCategoryTimeSleep, "秒 倒计时", i, "秒===========")
+			fmt.Println("page="+strconv.Itoa(page)+"====== 暂停", DownLoadLawCategoryTimeSleep, "秒 倒计时", i, "秒===========")
+		}
+		page++
+		if page > maxPage {
+			isPageListGo = false
+			break
 		}
 	}
 }
 
 type QueryLawListResponse struct {
-	Code int                      `json:"code"`
-	Data QueryLawListResponseData `json:"data"`
-	Ok   bool                     `json:"ok"`
+	KeysAll string                     `json:"keysAll"`
+	Rows    []QueryLawListResponseRows `json:"rows"`
+	Total   int                        `json:"total"`
 }
 
-type QueryLawListResponseData struct {
-	Current          int                               `json:"current"`
-	OptimizeCountSql bool                              `json:"optimizeCountSql"`
-	Pages            int                               `json:"pages"`
-	Records          []QueryLawListResponseDataRecords `json:"records"`
-	SearchCount      bool                              `json:"searchCount"`
-	Size             int                               `json:"size"`
-	Total            int                               `json:"total"`
+type QueryLawListResponseRows struct {
+	AttachmentId interface{} `json:"attId"`
+	RecordId     string      `json:"id"`
+	LibraryId    string      `json:"libraryId"`
+	Number       string      `json:"number"`
+	Title        string      `json:"title"`
 }
 
-type QueryLawListResponseDataRecords struct {
-	FileId string `json:"fileId"`
-	FileNo string `json:"fileNo"`
-	Title  string `json:"title"`
-}
-
-func QueryLawList(requestUrl string, referer string, queryLawListRequestPayload QueryLawListRequestPayload) (queryLawListResponseDataRecords []QueryLawListResponseDataRecords, err error) {
+func QueryLawList(requestUrl string, queryLawListRequestFormData QueryLawListRequestFormData) (queryLawListResponseRows []QueryLawListResponseRows, err error) {
 	// 初始化客户端
 	var client *http.Client = &http.Client{
 		Transport: &http.Transport{
@@ -376,123 +304,60 @@ func QueryLawList(requestUrl string, referer string, queryLawListRequestPayload 
 	if LawEnableHttpProxy {
 		client = LawSetHttpProxy()
 	}
+
 	// 将数据编码为JSON格式
-	queryLawListRequestPayloadJson, err := json.Marshal(queryLawListRequestPayload)
+	queryLawListRequestFormDataArgsJson, err := json.Marshal(queryLawListRequestFormData.Args)
 	if err != nil {
 		fmt.Println("Error encoding JSON:", err)
 		return
 	}
 
-	// 创建字符串读取器，这是http.Request需要的类型
-	body := bytes.NewReader(queryLawListRequestPayloadJson)
-	req, err := http.NewRequest("POST", requestUrl, body) //建立连接
+	postData := url.Values{}
+	postData.Add("_command", queryLawListRequestFormData.Command)
+	postData.Add("_contentType", queryLawListRequestFormData.ContentType)
+	postData.Add("_args", string(queryLawListRequestFormDataArgsJson))
+	req, err := http.NewRequest("POST", requestUrl, strings.NewReader(postData.Encode())) //建立连接
 
 	queryLawListResponse := QueryLawListResponse{}
 	if err != nil {
-		return queryLawListResponseDataRecords, err
+		return queryLawListResponseRows, err
 	}
 
-	req.Header.Set("Accept", "application/json, text/plain, */*")
+	req.Header.Set("Accept", "*/*")
 	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
 	req.Header.Set("Connection", "keep-alive")
-	req.Header.Set("Content-Type", "application/json;charset=UTF-8")
+	req.Header.Set("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")
+	req.Header.Set("Cookie", LawListCookie)
 	req.Header.Set("Host", "law.chemicalsafety.org.cn")
 	req.Header.Set("Origin", "https://law.chemicalsafety.org.cn")
-	req.Header.Set("Referer", referer)
-	req.Header.Set("Tenant-Id", "1")
+	req.Header.Set("Referer", "https://law.chemicalsafety.org.cn/compliance/guild/customer/SearchAllCustomer.jsp?moduleId=2&type=all")
+	req.Header.Set("Sec-Ch-Ua", "\"Not.A/Brand\";v=\"8\", \"Chromium\";v=\"114\", \"Google Chrome\";v=\"114\"")
+	req.Header.Set("Sec-Ch-Ua-Mobile", "?0")
+	req.Header.Set("Sec-Ch-Ua-Platform", "\"macOS\"")
+	req.Header.Set("Sec-Fetch-Dest", "empty")
+	req.Header.Set("Sec-Fetch-Mode", "cors")
+	req.Header.Set("Sec-Fetch-Site", "same-origin")
 	req.Header.Set("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36")
 	resp, err := client.Do(req) //拿到返回的内容
 	if err != nil {
 		fmt.Println(err)
-		return queryLawListResponseDataRecords, err
+		return queryLawListResponseRows, err
 	}
 	defer resp.Body.Close()
 	if resp.StatusCode != http.StatusOK {
-		return queryLawListResponseDataRecords, errors.New("http status :" + strconv.Itoa(resp.StatusCode))
+		return queryLawListResponseRows, errors.New("http status :" + strconv.Itoa(resp.StatusCode))
 	}
 	respBytes, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		fmt.Println(err)
-		return queryLawListResponseDataRecords, err
+		return queryLawListResponseRows, err
 	}
 	err = json.Unmarshal(respBytes, &queryLawListResponse)
 	if err != nil {
-		return queryLawListResponseDataRecords, err
+		return queryLawListResponseRows, err
 	}
-	queryLawListResponseDataRecords = queryLawListResponse.Data.Records
-	return queryLawListResponseDataRecords, nil
-}
-
-type QueryLawBaseInfoResponse struct {
-	Code int                          `json:"code"`
-	Data QueryLawBaseInfoResponseData `json:"data"`
-	Ok   bool                         `json:"ok"`
-}
-
-type QueryLawBaseInfoResponseData struct {
-	FileId string `json:"fileId"`
-	FileNo string `json:"fileNo"`
-	Title  string `json:"title"`
-	PdfUrl string `json:"pdfUrl"`
-}
-
-func QueryLawBaseInfoUrl(requestUrl string, referer string) (queryLawBaseInfoResponseData QueryLawBaseInfoResponseData, err error) {
-	// 初始化客户端
-	var client *http.Client = &http.Client{
-		Transport: &http.Transport{
-			Dial: func(netw, addr string) (net.Conn, error) {
-				c, err := net.DialTimeout(netw, addr, time.Second*3)
-				if err != nil {
-					fmt.Println("dail timeout", err)
-					return nil, err
-				}
-				return c, nil
-
-			},
-			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 30,
-		},
-	}
-	if LawEnableHttpProxy {
-		client = LawSetHttpProxy()
-	}
-	req, err := http.NewRequest("GET", requestUrl, nil) //建立连接
-
-	queryLawBaseInfoResponse := QueryLawBaseInfoResponse{}
-	if err != nil {
-		return queryLawBaseInfoResponseData, err
-	}
-
-	req.Header.Set("Accept", "application/json, text/plain, */*")
-	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
-	req.Header.Set("Authorization", "test1")
-	req.Header.Set("Connection", "keep-alive")
-	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
-	req.Header.Set("Host", "law.chemicalsafety.org.cn")
-	req.Header.Set("Origin", "https://law.chemicalsafety.org.cn")
-	req.Header.Set("Referer", referer)
-	req.Header.Set("Tenant-Id", "1")
-	req.Header.Set("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36")
-	resp, err := client.Do(req) //拿到返回的内容
-	if err != nil {
-		fmt.Println(err)
-		return queryLawBaseInfoResponseData, err
-	}
-	defer resp.Body.Close()
-	if resp.StatusCode != http.StatusOK {
-		return queryLawBaseInfoResponseData, errors.New("http status :" + strconv.Itoa(resp.StatusCode))
-	}
-	respBytes, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		fmt.Println(err)
-		return queryLawBaseInfoResponseData, err
-	}
-	err = json.Unmarshal(respBytes, &queryLawBaseInfoResponse)
-	if err != nil {
-		return queryLawBaseInfoResponseData, err
-	}
-	queryLawBaseInfoResponseData = queryLawBaseInfoResponse.Data
-	return queryLawBaseInfoResponseData, nil
+	queryLawListResponseRows = queryLawListResponse.Rows
+	return queryLawListResponseRows, nil
 }
 
 func downloadLaw(attachmentUrl string, referer string, filePath string) error {
@@ -524,6 +389,7 @@ func downloadLaw(attachmentUrl string, referer string, filePath string) error {
 	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
 	req.Header.Set("Cache-Control", "no-cache")
 	req.Header.Set("Connection", "keep-alive")
+	req.Header.Set("Cookie", LawListCookie)
 	req.Header.Set("Host", "law.chemicalsafety.org.cn")
 	//req.Header.Set("Referer", referer)
 	req.Header.Set("Upgrade-Insecure-Requests", "1")

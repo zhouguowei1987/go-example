@@ -4,8 +4,6 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/antchfx/htmlquery"
-	"github.com/otiai10/gosseract/v2"
 	"io"
 	"io/ioutil"
 	"math/rand"
@@ -17,6 +15,9 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/antchfx/htmlquery"
+	"github.com/otiai10/gosseract/v2"
 )
 
 const (
@@ -61,7 +62,7 @@ type DbBaResponseValidateCaptcha struct {
 	Msg  string `json:"msg"`
 }
 
-const DbBaCookie = "HMACCOUNT=487EF362690A1D5D; Hm_lvt_36f2f0446e1c2cda8410befc24743a9b=1762608423; Hm_lpvt_36f2f0446e1c2cda8410befc24743a9b=1762776330; JSESSIONID=E031A6CE159D541C24750109E1299625"
+const DbBaCookie = "HMACCOUNT=487EF362690A1D5D; Hm_lvt_36f2f0446e1c2cda8410befc24743a9b=1762608423; Hm_lpvt_36f2f0446e1c2cda8410befc24743a9b=1764747366; JSESSIONID=B370AE8EEA1F24D1FCC9A0147F9369B2"
 
 // ychEduSpider 获取地方标准文档
 // @Title 获取地方标准文档
@@ -183,14 +184,14 @@ func main() {
 					}
 
 					// 查看文件大小，如果是空文件，则删除
-                    fileInfo, err := os.Stat(filePath)
-                    if err == nil && fileInfo.Size() == 0 {
-                        fmt.Println("空文件删除")
-                        err = os.Remove(filePath)
-                    }
-                    if err != nil {
-                        continue
-                    }
+					fileInfo, err := os.Stat(filePath)
+					if err == nil && fileInfo.Size() == 0 {
+						fmt.Println("空文件删除")
+						err = os.Remove(filePath)
+					}
+					if err != nil {
+						continue
+					}
 
 					//复制文件
 					tempFilePath := strings.ReplaceAll(filePath, "../dbba.sacinfo.org.cn", "../upload.doc88.com/dbba.sacinfo.org.cn")
