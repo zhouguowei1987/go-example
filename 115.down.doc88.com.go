@@ -123,7 +123,7 @@ var TodayMaxDownLoadCount = 300
 // @Title 下载道客巴巴文档
 // @Description https://www.doc88.com/，下载道客巴巴文档
 func main() {
-	curPage := 3710
+	curPage := 3740
 
 	isPageListGo := true
 	for isPageListGo {
