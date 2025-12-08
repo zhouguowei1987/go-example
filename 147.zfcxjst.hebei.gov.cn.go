@@ -3,8 +3,6 @@ package main
 import (
 	"errors"
 	"fmt"
-	"github.com/antchfx/htmlquery"
-	"golang.org/x/net/html"
 	"io"
 	"math/rand"
 	"net"
@@ -14,6 +12,9 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/antchfx/htmlquery"
+	"golang.org/x/net/html"
 )
 
 type zfCxJstCategory struct {
@@ -23,7 +24,7 @@ type zfCxJstCategory struct {
 	maxPage int
 }
 
-var ZfCxJstCookie = "qspJd7aG3Y1XO=60fUHO9ocKVEtR8xeDuxT.qFr5J7jn5RfHlXxJP7md0y65aCBzcwx2z5Qr7cdOFg2rDD4j8V4_9YIAsUyvxlCGlG; qspJd7aG3Y1XP=0usQkP0WPwGpH5KKko2Ycxk3gtElAtOSNAmxXaOt2DKLmms1FDsNHwsgWnbjqucpKL_x9hnsFe06FV.F5b2gFzQU169g3SkKJ0TM0MsmUrlwRHCr7T8Mn9t.YFRk7o5HNWAwMKScYBY6BGpjzBVOWtwtQR.UAnWxoHo5hq.TkJmkWpIjBnt7e19LuSD4nvIHveWxHqUcOnikns8ccaC.aE3C23oZumXlVbS439Xn.KxfWOmgfd6ulijBND_bj2TqVICSdSJ7OL0OMYvxiBCqBZeSZvNNatGexfCYAyKXtubOW4QHf1nViqo.rusfY_FH.SxyaniWMiA7hm90HDXjDFga1.eqRejehfGJNqiLo0OAUuG.tFnHIva6Q20q_kskOeixGtU_OwZzJ5tBWCSLspS1rfttoivmVTr98kqk_hchedwmW4oPmuGLelpaBHPyD"
+var ZfCxJstCookie = "_idx_count=1; qspJd7aG3Y1XO=60fUHO9ocKVEtR8xeDuxT.qFr5J7jn5RfHlXxJP7md0y65aCBzcwx2z5Qr7cdOFg2rDD4j8V4_9YIAsUyvxlCGlG; qspJd7aG3Y1XP=01d2HRj4ODiMITaN04S0di6Zo5ZVUOnEhywUFNCfXja1umv_WJ_3owfM_A18MP49fT90SM_5ESeYDNIkSbQAkgmsDLzuGDYySCoTjkp.CzCyF4HvdMiLO.G6Bquwq1fAdt.H.3HTa008rgZw4xXqX7wbp09FXvkFKMVGSlPiaZJ21QjdI94SFd7lGI51xGb7yrWzJkY8u3lHco0iYXsV43tIR9uoeatyqKwaQWVIGZ5iXgYMO8A4hLOPwJouyk2l32RFapwkEmkJeNvyGj8Vt2IIitO6.rzSFRKAhy1QzedVH7WsTzIRYgd09jJ1P8cIYVjPEqYtd3BR4foIMB1AysNhmWv_qIhpvvhDuBCug2BWEMKFd7c8VVT2PHX_Y.IUXHf2gpnhMak2FQa3.6oNFzkrZbyqE6TiPd0QwmZ52BEI3EXYnDvC1ug77fJYucZq."
 
 // zfCxJstSpider 获取河北省住房和城乡建设厅标准
 // @Title 获取河北省住房和城乡建设厅标准
