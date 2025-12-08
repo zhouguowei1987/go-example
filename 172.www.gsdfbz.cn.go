@@ -23,7 +23,7 @@ var GsDfBzCookie = "CookieNid=http%3A%2F%2Fwww.gsdfbz.cn%2Ftheme%2Fdefault%2Fsta
 // @Title 获取甘肃省地方标准文档
 // @Description http://www.gsdfbz.cn/，将甘肃省地方标准文档入库
 func main() {
-	var startId = 1
+	var startId = 4829
 	var endId = 4830
 	for id := startId; id <= endId; id++ {
 		fmt.Println(id)
@@ -75,7 +75,7 @@ func main() {
 			continue
 		}
 		//复制文件
-		tempFilePath := strings.ReplaceAll(filePath, "www.gsdfbz.cn", "../upload.doc88.com/dbba.sacinfo.org.cn")
+		tempFilePath := strings.ReplaceAll(filePath, "../www.gsdfbz.cn", "../upload.doc88.com/dbba.sacinfo.org.cn")
 		err = copyGsDfBzFile(filePath, tempFilePath)
 		if err != nil {
 			fmt.Println(err)
@@ -142,7 +142,7 @@ func downloadGsDfBz(requestUrl string, referer string, filePath string) error {
 	if err != nil {
 		return err
 	}
-	req.Header.Set("Accept", "*/*")
+	req.Header.Set("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7")
 	req.Header.Set("Accept-Encoding", "gzip, deflate")
 	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
 	req.Header.Set("Cache-Control", "no-cache")
@@ -159,7 +159,7 @@ func downloadGsDfBz(requestUrl string, referer string, filePath string) error {
 	}
 	defer resp.Body.Close()
 	// 如果访问失败，就打印当前状态码
-	if resp.StatusCode != http.StatusCreated {
+	if resp.StatusCode != http.StatusOK {
 		return errors.New("http status :" + strconv.Itoa(resp.StatusCode))
 	}
 
