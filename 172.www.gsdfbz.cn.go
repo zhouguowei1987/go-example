@@ -23,7 +23,7 @@ var GsDfBzCookie = "CookieNid=http%3A%2F%2Fwww.gsdfbz.cn%2Ftheme%2Fdefault%2Fsta
 // @Title 获取甘肃省地方标准文档
 // @Description http://www.gsdfbz.cn/，将甘肃省地方标准文档入库
 func main() {
-	var startId = 4829
+	var startId = 1
 	var endId = 4830
 	for id := startId; id <= endId; id++ {
 		fmt.Println(id)
@@ -75,7 +75,7 @@ func main() {
 			continue
 		}
 		//复制文件
-		tempFilePath := strings.ReplaceAll(filePath, "../www.gsdfbz.cn", "../upload.doc88.com/dbba.sacinfo.org.cn")
+		tempFilePath := strings.ReplaceAll(filePath, "www.gsdfbz.cn", "temp-www.gsdfbz.cn")
 		err = copyGsDfBzFile(filePath, tempFilePath)
 		if err != nil {
 			fmt.Println(err)
