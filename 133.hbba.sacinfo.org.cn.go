@@ -4,8 +4,6 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/antchfx/htmlquery"
-	"github.com/otiai10/gosseract/v2"
 	"io"
 	"io/ioutil"
 	"math/rand"
@@ -17,6 +15,9 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/antchfx/htmlquery"
+	"github.com/otiai10/gosseract/v2"
 )
 
 const (
@@ -189,7 +190,7 @@ func main() {
 						}
 
 						//复制文件
-						tempFilePath := strings.ReplaceAll(filePath, "../hbba.sacinfo.org.cn", "../upload.doc88.com/hbba.sacinfo.org.cn")
+						tempFilePath := strings.ReplaceAll(filePath, "hbba.sacinfo.org.cn", "temp-hbba.sacinfo.org.cn")
 						err = HbBaCopyFile(filePath, tempFilePath)
 						if err != nil {
 							fmt.Println(err)
