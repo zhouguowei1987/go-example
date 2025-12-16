@@ -582,11 +582,6 @@ func main() {
 			Price:   200,
 		},
 		{
-			dirName: "www.webfree.net",
-			pCid:    8370,
-			Price:   200,
-		},
-		{
 			dirName: "sc.chinaz.com/ppt",
 			pCid:    8120,
 			Price:   200,

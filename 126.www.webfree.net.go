@@ -5,8 +5,8 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"math/rand"
 	"io/ioutil"
+	"math/rand"
 	"net"
 	"net/http"
 	"net/url"
@@ -101,7 +101,7 @@ func main() {
 			}
 			for _, liNode := range liNodes {
 				fmt.Println("============================================================================")
-				fmt.Println("=======当前页为：" + strconv.Itoa(current) + "========标准类别="+webfree.name)
+				fmt.Println("=======当前页为：" + strconv.Itoa(current) + "========标准类别=" + webfree.name)
 
 				fileANode := htmlquery.FindOne(liNode, `./div[@class="entry entry-cpt"]/div[@class="entry-container"]/div[@class="entry-head"]/h2[@class="entry-title"]/a`)
 				fileName := htmlquery.InnerText(fileANode)
@@ -112,71 +112,71 @@ func main() {
 
 				filePath := "../www.webfree.net/" + fileName + ".pdf"
 				_, err = os.Stat(filePath)
-                if err == nil {
-                    fmt.Println("文档已下载过，跳过")
-                    continue
-                }
+				if err == nil {
+					fmt.Println("文档已下载过，跳过")
+					continue
+				}
 
 				// 标准文件id
-                fileId := htmlquery.InnerText(htmlquery.FindOne(fileANode, `./@href`))
-                fileId = strings.ReplaceAll(fileId, "https://www.webfree.net/download/", "")
-                fmt.Println(fileId)
+				fileId := htmlquery.InnerText(htmlquery.FindOne(fileANode, `./@href`))
+				fileId = strings.ReplaceAll(fileId, "https://www.webfree.net/download/", "")
+				fmt.Println(fileId)
 
-                downLoadWebFreeFormData := DownLoadWebFreeFormData{
-                    __wpdm_ID: fileId,
-                    dataType:  "json",
-                    execute:   "wpdm_getlink",
-                    action:    "wpdm_ajax_call",
-                    password:  "Webfree.net",
-                }
+				downLoadWebFreeFormData := DownLoadWebFreeFormData{
+					__wpdm_ID: fileId,
+					dataType:  "json",
+					execute:   "wpdm_getlink",
+					action:    "wpdm_ajax_call",
+					password:  "Webfree.net",
+				}
 
-                downLoadWebFreeResponse, err := DownLoadWebFreeUrl(downLoadWebFreeFormData)
-                if err != nil {
-                    fmt.Println(err)
-                    continue
-                }
-                if downLoadWebFreeResponse.Success != true {
-                    fmt.Println(err)
-                    continue
-                }
+				downLoadWebFreeResponse, err := DownLoadWebFreeUrl(downLoadWebFreeFormData)
+				if err != nil {
+					fmt.Println(err)
+					continue
+				}
+				if downLoadWebFreeResponse.Success != true {
+					fmt.Println(err)
+					continue
+				}
 
-                downLoadUrl := downLoadWebFreeResponse.DownLoadUrl
-                fmt.Println(downLoadUrl)
+				downLoadUrl := downLoadWebFreeResponse.DownLoadUrl
+				fmt.Println(downLoadUrl)
 
-                fmt.Println("=======开始下载" + strconv.Itoa(current) + "========")
-                err = downloadWebFree(downLoadUrl, filePath)
-                if err != nil {
-                    fmt.Println(err)
-                    continue
-                }
+				fmt.Println("=======开始下载" + strconv.Itoa(current) + "========")
+				err = downloadWebFree(downLoadUrl, filePath)
+				if err != nil {
+					fmt.Println(err)
+					continue
+				}
 
-                //复制文件
-                tempFilePath := strings.ReplaceAll(filePath, "../www.webfree.net", "../upload.doc88.com/www.webfree.net")
-                err = WebFreeCopyFile(filePath, tempFilePath)
-                if err != nil {
-                    fmt.Println(err)
-                    continue
-                }
+				//复制文件
+				tempFilePath := strings.ReplaceAll(filePath, "www.webfree.net", "temp-hbba.sacinfo.org.cn")
+				err = WebFreeCopyFile(filePath, tempFilePath)
+				if err != nil {
+					fmt.Println(err)
+					continue
+				}
 
-                fmt.Println("=======下载完成========")
+				fmt.Println("=======下载完成========")
 
-                downloadWebFreePdfSleep := rand.Intn(5)
-                for i := 1; i <= downloadWebFreePdfSleep; i++ {
-                    time.Sleep(time.Second)
-                    fmt.Println("page="+strconv.Itoa(current)+"=======fileName=", fileName, "成功，====== 暂停", downloadWebFreePdfSleep, "秒，倒计时", i, "秒===========")
-                }
+				downloadWebFreePdfSleep := rand.Intn(5)
+				for i := 1; i <= downloadWebFreePdfSleep; i++ {
+					time.Sleep(time.Second)
+					fmt.Println("page="+strconv.Itoa(current)+"=======fileName=", fileName, "成功，====== 暂停", downloadWebFreePdfSleep, "秒，倒计时", i, "秒===========")
+				}
 			}
 			// DownLoadWebFreePageTimeSleep := 10
-            DownLoadWebFreePageTimeSleep := rand.Intn(5)
-            for i := 1; i <= DownLoadWebFreePageTimeSleep; i++ {
-                time.Sleep(time.Second)
-                fmt.Println("page="+strconv.Itoa(current)+"======标准类别="+webfree.name+"====== 暂停", DownLoadWebFreePageTimeSleep, "秒 倒计时", i, "秒===========")
-            }
-            current++
-            if current > maxCurrent {
-                isPageListGo = false
-                break
-            }
+			DownLoadWebFreePageTimeSleep := rand.Intn(5)
+			for i := 1; i <= DownLoadWebFreePageTimeSleep; i++ {
+				time.Sleep(time.Second)
+				fmt.Println("page="+strconv.Itoa(current)+"======标准类别="+webfree.name+"====== 暂停", DownLoadWebFreePageTimeSleep, "秒 倒计时", i, "秒===========")
+			}
+			current++
+			if current > maxCurrent {
+				isPageListGo = false
+				break
+			}
 		}
 	}
 }
