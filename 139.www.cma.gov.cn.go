@@ -3,7 +3,6 @@ package main
 import (
 	"errors"
 	"fmt"
-	"github.com/antchfx/htmlquery"
 	"io"
 	"math/rand"
 	"net"
@@ -14,6 +13,8 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/antchfx/htmlquery"
 )
 
 const (
@@ -115,7 +116,7 @@ func main() {
 					continue
 				}
 				//复制文件
-				tempFilePath := strings.ReplaceAll(filePath, "../www.cma.gov.cn", "../upload.doc88.com/www.cma.gov.cn")
+				tempFilePath := strings.ReplaceAll(filePath, "www.cma.gov.cn", "temp-hbba.sacinfo.org.cn")
 				err = copyCmaFile(filePath, tempFilePath)
 				if err != nil {
 					fmt.Println(err)

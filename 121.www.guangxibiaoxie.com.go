@@ -21,7 +21,7 @@ import (
 // @Description http://www.guangxibiaoxie.com/，将广西标准化协会Pdf文档入库
 func main() {
 	var startId = 4528
-	var endId = 4976
+	var endId = 5012
 	for id := startId; id <= endId; id++ {
 		detailUrl := fmt.Sprintf("http://www.guangxibiaoxie.com/a/%d.html", id)
 		fmt.Println(detailUrl)
@@ -78,7 +78,7 @@ func main() {
 		fmt.Println("=======完成下载========")
 
 		//复制文件
-		tempFilePath := strings.ReplaceAll(filePath, "../www.guangxibiaoxie.com", "../upload.doc88.com/hbba.sacinfo.org.cn")
+		tempFilePath := strings.ReplaceAll(filePath, "www.guangxibiaoxie.com", "temp-hbba.sacinfo.org.cn")
 		err = copyGuangXiBiaoXieFile(filePath, tempFilePath)
 		if err != nil {
 			fmt.Println(err)

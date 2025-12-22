@@ -682,21 +682,6 @@ func main() {
 			Price:   200,
 		},
 		{
-			dirName: "www.cma.gov.cn",
-			pCid:    8370,
-			Price:   200,
-		},
-		{
-			dirName: "scjgj.beijing.gov.cn",
-			pCid:    8370,
-			Price:   200,
-		},
-		{
-			dirName: "www.caac.gov.cn",
-			pCid:    8370,
-			Price:   200,
-		},
-		{
 			dirName: "htsfwb.samr.gov.cn",
 			pCid:    8131,
 			Price:   200,
