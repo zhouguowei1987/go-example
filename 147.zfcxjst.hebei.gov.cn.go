@@ -24,7 +24,7 @@ type zfCxJstCategory struct {
 	maxPage int
 }
 
-var ZfCxJstCookie = "_idx_count=1; qspJd7aG3Y1XO=60fUHO9ocKVEtR8xeDuxT.qFr5J7jn5RfHlXxJP7md0y65aCBzcwx2z5Qr7cdOFg2rDD4j8V4_9YIAsUyvxlCGlG; qspJd7aG3Y1XP=01d2HRj4ODiMITaN04S0di6Zo5ZVUOnEhywUFNCfXja1umv_WJ_3owfM_A18MP49fT90SM_5ESeYDNIkSbQAkgmsDLzuGDYySCoTjkp.CzCyF4HvdMiLO.G6Bquwq1fAdt.H.3HTa008rgZw4xXqX7wbp09FXvkFKMVGSlPiaZJ21QjdI94SFd7lGI51xGb7yrWzJkY8u3lHco0iYXsV43tIR9uoeatyqKwaQWVIGZ5iXgYMO8A4hLOPwJouyk2l32RFapwkEmkJeNvyGj8Vt2IIitO6.rzSFRKAhy1QzedVH7WsTzIRYgd09jJ1P8cIYVjPEqYtd3BR4foIMB1AysNhmWv_qIhpvvhDuBCug2BWEMKFd7c8VVT2PHX_Y.IUXHf2gpnhMak2FQa3.6oNFzkrZbyqE6TiPd0QwmZ52BEI3EXYnDvC1ug77fJYucZq."
+var ZfCxJstCookie = "_idx_count=1; qspJd7aG3Y1XO=60fUHO9ocKVEtR8xeDuxT.qFr5J7jn5RfHlXxJP7md0y65aCBzcwx2z5Qr7cdOFg2rDD4j8V4_9YIAsUyvxlCGlG; qspJd7aG3Y1XP=0qsTq0xfFl0j_snymTYRf4Ug1AgMjSzmHr66k297EPb1v7eoamQmra_cpp.zgF3smwXuX.HG7AeD7b7ZM1EFe6v_yo9K7FeDR7.Fwec9ZAe0db03AXp34nqCLTVFvJr7mljPAq5MWrL6flLpNPVDiazrRUrLoWZ.CAL1.HK9l3N_Fp2xapy.g6mXXyT8_sKUQfB21IYTD9CyUnA15.DFOnBKFaH5Qviz0Nk3xcF3zqSo5bWmnFw6jPYCldRkaLgzgx30.H8JUsD7ym3Re83I6kSyV6e1hQd740QrHeqm80jECcCt0C.hgwqs0CsdopJouO0DxTOlnqbMSHHDFUPuabnVUsp0a1PLy4Yki8NEgGr10yNaeIdr.1BWj7ftg92of4IJSLwfIPoF6Ts8L4L8siGYUaHxiIVwX6GG3P24QzlUKX2baeF8.MbQWYukCtP8Z"
 
 // zfCxJstSpider 获取河北省住房和城乡建设厅标准
 // @Title 获取河北省住房和城乡建设厅标准
@@ -113,7 +113,7 @@ func main() {
 						fmt.Println(err)
 					}
 					//复制文件
-					tempFilePath := strings.ReplaceAll(filePath, "../zfcxjst.hebei.gov.cn", "upload.doc88.com/dbba.sacinfo.org.cn")
+					tempFilePath := strings.ReplaceAll(filePath, "zfcxjst.hebei.gov.cn", "temp-dbba.sacinfo.org.cn")
 					err = ZfCxJstCopyFile(filePath, tempFilePath)
 					if err != nil {
 						fmt.Println(err)

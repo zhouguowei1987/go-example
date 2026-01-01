@@ -205,7 +205,7 @@ func main() {
 					continue
 				}
 				//复制文件
-				tempFilePath := strings.ReplaceAll(filePath, "../app.nifdc.org.cn", "../upload.doc88.com/hbba.sacinfo.org.cn")
+				tempFilePath := strings.ReplaceAll(filePath, "app.nifdc.org.cn", "temp-hbba.sacinfo.org.cn")
 				err = QxTjBzCopyFile(filePath, tempFilePath)
 				if err != nil {
 					fmt.Println(err)

@@ -222,7 +222,7 @@ func main() {
 					continue
 				}
 				//复制文件
-				tempFilePath := strings.ReplaceAll(filePath, "../www.hnbzw.com", "../temp-www.hnbzw.com")
+				tempFilePath := strings.ReplaceAll(filePath, "www.hnbzw.com", "temp-dbba.sacinfo.org.cn")
 				err = copyHnBzwFile(filePath, tempFilePath)
 				if err != nil {
 					fmt.Println(err)

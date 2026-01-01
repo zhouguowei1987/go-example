@@ -116,7 +116,7 @@ type QueryDb52ListFormData struct {
 	pageSize  int
 }
 
-var Db52Cookie = "MM_mq4qQammP3BA4=MzJlNTk3MjRhYjM0OTA5ZQF2n69wGnJrhiAPB_Lm4CSmnMT7hUDvBKOrPvDKRugXH2tQiFaUNE4-9AYiM9FnjQ; Hm_lvt_f16f49ee9ef4b0f8392405dd9dbcd628=1755227959; HMACCOUNT=1CCD0111717619C6; Hm_lpvt_f16f49ee9ef4b0f8392405dd9dbcd628=1755228159"
+var Db52Cookie = "MM_mq4qQammP3BA4=YWQ0ZDViZDJjNjU1ZDM3NWL_PeyHzJuOhwD3DeuuFPagVwvsL_hlX5xSBMX33CpDzk4E-yCuM-FAzJQt3iaB4kftLzMlhQu_iNEMY43S09s"
 
 // 下载贵州省地方标准文档
 // @Title 下载贵州省地方标准文档
@@ -192,7 +192,7 @@ func main() {
 				continue
 			}
 			//复制文件
-			tempFilePath := strings.ReplaceAll(filePath, "../db52.amr.guizhou.gov.cn", "../upload.doc88.com/dbba.sacinfo.org.cn")
+			tempFilePath := strings.ReplaceAll(filePath, "db52.amr.guizhou.gov.cn", "temp-dbba.sacinfo.org.cn")
 			err = copyDb52File(filePath, tempFilePath)
 			if err != nil {
 				fmt.Println(err)

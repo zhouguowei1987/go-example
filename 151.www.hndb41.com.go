@@ -182,7 +182,7 @@ func main() {
 				continue
 			}
 			//复制文件
-			tempFilePath := strings.ReplaceAll(filePath, "../www.hndb41.com", "../temp-www.hndb41.com")
+			tempFilePath := strings.ReplaceAll(filePath, "www.hndb41.com", "temp-dbba.sacinfo.org.cn")
 			err = copyHnDb41File(filePath, tempFilePath)
 			if err != nil {
 				fmt.Println(err)

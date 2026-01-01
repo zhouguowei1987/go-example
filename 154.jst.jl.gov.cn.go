@@ -138,7 +138,7 @@ func main() {
 					continue
 				}
 				//复制文件
-				tempFilePath := strings.ReplaceAll(filePath, "../jst.jl.gov.cn", "../temp-jst.jl.gov.cn")
+				tempFilePath := strings.ReplaceAll(filePath, "jst.jl.gov.cn", "temp-dbba.sacinfo.org.cn")
 				err = copyJstFile(filePath, tempFilePath)
 				if err != nil {
 					fmt.Println(err)

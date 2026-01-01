@@ -23,8 +23,8 @@ var Fire114Cookie = "PHPSESSID=sgeiq3i8ut557f35o4mnur1p83; UM_distinctid=199997a
 // @Title 获取消防百事通文档
 // @Description http://www.fire114.cn/，将消防百事通文档入库
 func main() {
-	var startId = 140561
-	var endId = 140500
+	var startId = 140716
+	var endId = 140700
 	for id := startId; id >= endId; id-- {
 		detailUrl := fmt.Sprintf("https://www.fire114.cn/islibd/%d.html", id)
 		fmt.Println(detailUrl)
@@ -90,7 +90,7 @@ func main() {
 		fmt.Println("=======完成下载========")
 
 		//复制文件
-		tempFilePath := strings.ReplaceAll(filePath, "../www.fire114.cn", "../temp-www.fire114.cn")
+		tempFilePath := strings.ReplaceAll(filePath, "www.fire114.cn", "../temp-hbba.sacinfo.org.cn")
 		err = copyFire114File(filePath, tempFilePath)
 		if err != nil {
 			fmt.Println(err)
