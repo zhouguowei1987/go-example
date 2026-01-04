@@ -178,7 +178,7 @@ func main() {
 				continue
 			}
 			//复制文件
-			tempFilePath := strings.ReplaceAll(filePath, "../scjgj.beijing.gov.cn", "../upload.doc88.com/scjgj.beijing.gov.cn")
+			tempFilePath := strings.ReplaceAll(filePath, "scjgj.beijing.gov.cn", "temp-hbba.sacinfo.org.cn")
 			err = copyScJgjFile(filePath, tempFilePath)
 			if err != nil {
 				fmt.Println(err)

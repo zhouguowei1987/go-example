@@ -62,7 +62,7 @@ type DbBaResponseValidateCaptcha struct {
 	Msg  string `json:"msg"`
 }
 
-const DbBaCookie = "HMACCOUNT=487EF362690A1D5D; Hm_lvt_36f2f0446e1c2cda8410befc24743a9b=1762608423; Hm_lpvt_36f2f0446e1c2cda8410befc24743a9b=1765165162; JSESSIONID=70536E7EF2F53D1ECAAE35E5B1A0D4E2"
+const DbBaCookie = "HMACCOUNT=487EF362690A1D5D; Hm_lvt_36f2f0446e1c2cda8410befc24743a9b=1765208911; Hm_lpvt_36f2f0446e1c2cda8410befc24743a9b=1767490318; JSESSIONID=49483ED681F8EBF1493A6EFB030ADE40"
 
 // ychEduSpider 获取地方标准文档
 // @Title 获取地方标准文档
@@ -194,7 +194,7 @@ func main() {
 					}
 
 					//复制文件
-					tempFilePath := strings.ReplaceAll(filePath, "../dbba.sacinfo.org.cn", "../upload.doc88.com/dbba.sacinfo.org.cn")
+					tempFilePath := strings.ReplaceAll(filePath, "dbba.sacinfo.org.cn", "temp-dbba.sacinfo.org.cn")
 					err = DbBaCopyFile(filePath, tempFilePath)
 					if err != nil {
 						fmt.Println(err)

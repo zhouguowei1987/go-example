@@ -4,8 +4,6 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/antchfx/htmlquery"
-	"github.com/otiai10/gosseract/v2"
 	"io"
 	"io/ioutil"
 	"math/rand"
@@ -17,6 +15,9 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/antchfx/htmlquery"
+	"github.com/otiai10/gosseract/v2"
 )
 
 const (
@@ -61,7 +62,7 @@ type HdBaResponseValidateCaptcha struct {
 	Msg  string `json:"msg"`
 }
 
-const HbBaCookie = "HMACCOUNT=487EF362690A1D5D; Hm_lvt_bc6f61eace617162b31b982f796830e6=1762749536; Hm_lpvt_bc6f61eace617162b31b982f796830e6=1764922985; JSESSIONID=9E97E452C03EE1ACF1C35C2045352CE8"
+const HbBaCookie = "HMACCOUNT=487EF362690A1D5D; Hm_lvt_bc6f61eace617162b31b982f796830e6=1765350767; Hm_lpvt_bc6f61eace617162b31b982f796830e6=1767490396; JSESSIONID=BA3CC9E2BEF29F48A1F0806662BE1D5A"
 
 // ychEduSpider 获取行业标准文档
 // @Title 获取行业标准文档
@@ -189,7 +190,7 @@ func main() {
 						}
 
 						//复制文件
-						tempFilePath := strings.ReplaceAll(filePath, "../hbba.sacinfo.org.cn", "../upload.doc88.com/hbba.sacinfo.org.cn")
+						tempFilePath := strings.ReplaceAll(filePath, "hbba.sacinfo.org.cn", "temp-hbba.sacinfo.org.cn")
 						err = HbBaCopyFile(filePath, tempFilePath)
 						if err != nil {
 							fmt.Println(err)

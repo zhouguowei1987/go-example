@@ -4,9 +4,9 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"golang.org/x/net/html"
 	"io"
 	"io/ioutil"
+	"math/rand"
 	"net"
 	"net/http"
 	"net/url"
@@ -17,7 +17,8 @@ import (
 	"strconv"
 	"strings"
 	"time"
-	"math/rand"
+
+	"golang.org/x/net/html"
 
 	"github.com/antchfx/htmlquery"
 	_ "golang.org/x/net/html"
@@ -133,7 +134,7 @@ func create_yfxkpy_ssid() {
 		Yfxkpy_lasttime:  strconv.Itoa(int(now_milliseconds)),
 		Yfxkpy_visittime: strconv.Itoa(int(now_milliseconds)),
 		Yfxkpy_cookie:    now_day + "34962272829032799947",
-// 		Yfxkpy_returncount: "1",
+		// 		Yfxkpy_returncount: "1",
 	}
 	// 将结构体转换为JSON字节数组
 	yfxkpy_ssid_10006654_json_data, err := json.Marshal(yfxkpy_ssid_10006654)
@@ -143,10 +144,10 @@ func create_yfxkpy_ssid() {
 
 	yfxkpy_ssid_10006654_json_data_string := string(yfxkpy_ssid_10006654_json_data)
 	yfxkpy_ssid_10006654_json_data_string = url.QueryEscape(yfxkpy_ssid_10006654_json_data_string)
-// 	fmt.Println(yfxkpy_ssid_10006654_json_data_string)
+	// 	fmt.Println(yfxkpy_ssid_10006654_json_data_string)
 
 	NhcGovCookie = fmt.Sprintf("5uRo8RWcod0KO=603Se6al8mCmIyKI6qz89CLPxYBjv3jLkOmQKaig.o_VoxTKUs7u5.GLBoQZqQI8wKJkls3kv0n2fjI_ZRWBNuJa; ariauseGraymode=false; _yfxkpy_ssid_10006654=%s; 5uRo8RWcod0KP=0YfsfENJRVQcDADFmVzjlO0WAU8_FJrmTEaoqrGaDP.EURyINWIL7XRa0aUQWVLVIi2l2uSV4NmTx90Z6zSmZFHQMG_BfxsQSIAhqX3ku7hODvnNhOFFmc9Et8OIL6UUBlkTX_QWj.xis2_vxqZ5Na22gtvY3WVrNa7JWv7..29dM.X4h.hsa_5VhTeXs9ffnuI95TQObg0zdMiLqQlcR2Gz0byze5_XW6bKBBcSQJoHpLhQC2gX830RQQITfIDym2icMzNnP1Dq.EyloqkjS4YN_yL2F4pZdpIwc9GGMHaZ5Jj3k6hVYJ8VK10ODnDjB9VKklb8wLcjBlfSaMijKcWDsgk81ziLZgDSUDC_Gf_VmuJs7DqruGDoGp_4GPZ_k; arialoadData=true", yfxkpy_ssid_10006654_json_data_string)
-// 	fmt.Println(NhcGovCookie)
+	// 	fmt.Println(NhcGovCookie)
 }
 
 // 下载国家卫生标准文档
@@ -184,19 +185,19 @@ func main() {
 
 		nhcGovDetailUrl := nhcGovResult.Url
 		fmt.Println(nhcGovDetailUrl)
-// 		os.Exit(1)
+		// 		os.Exit(1)
 
 		nhcGovDetailDoc, err := NhcGovDetailDoc(nhcGovDetailUrl, "https://www.nhc.gov.cn/wjw/wsbzxx/wsbz.shtml")
 		if err != nil {
 			fmt.Println(err)
 			continue
 		}
-// 		fmt.Println(htmlquery.InnerText(nhcGovDetailDoc))
-// 		os.Exit(1)
+		// 		fmt.Println(htmlquery.InnerText(nhcGovDetailDoc))
+		// 		os.Exit(1)
 
 		codeNode := htmlquery.FindOne(nhcGovDetailDoc, `//div[@class="w1140 bgfff p20"]/div[@class="list"]/table[@class="mt20 mb20"]/tbody/tr[1]/td[@class="zhupei"]`)
-// 		fmt.Println(htmlquery.InnerText(codeNode))
-// 		os.Exit(1)
+		// 		fmt.Println(htmlquery.InnerText(codeNode))
+		// 		os.Exit(1)
 		if codeNode == nil {
 			fmt.Println("没有code节点，跳过")
 			continue
@@ -212,19 +213,19 @@ func main() {
 
 		nhcGovDownloadHrefNode1 := htmlquery.FindOne(nhcGovDetailDoc, `//div[@class="w1140 bgfff p20"]/div[@class="list"]/div[@class="con"]/p/a/@href`)
 		nhcGovDownloadHrefNode2 := htmlquery.FindOne(nhcGovDetailDoc, `//div[@class="w1140 bgfff p20"]/div[@class="list"]/div[@class="con"]/a/@href`)
-		if nhcGovDownloadHrefNode1 == nil && nhcGovDownloadHrefNode2 == nil{
-		    fmt.Println("没有下载地址节点，跳过")
+		if nhcGovDownloadHrefNode1 == nil && nhcGovDownloadHrefNode2 == nil {
+			fmt.Println("没有下载地址节点，跳过")
 			continue
 		}
 		nhcGovDownloadHref := ""
-		if nhcGovDownloadHrefNode1 == nil{
-		    nhcGovDownloadHref = htmlquery.InnerText(nhcGovDownloadHrefNode2)
+		if nhcGovDownloadHrefNode1 == nil {
+			nhcGovDownloadHref = htmlquery.InnerText(nhcGovDownloadHrefNode2)
 		}
-		if nhcGovDownloadHrefNode2 == nil{
-		    nhcGovDownloadHref = htmlquery.InnerText(nhcGovDownloadHrefNode1)
+		if nhcGovDownloadHrefNode2 == nil {
+			nhcGovDownloadHref = htmlquery.InnerText(nhcGovDownloadHrefNode1)
 		}
-		if len(nhcGovDownloadHref) <= 0{
-		    fmt.Println("没有下载地址，跳过")
+		if len(nhcGovDownloadHref) <= 0 {
+			fmt.Println("没有下载地址，跳过")
 			continue
 		}
 
@@ -249,14 +250,14 @@ func main() {
 			continue
 		}
 		//复制文件
-        tempFilePath := strings.ReplaceAll(filePath, "../www.nhc.gov.cn", "../temp-www.nhc.gov.cn")
-        err = NhcGovCopyFile(filePath, tempFilePath)
-        if err != nil {
-            fmt.Println(err)
-            continue
-        }
+		tempFilePath := strings.ReplaceAll(filePath, "www.nhc.gov.cn", "temp-hbba.sacinfo.org.cn")
+		err = NhcGovCopyFile(filePath, tempFilePath)
+		if err != nil {
+			fmt.Println(err)
+			continue
+		}
 		fmt.Println("=======完成下载========")
-// 		DownLoadNhcGovTimeSleep := 10
+		// 		DownLoadNhcGovTimeSleep := 10
 		DownLoadNhcGovTimeSleep := rand.Intn(5)
 		for i := 1; i <= DownLoadNhcGovTimeSleep; i++ {
 			time.Sleep(time.Second)

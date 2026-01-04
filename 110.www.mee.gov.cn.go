@@ -3,8 +3,6 @@ package main
 import (
 	"errors"
 	"fmt"
-	"github.com/antchfx/htmlquery"
-	"golang.org/x/net/html"
 	"io"
 	"net"
 	"net/http"
@@ -14,6 +12,9 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/antchfx/htmlquery"
+	"golang.org/x/net/html"
 )
 
 const (
@@ -98,11 +99,20 @@ func main() {
 			liNodes := htmlquery.Find(meeBzListDoc, `//html/body/div[4]/div[2]/div/div[2]/ul[2]/li`)
 			if len(liNodes) >= 1 {
 				for _, liNode := range liNodes {
+					fmt.Println("=====================开始处理列表-分割线==========================")
+
+					fmt.Println("=======category_name = " + category.name + ",-page = " + strconv.Itoa(page) + "=========")
+
 					detailUrlNode := htmlquery.FindOne(liNode, `./a/@href`)
 					if detailUrlNode == nil {
 						fmt.Println("没有文档详情链接，跳过")
 						continue
 					}
+
+					detailTitleNode := htmlquery.FindOne(liNode, `./a`)
+					detailTitle := htmlquery.InnerText(detailTitleNode)
+					fmt.Println(detailTitle)
+
 					detailUrl := category.url + htmlquery.InnerText(detailUrlNode)
 					fmt.Println(detailUrl)
 					//os.Exit(1)
@@ -113,15 +123,18 @@ func main() {
 						continue
 					}
 
-					bzDetailANodes := htmlquery.Find(meeDetailDoc, `//div[@class="neiright_Content"]/div[@class="neiright_JPZ_GK_CP"]/a`)
-					if len(bzDetailANodes) > 0 {
-						for _, bzDetailANode := range bzDetailANodes {
-							bzDownloadHrefNode := htmlquery.FindOne(bzDetailANode, `./@href`)
+					bzDetailNode := htmlquery.FindOne(meeDetailDoc, `//div[@class="neiright_Content"]/div[@class="neiright_JPZ_GK_CP"]`)
+					if bzDetailNode == nil {
+						fmt.Println("文章详情为空")
+					}
+					bzDownloadANodes := htmlquery.Find(bzDetailNode, `//a`)
+					if len(bzDownloadANodes) > 0 {
+						for _, bzDownloadANode := range bzDownloadANodes {
+							bzDownloadHrefNode := htmlquery.FindOne(bzDownloadANode, `./@href`)
 							bzDownloadHref := htmlquery.InnerText(bzDownloadHrefNode)
-							fmt.Println(bzDownloadHref)
 							if strings.Contains(bzDownloadHref, ".pdf") {
 								// 中文标题
-								chineseTitle := htmlquery.InnerText(bzDetailANode)
+								chineseTitle := htmlquery.InnerText(bzDownloadANode)
 								chineseTitle = strings.TrimSpace(chineseTitle)
 								chineseTitle = strings.ReplaceAll(chineseTitle, "/", "-")
 								chineseTitle = strings.ReplaceAll(chineseTitle, "／", "-")
@@ -162,7 +175,7 @@ func main() {
 									continue
 								}
 								//复制文件
-								tempFilePath := strings.ReplaceAll(filePath, "../www.mee.gov.cn", "../upload.doc88.com/www.mee.gov.cn")
+								tempFilePath := strings.ReplaceAll(filePath, "www.mee.gov.cn", "temp-hbba.sacinfo.org.cn")
 								err = copyMeeFile(filePath, tempFilePath)
 								if err != nil {
 									fmt.Println(err)
