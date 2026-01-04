@@ -129,7 +129,7 @@ func main() {
 			pageSize := 20
 			isPageListGo := true
 			for isPageListGo {
-				listUrl := fmt.Sprintf("http://iweb.zhuangyuan123.com/web/resources/list?period=%d&subjectId=%d&categoryId=&pointsId=&type=2&rank=&district=&province=&year=&grade=&examType=&status=2&pageNum=%d&orderByColumn=update_time&isAsc=desc&pageSize=%d", period.periodId, subject.subjectId, pageNum, pageSize)
+				listUrl := fmt.Sprintf("http://iweb.zhuangyuan123.com/web/resources/list?period=%d&subjectId=%d&categoryId=&pointsId=&type=4&rank=&district=&province=&year=&grade=&examType=&status=2&pageNum=%d&orderByColumn=update_time&isAsc=desc&pageSize=%d", period.periodId, subject.subjectId, pageNum, pageSize)
 				fmt.Println(listUrl)
 				zhuangYuan123ListResponse, err := GetZhuangYuan123List(listUrl)
 				if err != nil {
