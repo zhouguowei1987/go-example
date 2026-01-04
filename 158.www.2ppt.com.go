@@ -38,7 +38,7 @@ type QueryPpt2DownloadUrlFormData struct {
 	resourceid string
 }
 
-var Ppt2Cookie = "Hm_lvt_cd668c52b64b6c51259bb01b5a1ca278=1755330154; HMACCOUNT=1CCD0111717619C6; Hm_lpvt_cd668c52b64b6c51259bb01b5a1ca278=1755392773"
+var Ppt2Cookie = "Hm_lvt_cd668c52b64b6c51259bb01b5a1ca278=1765592997; HMACCOUNT=1CCD0111717619C6; Hm_lpvt_cd668c52b64b6c51259bb01b5a1ca278=1765593145"
 
 // ychEduSpider 获取爱ppt文档
 // @Title 获取爱ppt文档
@@ -163,20 +163,25 @@ func Ppt2HtmlDoc(requestUrl string, referer string) (doc *html.Node, err error) 
 		return doc, err
 	}
 
+	req.Header.Set("authority", "www.2ppt.com")
+	req.Header.Set("method", "GET")
+	req.Header.Set("path", "/ppt/p1.html")
+	req.Header.Set("scheme", "https")
 	req.Header.Set("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7")
-	//req.Header.Set("Accept-Encoding", "gzip, deflate, br")
+	// req.Header.Set("Accept-Encoding", "gzip, deflate, br")
 	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
-	req.Header.Set("Cache-Control", "max-age=0")
-	req.Header.Set("Connection", "keep-alive")
+	// req.Header.Set("Cache-Control", "max-age=0")
+	// req.Header.Set("Connection", "keep-alive")
 	req.Header.Set("Cookie", Ppt2Cookie)
+	req.Header.Set("Priority", "u=0, i")
 	req.Header.Set("Host", "www.2ppt.com")
-	req.Header.Set("Origin", "https://www.2ppt.com/")
+	// req.Header.Set("Origin", "https://www.2ppt.com/")
 	req.Header.Set("Referer", referer)
 	req.Header.Set("sec-ch-ua", "\"Chromium\";v=\"118\", \"Google Chrome\";v=\"118\", \"Not=A?Brand\";v=\"99\"")
 	req.Header.Set("sec-ch-ua-mobile", "?0")
 	req.Header.Set("sec-ch-ua-platform", "\"macOS\"")
 	req.Header.Set("Sec-Fetch-Dest", "document")
-	req.Header.Set("Sec-Fetch-Mode", "cors")
+	req.Header.Set("Sec-Fetch-Mode", "navigate")
 	req.Header.Set("Sec-Fetch-Site", "same-origin")
 	req.Header.Set("Sec-Fetch-User", "?1")
 	req.Header.Set("Upgrade-Insecure-Requests", "1")
