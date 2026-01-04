@@ -23,7 +23,7 @@ var Fire114Cookie = "PHPSESSID=sgeiq3i8ut557f35o4mnur1p83; UM_distinctid=199997a
 // @Title 获取消防百事通文档
 // @Description http://www.fire114.cn/，将消防百事通文档入库
 func main() {
-	var startId = 140716
+	var startId = 140723
 	var endId = 140700
 	for id := startId; id >= endId; id-- {
 		detailUrl := fmt.Sprintf("https://www.fire114.cn/islibd/%d.html", id)
