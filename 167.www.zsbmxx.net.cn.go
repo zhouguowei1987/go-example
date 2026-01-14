@@ -130,7 +130,7 @@ func main() {
 					continue
 				}
 				//复制文件
-				tempFilePath := strings.ReplaceAll(filePath, "../www.zsbmxx.net.cn", "../upload.doc88.com/dbba.sacinfo.org.cn")
+				tempFilePath := strings.ReplaceAll(filePath, "www.zsbmxx.net.cn", "temp-dbba.sacinfo.org.cn")
 				err = copyZsBmXxFile(filePath, tempFilePath)
 				if err != nil {
 					fmt.Println(err)

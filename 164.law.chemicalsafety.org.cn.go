@@ -144,7 +144,7 @@ type QueryLawListRequestFormDataArgsMap struct {
 	SearchType      string   `json:"searchType"`
 }
 
-var LawListCookie = "home_page2=https://law.chemicalsafety.org.cn:443/compliance/guild/main/Main.jsp; JSESSIONID=1984976F4B0454B80EB011541097FBEE; Hm_lvt_8f8c4c4dbc9ac98f44dcd28c17e60d71=1756479886"
+var LawListCookie = "home_page2=https://law.chemicalsafety.org.cn:443/compliance/guild/main/Main.jsp; JSESSIONID=44947CA659C33E359D74AEE9E2F87B1E; Hm_lvt_8f8c4c4dbc9ac98f44dcd28c17e60d71=1756479886"
 
 // 下载化学品安全法规标准文档
 // @Title 下载化学品安全法规标准文档
@@ -242,7 +242,7 @@ func main() {
 				continue
 			}
 			//复制文件
-			tempFilePath := strings.ReplaceAll(filePath, "../law.chemicalsafety.org.cn", "../upload.doc88.com/hbba.sacinfo.org.cn")
+			tempFilePath := strings.ReplaceAll(filePath, "law.chemicalsafety.org.cn", "temp-hbba.sacinfo.org.cn")
 			err = copyLawFile(filePath, tempFilePath)
 			if err != nil {
 				fmt.Println(err)
