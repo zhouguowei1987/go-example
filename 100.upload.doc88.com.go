@@ -815,27 +815,26 @@ func main() {
 				pDocFormat = "PPTX"
 			}
 
-<<<<<<< HEAD
-			// filePageNum := 0
-			// if fileExt == ".pdf" {
-			// 	// 获取PDF文件，获取总页数
-			// 	if pdfFile, err := pdf.Open(filePath); err == nil {
-			// 		filePageNum = pdfFile.NumPage()
-			// 	}
-			// }
-			// //根据页数设置价格
-			// if filePageNum > 0 {
-			// 	if filePageNum <= 25 {
-			// 		price = 688
-			// 	} else if filePageNum > 25 && filePageNum <= 30 {
-			// 		price = 788
-			// 	} else if filePageNum > 30 && filePageNum <= 35 {
-			// 		price = 888
-			// 	} else {
-			// 		price = 988
-			// 	}
-			// }
-=======
+			filePageNum := 0
+			if fileExt == ".pdf" {
+				// 获取PDF文件，获取总页数
+				if pdfFile, err := pdf.Open(filePath); err == nil {
+					filePageNum = pdfFile.NumPage()
+				}
+			}
+			//根据页数设置价格
+			if filePageNum > 0 {
+				if filePageNum <= 25 {
+					price = 688
+				} else if filePageNum > 25 && filePageNum <= 30 {
+					price = 788
+				} else if filePageNum > 30 && filePageNum <= 35 {
+					price = 888
+				} else {
+					price = 988
+				}
+			}
+			
 			filePageNum := 0
 			if fileExt == ".pdf" {
 				// 获取PDF文件，获取总页数
