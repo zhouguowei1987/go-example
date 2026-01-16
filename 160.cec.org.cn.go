@@ -15,14 +15,14 @@ import (
 	"time"
 )
 
-var CecCookie = "Hm_lvt_49d543ff6a4932299291456dd99019b0=1754902653,1755956209; HMACCOUNT=1CCD0111717619C6; Hm_lpvt_49d543ff6a4932299291456dd99019b0=1756086545"
+var CecCookie = "Hm_lvt_49d543ff6a4932299291456dd99019b0=1768268037; HMACCOUNT=4E5B3419A3141A8E; Hm_lpvt_49d543ff6a4932299291456dd99019b0=1768268134"
 
 // CecSpider 获取中国电力企业联合会文档
 // @Title 获取中国电力企业联合会文档
 // @Description https://cec.org.cn/，将中国电力企业联合会文档入库
 func main() {
-	var startId = 177841
-	var endId = 177999
+	var startId = 177851
+	var endId = 177840
 	for id := startId; id <= endId; id++ {
 		detailUrl := fmt.Sprintf("https://cec.org.cn/ms-mcms/mcms/content/detail?id=%d", id)
 		fmt.Println(detailUrl)

@@ -180,7 +180,7 @@ func main() {
 					}
 
 					//复制文件
-					tempFilePath := strings.ReplaceAll(docFilePath, "../sjfg.samr.gov.cn", "../upload.doc88.com/sjfg.samr.gov.cn")
+					tempFilePath := strings.ReplaceAll(docFilePath, "sjfg.samr.gov.cn", "temp-hbba.sacinfo.org.cn")
 					err = SjFgCopyFile(docFilePath, tempFilePath)
 					if err != nil {
 						fmt.Println(err)
