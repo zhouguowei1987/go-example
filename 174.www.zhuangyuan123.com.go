@@ -6,7 +6,8 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
-	"math/rand"
+
+	// "math/rand"
 	"net"
 	"net/http"
 	"net/url"
@@ -46,51 +47,51 @@ type ZhuangYuan123ListSubject struct {
 }
 
 var zhuangYuan123ListPeriodSubject = []ZhuangYuan123ListPeriod{
-	{
-		periodId:   1,
-		periodName: "小学",
-		subject: []ZhuangYuan123ListSubject{
-			{subjectId: 43, subjectName: "语文"},
-			{subjectId: 44, subjectName: "数学"},
-			{subjectId: 45, subjectName: "英语"},
-			{subjectId: 46, subjectName: "科学"},
-			{subjectId: 47, subjectName: "道德与法治"},
-			{subjectId: 48, subjectName: "音乐"},
-			{subjectId: 49, subjectName: "体育"},
-			{subjectId: 50, subjectName: "美术"},
-			{subjectId: 51, subjectName: "信息技术"},
-			{subjectId: 52, subjectName: "心理健康"},
-			{subjectId: 53, subjectName: "班会"},
-			{subjectId: 54, subjectName: "综合实践"},
-			{subjectId: 56, subjectName: "书法"},
-			{subjectId: 60, subjectName: "劳动技术"},
-			{subjectId: 61, subjectName: "专题教育"},
-		},
-	},
 	// {
-	// 	periodId:   2,
-	// 	periodName: "初中",
+	// 	periodId:   1,
+	// 	periodName: "小学",
 	// 	subject: []ZhuangYuan123ListSubject{
-	// 		{subjectId: 1, subjectName: "语文"},
-	// 		{subjectId: 2, subjectName: "数学"},
-	// 		{subjectId: 3, subjectName: "英语"},
-	// 		{subjectId: 4, subjectName: "道德与法治"},
-	// 		{subjectId: 5, subjectName: "历史"},
-	// 		{subjectId: 6, subjectName: "物理"},
-	// 		{subjectId: 7, subjectName: "生物"},
-	// 		{subjectId: 8, subjectName: "化学"},
-	// 		{subjectId: 9, subjectName: "地理"},
-	// 		{subjectId: 10, subjectName: "科学"},
-	// 		{subjectId: 37, subjectName: "信息技术"},
-	// 		{subjectId: 36, subjectName: "历史与社会"},
-	// 		{subjectId: 38, subjectName: "音乐"},
-	// 		{subjectId: 39, subjectName: "美术"},
-	// 		{subjectId: 40, subjectName: "体育与健康"},
-	// 		{subjectId: 41, subjectName: "劳动技术"},
-	// 		{subjectId: 58, subjectName: "心理健康"},
-	// 		{subjectId: 42, subjectName: "综合"},
+	// 		/*// {subjectId: 43, subjectName: "语文"},
+	// 		// {subjectId: 44, subjectName: "数*/学"},
+	// 		{subjectId: 45, subjectName: "英语"},
+	// 		{subjectId: 46, subjectName: "科学"},
+	// 		{subjectId: 47, subjectName: "道德与法治"},
+	// 		{subjectId: 48, subjectName: "音乐"},
+	// 		{subjectId: 49, subjectName: "体育"},
+	// 		{subjectId: 50, subjectName: "美术"},
+	// 		{subjectId: 51, subjectName: "信息技术"},
+	// 		{subjectId: 52, subjectName: "心理健康"},
+	// 		{subjectId: 53, subjectName: "班会"},
+	// 		{subjectId: 54, subjectName: "综合实践"},
+	// 		{subjectId: 56, subjectName: "书法"},
+	// 		{subjectId: 60, subjectName: "劳动技术"},
+	// 		{subjectId: 61, subjectName: "专题教育"},
 	// 	},
 	// },
+	{
+		periodId:   2,
+		periodName: "初中",
+		subject: []ZhuangYuan123ListSubject{
+			// {subjectId: 1, subjectName: "语文"},
+			// {subjectId: 2, subjectName: "数学"},
+			// {subjectId: 3, subjectName: "英语"},
+			// {subjectId: 4, subjectName: "道德与法治"},
+			// {subjectId: 5, subjectName: "历史"},
+			// {subjectId: 6, subjectName: "物理"},
+			// {subjectId: 7, subjectName: "生物"},
+			// {subjectId: 8, subjectName: "化学"},
+			{subjectId: 9, subjectName: "地理"},
+			{subjectId: 10, subjectName: "科学"},
+			{subjectId: 37, subjectName: "信息技术"},
+			{subjectId: 36, subjectName: "历史与社会"},
+			{subjectId: 38, subjectName: "音乐"},
+			{subjectId: 39, subjectName: "美术"},
+			{subjectId: 40, subjectName: "体育与健康"},
+			{subjectId: 41, subjectName: "劳动技术"},
+			{subjectId: 58, subjectName: "心理健康"},
+			{subjectId: 42, subjectName: "综合"},
+		},
+	},
 	// {
 	// 	periodId:   3,
 	// 	periodName: "高中",
@@ -126,7 +127,7 @@ func main() {
 		for _, subject := range period.subject {
 			fmt.Println("=======subjectId：" + strconv.Itoa(subject.subjectId) + " ===subjectName：" + subject.subjectName + "========")
 			pageNum := 1
-			pageSize := 20
+			pageSize := 1000
 			isPageListGo := true
 			for isPageListGo {
 				listUrl := fmt.Sprintf("http://iweb.zhuangyuan123.com/web/resources/list?period=%d&subjectId=%d&categoryId=&pointsId=&type=4&rank=&district=&province=&year=&grade=&examType=&status=2&pageNum=%d&orderByColumn=update_time&isAsc=desc&pageSize=%d", period.periodId, subject.subjectId, pageNum, pageSize)
@@ -156,7 +157,7 @@ func main() {
 							fmt.Println("不是doc文件，跳过")
 							continue
 						}
-						filePath := "../www.zhuangyuan123.com/" + period.periodName + "/" + subject.subjectName + "/" + title + ".doc"
+						filePath := "../www.zhuangyuan123.com/2026-01-04/www.zhuangyuan123.com/" + period.periodName + "/" + subject.subjectName + "/" + title + ".doc"
 						_, err = os.Stat(filePath)
 						if err == nil {
 							fmt.Println("文档已下载过，跳过")
@@ -173,12 +174,19 @@ func main() {
 						}
 						fmt.Println("=======开始完成========")
 						// 设置倒计时
-						DownLoadZhuangYuan123TimeSleep := rand.Intn(8)
+						DownLoadZhuangYuan123TimeSleep := 5
+						// DownLoadZhuangYuan123TimeSleep := rand.Intn(3)
 						for i := 1; i <= DownLoadZhuangYuan123TimeSleep; i++ {
 							time.Sleep(time.Second)
 							fmt.Println("暂停，periodName："+period.periodName+"===subjectName："+subject.subjectName+"===pageNumMax = ", strconv.Itoa((zhuangYuan123ListResponse.Total/pageSize)+1)+"=====pageNum："+strconv.Itoa(pageNum)+"，倒计时", i, "秒===========")
 						}
 					}
+				}
+				DownLoadZhuangYuan123PageTimeSleep := 8
+				// DownLoadZhuangYuan123PageTimeSleep := rand.Intn(5)
+				for i := 1; i <= DownLoadZhuangYuan123PageTimeSleep; i++ {
+					time.Sleep(time.Second)
+					fmt.Println("暂停，periodName："+period.periodName+"===subjectName："+subject.subjectName+"===pageNumMax = ", strconv.Itoa((zhuangYuan123ListResponse.Total/pageSize)+1)+"=====pageNum："+strconv.Itoa(pageNum)+"，倒计时", i, "秒===========")
 				}
 				pageNum++
 				if pageNum > (zhuangYuan123ListResponse.Total/pageSize)+1 {
@@ -187,7 +195,7 @@ func main() {
 					pageNum = 1
 					break
 				}
-				time.Sleep(time.Second)
+
 			}
 		}
 	}
@@ -218,7 +226,7 @@ func GetZhuangYuan123List(requestUrl string) (zhuangYuan123ListResponse ZhuangYu
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if ZhuangYuan123EnableHttpProxy {
@@ -269,7 +277,7 @@ func downloadZhuangYuan123(attachmentUrl string, filePath string) error {
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if ZhuangYuan123EnableHttpProxy {

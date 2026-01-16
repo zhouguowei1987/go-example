@@ -715,6 +715,31 @@ func main() {
 			pCid:    8370,
 			Price:   200,
 		},
+		{
+			dirName: "docx.zhuangyuan123.com/小学/语文",
+			pCid:    8246,
+			Price:   200,
+		},
+		{
+			dirName: "docx.zhuangyuan123.com/小学/科学",
+			pCid:    8253,
+			Price:   200,
+		},
+		{
+			dirName: "docx.zhuangyuan123.com/小学/道德与法治",
+			pCid:    8307,
+			Price:   200,
+		},
+		{
+			dirName: "docx.zhuangyuan123.com/小学/数学",
+			pCid:    8247,
+			Price:   200,
+		},
+		{
+			dirName: "docx.zhuangyuan123.com/小学/英语",
+			pCid:    8248,
+			Price:   200,
+		},
 	}
 	rootPath := "../upload.doc88.com/"
 	for _, childDir := range uploadChildDirArr {
@@ -799,15 +824,7 @@ func main() {
 			// }
 			// //根据页数设置价格
 			// if filePageNum > 0 {
-			// 	if filePageNum > 0 && filePageNum <= 5 {
-			// 		price = 288
-			// 	} else if filePageNum > 5 && filePageNum <= 10 {
-			// 		price = 388
-			// 	} else if filePageNum > 10 && filePageNum <= 15 {
-			// 		price = 488
-			// 	} else if filePageNum > 15 && filePageNum <= 20 {
-			// 		price = 588
-			// 	} else if filePageNum > 20 && filePageNum <= 25 {
+			// 	if filePageNum <= 25 {
 			// 		price = 688
 			// 	} else if filePageNum > 25 && filePageNum <= 30 {
 			// 		price = 788
