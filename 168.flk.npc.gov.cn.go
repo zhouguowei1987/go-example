@@ -7,7 +7,8 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
-	"math/rand"
+
+	// "math/rand"
 	"net"
 	"net/http"
 	"net/url"
@@ -215,15 +216,15 @@ func main() {
 				continue
 			}
 			fmt.Println("=======下载完成========")
-			//DownLoadFlkTimeSleep := 10
-			DownLoadFlkTimeSleep := rand.Intn(5)
+			DownLoadFlkTimeSleep := 5
+			// DownLoadFlkTimeSleep := rand.Intn(5)
 			for i := 1; i <= DownLoadFlkTimeSleep; i++ {
 				time.Sleep(time.Second)
 				fmt.Println("page="+strconv.Itoa(page)+",filePath="+filePath+"===========下载成功 暂停", DownLoadFlkTimeSleep, "秒 倒计时", i, "秒===========")
 			}
 		}
-		// DownLoadFlkPageTimeSleep := 10
-		DownLoadFlkPageTimeSleep := rand.Intn(5)
+		DownLoadFlkPageTimeSleep := 5
+		// DownLoadFlkPageTimeSleep := rand.Intn(5)
 		for i := 1; i <= DownLoadFlkPageTimeSleep; i++ {
 			time.Sleep(time.Second)
 			fmt.Println("page="+strconv.Itoa(page)+"=========== 暂停", DownLoadFlkPageTimeSleep, "秒 倒计时", i, "秒===========")

@@ -149,7 +149,7 @@ var EditNextPageSleep = 15
 // @Title 编辑道客巴巴文档
 // @Description https://www.doc88.com/，编辑道客巴巴文档
 func main() {
-	curPage := 2600
+	curPage := 1
 
 	for {
 		pageListUrl := fmt.Sprintf("https://www.doc88.com/uc/doc_manager.php?act=ajax_doc_list&curpage=%d", curPage)
@@ -191,15 +191,7 @@ func main() {
 			filePageNum, _ := strconv.Atoi(PPageCount)
 			PPriceNew := ""
 			// 根据页数设置价格
-			if filePageNum > 0 && filePageNum <= 5 {
-				PPriceNew = "288"
-			} else if filePageNum > 5 && filePageNum <= 10 {
-				PPriceNew = "388"
-			} else if filePageNum > 10 && filePageNum <= 15 {
-				PPriceNew = "488"
-			} else if filePageNum > 15 && filePageNum <= 20 {
-				PPriceNew = "588"
-			} else if filePageNum > 20 && filePageNum <= 25 {
+			if filePageNum <= 25 {
 				PPriceNew = "688"
 			} else if filePageNum > 25 && filePageNum <= 30 {
 				PPriceNew = "788"
@@ -214,8 +206,8 @@ func main() {
 				continue
 			}
 			CateLogName := htmlquery.InnerText(CateLogNameNode)
-			if CateLogName != "实用文书>标准规范>国家标准" && CateLogName != "实用文书>标准规范>行业标准" && CateLogName != "实用文书>标准规范>地方标准" && CateLogName != "实用文书>标准规范>企业标准" {
-				PPriceNew = "200"
+			if strings.Index(CateLogName, "标准") == -1 {
+				continue
 			}
 
 			// 新旧价格一样，则跳过
