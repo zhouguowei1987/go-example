@@ -51,8 +51,8 @@ var zhuangYuan123ListPeriodSubject = []ZhuangYuan123ListPeriod{
 	// 	periodId:   1,
 	// 	periodName: "小学",
 	// 	subject: []ZhuangYuan123ListSubject{
-	// 		/*// {subjectId: 43, subjectName: "语文"},
-	// 		// {subjectId: 44, subjectName: "数*/学"},
+	// 		{subjectId: 43, subjectName: "语文"},
+	// 		{subjectId: 44, subjectName: "数学"},
 	// 		{subjectId: 45, subjectName: "英语"},
 	// 		{subjectId: 46, subjectName: "科学"},
 	// 		{subjectId: 47, subjectName: "道德与法治"},
@@ -72,14 +72,14 @@ var zhuangYuan123ListPeriodSubject = []ZhuangYuan123ListPeriod{
 		periodId:   2,
 		periodName: "初中",
 		subject: []ZhuangYuan123ListSubject{
-			// {subjectId: 1, subjectName: "语文"},
-			// {subjectId: 2, subjectName: "数学"},
-			// {subjectId: 3, subjectName: "英语"},
-			// {subjectId: 4, subjectName: "道德与法治"},
-			// {subjectId: 5, subjectName: "历史"},
-			// {subjectId: 6, subjectName: "物理"},
-			// {subjectId: 7, subjectName: "生物"},
-			// {subjectId: 8, subjectName: "化学"},
+			{subjectId: 1, subjectName: "语文"},
+			{subjectId: 2, subjectName: "数学"},
+			{subjectId: 3, subjectName: "英语"},
+			{subjectId: 4, subjectName: "道德与法治"},
+			{subjectId: 5, subjectName: "历史"},
+			{subjectId: 6, subjectName: "物理"},
+			{subjectId: 7, subjectName: "生物"},
+			{subjectId: 8, subjectName: "化学"},
 			{subjectId: 9, subjectName: "地理"},
 			{subjectId: 10, subjectName: "科学"},
 			{subjectId: 37, subjectName: "信息技术"},
@@ -157,7 +157,7 @@ func main() {
 							fmt.Println("不是doc文件，跳过")
 							continue
 						}
-						filePath := "../www.zhuangyuan123.com/2026-01-04/www.zhuangyuan123.com/" + period.periodName + "/" + subject.subjectName + "/" + title + ".doc"
+						filePath := "../www.zhuangyuan123.com/www.zhuangyuan123.com/" + period.periodName + "/" + subject.subjectName + "/" + title + ".doc"
 						_, err = os.Stat(filePath)
 						if err == nil {
 							fmt.Println("文档已下载过，跳过")
@@ -173,6 +173,14 @@ func main() {
 							continue
 						}
 						fmt.Println("=======开始完成========")
+
+						//复制文件
+						tempFilePath := strings.ReplaceAll(filePath, "www.zhuangyuan123.com/www.zhuangyuan123.com", "www.zhuangyuan123.com/temp.zhuangyuan123.com")
+						err = copyZhuangYuan123File(filePath, tempFilePath)
+						if err != nil {
+							fmt.Println(err)
+							continue
+						}
 						// 设置倒计时
 						DownLoadZhuangYuan123TimeSleep := 5
 						// DownLoadZhuangYuan123TimeSleep := rand.Intn(3)
@@ -324,4 +332,31 @@ func downloadZhuangYuan123(attachmentUrl string, filePath string) error {
 		return err
 	}
 	return nil
+}
+
+func copyZhuangYuan123File(src, dst string) (err error) {
+	in, err := os.Open(src)
+	if err != nil {
+		return
+	}
+	defer func(in *os.File) {
+		err := in.Close()
+		if err != nil {
+			return
+		}
+	}(in)
+
+	out, err := os.Create(dst)
+	if err != nil {
+		return
+	}
+	defer func(out *os.File) {
+		err := out.Close()
+		if err != nil {
+			return
+		}
+	}(out)
+
+	_, err = io.Copy(out, in)
+	return
 }
