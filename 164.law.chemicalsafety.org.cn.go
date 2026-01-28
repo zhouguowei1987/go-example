@@ -144,7 +144,7 @@ type QueryLawListRequestFormDataArgsMap struct {
 	SearchType      string   `json:"searchType"`
 }
 
-var LawListCookie = "home_page2=https://law.chemicalsafety.org.cn:443/compliance/guild/main/Main.jsp; JSESSIONID=44947CA659C33E359D74AEE9E2F87B1E; Hm_lvt_8f8c4c4dbc9ac98f44dcd28c17e60d71=1756479886"
+var LawListCookie = "home_page2=https://law.chemicalsafety.org.cn:443/compliance/guild/main/Main.jsp; JSESSIONID=1D891449410FA74137DAE00D5E2AFF82; Hm_lvt_8f8c4c4dbc9ac98f44dcd28c17e60d71=1756479886"
 
 // 下载化学品安全法规标准文档
 // @Title 下载化学品安全法规标准文档
