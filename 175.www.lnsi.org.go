@@ -125,11 +125,12 @@ func main() {
 
 		title := lnSiData.BzMc
 		title = strings.TrimSpace(title)
-		title = strings.ReplaceAll(title, " ", "-")
-		title = strings.ReplaceAll(title, "　", "-")
-		title = strings.ReplaceAll(title, "/", "-")
-		title = strings.ReplaceAll(title, "--", "-")
-		fmt.Println(title)
+        title = strings.ReplaceAll(title, " ", "-")
+        title = strings.ReplaceAll(title, "　", "-")
+        title = strings.ReplaceAll(title, "：", "-")
+        title = strings.ReplaceAll(title, "/", "-")
+        title = strings.ReplaceAll(title, "--", "-")
+        fmt.Println(title)
 
 		code := lnSiData.BzBh
 		code = strings.TrimSpace(code)
