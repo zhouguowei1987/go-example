@@ -107,6 +107,10 @@ var BydAutoEditAuthorization = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW5
 
 // BydAutoEditNextPageSleep 高宏瑞
 // var BydAutoEditAuthorization = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50VHlwZSI6MSwiaWQiOjExMTA2NCwiaXNTdXBlciI6ZmFsc2V9.17zcz8xR6-cOP8OZjDUcAOoAYe2imAAKxi7vNc66PDc"
+
+// BydAutoEditNextPageSleep 李志强
+// var BydAutoEditAuthorization = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50VHlwZSI6MSwiZXhwIjoxNzcwMzgxNTEwLCJpZCI6MTEyODIwLCJpc1N1cGVyIjpmYWxzZSwianRpIjoiMTliMzA2OGYtNzM3Yi00YmI5LTU1OWQtMzAxYmE0MWQ1MWIzIn0.KP9o8UidIbKbqP_ZGzU3xL0cfdOlf0XbkwydJ2obxg4"
+
 var BydAutoEditNextPageSleep = 5
 
 type QueryEditBydAutoResponseList struct {
