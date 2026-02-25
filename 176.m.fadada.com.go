@@ -320,6 +320,7 @@ func downloadFaDaDa(attachmentUrl string, referer string, filePath string) error
 	}
 	req.Header.Set("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7")
 	req.Header.Set("Connection", "keep-alive")
+	req.Header.Set("Cookie", FaDaDaCookie)
 	req.Header.Set("Host", "m.fadada.com")
 	req.Header.Set("Referer", referer)
 	req.Header.Set("sec-ch-ua", "\"Chromium\";v=\"110\", \"Not A(Brand\";v=\"24\", \"Google Chrome\";v=\"110\"")
