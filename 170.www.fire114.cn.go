@@ -23,13 +23,13 @@ var Fire114Cookie = "PHPSESSID=sgeiq3i8ut557f35o4mnur1p83; UM_distinctid=199997a
 // @Title 获取消防百事通文档
 // @Description http://www.fire114.cn/，将消防百事通文档入库
 func main() {
-	var startId = 141260
-	var endId = 140700
-	for id := startId; id >= endId; id-- {
+// 	var startId = 449
+    var startId = 141600
+	var endId = 141695
+	for id := startId; id <= endId; id++ {
 		detailUrl := fmt.Sprintf("https://www.fire114.cn/islibd/%d.html", id)
 		fmt.Println(detailUrl)
 		refererUrl := fmt.Sprintf("https://www.fire114.cn/islibd/%d.html", id-1)
-		fmt.Println(refererUrl)
 		detailDoc, err := Fire114Doc(detailUrl, refererUrl)
 		if err != nil {
 			fmt.Println(err)
@@ -50,15 +50,15 @@ func main() {
 		title = strings.ReplaceAll(title, "（)", "")
 		title = strings.ReplaceAll(title, "‘", "")
 		title = strings.TrimSpace(title)
-		if strings.Index(title, ".pdf") == -1 && strings.Index(title, ".doc") == -1 {
-			fmt.Println("不是pdf、doc文档")
+		fmt.Println(title)
+		if strings.Index(title, ".pdf") == -1 && strings.Index(title, ".doc") == -1  && strings.Index(title, ".ppt") == -1 && strings.Index(title, ".xls") == -1 {
+			fmt.Println("不是pdf、doc、ppt、xls文档")
 			continue
 		}
 		if strings.Index(title, "检验报告") != -1 {
 			fmt.Println("标题含有‘检验报告’字样，跳过")
 			continue
 		}
-		fmt.Println(title)
 
 		filePath := "../www.fire114.cn/" + title
 		fmt.Println(filePath)
@@ -68,11 +68,17 @@ func main() {
 			continue
 		}
 		fmt.Println("=======开始下载========")
-		iframeSrcNode := htmlquery.FindOne(detailDoc, `//div[@class="mainWrap"]/div[@class="containWrap row"]/div[@class="col-9"]/iframe/@src`)
-		if iframeSrcNode == nil {
+		iframeSrcNode1 := htmlquery.FindOne(detailDoc, `//div[@class="mainWrap"]/div[@class="containWrap row"]/div[@class="col-9"]/div/iframe/@src`)
+		iframeSrcNode2 := htmlquery.FindOne(detailDoc, `//div[@class="mainWrap"]/div[@class="containWrap row"]/div[@class="col-9"]/iframe/@src`)
+		if iframeSrcNode1 == nil && iframeSrcNode2 == nil {
 			fmt.Println("没有下载链接节点")
 			continue
 		}
+		iframeSrcNode := iframeSrcNode1
+		if iframeSrcNode2 != nil {
+		    iframeSrcNode = iframeSrcNode2
+		}
+
 		downLoadUrl := htmlquery.InnerText(iframeSrcNode)
 		if strings.Index(downLoadUrl, "https://new.fire114.cn") != -1 {
 			downLoadUrl = strings.ReplaceAll(downLoadUrl, "/Cms/widget/pdfjs/web/viewer-2.html?cwgpdfsrcurl=", "")
