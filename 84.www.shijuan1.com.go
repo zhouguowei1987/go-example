@@ -198,12 +198,12 @@ func main() {
 						fmt.Println(dateText)
 
 						datePaper, _ := time.Parse("2006-01-02", dateText)
-						dateStart, _ := time.Parse("2006-01-02", "2025-04-07")
+						dateStart, _ := time.Parse("2006-01-02", "2025-08-02")
 						fmt.Println(dateStart)
 
 						// 比较日期
 						if datePaper.After(dateStart) == false {
-							fmt.Println("日期在2025-04-07后，跳过")
+							fmt.Println("日期在2025-08-02后，跳过")
 							isPageListGo = false
 							page = 1
 							break
@@ -213,7 +213,7 @@ func main() {
 						detailDoc, _ := htmlquery.LoadURL(detailUrl)
 						fmt.Println(detailUrl)
 
-						filePath := "E:\\workspace\\www.shijuan1.com\\2025-04-07\\www.rar_shijuan1.com\\" + testCategory.name + "\\" + title + ".rar"
+						filePath := "D:\\workspace\\www.shijuan1.com\\2025-08-02\\www.rar_shijuan1.com\\" + testCategory.name + "\\" + title + ".rar"
 						if _, err := os.Stat(filePath); err != nil {
 							downloadUrl := "https://www.shijuan1.com" + htmlquery.InnerText(htmlquery.FindOne(detailDoc, `//ul[@class="downurllist"]/li/a/@href`))
 							fmt.Println(downloadUrl)
