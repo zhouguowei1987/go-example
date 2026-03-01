@@ -261,12 +261,17 @@ func main() {
 			Price:   200,
 		},
 		{
-			dirName: "docx.topedu.ybep.com.cn/中考真题",
+			dirName: "docx.topedu.ybep.com.cn/小学试卷",
 			pCid:    8243,
 			Price:   200,
 		},
 		{
-			dirName: "docx.topedu.ybep.com.cn/高考真题",
+			dirName: "docx.topedu.ybep.com.cn/中考试卷",
+			pCid:    8243,
+			Price:   200,
+		},
+		{
+			dirName: "docx.topedu.ybep.com.cn/高考试卷",
 			pCid:    8244,
 			Price:   200,
 		},
