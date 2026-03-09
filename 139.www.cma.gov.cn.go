@@ -10,6 +10,7 @@ import (
 	"net/url"
 	"os"
 	"path/filepath"
+	"regexp"
 	"strconv"
 	"strings"
 	"time"
@@ -43,11 +44,11 @@ func main() {
 	page := 0
 	isPageListGo := true
 	for isPageListGo {
-		requestUrl := "https://www.cma.gov.cn/zfxxgk/gknr/flfgbz/bz/index.html"
-		refererUrl := "https://www.cma.gov.cn/zfxxgk/gknr/flfgbz/bz/index.html"
+		requestUrl := "https://www.cma.gov.cn/zfxxgk/gknr/bzfgbz/bz/index.html"
+		refererUrl := "https://www.cma.gov.cn/zfxxgk/gknr/bzfgbz/bz/index.html"
 		if page > 0 {
-			requestUrl = fmt.Sprintf("https://www.cma.gov.cn/zfxxgk/gknr/flfgbz/bz/index_%d.html", page)
-			refererUrl = fmt.Sprintf("https://www.cma.gov.cn/zfxxgk/gknr/flfgbz/bz/index_%d.html", page-1)
+			requestUrl = fmt.Sprintf("https://www.cma.gov.cn/zfxxgk/gknr/bzfgbz/bz/index_%d.html", page)
+			refererUrl = fmt.Sprintf("https://www.cma.gov.cn/zfxxgk/gknr/bzfgbz/bz/index_%d.html", page-1)
 		}
 		fmt.Println(requestUrl)
 		pageDoc, err := QueryCmaHtml(requestUrl, refererUrl)
@@ -72,7 +73,7 @@ func main() {
 				continue
 			}
 			detailUrl := htmlquery.InnerText(aHrefNode)
-			detailUrl = "https://www.cma.gov.cn/zfxxgk/gknr/flfgbz/bz/" + strings.ReplaceAll(detailUrl, "./", "")
+			detailUrl = "https://www.cma.gov.cn/zfxxgk/gknr/bzfgbz/bz/" + strings.ReplaceAll(detailUrl, "./", "")
 			fmt.Println(detailUrl)
 
 			detailDoc, err := QueryCmaHtml(detailUrl,requestUrl)
@@ -112,15 +113,13 @@ func main() {
                 fmt.Println("文档已下载过，跳过")
                 continue
             }
-			downloadNode := htmlquery.FindOne(detailDoc, `//div[@class="boxcenter"]/div[@class="mainbox clearfix"]/div[@class="mainCont clearfix"]/div[@class="rightBox rightbox5"]/div[@class="relList"]/ul[@class="fujian"]/li[@class="1"]/a/@href`)
-            if downloadNode == nil {
-                fmt.Println("未找到下载文件节点，跳过")
-                continue
-            }
+            regPdfNameUrl := regexp.MustCompile(`var pdfname=".(.*?)"`)
+            regPdfNameMatch := regPdfNameUrl.FindAllSubmatch([]byte(htmlquery.InnerText(detailDoc)), -1)
 
-            detailUrlArray := strings.Split(detailUrl, "/")
-            downloadUrlArray := detailUrlArray[:len(detailUrlArray)-1]
-            downloadUrl := strings.Join(downloadUrlArray, "/") + strings.ReplaceAll(htmlquery.InnerText(downloadNode), "./", "/")
+            downloadUrl := string(regPdfNameMatch[0][1])
+            detailUrlArray := strings.Split(detailUrl,"/")
+            downloadUrl = strings.Join(detailUrlArray[:len(detailUrlArray)-1],"/") + downloadUrl
+
             fmt.Println(downloadUrl)
 
             fmt.Println("=======开始下载" + title + "========")
