@@ -102,7 +102,7 @@ func LvPin100SetHttpProxy() (httpclient *http.Client) {
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	return httpclient
@@ -113,11 +113,17 @@ func LvPin100SetHttpProxy() (httpclient *http.Client) {
 // @Description https://yn.ai.lvpin100.com/，下载云南法网合同模板文档
 func main() {
 	// 第一步：获取文书模版相关类别
-	categoriesUrl := "https://front.ai.lvpin100.com/api/speed-front/doc/categories?appId=ED4E1B16C6FE657B804981B9EBC8465D&type=3&deviceType=1"
-	queryLvPin100CategoriesListResponseDataList, err := QueryLvPin100CategoriesList(categoriesUrl)
-	if err != nil {
-		LvPin100HttpProxyUrl = ""
-		fmt.Println(err)
+	// categoriesUrl := "https://front.ai.lvpin100.com/api/speed-front/doc/categories?appId=ED4E1B16C6FE657B804981B9EBC8465D&type=3&deviceType=1"
+	// queryLvPin100CategoriesListResponseDataList, err := QueryLvPin100CategoriesList(categoriesUrl)
+	// if err != nil {
+	// 	LvPin100HttpProxyUrl = ""
+	// 	fmt.Println(err)
+	// }
+	queryLvPin100CategoriesListResponseDataList := []QueryLvPin100CategoriesListResponseDataList{
+		{
+			Id:    "",
+			Title: "全部",
+		},
 	}
 	if len(queryLvPin100CategoriesListResponseDataList) <= 0 {
 		fmt.Println("获取文书模版相关类别失败")
@@ -128,6 +134,9 @@ func main() {
 
 		// 一次性获取分类下所有模板
 		pageListUrl := fmt.Sprintf("https://front.ai.lvpin100.com/api/speed-front/doc/list?pageNo=1&pageSize=9999&categoryId=%s&appId=ED4E1B16C6FE657B804981B9EBC8465D&type=3&deviceType=1", category.Id)
+		if len(category.Id) <= 0 {
+			pageListUrl = "https://front.ai.lvpin100.com/api/speed-front/doc/list?pageNo=1&pageSize=9999&appId=ED4E1B16C6FE657B804981B9EBC8465D&type=3&deviceType=1"
+		}
 		fmt.Println(pageListUrl)
 		queryLvPin100ListResponseDataResultList, err := QueryLvPin100List(pageListUrl)
 		if err != nil {
@@ -180,12 +189,12 @@ func main() {
 				continue
 			}
 			fmt.Println("=======下载完成========")
-			DownLoadLvPin100TimeSleep := 5
+			// DownLoadLvPin100TimeSleep := 5
 			// DownLoadLvPin100TimeSleep := rand.Intn(5)
-			for i := 1; i <= DownLoadLvPin100TimeSleep; i++ {
-				time.Sleep(time.Second)
-				fmt.Println("category="+category.Title+",filePath="+filePath+"===========下载成功 暂停", DownLoadLvPin100TimeSleep, "秒 倒计时", i, "秒===========")
-			}
+			// for i := 1; i <= DownLoadLvPin100TimeSleep; i++ {
+			// 	time.Sleep(time.Second)
+			// 	fmt.Println("category="+category.Title+",filePath="+filePath+"===========下载成功 暂停", DownLoadLvPin100TimeSleep, "秒 倒计时", i, "秒===========")
+			// }
 		}
 		DownLoadLvPin100PageTimeSleep := 5
 		// DownLoadLvPin100PageTimeSleep := rand.Intn(5)
@@ -219,7 +228,7 @@ func QueryLvPin100CategoriesList(requestUrl string) (queryLvPin100CategoriesList
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if LvPin100EnableHttpProxy {
@@ -294,7 +303,7 @@ func QueryLvPin100List(requestUrl string) (queryLvPin100ListResponseDataResultLi
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if LvPin100EnableHttpProxy {
@@ -356,7 +365,7 @@ func downloadLvPin100(attachmentUrl string, referer string, filePath string) (fi
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if LvPin100EnableHttpProxy {
