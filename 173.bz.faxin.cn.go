@@ -7,7 +7,7 @@ import (
 
 	"golang.org/x/net/html"
 
-	// 	"io/ioutil"
+// 	"io/ioutil"
 	"math/rand"
 	"net"
 	"net/http"
@@ -133,9 +133,9 @@ type QueryFaXinStdOnlineFormData struct {
 	encstr     string
 }
 
-var FaXinCookie = "JSESSIONID=AA4ABCF489ED01089C22CAA5AC268D9C; Hm_lvt_cb8a2025f4234726e55e45f893fb7954=1773039498; HMACCOUNT=1CCD0111717619C6; Hm_lvt_a317640b4aeca83b20c90d410335b70f=1772856099,1773039513; Hm_lpvt_a317640b4aeca83b20c90d410335b70f=1773039513; HMACCOUNT=1CCD0111717619C6; lawapp_web=476A6C3C5FCD984BD552469D446594AE84A0E0AFDA9C8C68F17DF37EA17C0229ACA64DCB0F1CDB2326F3909E83D47274FF1AE3AAC219B2C2920267EA5C427990E061A6C576F59EFE95D5E7C1173CDA6FC25C76C4F487AB450FF2885B83F06798790CE6D06DE1326C6A353710447B73C7369019D9F183E09DEC58B3357779F96B5185A650E75B926079A7DF7C56E9247FBEEE3CBB; Hm_lpvt_cb8a2025f4234726e55e45f893fb7954=1773039534"
-var SpcStdOnlineCookie = "Hm_lpvt_6d75523a84ebfd663067173dd3baab34=1773042991"
-var SpcDownloadCookie = "Hm_lvt_6d75523a84ebfd663067173dd3baab34=1773039540; HMACCOUNT=1CCD0111717619C6; JSESSIONID=D4BEC78FB434AE2C14E37A88C80738BF; Hm_lpvt_6d75523a84ebfd663067173dd3baab34=1773043047"
+var FaXinCookie = "JSESSIONID=221443C9BCC3F5ABFB08FEDAA4F80249; Hm_lvt_cb8a2025f4234726e55e45f893fb7954=1771997810; HMACCOUNT=4E5B3419A3141A8E; Hm_lvt_a317640b4aeca83b20c90d410335b70f=1771997824; HMACCOUNT=4E5B3419A3141A8E; Hm_lpvt_a317640b4aeca83b20c90d410335b70f=1773107689; lawapp_web=9B62EB060E96A41C08BFB4BFBB88DD5BF2BB3818921B383451F0D19BE409F11B4AE47A8408591BD48C8D7DDE66CC1A9A92C784A019D702252E95B404BEFF7E3D44970A51F90ECF18B63C050347503388DB057CC550BFC652175F8363CD3F4B178192F485E4C0C4ED85C3AB5DB15129F7518997575FB568B08088D2D9642173F328A30857EFCDA4CB7AF400784D51BFC8DEE90BB2; Hm_lpvt_cb8a2025f4234726e55e45f893fb7954=1773107703"
+var SpcStdOnlineCookie = "JSESSIONID=B0337F6E63E4446BF0CC9562D49D382F; Hm_lpvt_6d75523a84ebfd663067173dd3baab34=1773107706"
+var SpcDownloadCookie = "Qs_lvt_503365=1759975608%2C1763093101%2C1766475585%2C1768268241%2C1769395188; Qs_pv_503365=2169124988614570200%2C1976145068643755300%2C2957571777807069000%2C3500804953458690000%2C4312190314712403000; Hm_lvt_6d75523a84ebfd663067173dd3baab34=1771997845; HMACCOUNT=4E5B3419A3141A8E; Hm_lvt_b5bdb81ba9543a3b3567778ab86df74b=1773053945; Hm_lvt_f1e3be80a525d0bb9e111ca6cbaa2457=1773053945; Hm_lpvt_b5bdb81ba9543a3b3567778ab86df74b=1773054109; Hm_lpvt_f1e3be80a525d0bb9e111ca6cbaa2457=1773054109; JSESSIONID=B0337F6E63E4446BF0CC9562D49D382F; Hm_lpvt_6d75523a84ebfd663067173dd3baab34=1773107720"
 
 // 下载法信标准文档
 // @Title 下载法信标准文档
@@ -209,18 +209,18 @@ func main() {
 				}
 
 				// 获取encstr
-				faXinEncstrUrl := fmt.Sprintf("https://bz.faxin.cn/faxin/stdlib/getencstr?a100=%s", strings.ReplaceAll(code, " ", "%20"))
-				fmt.Println(faXinEncstrUrl)
-				faXinEncstrReferer := fmt.Sprintf("https://bz.faxin.cn/faxin/view/online/%s/?", code)
-				faXinEncstrDoc, err := getFaXinEncstr(faXinEncstrUrl, faXinEncstrReferer)
+				faXinEncStrUrl := fmt.Sprintf("https://bz.faxin.cn/faxin/stdlib/getencstr?a100=%s", strings.ReplaceAll(code, " ", "%20"))
+				fmt.Println(faXinEncStrUrl)
+				faXinEncStrReferer := fmt.Sprintf("https://bz.faxin.cn/faxin/view/online/%s/?", code)
+				faXinEncStrDoc, err := getFaXinEncStr(faXinEncStrUrl, faXinEncStrReferer)
 				if err != nil {
 					fmt.Println(err)
 					continue
 				}
-				faXinEncstr := htmlquery.InnerText(faXinEncstrDoc)
-				fmt.Println(faXinEncstr)
-				if len(faXinEncstr) < 32 {
-					fmt.Println("获取Encstr失败")
+				faXinEncStr := htmlquery.InnerText(faXinEncStrDoc)
+				fmt.Println(faXinEncStr)
+				if len(faXinEncStr) < 32 {
+					fmt.Println("获取EncStr失败")
 					continue
 				}
 				// 获取在线阅读页面内容
@@ -229,12 +229,10 @@ func main() {
 					saleagtid:  "0114",
 					username:   "",
 					readdevice: "1",
-					encstr:     faXinEncstr,
+					encstr:     faXinEncStr,
 				}
 				stdOnlineUrl := "https://www.spc.org.cn/gb168/agtvip/stdonline"
 				queryFaXinStdOnlineDoc, err := QueryFaXinStdOnline(stdOnlineUrl, queryFaXinStdOnlineFormData)
-				// fmt.Println(htmlquery.InnerText(queryFaXinStdOnlineDoc))
-				// os.Exit(1)
 				if err != nil {
 					fmt.Println(err)
 					continue
@@ -249,7 +247,7 @@ func main() {
 				}
 				faXinEnc := string(regFaXinEncMatch[0][1])
 				fmt.Println("enc==", faXinEnc)
-				downloadMyfoxit := faXinEnc
+				downloadMyFoxit := faXinEnc
 
 				// 获取在线阅读rc
 				regFaXinRc := regexp.MustCompile(`var rc = "(.*?)";`)
@@ -266,12 +264,11 @@ func main() {
 				fmt.Println(downloadUrl)
 
 				fmt.Println("=======开始下载" + title + "========")
-				err = downloadFaXin(downloadUrl, downloadReferer, downloadMyfoxit, filePath)
+				err = downloadFaXin(downloadUrl, downloadReferer, downloadMyFoxit, filePath)
 				if err != nil {
 					fmt.Println(err)
 					continue
 				}
-				os.Exit(1)
 				//复制文件
 				tempFilePath := strings.ReplaceAll(filePath, "bz.faxin.cn", "temp-hbba.sacinfo.org.cn")
 				err = copyFaXinFile(filePath, tempFilePath)
@@ -370,7 +367,7 @@ func QueryFaXinList(requestUrl string, queryFaXinListFormData QueryFaXinListForm
 	return doc, nil
 }
 
-func getFaXinEncstr(requestUrl string, refererUrl string) (doc *html.Node, err error) {
+func getFaXinEncStr(requestUrl string, refererUrl string) (doc *html.Node, err error) {
 	// 初始化客户端
 	var client *http.Client = &http.Client{
 		Transport: &http.Transport{
@@ -491,7 +488,7 @@ func QueryFaXinStdOnline(requestUrl string, queryFaXinStdOnlineFormData QueryFaX
 	return doc, nil
 }
 
-func downloadFaXin(attachmentUrl string, referer string, myfoxit string, filePath string) error {
+func downloadFaXin(attachmentUrl string, referer string, myFoxit string, filePath string) error {
 	// 初始化客户端
 	var client *http.Client = &http.Client{
 		Transport: &http.Transport{
@@ -516,11 +513,12 @@ func downloadFaXin(attachmentUrl string, referer string, myfoxit string, filePat
 		return err
 	}
 	req.Header.Set("Accept", "*/*")
-	req.Header.Set("Accept-Encoding", "gzip, deflate")
+    req.Header.Set("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7")
+	req.Header.Set("Accept-Encoding", "gzip, deflate, br, zstd")
 	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
 	req.Header.Set("Cookie", SpcDownloadCookie)
 	req.Header.Set("Host", "www.spc.org.cn")
-	req.Header.Set("Myfoxit", myfoxit)
+	req.Header.Set("Myfoxit", myFoxit)
 	req.Header.Set("Origin", "https://www.spc.org.cn")
 	req.Header.Set("Referer", referer)
 	req.Header.Set("sec-ch-ua", "\"Chromium\";v=\"110\", \"Not A(Brand\";v=\"24\", \"Google Chrome\";v=\"110\"")
@@ -538,9 +536,9 @@ func downloadFaXin(attachmentUrl string, referer string, myfoxit string, filePat
 	}
 	defer resp.Body.Close()
 	// 如果访问失败 就打印当前状态码
-	if resp.StatusCode != http.StatusOK {
-		return errors.New("http status :" + strconv.Itoa(resp.StatusCode))
-	}
+// 	if resp.StatusCode != http.StatusOK {
+// 		return errors.New("http status :" + strconv.Itoa(resp.StatusCode))
+// 	}
 
 	// 创建一个文件用于保存
 	fileDiv := filepath.Dir(filePath)
