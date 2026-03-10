@@ -121,7 +121,7 @@ func downloadZuoWenWang(attachmentUrl string, referer string, filePath string, f
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if ZuoWenWangEnableHttpProxy {

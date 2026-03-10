@@ -258,7 +258,7 @@ func downloadShiJuan1(attachmentUrl string, referer string, filePath string) err
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if ShiJuan1EnableHttpProxy {

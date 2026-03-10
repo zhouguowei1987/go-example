@@ -101,7 +101,7 @@ func HnDb41SetHttpProxy() (httpclient *http.Client) {
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	return httpclient
@@ -235,7 +235,7 @@ func QueryHnDb41List(requestUrl string, queryHnDb41ListFormData QueryHnDb41ListF
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if HnDb41EnableHttpProxy {
@@ -301,7 +301,7 @@ func downloadHnDb41(attachmentUrl string, filePath string) error {
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if HnDb41EnableHttpProxy {

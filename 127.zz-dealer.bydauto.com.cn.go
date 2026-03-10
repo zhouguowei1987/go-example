@@ -96,7 +96,7 @@ func EditBydAutoSetHttpProxy() (httpclient *http.Client) {
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	return httpclient
@@ -316,7 +316,7 @@ func QueryEditBydAutoList(requestUrl string, listRequestPayload map[string]inter
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if EditBydAutoEnableHttpProxy {
@@ -380,7 +380,7 @@ func QueryEditBydAutoGet(requestUrl string, getRequestPayload map[string]interfa
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if EditBydAutoEnableHttpProxy {
@@ -444,7 +444,7 @@ func QueryEditBydAutoFollow(requestUrl string, followRequestPayload map[string]i
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if EditBydAutoEnableHttpProxy {

@@ -25,7 +25,7 @@ var Fire114Cookie = "PHPSESSID=sgeiq3i8ut557f35o4mnur1p83; UM_distinctid=199997a
 func main() {
 // 	var startId = 449
     var startId = 141800
-	var endId = 141880
+	var endId = 141932
 	for id := startId; id <= endId; id++ {
 		detailUrl := fmt.Sprintf("https://www.fire114.cn/islibd/%d.html", id)
 		fmt.Println(detailUrl)

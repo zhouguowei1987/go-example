@@ -101,7 +101,7 @@ func HtSfWbSetHttpProxy() (httpclient *http.Client) {
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	return httpclient
@@ -228,7 +228,7 @@ func QueryHtSfWbList(requestUrl string) (queryHtSfWbListResponseData []QueryHtSf
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if HtSfWbEnableHttpProxy {
@@ -287,7 +287,7 @@ func downloadHtSfWb(attachmentUrl string, referer string, filePath string) error
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if HtSfWbEnableHttpProxy {

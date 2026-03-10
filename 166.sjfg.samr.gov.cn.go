@@ -101,7 +101,7 @@ type QueryLawByLawIdRequestPayload struct {
 	Id interface{} `json:"id"`
 }
 
-var SjFgCookie = "HMACCOUNT=1CCD0111717619C6; Hm_lvt_54db9897e5a65f7a7b00359d86015d8d=1756176872,1756314720; Hm_lpvt_54db9897e5a65f7a7b00359d86015d8d=1757428720; __jsluid_s=06e6e8d62d686727e4c088a24e481331"
+var SjFgCookie = "__jsluid_s=6491b4ee52a20cd1c072c1b4d29f04a3; Hm_lvt_54db9897e5a65f7a7b00359d86015d8d=1771856442; Hm_lpvt_54db9897e5a65f7a7b00359d86015d8d=1771856442; HMACCOUNT=4E5B3419A3141A8E"
 
 // ychEduSpider 市场监管法律法规规章数据库文档
 // @Title 市场监管法律法规规章数据库文档
@@ -271,7 +271,7 @@ func SjFgList(requestUrl string, sjFgListFormData SjFgListFormData) (sjFgListRes
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if SjFgEnableHttpProxy {
@@ -358,7 +358,7 @@ func QueryLawByLawId(requestUrl string, referer string, queryLawByLawIdRequestPa
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if SjFgEnableHttpProxy {
@@ -428,7 +428,7 @@ func downloadSjFg(attachmentUrl string, filePath string) error {
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if SjFgEnableHttpProxy {

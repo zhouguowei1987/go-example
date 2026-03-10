@@ -102,7 +102,7 @@ func BjJsSetHttpProxy() (httpclient *http.Client) {
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	return httpclient
@@ -260,7 +260,7 @@ func QueryBjJsList(requestUrl string, queryBjJsListFormData QueryBjJsListFormDat
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if BjJsEnableHttpProxy {
@@ -325,7 +325,7 @@ func downloadBjJs(attachmentUrl string, referer string, filePath string) error {
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if BjJsEnableHttpProxy {

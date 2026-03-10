@@ -95,7 +95,7 @@ func EditDoc88SetHttpProxy() (httpclient *http.Client) {
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	return httpclient
@@ -294,7 +294,7 @@ func QueryEditDoc88List(requestUrl string, queryEditDoc88ListFormData QueryEditD
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if EditDoc88EnableHttpProxy {
@@ -360,7 +360,7 @@ func QueryEditDoc88Detail(requestUrl string, PId string) (doc *html.Node, err er
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if EditDoc88EnableHttpProxy {
@@ -421,7 +421,7 @@ func EditDoc88(requestUrl string, editDoc88FormData EditDoc88FormData) (editDoc8
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if EditDoc88EnableHttpProxy {

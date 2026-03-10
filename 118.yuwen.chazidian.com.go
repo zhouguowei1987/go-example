@@ -98,7 +98,7 @@ func YuWenChaZiDianSetHttpProxy() (httpclient *http.Client) {
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	return httpclient
@@ -210,7 +210,7 @@ func YuWenChaZiDianGetCatePageDataApi(page int) (yuWenChaZiDianResponse YuWenCha
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if YuWenChaZiDianEnableHttpProxy {
@@ -286,7 +286,7 @@ func downloadYuWenChaZiDian(attachmentUrl string, referer string, filePath strin
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if YuWenChaZiDianEnableHttpProxy {

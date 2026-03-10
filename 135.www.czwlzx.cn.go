@@ -99,7 +99,7 @@ func CzWlZxSetHttpProxy() (httpclient *http.Client) {
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	return httpclient
@@ -241,7 +241,7 @@ func CzWlZxDetailDoc(requestUrl string, referer string) (doc *html.Node, err err
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if CzWlZxEnableHttpProxy {
@@ -293,7 +293,7 @@ func downloadCzWlZx(attachmentUrl string, filePath string, referer string) error
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if CzWlZxEnableHttpProxy {

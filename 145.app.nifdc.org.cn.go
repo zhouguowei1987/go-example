@@ -104,7 +104,7 @@ func QxTjBzSetHttpProxy() (httpclient *http.Client) {
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	return httpclient
@@ -248,7 +248,7 @@ func QueryQxTjBzList(requestUrl string, queryQxTjBzListFormData QueryQxTjBzListF
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if QxTjBzEnableHttpProxy {
@@ -307,7 +307,7 @@ func viewQxTjBz(requestUrl string, viewQxTjBzFormData ViewQxTjBzFormData) (doc *
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if QxTjBzEnableHttpProxy {
@@ -381,7 +381,7 @@ func downloadQxTjBz(requestUrl string, filePath string) error {
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if QxTjBzEnableHttpProxy {

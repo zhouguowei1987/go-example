@@ -101,7 +101,7 @@ func FaDaDaSetHttpProxy() (httpclient *http.Client) {
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	return httpclient
@@ -239,7 +239,7 @@ func QueryFaDaDaList(requestUrl string, queryFaDaDaListFormData QueryFaDaDaListF
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if FaDaDaEnableHttpProxy {
@@ -308,7 +308,7 @@ func downloadFaDaDa(attachmentUrl string, referer string, filePath string) error
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if FaDaDaEnableHttpProxy {

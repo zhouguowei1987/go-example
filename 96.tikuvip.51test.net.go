@@ -183,7 +183,7 @@ func treeListInit() (tiKuVip51TestTreeListInitData []TiKuVip51TestTreeListInitDa
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if TiKuVip51TestEnableHttpProxy {
@@ -257,7 +257,7 @@ func treeList(path string) (tiKuVip51TestTreeListData []TiKuVip51TestTreeListDat
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if TiKuVip51TestEnableHttpProxy {
@@ -347,7 +347,7 @@ func PathList(path string) (tiKuVip51TestPathListDataFileList []TiKuVip51TestPat
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if TiKuVip51TestEnableHttpProxy {
@@ -503,7 +503,7 @@ func downloadTiKuVip51Test(attachmentUrl string, filePath string, fileName strin
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if TiKuVip51TestEnableHttpProxy {

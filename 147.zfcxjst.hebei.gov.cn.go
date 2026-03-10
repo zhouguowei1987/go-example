@@ -157,7 +157,7 @@ func QueryZfCxJstHtml(requestUrl string, referer string) (doc *html.Node, err er
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	req, err := http.NewRequest("GET", requestUrl, nil) //建立连接

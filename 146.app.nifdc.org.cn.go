@@ -104,7 +104,7 @@ func YlQxSetHttpProxy() (httpclient *http.Client) {
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	return httpclient
@@ -248,7 +248,7 @@ func QueryYlQxList(requestUrl string, queryYlQxListFormData QueryYlQxListFormDat
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if YlQxEnableHttpProxy {
@@ -307,7 +307,7 @@ func viewYlQx(requestUrl string, viewYlQxFormData ViewYlQxFormData) (doc *html.N
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if YlQxEnableHttpProxy {
@@ -381,7 +381,7 @@ func downloadYlQx(requestUrl string, filePath string) error {
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if YlQxEnableHttpProxy {

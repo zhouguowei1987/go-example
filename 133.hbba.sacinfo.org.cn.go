@@ -236,7 +236,7 @@ func HbBaGetStdQueryList(requestUrl string, current int, size int, status string
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if HbBaEnableHttpProxy {
@@ -300,7 +300,7 @@ func downloadValidateCodeHbBa(validateCodeUrl string, filePath string) error {
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if HbBaEnableHttpProxy {
@@ -397,7 +397,7 @@ func validateCaptchaHbBa(captcha string, pk string, referer string) (responseVal
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if HbBaEnableHttpProxy {
@@ -465,7 +465,7 @@ func downloadHbBa(attachmentUrl string, referer string, filePath string) error {
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if HbBaEnableHttpProxy {

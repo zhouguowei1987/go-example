@@ -158,7 +158,7 @@ func downloadPpt818(attachmentUrl string, referer string, filePath string, fileN
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if Ppt818EnableHttpProxy {

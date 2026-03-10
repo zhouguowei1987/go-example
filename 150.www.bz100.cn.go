@@ -100,7 +100,7 @@ func Bz100SetHttpProxy() (httpclient *http.Client) {
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	return httpclient
@@ -245,7 +245,7 @@ func QueryBz100List(requestUrl string, queryBz100ListFormData QueryBz100ListForm
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if Bz100EnableHttpProxy {
@@ -310,7 +310,7 @@ func downloadBz100(requestUrl string, bz100DownloadFormData Bz100DownloadFormDat
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if Bz100EnableHttpProxy {

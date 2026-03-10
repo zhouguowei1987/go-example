@@ -96,7 +96,7 @@ func DownDoc88SetHttpProxy() (httpclient *http.Client) {
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	return httpclient
@@ -252,7 +252,7 @@ func QueryDownDoc88List(requestUrl string, queryDownDoc88ListFormData QueryDownD
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if DownDoc88EnableHttpProxy {
@@ -318,7 +318,7 @@ func QueryDownDoc88DownLoadUrl(requestUrl string) (doc *html.Node, err error) {
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if DownDoc88EnableHttpProxy {
@@ -378,7 +378,7 @@ func DownLoadDoc88(attachmentUrl string, referer string, filePath string) error 
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if DownDoc88EnableHttpProxy {

@@ -228,7 +228,7 @@ func QueryPpt2DownloadUrl(requestUrl string, queryPpt2DownloadUrlFormData QueryP
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if Ppt2EnableHttpProxy {

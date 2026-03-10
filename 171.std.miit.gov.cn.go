@@ -102,7 +102,7 @@ func StdMiItSetHttpProxy() (httpclient *http.Client) {
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	return httpclient
@@ -250,7 +250,7 @@ func QueryStdMiItList(requestUrl string, queryStdMiItListRequestPayload QueryStd
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if StdMiItEnableHttpProxy {
@@ -323,7 +323,7 @@ func downloadStdMiIt(attachmentUrl string, filePath string) error {
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if StdMiItEnableHttpProxy {
