@@ -132,9 +132,9 @@ type QueryFaXinStdOnlineFormData struct {
 }
 
 var FaXinCookie = "JSESSIONID=221443C9BCC3F5ABFB08FEDAA4F80249; Hm_lvt_cb8a2025f4234726e55e45f893fb7954=1771997810; HMACCOUNT=4E5B3419A3141A8E; Hm_lvt_a317640b4aeca83b20c90d410335b70f=1771997824; HMACCOUNT=4E5B3419A3141A8E; Hm_lpvt_a317640b4aeca83b20c90d410335b70f=1773107689; lawapp_web=9B62EB060E96A41C08BFB4BFBB88DD5BF2BB3818921B383451F0D19BE409F11B4AE47A8408591BD48C8D7DDE66CC1A9A92C784A019D702252E95B404BEFF7E3D44970A51F90ECF18B63C050347503388DB057CC550BFC652175F8363CD3F4B178192F485E4C0C4ED85C3AB5DB15129F7518997575FB568B08088D2D9642173F328A30857EFCDA4CB7AF400784D51BFC8DEE90BB2; Hm_lpvt_cb8a2025f4234726e55e45f893fb7954=1773112420"
-var FaXinEncStrCookie = "JSESSIONID=221443C9BCC3F5ABFB08FEDAA4F80249; Hm_lvt_cb8a2025f4234726e55e45f893fb7954=1771997810; HMACCOUNT=4E5B3419A3141A8E; Hm_lvt_a317640b4aeca83b20c90d410335b70f=1771997824; HMACCOUNT=4E5B3419A3141A8E; Hm_lpvt_a317640b4aeca83b20c90d410335b70f=1773107689; lawapp_web=9B62EB060E96A41C08BFB4BFBB88DD5BF2BB3818921B383451F0D19BE409F11B4AE47A8408591BD48C8D7DDE66CC1A9A92C784A019D702252E95B404BEFF7E3D44970A51F90ECF18B63C050347503388DB057CC550BFC652175F8363CD3F4B178192F485E4C0C4ED85C3AB5DB15129F7518997575FB568B08088D2D9642173F328A30857EFCDA4CB7AF400784D51BFC8DEE90BB2; JSESSIONID=2116BE012B79BB7E567CF8045F19A765; Hm_lpvt_cb8a2025f4234726e55e45f893fb7954=1773119144"
-var SpcStdOnlineCookie = "JSESSIONID=73AED56B4D4427C678D2491D782ADA7C; Hm_lpvt_6d75523a84ebfd663067173dd3baab34=1773119308"
-var SpcDownloadCookie = "Qs_lvt_503365=1759975608%2C1763093101%2C1766475585%2C1768268241%2C1769395188; Qs_pv_503365=2169124988614570200%2C1976145068643755300%2C2957571777807069000%2C3500804953458690000%2C4312190314712403000; Hm_lvt_6d75523a84ebfd663067173dd3baab34=1771997845; HMACCOUNT=4E5B3419A3141A8E; Hm_lvt_b5bdb81ba9543a3b3567778ab86df74b=1773053945; Hm_lvt_f1e3be80a525d0bb9e111ca6cbaa2457=1773053945; Hm_lpvt_b5bdb81ba9543a3b3567778ab86df74b=1773114537; Hm_lpvt_f1e3be80a525d0bb9e111ca6cbaa2457=1773114537; JSESSIONID=AEA0BFF5E999FDA4B9D5AEECF0588C52; Hm_lpvt_6d75523a84ebfd663067173dd3baab34=1773119230"
+var FaXinEncStrCookie = "JSESSIONID=221443C9BCC3F5ABFB08FEDAA4F80249; Hm_lvt_cb8a2025f4234726e55e45f893fb7954=1771997810; HMACCOUNT=4E5B3419A3141A8E; Hm_lvt_a317640b4aeca83b20c90d410335b70f=1771997824; HMACCOUNT=4E5B3419A3141A8E; JSESSIONID=2116BE012B79BB7E567CF8045F19A765; Hm_lpvt_a317640b4aeca83b20c90d410335b70f=1773119716; lawapp_web=1F768A318467F611ECD0074431108DD6CA7E3E8A0B8CE3EAB9740ED1CF5AEB900E0F9D20CCE96653E26DAEB43F80B84A073582145310E2B7451EDCAA8CD435FBA90990B35B966FA3A215A6FC8586AAE74E05953204EF3DC7B41437E4729E3B3945B2CA7E38905B435C243988D5EFA473C88CA5D1954DF68C4997440A0A1D6E5F03E778F21F57702A72B626E94467199054D618C3; Hm_lpvt_cb8a2025f4234726e55e45f893fb7954=1773149339"
+var SpcStdOnlineCookie = "JSESSIONID=89D50D12944756FA57A19F05927BCF08; Hm_lpvt_6d75523a84ebfd663067173dd3baab34=1773149466"
+var SpcDownloadCookie = "Hm_lvt_6d75523a84ebfd663067173dd3baab34=1771997845; HMACCOUNT=4E5B3419A3141A8E; Hm_lvt_b5bdb81ba9543a3b3567778ab86df74b=1773053945; Hm_lvt_f1e3be80a525d0bb9e111ca6cbaa2457=1773053945; Hm_lpvt_b5bdb81ba9543a3b3567778ab86df74b=1773114537; Hm_lpvt_f1e3be80a525d0bb9e111ca6cbaa2457=1773114537; Qs_lvt_503365=1763093101%2C1766475585%2C1768268241%2C1769395188%2C1773120407; Qs_pv_503365=3500804953458690000%2C4312190314712403000%2C2139172949710619400%2C4130296931540564500%2C640593025427853300; JSESSIONID=89D50D12944756FA57A19F05927BCF08; Hm_lpvt_6d75523a84ebfd663067173dd3baab34=1773149510"
 
 // 下载法信标准文档
 // @Title 下载法信标准文档
@@ -142,167 +142,190 @@ var SpcDownloadCookie = "Qs_lvt_503365=1759975608%2C1763093101%2C1766475585%2C17
 func main() {
 	pageListUrl := "https://bz.faxin.cn/faxin/view/advancedsearch"
 	fmt.Println(pageListUrl)
-	page := 0
-	maxPage := 30 //对不起，目前网站只支持下翻30页
-	isPageListGo := true
-	for isPageListGo {
-		if page > maxPage {
-			isPageListGo = false
-			break
-		}
-		queryFaXinListFormData := QueryFaXinListFormData{
-			sctype:         "",
-			stdno:          "",
-			sc:             "CN", //CN：国家标准 QT：行业标准 JJ：计量规程规范
-			stdname:        "",
-			a404:           "",
-			a825:           "*",
-			standStatus:    "",
-			issueDateStart: "",
-			issueDateEnd:   "",
-			a205Start:      "",
-			a205End:        "",
-			issueDepart:    "",
-			draftsDept:     "",
-			reader:         "",
-			ownerDept:      "",
-			pageIndex:      page,
-		}
-		queryFaXinListDoc, err := QueryFaXinList(pageListUrl, queryFaXinListFormData)
-		if err != nil {
-			fmt.Println(err)
-			break
-		}
-		divNodes := htmlquery.Find(queryFaXinListDoc, `//html/body/div[2]/div/div[2]/div[2]/div[2]/div[@class="search-list"]`)
-		fmt.Println("=======一共有====", len(divNodes), "====记录=======")
-		if len(divNodes) >= 1 {
-			for _, divNode := range divNodes {
-				fmt.Println("=====================开始处理数据=========================")
-				titleNode := htmlquery.FindOne(divNode, `./div[1]/div/a[2]/span/@title`)
-				title := htmlquery.InnerText(titleNode)
-				title = strings.TrimSpace(title)
-				title = strings.ReplaceAll(title, "-", "")
-				title = strings.ReplaceAll(title, " ", "")
-				title = strings.ReplaceAll(title, "|", "-")
-				title = strings.ReplaceAll(title, "/", "-")
-				title = strings.ReplaceAll(title, "/", "-")
-				title = strings.ReplaceAll(title, "　", "-")
-				fmt.Println(title)
+	for year := 1980; year <= 2026; year++ {
+	    startYear := year
+	    for month := 1; month <= 11; month++ {
+            startMonth := month
+            modifyStartMonth := strconv.Itoa(startMonth)
+            endMonth := month + 1
+            modifyEndMonth := strconv.Itoa(endMonth)
+            if startMonth <= 9{
+                modifyStartMonth = "0" + strconv.Itoa(startMonth)
+            }
+            if endMonth <= 9{
+                modifyEndMonth = "0" + strconv.Itoa(endMonth)
+            }
+            issueDateStart := strconv.Itoa(startYear) + "-"+modifyStartMonth+"-01"
+            issueDateEnd := strconv.Itoa(startYear) + "-"+modifyEndMonth+"-01"
 
-				codeNode := htmlquery.FindOne(divNode, `./div[1]/div/a[1]/span`)
-				code := htmlquery.InnerText(codeNode)
-				code = strings.ReplaceAll(code, "[国家标准]", "")
-				code = strings.ReplaceAll(code, "[行业标准]", "")
-				code = strings.ReplaceAll(code, "[计量规程规范]", "")
-				code = strings.ReplaceAll(code, "\n", "")
-				code = strings.ReplaceAll(code, "\r", "")
-				code = strings.ReplaceAll(code, "\t", "")
-				code = strings.Replace(code, " ", "", 1)
-				fmt.Println(code)
-// 				标准号中含有“/”，推荐性标准不提供在线阅读，跳过
-                if strings.Index(code,"/") != -1{
-                    fmt.Println("推荐性标准不提供在线阅读，跳过")
-                    continue
+            page := 0
+            maxPage := 30 //对不起，目前网站只支持下翻30页
+            isPageListGo := true
+            for isPageListGo {
+                if page > maxPage {
+                    isPageListGo = false
+                    break
                 }
+                queryFaXinListFormData := QueryFaXinListFormData{
+                    sctype:         "",
+                    stdno:          "",
+                    sc:             "CN", //CN：国家标准 QT：行业标准 JJ：计量规程规范
+                    stdname:        "",
+                    a404:           "",
+                    a825:           "",
+                    standStatus:    "", //现行、即将实施
+                    issueDateStart: issueDateStart,
+                    issueDateEnd:   issueDateEnd,
+                    a205Start:      "",
+                    a205End:        "",
+                    issueDepart:    "",
+                    draftsDept:     "",
+                    reader:         "",
+                    ownerDept:      "",
+                    pageIndex:      page,
+                }
+                queryFaXinListDoc, err := QueryFaXinList(pageListUrl, queryFaXinListFormData)
+                if err != nil {
+                    fmt.Println(err)
+                    break
+                }
+                divNodes := htmlquery.Find(queryFaXinListDoc, `//html/body/div[2]/div/div[2]/div[2]/div[2]/div[@class="search-list"]`)
+                fmt.Println("issueDateStart = ",issueDateStart,"issueDateEnd = ",issueDateEnd)
+                fmt.Println("=======一共有====", len(divNodes), "====记录=======")
+                if len(divNodes) <= 0{
+                    page = 0
+                    fmt.Println("没有记录，跳出当前循环")
+                    break
+                }
+                for _, divNode := range divNodes {
+                    fmt.Println("issueDateStart = ",issueDateStart,"issueDateEnd = ",issueDateEnd)
+                    fmt.Println("=====================开始处理数据=========================")
+                    titleNode := htmlquery.FindOne(divNode, `./div[1]/div/a[2]/span/@title`)
+                    title := htmlquery.InnerText(titleNode)
+                    title = strings.TrimSpace(title)
+                    title = strings.ReplaceAll(title, "-", "")
+                    title = strings.ReplaceAll(title, " ", "")
+                    title = strings.ReplaceAll(title, "|", "-")
+                    title = strings.ReplaceAll(title, "/", "-")
+                    title = strings.ReplaceAll(title, "/", "-")
+                    title = strings.ReplaceAll(title, "　", "-")
+                    fmt.Println(title)
 
-				filePath := "../bz.faxin.cn/" + title + "(" + strings.ReplaceAll(code, "/", "-") + ")" + ".pdf"
-				fmt.Println(filePath)
+                    codeNode := htmlquery.FindOne(divNode, `./div[1]/div/a[1]/span`)
+                    code := htmlquery.InnerText(codeNode)
+                    code = strings.ReplaceAll(code, "[国家标准]", "")
+                    code = strings.ReplaceAll(code, "[行业标准]", "")
+                    code = strings.ReplaceAll(code, "[计量规程规范]", "")
+                    code = strings.ReplaceAll(code, "\n", "")
+                    code = strings.ReplaceAll(code, "\r", "")
+                    code = strings.ReplaceAll(code, "\t", "")
+                    code = strings.Replace(code, " ", "", 1)
+                    fmt.Println(code)
+    // 				标准号中含有“/”，推荐性标准不提供在线阅读，跳过
+                    if strings.Index(code,"/") != -1{
+                        fmt.Println("推荐性标准不提供在线阅读，跳过")
+                        continue
+                    }
 
-				_, err = os.Stat(filePath)
-				if err == nil {
-					fmt.Println("文档已下载过，跳过")
-					continue
-				}
+                    filePath := "../bz.faxin.cn/" + title + "(" + strings.ReplaceAll(code, "/", "-") + ")" + ".pdf"
+                    fmt.Println(filePath)
 
-				// 获取encstr
-				faXinEncStrUrl := fmt.Sprintf("https://bz.faxin.cn/faxin/stdlib/getencstr?a100=%s", strings.ReplaceAll(code, " ", "%20"))
-				fmt.Println(faXinEncStrUrl)
-				faXinEncStrReferer := fmt.Sprintf("https://bz.faxin.cn/faxin/view/online/%s/?", strings.ReplaceAll(code, " ", "%20"))
-				faXinEncStrDoc, err := getFaXinEncStr(faXinEncStrUrl, faXinEncStrReferer)
-				if err != nil {
-					fmt.Println(err)
-					continue
-				}
-				faXinEncStr := htmlquery.InnerText(faXinEncStrDoc)
-				fmt.Println(faXinEncStr)
-				if len(faXinEncStr) < 32 {
-					fmt.Println("获取EncStr失败")
-					break
-				}
-				// 获取在线阅读页面内容
-				queryFaXinStdOnlineFormData := QueryFaXinStdOnlineFormData{
-					a100:       code,
-					saleagtid:  "0114",
-					username:   "",
-					readdevice: "1",
-					encstr:     faXinEncStr,
-				}
-				stdOnlineUrl := "https://www.spc.org.cn/gb168/agtvip/stdonline"
-				queryFaXinStdOnlineDoc, err := QueryFaXinStdOnline(stdOnlineUrl,queryFaXinStdOnlineFormData)
-				if err != nil {
-// 				[{"errorCode":"804010016","value":"因版权限制，此标准不提供在线阅读"}]
-					fmt.Println(err)
-					continue
-				}
+                    _, err = os.Stat(filePath)
+                    if err == nil {
+                        fmt.Println("文档已下载过，跳过")
+                        continue
+                    }
 
-				// 获取在线阅读enc
-				regFaXinEnc := regexp.MustCompile(`var enc = "(.*?)";`)
-				regFaXinEncMatch := regFaXinEnc.FindAllSubmatch([]byte(htmlquery.InnerText(queryFaXinStdOnlineDoc)), -1)
-				if len(regFaXinEncMatch) == 0 {
-					fmt.Println("获取enc失败")
-					break
-				}
-				faXinEnc := string(regFaXinEncMatch[0][1])
-				fmt.Println("enc==", faXinEnc)
-				downloadMyFoxit := faXinEnc
+                    // 获取encstr
+                    faXinEncStrUrl := fmt.Sprintf("https://bz.faxin.cn/faxin/stdlib/getencstr?a100=%s", strings.ReplaceAll(code, " ", "%20"))
+                    fmt.Println(faXinEncStrUrl)
+                    faXinEncStrReferer := fmt.Sprintf("https://bz.faxin.cn/faxin/view/online/%s/?", strings.ReplaceAll(code, " ", "%20"))
+                    faXinEncStrDoc, err := getFaXinEncStr(faXinEncStrUrl, faXinEncStrReferer)
+                    if err != nil {
+                        fmt.Println(err)
+                        continue
+                    }
+                    faXinEncStr := htmlquery.InnerText(faXinEncStrDoc)
+                    fmt.Println(faXinEncStr)
+                    if len(faXinEncStr) < 32 {
+                        fmt.Println("获取EncStr失败")
+                        break
+                    }
+                    // 获取在线阅读页面内容
+                    queryFaXinStdOnlineFormData := QueryFaXinStdOnlineFormData{
+                        a100:       code,
+                        saleagtid:  "0114",
+                        username:   "",
+                        readdevice: "1",
+                        encstr:     faXinEncStr,
+                    }
+                    stdOnlineUrl := "https://www.spc.org.cn/gb168/agtvip/stdonline"
+                    queryFaXinStdOnlineDoc, err := QueryFaXinStdOnline(stdOnlineUrl,queryFaXinStdOnlineFormData)
+                    if err != nil {
+    // 				[{"errorCode":"804010016","value":"因版权限制，此标准不提供在线阅读"}]
+                        fmt.Println(err)
+                        continue
+                    }
 
-				// 获取在线阅读rc
-				regFaXinRc := regexp.MustCompile(`var rc = "(.*?)";`)
-				regFaXinRcMatch := regFaXinRc.FindAllSubmatch([]byte(htmlquery.InnerText(queryFaXinStdOnlineDoc)), -1)
-				if len(regFaXinRcMatch) == 0 {
-					fmt.Println("获取rc失败")
-					break
-				}
-				faXinRc := string(regFaXinRcMatch[0][1])
-				fmt.Println("rc==", faXinRc)
+                    // 获取在线阅读enc
+                    regFaXinEnc := regexp.MustCompile(`var enc = "(.*?)";`)
+                    regFaXinEncMatch := regFaXinEnc.FindAllSubmatch([]byte(htmlquery.InnerText(queryFaXinStdOnlineDoc)), -1)
+                    if len(regFaXinEncMatch) == 0 {
+                        fmt.Println("获取enc失败")
+                        break
+                    }
+                    faXinEnc := string(regFaXinEncMatch[0][1])
+                    fmt.Println("enc==", faXinEnc)
+                    downloadMyFoxit := faXinEnc
 
-				downloadReferer := "https://www.spc.org.cn/gb168/agtvip/stdonline"
-				downloadUrl := fmt.Sprintf("https://www.spc.org.cn/stdlib/onlinereading?token=%s&type=", faXinRc)
-				fmt.Println(downloadUrl)
+                    // 获取在线阅读rc
+                    regFaXinRc := regexp.MustCompile(`var rc = "(.*?)";`)
+                    regFaXinRcMatch := regFaXinRc.FindAllSubmatch([]byte(htmlquery.InnerText(queryFaXinStdOnlineDoc)), -1)
+                    if len(regFaXinRcMatch) == 0 {
+                        fmt.Println("获取rc失败")
+                        break
+                    }
+                    faXinRc := string(regFaXinRcMatch[0][1])
+                    fmt.Println("rc==", faXinRc)
 
-				fmt.Println("=======开始下载" + title + "========")
-				err = downloadFaXin(downloadUrl, downloadReferer, downloadMyFoxit, filePath)
-				if err != nil {
-					fmt.Println(err)
-					continue
-				}
-				//复制文件
-				tempFilePath := strings.ReplaceAll(filePath, "bz.faxin.cn", "temp-hbba.sacinfo.org.cn")
-				err = copyFaXinFile(filePath, tempFilePath)
-				if err != nil {
-					fmt.Println(err)
-					continue
-				}
-				fmt.Println("=======下载完成========")
-				//DownLoadFaXinTimeSleep := 10
-				DownLoadFaXinTimeSleep := rand.Intn(5)
-				for i := 1; i <= DownLoadFaXinTimeSleep; i++ {
-					time.Sleep(time.Second)
-					fmt.Println("page="+strconv.Itoa(page)+",filePath="+filePath+"===========下载成功 暂停", DownLoadFaXinTimeSleep, "秒 倒计时", i, "秒===========")
-				}
-			}
-		}
-		DownLoadFaXinPageTimeSleep := 10
-		// DownLoadFaXinPageTimeSleep := rand.Intn(5)
-		for i := 1; i <= DownLoadFaXinPageTimeSleep; i++ {
-			time.Sleep(time.Second)
-			fmt.Println("page="+strconv.Itoa(page)+"=========== 暂停", DownLoadFaXinPageTimeSleep, "秒 倒计时", i, "秒===========")
-		}
-		page++
-		if page > maxPage {
-			isPageListGo = false
-			break
-		}
+                    downloadReferer := "https://www.spc.org.cn/gb168/agtvip/stdonline"
+                    downloadUrl := fmt.Sprintf("https://www.spc.org.cn/stdlib/onlinereading?token=%s&type=", faXinRc)
+                    fmt.Println(downloadUrl)
+
+                    fmt.Println("=======开始下载" + title + "========")
+                    err = downloadFaXin(downloadUrl, downloadReferer, downloadMyFoxit, filePath)
+                    if err != nil {
+                        fmt.Println(err)
+                        continue
+                    }
+                    //复制文件
+                    tempFilePath := strings.ReplaceAll(filePath, "bz.faxin.cn", "temp-hbba.sacinfo.org.cn")
+                    err = copyFaXinFile(filePath, tempFilePath)
+                    if err != nil {
+                        fmt.Println(err)
+                        continue
+                    }
+                    fmt.Println("=======下载完成========")
+                    //DownLoadFaXinTimeSleep := 10
+                    DownLoadFaXinTimeSleep := rand.Intn(5)
+                    for i := 1; i <= DownLoadFaXinTimeSleep; i++ {
+                        time.Sleep(time.Second)
+                        fmt.Println("page="+strconv.Itoa(page)+",filePath="+filePath+"===========下载成功 暂停", DownLoadFaXinTimeSleep, "秒 倒计时", i, "秒===========")
+                    }
+                }
+        // 		DownLoadFaXinPageTimeSleep := 10
+                DownLoadFaXinPageTimeSleep := rand.Intn(5)
+                for i := 1; i <= DownLoadFaXinPageTimeSleep; i++ {
+                    time.Sleep(time.Second)
+                    fmt.Println("page="+strconv.Itoa(page)+"=========== 暂停", DownLoadFaXinPageTimeSleep, "秒 倒计时", i, "秒===========")
+                }
+                page++
+                if page > maxPage {
+                    isPageListGo = false
+                    break
+                }
+            }
+        }
 	}
 }
 
