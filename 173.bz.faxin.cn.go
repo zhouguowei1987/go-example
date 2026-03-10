@@ -173,7 +173,7 @@ func main() {
                     stdname:        "",
                     a404:           "",
                     a825:           "",
-                    standStatus:    "", //现行、即将实施
+                    standStatus:    "现行,即将实施", //现行、即将实施
                     issueDateStart: issueDateStart,
                     issueDateEnd:   issueDateEnd,
                     a205Start:      "",
