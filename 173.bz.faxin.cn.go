@@ -142,7 +142,7 @@ var SpcDownloadCookie = "Hm_lvt_6d75523a84ebfd663067173dd3baab34=1771997845; HMA
 func main() {
 	pageListUrl := "https://bz.faxin.cn/faxin/view/advancedsearch"
 	fmt.Println(pageListUrl)
-	for year := 1980; year <= 2026; year++ {
+	for year := 2026; year <= 2026; year++ {
 	    startYear := year
 	    for month := 1; month <= 11; month++ {
             startMonth := month
@@ -169,7 +169,7 @@ func main() {
                 queryFaXinListFormData := QueryFaXinListFormData{
                     sctype:         "",
                     stdno:          "",
-                    sc:             "CN", //CN：国家标准 QT：行业标准 JJ：计量规程规范
+                    sc:             "", //CN：国家标准 QT：行业标准 JJ：计量规程规范
                     stdname:        "",
                     a404:           "",
                     a825:           "",
