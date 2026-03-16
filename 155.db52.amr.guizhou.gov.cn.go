@@ -1,7 +1,7 @@
 package main
 
 import (
-    "bytes"
+	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -109,16 +109,16 @@ func Db52SetHttpProxy() (httpclient *http.Client) {
 }
 
 type QueryDb52ListRequestPayload struct {
-	Areaid      string `json:"areaid"`
-	Flag      string `json:"flag"`
-	IndustryType      string `json:"industryType"`
-	IsAsc      string `json:"isAsc"`
-	Name      string `json:"name"`
-	Number      string `json:"number"`
-	Param      QueryDb52ListRequestPayloadParam `json:"param"`
+	Areaid       string                           `json:"areaid"`
+	Flag         string                           `json:"flag"`
+	IndustryType string                           `json:"industryType"`
+	IsAsc        string                           `json:"isAsc"`
+	Name         string                           `json:"name"`
+	Number       string                           `json:"number"`
+	Param        QueryDb52ListRequestPayloadParam `json:"param"`
 }
 type QueryDb52ListRequestPayloadParam struct {
-    PageNum int `json:"pageNum"`
+	PageNum  int `json:"pageNum"`
 	PageSize int `json:"pageSize"`
 }
 
@@ -137,22 +137,22 @@ func main() {
 			isPageListGo = false
 			break
 		}
-		pageListUrl := fmt.Sprintf("https://db52.amr.guizhou.gov.cn/v2-service/std-back/client/standardpermit/page?pageNum=%d&pageSize=%d",page,pageSize)
-	    fmt.Println(pageListUrl)
+		pageListUrl := fmt.Sprintf("https://db52.amr.guizhou.gov.cn/v2-service/std-back/client/standardpermit/page?pageNum=%d&pageSize=%d", page, pageSize)
+		fmt.Println(pageListUrl)
 		queryDb52ListRequestPayload := QueryDb52ListRequestPayload{
-			Areaid:      "",
-			Flag:  "",
-			IndustryType:   "",
-			IsAsc:     "desc",
-			Name: "",
-			Number:  "",
+			Areaid:       "",
+			Flag:         "",
+			IndustryType: "",
+			IsAsc:        "desc",
+			Name:         "",
+			Number:       "",
 			Param: QueryDb52ListRequestPayloadParam{
-			    PageNum: page,
-			    PageSize:pageSize,
+				PageNum:  page,
+				PageSize: pageSize,
 			},
 		}
 		queryDb52ListResponseRows, err := QueryDb52List(pageListUrl, queryDb52ListRequestPayload)
-// 		fmt.Println(queryDb52ListResponseRows)
+		// 		fmt.Println(queryDb52ListResponseRows)
 		if err != nil {
 			fmt.Println(err)
 			break
@@ -184,7 +184,7 @@ func main() {
 
 			fmt.Println("=======开始下载========")
 
-			downloadUrl := fmt.Sprintf("https://db52.amr.guizhou.gov.cn/v2-service/std-back/client/common/download/byPath?id=%d&disposition=attachment&name=%s", data.Id,url.QueryEscape(data.Sname))
+			downloadUrl := fmt.Sprintf("https://db52.amr.guizhou.gov.cn/v2-service/std-back/client/common/download/byPath?id=%d&disposition=attachment&name=%s", data.Id, url.QueryEscape(data.Sname))
 			fmt.Println(downloadUrl)
 
 			fmt.Println("=======开始下载" + title + "========")
@@ -224,16 +224,16 @@ func main() {
 }
 
 type QueryDb52ListResponse struct {
-	Code      int                         `json:"code"`
-	Rows      []QueryDb52ListResponseRows `json:"rows"`
-	Msg       string                      `json:"msg"`
-	Total     int                         `json:"total"`
+	Code  int                         `json:"code"`
+	Rows  []QueryDb52ListResponseRows `json:"rows"`
+	Msg   string                      `json:"msg"`
+	Total int                         `json:"total"`
 }
 
 type QueryDb52ListResponseRows struct {
-    Id  int `json:"id"`
-	Sname    string `json:"sname"`
-	Snumber  string `json:"snumber"`
+	Id      int    `json:"id"`
+	Sname   string `json:"sname"`
+	Snumber string `json:"snumber"`
 }
 
 func QueryDb52List(requestUrl string, queryDb52ListRequestPayload QueryDb52ListRequestPayload) (queryDb52ListResponseRows []QueryDb52ListResponseRows, err error) {
@@ -272,7 +272,7 @@ func QueryDb52List(requestUrl string, queryDb52ListRequestPayload QueryDb52ListR
 		return queryDb52ListResponseRows, err
 	}
 
-    req.Header.Set("authority", "db52.amr.guizhou.gov.cn")
+	req.Header.Set("authority", "db52.amr.guizhou.gov.cn")
 	req.Header.Set("method", "POST")
 	path := strings.Replace(requestUrl, "https://db52.amr.guizhou.gov.cn", "", 1)
 	fmt.Println(path)
