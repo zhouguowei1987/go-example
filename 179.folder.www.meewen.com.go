@@ -188,67 +188,49 @@ func main() {
 			}
 			for _, data := range queryFolderMeeWenListResponseDataData {
 				fmt.Println("===============开始处理数据 page = ", page, " data记录数量 = ", len(queryFolderMeeWenListResponseDataData), "==================")
+				fmt.Println("Name = ", category.Name, "===", folder.Title, " Id = ", category.Id)
+				categoryName := category.Name
 				fmt.Println(data.Id)
-
-				title := data.Title
 				fmt.Println(data.Title)
-				if strings.Index(data.Title, "doc") == -1 && strings.Index(data.Title, "pdf") == -1 {
-					fmt.Println("文档不是doc、pdf文档，跳过")
-					continue
-				}
-				title = strings.TrimSpace(title)
-				title = strings.ReplaceAll(title, " ", "-")
-				title = strings.ReplaceAll(title, "　", "-")
-				title = strings.ReplaceAll(title, "/", "-")
-				title = strings.ReplaceAll(title, "--", "-")
-				title = strings.ReplaceAll(title, ".docx", "")
-				title = strings.ReplaceAll(title, ".doc", "")
-				title = strings.ReplaceAll(title, ".pdf", "")
-
-				filePath := "../www.meewen.com/www.meewen.com/" + category.Name + "/" + title + ".pdf"
-				fmt.Println(filePath)
-
-				_, err = os.Stat(filePath)
-				if err == nil {
-					fmt.Println("文档已下载过，跳过")
-					continue
-				}
-
-				fmt.Println("=======开始下载========")
-				detailUrl := "https://www.meewen.com/meewen-portal/api/portal/custom/file/document/getDetail"
-				queryFolderMeeWenDetailRequestPayload := QueryFolderMeeWenDetailRequestPayload{
-					Id: data.Id,
-				}
-				queryFolderMeeWenDetailResponseData, err := QueryFolderMeeWenDetail(detailUrl, queryFolderMeeWenDetailRequestPayload)
-				fmt.Println(queryFolderMeeWenDetailResponseData)
-				if err != nil {
-					fmt.Println(err)
-					continue
-				}
-
-				downloadUrl := queryFolderMeeWenDetailResponseData.PdfUrl
-				fmt.Println(downloadUrl)
-
-				fmt.Println("=======开始下载" + title + "========")
-
-				err = downloadFolderMeeWen(downloadUrl, filePath)
-				if err != nil {
-					fmt.Println(err)
-					continue
-				}
-				//复制文件
-				tempFilePath := strings.ReplaceAll(filePath, "www.meewen.com/www.meewen.com", "www.meewen.com/2026-03-16")
-				err = copyFolderMeeWenFile(filePath, tempFilePath)
-				if err != nil {
-					fmt.Println(err)
-					continue
-				}
-				fmt.Println("=======下载完成========")
-				//DownLoadFolderMeeWenTimeSleep := 10
-				DownLoadFolderMeeWenTimeSleep := rand.Intn(5)
-				for i := 1; i <= DownLoadFolderMeeWenTimeSleep; i++ {
-					time.Sleep(time.Second)
-					fmt.Println("page="+strconv.Itoa(page)+",filePath="+filePath+"===========下载成功 暂停", DownLoadFolderMeeWenTimeSleep, "秒 倒计时", i, "秒===========")
+				if data.ShowType == 1 { //文件夹
+					queryFolderMeeWenListRequestPayload2 := QueryFolderMeeWenListRequestPayload{
+						Current: page,
+						Id:      data.Id,
+						Size:    1000,
+						Path:    "",
+					}
+					queryFolderMeeWenListResponseDataData2, err := QueryFolderMeeWenList(pageListUrl, queryFolderMeeWenListRequestPayload2)
+					if err != nil {
+						fmt.Println(err)
+						continue
+					}
+					for _, data2 := range queryFolderMeeWenListResponseDataData2 {
+						//处理下载文件
+						err = HandleFolderMeeWenListData(data2, categoryName)
+						if err != nil {
+							fmt.Println(err)
+							continue
+						}
+						//DownLoadFolderMeeWenTimeSleep := 10
+						DownLoadFolderMeeWenTimeSleep := rand.Intn(5)
+						for i := 1; i <= DownLoadFolderMeeWenTimeSleep; i++ {
+							time.Sleep(time.Second)
+							fmt.Println("page="+strconv.Itoa(page)+"===========下载成功 暂停", DownLoadFolderMeeWenTimeSleep, "秒 倒计时", i, "秒===========")
+						}
+					}
+				} else if data.ShowType == 3 { //文件
+					//处理下载文件
+					err = HandleFolderMeeWenListData(data, categoryName)
+					if err != nil {
+						fmt.Println(err)
+						continue
+					}
+					//DownLoadFolderMeeWenTimeSleep := 10
+					DownLoadFolderMeeWenTimeSleep := rand.Intn(5)
+					for i := 1; i <= DownLoadFolderMeeWenTimeSleep; i++ {
+						time.Sleep(time.Second)
+						fmt.Println("page="+strconv.Itoa(page)+"===========下载成功 暂停", DownLoadFolderMeeWenTimeSleep, "秒 倒计时", i, "秒===========")
+					}
 				}
 			}
 			DownLoadFolderMeeWenPageTimeSleep := 10
@@ -347,8 +329,9 @@ type QueryFolderMeeWenListResponseData struct {
 	Data []QueryFolderMeeWenListResponseDataData `json:"data"`
 }
 type QueryFolderMeeWenListResponseDataData struct {
-	Id    string `json:"id"`
-	Title string `json:"title"`
+	Id       string `json:"id"`
+	Title    string `json:"title"`
+	ShowType int    `json:"showType"`
 }
 
 func QueryFolderMeeWenList(requestUrl string, queryFolderMeeWenListRequestPayload QueryFolderMeeWenListRequestPayload) (queryFolderMeeWenListResponseDataData []QueryFolderMeeWenListResponseDataData, err error) {
@@ -416,6 +399,57 @@ func QueryFolderMeeWenList(requestUrl string, queryFolderMeeWenListRequestPayloa
 	}
 	queryFolderMeeWenListResponseDataData = queryFolderMeeWenListResponse.Data.Data
 	return queryFolderMeeWenListResponseDataData, nil
+}
+
+func HandleFolderMeeWenListData(data QueryFolderMeeWenListResponseDataData, categoryName string) error {
+	if strings.Index(data.Title, "doc") == -1 && strings.Index(data.Title, "pdf") == -1 {
+		return errors.New("文档不是doc、pdf文档，跳过")
+	}
+	title := data.Title
+	title = strings.TrimSpace(title)
+	title = strings.ReplaceAll(title, " ", "-")
+	title = strings.ReplaceAll(title, "　", "-")
+	title = strings.ReplaceAll(title, "/", "-")
+	title = strings.ReplaceAll(title, "--", "-")
+	title = strings.ReplaceAll(title, ".docx", "")
+	title = strings.ReplaceAll(title, ".doc", "")
+	title = strings.ReplaceAll(title, ".pdf", "")
+
+	filePath := "../www.meewen.com/www.meewen.com/" + categoryName + "/" + title + ".pdf"
+	fmt.Println(filePath)
+
+	_, err := os.Stat(filePath)
+	if err == nil {
+		return errors.New("文档已下载过，跳过")
+	}
+	fmt.Println("=======开始下载========")
+	detailUrl := "https://www.meewen.com/meewen-portal/api/portal/custom/file/document/getDetail"
+	queryFolderMeeWenDetailRequestPayload := QueryFolderMeeWenDetailRequestPayload{
+		Id: data.Id,
+	}
+	queryFolderMeeWenDetailResponseData, err := QueryFolderMeeWenDetail(detailUrl, queryFolderMeeWenDetailRequestPayload)
+	fmt.Println(queryFolderMeeWenDetailResponseData)
+	if err != nil {
+		return err
+	}
+
+	downloadUrl := queryFolderMeeWenDetailResponseData.PdfUrl
+	fmt.Println(downloadUrl)
+
+	fmt.Println("=======开始下载" + title + "========")
+
+	err = downloadFolderMeeWen(downloadUrl, filePath)
+	if err != nil {
+		return err
+	}
+	fmt.Println("=======下载完成========")
+	//复制文件
+	tempFilePath := strings.ReplaceAll(filePath, "www.meewen.com/www.meewen.com", "www.meewen.com/2026-03-16")
+	err = copyFolderMeeWenFile(filePath, tempFilePath)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 type QueryFolderMeeWenDetailResponse struct {
