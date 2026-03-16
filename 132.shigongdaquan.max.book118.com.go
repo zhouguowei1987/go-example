@@ -127,7 +127,7 @@ func downloadShiGongDaQuan(attachmentUrl string, filePath string, referer string
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if ShiGongDaQuanEnableHttpProxy {

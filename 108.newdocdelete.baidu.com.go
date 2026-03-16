@@ -138,7 +138,7 @@ func GetList(requestUrl string) (getListResponse GetListResponse, err error) {
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if NewDocDeleteEnableHttpProxy {
@@ -202,7 +202,7 @@ func NewDocDelete(docDeleteUrl string) (newDocDeleteResponse NewDocDeleteRespons
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if NewDocDeleteEnableHttpProxy {

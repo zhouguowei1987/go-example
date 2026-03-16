@@ -94,7 +94,7 @@ func KaoJuanXiaZaiSetHttpProxy() (httpclient *http.Client) {
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	return httpclient
@@ -313,7 +313,7 @@ func downloadKaoJuanXiaZai(attachmentUrl string, referer string, filePath string
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if KaoJuanXiaZaiEnableHttpProxy {

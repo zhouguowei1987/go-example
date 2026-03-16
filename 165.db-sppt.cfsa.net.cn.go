@@ -1654,7 +1654,7 @@ func downloadDbSpPt(requestUrl string, referer string, downloadDbSpPtFormData Do
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if DbSpPtEnableHttpProxy {

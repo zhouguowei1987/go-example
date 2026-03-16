@@ -158,7 +158,7 @@ func downloadEduY(attachmentUrl string, filePath string, referer string) error {
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if EduYEnableHttpProxy {

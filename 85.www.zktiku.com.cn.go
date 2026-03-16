@@ -195,7 +195,7 @@ func getZkTiKu(url string) (doc *html.Node, err error) {
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if ZkTiKuEnableHttpProxy {
@@ -240,7 +240,7 @@ func downloadZkTiKu(downloadUrl string, referer string, fileDetailId int) error 
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if ZkTiKuEnableHttpProxy {
@@ -310,7 +310,7 @@ func downloadExecZkTiKu(attachmentUrl string, referer string, filePath string, f
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if ZkTiKuEnableHttpProxy {

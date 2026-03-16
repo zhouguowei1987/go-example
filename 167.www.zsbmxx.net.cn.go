@@ -32,7 +32,7 @@ func ZsBmXxSetHttpProxy() (httpclient *http.Client) {
 	return httpclient
 }
 
-var ZsBmXxCookie = "PUBLICCMS_ANALYTICS_ID=f51aa4cd-45db-427f-bfff-bc7b20a12e3a"
+var ZsBmXxCookie = "PUBLICCMS_ANALYTICS_ID=75b95064-8962-464f-a6a6-5d9eacdafff8"
 
 // ychEduSpider 获取中山市地方标准文档
 // @Title 获取中山市地方标准文档
@@ -238,7 +238,7 @@ func downloadZsBmXx(attachmentUrl string, referer string, filePath string) error
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if ZsBmXxEnableHttpProxy {

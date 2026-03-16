@@ -62,7 +62,7 @@ type HdBaResponseValidateCaptcha struct {
 	Msg  string `json:"msg"`
 }
 
-const HbBaCookie = "HMACCOUNT=487EF362690A1D5D; Hm_lvt_bc6f61eace617162b31b982f796830e6=1770613850; Hm_lpvt_bc6f61eace617162b31b982f796830e6=1773020294; JSESSIONID=A05DF270650679A44CD3800B757BAEAE"
+const HbBaCookie = "HMACCOUNT=487EF362690A1D5D; Hm_lvt_bc6f61eace617162b31b982f796830e6=1773331458; Hm_lpvt_bc6f61eace617162b31b982f796830e6=1773331458; JSESSIONID=CC27A7624D90CA40FEDEE13F8F145559"
 
 // ychEduSpider 获取行业标准文档
 // @Title 获取行业标准文档
@@ -236,7 +236,7 @@ func HbBaGetStdQueryList(requestUrl string, current int, size int, status string
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if HbBaEnableHttpProxy {
@@ -300,7 +300,7 @@ func downloadValidateCodeHbBa(validateCodeUrl string, filePath string) error {
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if HbBaEnableHttpProxy {
@@ -397,7 +397,7 @@ func validateCaptchaHbBa(captcha string, pk string, referer string) (responseVal
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if HbBaEnableHttpProxy {
@@ -465,7 +465,7 @@ func downloadHbBa(attachmentUrl string, referer string, filePath string) error {
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if HbBaEnableHttpProxy {

@@ -101,7 +101,7 @@ func ZZStepSetHttpProxy() (httpclient *http.Client) {
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	return httpclient
@@ -692,7 +692,7 @@ func ZZStepRegisterRandUsername(username string, password string, password2 stri
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if ZZStepEnableHttpProxy {
@@ -766,7 +766,7 @@ func ZZStepLoginUsername(username string, passwordu string, refer string) error 
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if ZZStepEnableHttpProxy {
@@ -838,7 +838,7 @@ func downloadZZStep(attachmentUrl string, referer string, filePath string) error
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if ZZStepEnableHttpProxy {

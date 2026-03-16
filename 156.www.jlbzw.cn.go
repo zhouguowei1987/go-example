@@ -102,7 +102,7 @@ func JlBzwSetHttpProxy() (httpclient *http.Client) {
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	return httpclient
@@ -272,7 +272,7 @@ func QueryJlBzwList(requestUrl string, queryJlBzwListRequestPayload QueryJlBzwLi
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if JlBzwEnableHttpProxy {
@@ -346,7 +346,7 @@ func QueryJlBzwDownloadUrl(requestUrl string, queryJlBzwDownloadUrlFormData Quer
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if JlBzwEnableHttpProxy {
@@ -402,7 +402,7 @@ func downloadJlBzw(attachmentUrl string, referer string, filePath string) error 
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if JlBzwEnableHttpProxy {

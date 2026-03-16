@@ -174,7 +174,7 @@ func vipCheckJianLiSheJi(vipCheckUrl string, referer string) (vipCheckReturn vip
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if JianLiSheJiEnableHttpProxy {
@@ -249,7 +249,7 @@ func downloadJianLiSheJi(attachmentUrl string, referer string, filePath string, 
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if JianLiSheJiEnableHttpProxy {

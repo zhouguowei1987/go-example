@@ -101,7 +101,7 @@ func YnStdInfoSetHttpProxy() (httpclient *http.Client) {
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	return httpclient
@@ -252,7 +252,7 @@ func QueryYnStdInfoList(requestUrl string, queryYnStdInfoListFormData QueryYnStd
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if YnStdInfoEnableHttpProxy {
@@ -334,7 +334,7 @@ func downloadYnStdInfo(attachmentUrl string, referer string, filePath string) er
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if YnStdInfoEnableHttpProxy {

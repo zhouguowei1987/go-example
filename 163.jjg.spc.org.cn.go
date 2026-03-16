@@ -101,7 +101,7 @@ func JjgSetHttpProxy() (httpclient *http.Client) {
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	return httpclient
@@ -122,7 +122,7 @@ type ViewJjgFormData struct {
 	standclass string
 }
 
-var JjgCookie = "SESSIONID=8639E3758D5E36A91FC077F05248EF51; HMACCOUNT=4E5B3419A3141A8E; Hm_lvt_f1e3be80a525d0bb9e111ca6cbaa2457=1768787480; Hm_lpvt_f1e3be80a525d0bb9e111ca6cbaa2457=1768787507; Qs_lvt_503365=1759975608%2C1763093101%2C1766475585%2C1768268241%2C1769395188; Hm_lvt_283fc9e84b8a5a7401b75b0f774e2120=1769395192; Hm_lpvt_283fc9e84b8a5a7401b75b0f774e2120=1769395192; Qs_pv_503365=2485575939011046400%2C2169124988614570200%2C1976145068643755300%2C2957571777807069000%2C3500804953458690000"
+var JjgCookie = "JSESSIONID=54BDF5717BCF7CFF941596DCC1344438; Hm_lvt_f1e3be80a525d0bb9e111ca6cbaa2457=1773053945; Hm_lpvt_f1e3be80a525d0bb9e111ca6cbaa2457=1773114537; Hm_lvt_283fc9e84b8a5a7401b75b0f774e2120=1773120407; HMACCOUNT=4E5B3419A3141A8E; Qs_lvt_503365=1763093101%2C1766475585%2C1768268241%2C1769395188%2C1773120407; Qs_pv_503365=2957571777807069000%2C3500804953458690000%2C4312190314712403000%2C2139172949710619400%2C4130296931540564500; Hm_lpvt_283fc9e84b8a5a7401b75b0f774e2120=1773120410"
 
 // 下载国家计量技术规范文档
 // @Title 下载国家计量技术规范文档
@@ -266,7 +266,7 @@ func QueryJjgList(requestUrl string, queryJjgListFormData QueryJjgListFormData) 
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if JjgEnableHttpProxy {
@@ -332,7 +332,7 @@ func ViewJjg(requestUrl string, viewJjgFormData ViewJjgFormData) (doc *html.Node
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if JjgEnableHttpProxy {
@@ -395,7 +395,7 @@ func downloadJjg(requestUrl string, enc string, filePath string) error {
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if JjgEnableHttpProxy {

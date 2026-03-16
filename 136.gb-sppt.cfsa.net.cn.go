@@ -101,7 +101,7 @@ func GbSpPtSetHttpProxy() (httpclient *http.Client) {
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	return httpclient
@@ -233,7 +233,7 @@ func QueryGbSpPtList(requestUrl string, queryGbSpPtListFormData QueryGbSpPtListF
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if GbSpPtEnableHttpProxy {
@@ -296,7 +296,7 @@ func downloadGbSpPt(requestUrl string, downloadGbSpPtFormData DownloadGbSpPtForm
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if GbSpPtEnableHttpProxy {

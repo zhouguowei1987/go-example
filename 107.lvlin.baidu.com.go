@@ -141,7 +141,7 @@ func GetLawContractList(requestUrl string) (lawContractListResponse LawContractL
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if LvLinEnableHttpProxy {
@@ -200,7 +200,7 @@ func downloadLvLin(attachmentUrl string, referer string, filePath string) error 
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if LvLinEnableHttpProxy {

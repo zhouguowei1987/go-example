@@ -104,7 +104,7 @@ func CcSnSetHttpProxy() (httpclient *http.Client) {
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	return httpclient
@@ -263,7 +263,7 @@ func QueryCcSnList(requestUrl string, queryCcSnListFormData QueryCcSnListFormDat
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if CcSnEnableHttpProxy {
@@ -343,7 +343,7 @@ func QueryCcSnHtml(requestUrl string, referer string) (doc *html.Node, err error
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	req, err := http.NewRequest("GET", requestUrl, nil) //建立连接
@@ -396,7 +396,7 @@ func downloadCcSn(attachmentUrl string, referer string, filePath string) error {
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if CcSnEnableHttpProxy {

@@ -94,13 +94,13 @@ func EditDocInSetHttpProxy() (httpclient *http.Client) {
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	return httpclient
 }
 
-var DocInCookie = "last_upload_public243402665=yes; aliyungf_tc=b67c7843e29113946821791021990a9dfcb47204518972fa606e8fdfaf292f11; ifShowMsg=true; jumpIn=400; lastLoginType=weixin; doc_retrieval_welcome=1; docin_session_id=7ac77fa7-430d-43e9-8526-03bc15a2a7b1; cookie_id=CB06E60A30F00001A177E94618D0114F; time_id=2024122791421; recharge_from_type=nav-sub1; HMACCOUNT=00EDEFEA78E0441D; partner_tips=1; refererfunction=https%3A%2F%2Fwww.baidu.com%2Flink%3Furl%3DBV4-b9w4I4SW-59tL_I7aWpA9Xz-rkmA3VGPx49aXF5A2nyl6d13iDG3aOvc0Ap5Wcx1u407alaEpBIDTqO7dK3CRoTYaIaRGQtFHa-LoiW%26wd%3D%26eqid%3Df4d15be6012446b90000000667f9b823; isbaiduspider=false; Hm_lvt_6f08be44365dcdd8b6197b6770124977=1745975172; Hm_lpvt_6f08be44365dcdd8b6197b6770124977=1747032664; userchoose=170_169_174_171_175_176_177_180_181_998_000_; pbyCookieKey=1748749870334; userChoose=usertags170_169_174_171_175_176_177_180_181_998_000_; login_email=15238369929; user_password=uofLr1VXUFnZ3pLNVPDX5Kpq7lLi5mzCsPdXYATSgeY%3DH_T2mZLzKzFJFeQAZ89wgg2zIX1db6cKbXGAGFbDGqSIhC5uhBCK3LyhR7xS2mggnjj; mobilefirsttip=tip; today_first_in=1; _gid=GA1.2.91256854.1750381411; hide_home_study_banner_tips=1; s_from=direct; uaType=chrome; remindClickId=-1; saveFinProductToCookieValue=4882885303; downloadClickId=-1; booksaveClickId=-1; payReadClickId=-1; partnerLogin=-1; vip_alert_adv=-1; can_copy_alert=-1; payReadClickId_v2=-1; showFeekClickId=-1; addComdocs=-1; showShareClickId=-1; _ga=GA1.2.43085923.1672147943; _gat_gtag_UA_3158355_1=1; editOnlineloadClickId=-1; netfunction=/app/my/docin/editOne; JSESSIONID=17430A86C44A885FE6CC36415C3973E4-n2; _ga_ZYR13KTSXC=GS2.1.s1750425301$o1833$g1$t1750425470$j55$l0$h0"
+var DocInCookie = "last_upload_public243402665=yes; partner_tips=1; Hm_lvt_6f08be44365dcdd8b6197b6770124977=1745975172; pbyCookieKey=1748749870334; __root_domain_v=.docin.com; _qddaz=QD.151176617720177; _ga=GA1.1.43085923.1672147943; docin_session_id=d044a58c-7f9e-4cfe-ad5e-2945f072f81f; cookie_id=CB7CBAD17E100001B54CAB90517D1BC3; time_id=2025122811224; doc_retrieval_welcome=1; convertShow=true; ifShowMsg=true; jumpIn=401; recharge_from_type=nav-sub1; old_fin_channel243402665=1; isbaiduspider=false; mobilefirsttip=tip; login_email=15238369929; user_password=vCEE9NFpSvmJNNAmgaqbPqpq7lLi5mzCsPdXYATSgeY%3DH_T1BXrUrn2JHOsSVfH4nK0ovasbafWQcOcAGFbDGqSIhC5uhBCK3LyhR7xS2mggnjj; today_first_in=1; s_from=direct; uaType=chrome; remindClickId=-1;  _ga_ZYR13KTSXC=GS2.1.s1773195337$o2160$g1$t1773195578$j34$l0$h0; JSESSIONID=65ECC455BA8CDF6C3EF1F65967D2F44E"
 var downPrice = 5
 
 // ychEduSpider 编辑豆丁文档

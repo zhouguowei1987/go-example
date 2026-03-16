@@ -316,7 +316,7 @@ func main() {
 
 						},
 						MaxIdleConnsPerHost:   10,
-						ResponseHeaderTimeout: time.Second * 3,
+						ResponseHeaderTimeout: time.Second * 30,
 					},
 				}
 				if BiLianKuEnableHttpProxy {
@@ -411,7 +411,7 @@ func downloadBiLianKu(attachmentUrl string, referer string, filePath string, fil
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if BiLianKuEnableHttpProxy {

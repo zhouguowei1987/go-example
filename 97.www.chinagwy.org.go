@@ -130,7 +130,7 @@ func downloadChinaGwy(attachmentUrl string, referer string, filePath string) err
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if ChinaGwyEnableHttpProxy {

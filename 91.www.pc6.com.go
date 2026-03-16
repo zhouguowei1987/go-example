@@ -201,7 +201,7 @@ func downloadPc6(attachmentUrl string, referer string, filePath string, fileName
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if Pc6EnableHttpProxy {

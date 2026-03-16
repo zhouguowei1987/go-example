@@ -112,7 +112,7 @@ func YfGbCxList(requestUrl string, start int, length int) (doc *html.Node, err e
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if Tc260EnableHttpProxy {
@@ -181,7 +181,7 @@ func downloadTc260(attachmentUrl string, referer string, filePath string) error 
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if Tc260EnableHttpProxy {

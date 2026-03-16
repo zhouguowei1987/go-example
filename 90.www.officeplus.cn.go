@@ -84,7 +84,7 @@ func main() {
 
 					},
 					MaxIdleConnsPerHost:   10,
-					ResponseHeaderTimeout: time.Second * 3,
+					ResponseHeaderTimeout: time.Second * 30,
 				},
 			}
 			if OfficePlusEnableHttpProxy {
@@ -188,7 +188,7 @@ func downloadUrl(id string) (fileUrl string, err error) {
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if OfficePlusEnableHttpProxy {
@@ -242,7 +242,7 @@ func downloadOfficePlus(attachmentUrl string, filePath string) error {
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if OfficePlusEnableHttpProxy {

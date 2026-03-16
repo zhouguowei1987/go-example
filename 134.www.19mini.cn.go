@@ -100,7 +100,7 @@ func MiNi19SetHttpProxy() (httpclient *http.Client) {
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	return httpclient
@@ -306,7 +306,7 @@ func ListMiNi19(requestUrl string, referer string) (doc *html.Node, err error) {
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if MiNi19EnableHttpProxy {
@@ -355,7 +355,7 @@ func MiNi19DownloadDoc(requestUrl string, referer string) (doc *html.Node, err e
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if MiNi19EnableHttpProxy {
@@ -403,7 +403,7 @@ func MiNi19ViewDoc(requestUrl string, referer string) (doc *html.Node, err error
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if MiNi19EnableHttpProxy {
@@ -451,7 +451,7 @@ func downloadMiNi19(attachmentUrl string, filePath string, referer string) error
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 3,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
 	if MiNi19EnableHttpProxy {
