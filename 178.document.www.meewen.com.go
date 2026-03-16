@@ -180,7 +180,7 @@ func main() {
 			title = strings.ReplaceAll(title, "/", "-")
 			title = strings.ReplaceAll(title, "--", "-")
 			title = strings.ReplaceAll(title, ".docx", "")
-			title = strings.ReplaceAll(title, ".docx", "")
+			title = strings.ReplaceAll(title, ".doc", "")
 			title = strings.ReplaceAll(title, ".pdf", "")
 
 			filePath := "../www.meewen.com/www.meewen.com/" + category.Name + "/" + title + ".pdf"
