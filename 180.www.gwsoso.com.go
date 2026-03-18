@@ -132,67 +132,69 @@ func main() {
 		queryGwSoSoListResponseData, err := QueryGwSoSoList(pageListUrl, queryGwSoSoListFormData)
 		if err != nil {
 			fmt.Println(err)
-		}
-		if len(queryGwSoSoListResponseData) > 0 {
-			for _, data := range queryGwSoSoListResponseData {
-				fmt.Println("===============开始处理数据 start = ", start, " data记录数量 = ", len(queryGwSoSoListResponseData), "==================")
-				fmt.Println(data.Id)
-
-				title := data.Title
-				fmt.Println(data.Title)
-				if strings.Index(data.Title, "doc") == -1 && strings.Index(data.Title, "pdf") == -1 {
-					fmt.Println("文档不是doc、pdf文档，跳过")
-					continue
-				}
-				title = strings.TrimSpace(title)
-				title = strings.ReplaceAll(title, " ", "-")
-				title = strings.ReplaceAll(title, "　", "-")
-				title = strings.ReplaceAll(title, "/", "-")
-				title = strings.ReplaceAll(title, "--", "-")
-				title = strings.ReplaceAll(title, ".docx", "")
-				title = strings.ReplaceAll(title, ".doc", "")
-				title = strings.ReplaceAll(title, ".pdf", "")
-
-				filePath := "../www.gwsoso.com/www.gwsoso.com/" + title + ".pdf"
-				fmt.Println(filePath)
-
-				_, err = os.Stat(filePath)
-				if err == nil {
-					fmt.Println("文档已下载过，跳过")
-					continue
-				}
-
-				fmt.Println("=======开始下载========")
-				downloadUrl := fmt.Sprintf("https://www.gwsoso.com/docs/pdf/%s.pdf", data.Id)
-				fmt.Println(downloadUrl)
-
-				fmt.Println("=======开始下载" + title + "========")
-
-				err = downloadGwSoSo(downloadUrl, filePath)
-				if err != nil {
-					fmt.Println(err)
-					continue
-				}
-				//复制文件
-				tempFilePath := strings.ReplaceAll(filePath, "www.gwsoso.com/www.gwsoso.com", "www.gwsoso.com/2026-03-16")
-				err = copyGwSoSoFile(filePath, tempFilePath)
-				if err != nil {
-					fmt.Println(err)
-					continue
-				}
-				fmt.Println("=======下载完成========")
-				//DownLoadGwSoSoTimeSleep := 10
-				DownLoadGwSoSoTimeSleep := rand.Intn(5)
-				for i := 1; i <= DownLoadGwSoSoTimeSleep; i++ {
-					time.Sleep(time.Second)
-					fmt.Println("start="+strconv.Itoa(start)+",filePath="+filePath+"===========下载成功 暂停", DownLoadGwSoSoTimeSleep, "秒 倒计时", i, "秒===========")
-				}
-			}
-			Start = Start + 50
-		} else {
-			isPageListGo := false
+			isPageListGo = false
 			break
 		}
+		if len(queryGwSoSoListResponseData) <= 0 {
+			isPageListGo = false
+			break
+		}
+		for _, data := range queryGwSoSoListResponseData {
+			fmt.Println("===============开始处理数据 start = ", start, " data记录数量 = ", len(queryGwSoSoListResponseData), "==================")
+			fmt.Println(data.Id)
+
+			title := data.Title
+			fmt.Println(data.Title)
+			if strings.Index(data.Title, "doc") == -1 && strings.Index(data.Title, "pdf") == -1 {
+				fmt.Println("文档不是doc、pdf文档，跳过")
+				continue
+			}
+			title = strings.TrimSpace(title)
+			title = strings.ReplaceAll(title, " ", "-")
+			title = strings.ReplaceAll(title, "　", "-")
+			title = strings.ReplaceAll(title, "/", "-")
+			title = strings.ReplaceAll(title, "--", "-")
+			title = strings.ReplaceAll(title, ".docx", "")
+			title = strings.ReplaceAll(title, ".doc", "")
+			title = strings.ReplaceAll(title, ".pdf", "")
+
+			filePath := "../www.gwsoso.com/www.gwsoso.com/" + title + ".pdf"
+			fmt.Println(filePath)
+
+			_, err = os.Stat(filePath)
+			if err == nil {
+				fmt.Println("文档已下载过，跳过")
+				continue
+			}
+
+			fmt.Println("=======开始下载========")
+			downloadUrl := fmt.Sprintf("https://www.gwsoso.com/docs/pdf/%s.pdf", data.Id)
+			fmt.Println(downloadUrl)
+
+			fmt.Println("=======开始下载" + title + "========")
+
+			err = downloadGwSoSo(downloadUrl, filePath)
+			if err != nil {
+				fmt.Println(err)
+				continue
+			}
+			//复制文件
+			// tempFilePath := strings.ReplaceAll(filePath, "www.gwsoso.com/www.gwsoso.com", "www.gwsoso.com/temp-www.gwsoso.com")
+			// err = copyGwSoSoFile(filePath, tempFilePath)
+			// if err != nil {
+			// 	fmt.Println(err)
+			// 	continue
+			// }
+			fmt.Println("=======下载完成========")
+			//DownLoadGwSoSoTimeSleep := 10
+			DownLoadGwSoSoTimeSleep := rand.Intn(5)
+			for i := 1; i <= DownLoadGwSoSoTimeSleep; i++ {
+				time.Sleep(time.Second)
+				fmt.Println("start="+strconv.Itoa(start)+",filePath="+filePath+"===========下载成功 暂停", DownLoadGwSoSoTimeSleep, "秒 倒计时", i, "秒===========")
+			}
+		}
+
+		start = start + 50
 		DownLoadGwSoSoPageTimeSleep := 10
 		// DownLoadGwSoSoPageTimeSleep := rand.Intn(5)
 		for i := 1; i <= DownLoadGwSoSoPageTimeSleep; i++ {
