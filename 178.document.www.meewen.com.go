@@ -123,8 +123,6 @@ type QueryDocumentMeeWenDetailRequestPayload struct {
 	Id string `json:"id"`
 }
 
-var DocumentMeeWenCookie = "Hm_lvt_ee23207fd1904264b78aee1954cbba66=1773501874,1773627929; HMACCOUNT=1CCD0111717619C6; Hm_lpvt_ee23207fd1904264b78aee1954cbba66=1773628543"
-
 // 下载觅文普通文档
 // @Title 下载觅文普通文档
 // @Description https://www.meewen.com/，下载觅文普通文档
@@ -182,7 +180,7 @@ func main() {
 			title = strings.ReplaceAll(title, "/", "-")
 			title = strings.ReplaceAll(title, "--", "-")
 			title = strings.ReplaceAll(title, ".docx", "")
-			title = strings.ReplaceAll(title, ".docx", "")
+			title = strings.ReplaceAll(title, ".doc", "")
 			title = strings.ReplaceAll(title, ".pdf", "")
 
 			filePath := "../www.meewen.com/www.meewen.com/" + category.Name + "/" + title + ".pdf"
@@ -422,21 +420,14 @@ func downloadDocumentMeeWen(attachmentUrl string, filePath string) error {
 	if err != nil {
 		return err
 	}
-	req.Header.Set("authority", "www.meewen.com")
-	req.Header.Set("method", "GET")
-	path := strings.Replace(attachmentUrl, "https://www.meewen.com", "", 1)
-	fmt.Println(path)
-	req.Header.Set("path", path)
-	req.Header.Set("scheme", "https")
 	req.Header.Set("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7")
 	req.Header.Set("Accept-Encoding", "gzip, deflate")
 	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
 	req.Header.Set("Cache-Control", "no-cache")
 	req.Header.Set("Connection", "keep-alive")
-	req.Header.Set("Cookie", DocumentMeeWenCookie)
 	req.Header.Set("Priority", "u=0, i")
 	req.Header.Set("Host", "www.meewen.com")
-	req.Header.Set("Referer", "https://www.meewen.com/v2/localStandard")
+	req.Header.Set("Referer", "https://www.meewen.com/")
 	req.Header.Set("Sec-Ch-Ua", "\"Google Chrome\";v=\"131\", \"Chromium\";v=\"131\", \"Not_A Brand\";v=\"24\"")
 	req.Header.Set("Sec-Ch-Ua-Mobile", "?0")
 	req.Header.Set("Sec-Ch-Ua-Platform", "\"macOS\"")
