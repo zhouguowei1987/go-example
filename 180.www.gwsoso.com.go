@@ -114,14 +114,14 @@ type QueryGwSoSoListFormData struct {
 	PageCls int `json:"pagecls"`
 }
 
-var GwSoSoCookie = "Hm_lvt_b3ecdb0e91dc1c234e7f59ad61980ec7=1773641036,1773808346; HMACCOUNT=1CCD0111717619C6; gongwen=2e59ea79-1370-49ad-9e3f-fe7bc7a1ac1c; Hm_lpvt_b3ecdb0e91dc1c234e7f59ad61980ec7=1773809001"
+var GwSoSoCookie = "Hm_lvt_b3ecdb0e91dc1c234e7f59ad61980ec7=1773641036,1773808346,1773908325,1773921817; HMACCOUNT=1CCD0111717619C6; gongwen=a0fa0ebb-f678-4a0e-b97e-bb808d69d4ad; Hm_lpvt_b3ecdb0e91dc1c234e7f59ad61980ec7=1773921837"
 
 // 下载公文搜文档
 // @Title 下载公文搜文档
 // @Description https://www.gwsoso.com/，下载公文搜文档
 func main() {
 	pageListUrl := "https://www.gwsoso.com/docs/gettop?t=0.42132661413839645"
-	start := 50
+	start := 23700
 	isPageListGo := true
 	for isPageListGo {
 		queryGwSoSoListFormData := QueryGwSoSoListFormData{
@@ -176,6 +176,17 @@ func main() {
 			err = downloadGwSoSo(downloadUrl, filePath)
 			if err != nil {
 				fmt.Println(err)
+				continue
+			}
+			// 查看文件大小，如果是空文件，则删除
+			fileInfo, err := os.Stat(filePath)
+			if err == nil && fileInfo.Size() == 0 {
+				fmt.Println("空文件删除")
+				err = os.Remove(filePath)
+				isPageListGo = false
+				break
+			}
+			if err != nil {
 				continue
 			}
 			//复制文件
