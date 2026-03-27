@@ -114,7 +114,7 @@ func GuoJiaJiaoYuSetHttpProxy() (httpclient *http.Client) {
 func main() {
 	var classNames = [...]string{"学前", "小学", "初中", "高中"}
 	for _, className := range classNames {
-		limit := 100
+		limit := 1000
 		offset := 0
 		isPageListGo := true
 		for isPageListGo {
@@ -140,7 +140,8 @@ func main() {
 
 				// 查看文档后缀
 				fileExt := filepath.Ext(row.AnnexUrl)
-				if strings.Index(fileExt, "doc") == -1 {
+				fileExt = strings.ToLower(fileExt)
+				if strings.Index(fileExt, "doc") == -1 && strings.Index(fileExt, "pdf") == -1 && strings.Index(fileExt, "ppt") == -1 {
 					fmt.Println("文档不是doc文档，跳过")
 					continue
 				}
