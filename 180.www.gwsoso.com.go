@@ -114,19 +114,20 @@ type QueryGwSoSoListFormData struct {
 	PageCls int `json:"pagecls"`
 }
 
-var GwSoSoCookie = "Hm_lvt_b3ecdb0e91dc1c234e7f59ad61980ec7=1773641036,1773808346,1773908325,1773921817; HMACCOUNT=1CCD0111717619C6; gongwen=a0fa0ebb-f678-4a0e-b97e-bb808d69d4ad; Hm_lpvt_b3ecdb0e91dc1c234e7f59ad61980ec7=1773921837"
+var GwSoSoCookie = "Hm_lvt_b3ecdb0e91dc1c234e7f59ad61980ec7=1773908325,1773921817,1774447409,1775015186; HMACCOUNT=1CCD0111717619C6; gongwen=3efa6df1-55f7-4919-b2f2-b2cd9a95529f; Hm_lpvt_b3ecdb0e91dc1c234e7f59ad61980ec7=1775015219"
 
 // 下载公文搜文档
 // @Title 下载公文搜文档
 // @Description https://www.gwsoso.com/，下载公文搜文档
 func main() {
 	pageListUrl := "https://www.gwsoso.com/docs/gettop?t=0.42132661413839645"
-	start := 23700
+	start := 50
+	limit := 500
 	isPageListGo := true
 	for isPageListGo {
 		queryGwSoSoListFormData := QueryGwSoSoListFormData{
 			Start:   start,
-			Limit:   50,
+			Limit:   limit,
 			PageCls: 32,
 		}
 		queryGwSoSoListResponseData, err := QueryGwSoSoList(pageListUrl, queryGwSoSoListFormData)
@@ -158,7 +159,7 @@ func main() {
 			title = strings.ReplaceAll(title, ".doc", "")
 			title = strings.ReplaceAll(title, ".pdf", "")
 
-			filePath := "../www.gwsoso.com/www.gwsoso.com/" + title + ".pdf"
+			filePath := "D:\\workspace\\www.gwsoso.com\\www.gwsoso.com\\" + title + ".pdf"
 			fmt.Println(filePath)
 
 			_, err = os.Stat(filePath)
@@ -190,12 +191,12 @@ func main() {
 				continue
 			}
 			//复制文件
-			// tempFilePath := strings.ReplaceAll(filePath, "www.gwsoso.com/www.gwsoso.com", "www.gwsoso.com/temp-www.gwsoso.com")
-			// err = copyGwSoSoFile(filePath, tempFilePath)
-			// if err != nil {
-			// 	fmt.Println(err)
-			// 	continue
-			// }
+			tempFilePath := strings.ReplaceAll(filePath, "www.gwsoso.com\\www.gwsoso.com", "www.gwsoso.com\\temp-www.gwsoso.com")
+			err = copyGwSoSoFile(filePath, tempFilePath)
+			if err != nil {
+				fmt.Println(err)
+				continue
+			}
 			fmt.Println("=======下载完成========")
 			//DownLoadGwSoSoTimeSleep := 10
 			DownLoadGwSoSoTimeSleep := rand.Intn(5)
@@ -205,7 +206,7 @@ func main() {
 			}
 		}
 
-		start = start + 50
+		start = start + limit
 		DownLoadGwSoSoPageTimeSleep := 10
 		// DownLoadGwSoSoPageTimeSleep := rand.Intn(5)
 		for i := 1; i <= DownLoadGwSoSoPageTimeSleep; i++ {
@@ -372,6 +373,14 @@ func copyGwSoSoFile(src, dst string) (err error) {
 			return
 		}
 	}(in)
+
+	// 创建一个文件用于保存
+	fileDiv := filepath.Dir(dst)
+	if _, err = os.Stat(fileDiv); err != nil {
+		if os.MkdirAll(fileDiv, 0o777) != nil {
+			return err
+		}
+	}
 
 	out, err := os.Create(dst)
 	if err != nil {
