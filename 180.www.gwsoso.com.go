@@ -122,11 +122,12 @@ var GwSoSoCookie = "Hm_lvt_b3ecdb0e91dc1c234e7f59ad61980ec7=1773908325,177392181
 func main() {
 	pageListUrl := "https://www.gwsoso.com/docs/gettop?t=0.42132661413839645"
 	start := 50
+	limit := 500
 	isPageListGo := true
 	for isPageListGo {
 		queryGwSoSoListFormData := QueryGwSoSoListFormData{
 			Start:   start,
-			Limit:   50,
+			Limit:   limit,
 			PageCls: 32,
 		}
 		queryGwSoSoListResponseData, err := QueryGwSoSoList(pageListUrl, queryGwSoSoListFormData)
@@ -205,7 +206,7 @@ func main() {
 			}
 		}
 
-		start = start + 50
+		start = start + limit
 		DownLoadGwSoSoPageTimeSleep := 10
 		// DownLoadGwSoSoPageTimeSleep := rand.Intn(5)
 		for i := 1; i <= DownLoadGwSoSoPageTimeSleep; i++ {
