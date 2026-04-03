@@ -123,7 +123,7 @@ type DownloadGbSpPtFormData struct {
 	keyword    string
 }
 
-var GbSpPtCookie = "name=value; cookieName=cookieValue; JSESSIONID=1939457719D7E496EDAAB20F581FA15F"
+var GbSpPtCookie = "name=value; sessionId=358fcd20-06ab-4e2f-a1c3-9e6eb6001ebe; cookieName=cookieValue; JSESSIONID=103FA084FBF0C4869FDB72A52E05A829"
 
 // 下载食品安全国家标准数据文档
 // @Title 下载食品安全国家标准数据文档
@@ -133,7 +133,7 @@ func main() {
 	fmt.Println(pageListUrl)
 	queryGbSpPtListFormData := QueryGbSpPtListFormData{
 		isLength:      9999,
-		num_tn:        2,
+		num_tn:        5,
 		standard_type: "",
 		keyword:       "",
 	}
@@ -151,6 +151,7 @@ func main() {
 		title = strings.TrimSpace(title)
 		title = strings.ReplaceAll(title, "-", "")
 		title = strings.ReplaceAll(title, " ", "")
+		title = strings.ReplaceAll(title, "/", "-")
 		title = strings.ReplaceAll(title, "|", "-")
 		fmt.Println(title)
 

@@ -116,7 +116,7 @@ type QueryHnDb41ListFormData struct {
 	pageSize  int
 }
 
-var HnDb41Cookie = "JSESSIONID=405C61868B8B39E38B557F42147B9C66"
+var HnDb41Cookie = "JSESSIONID=B79054B49960F3E0D5D297E1DEF49899"
 
 // 下载河南省地方标准文档
 // @Title 下载河南省地方标准文档

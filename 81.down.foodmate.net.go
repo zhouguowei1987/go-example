@@ -45,6 +45,7 @@ func main() {
 			if len(liNodes) >= 1 {
 				for _, liNode := range liNodes {
 					fmt.Println(category.id, category.page, category.name)
+
 					detailUrl := htmlquery.InnerText(htmlquery.FindOne(liNode, `./div[@class="bz_listl"]/ul[1]/a/@href`))
 					fmt.Println(detailUrl)
 					detailDoc, err := htmlquery.LoadURL(detailUrl)
@@ -52,11 +53,7 @@ func main() {
 						fmt.Println("无法获取文档详情，跳过")
 						continue
 					}
-					downNode := htmlquery.FindOne(detailDoc, `//div[@class="downk"]/a[@class="telecom"]`)
-					if downNode == nil {
-						fmt.Println("没有下载地址，跳过")
-						continue
-					}
+
 					title := htmlquery.InnerText(htmlquery.FindOne(detailDoc, `//div[@class="title2"]/span`))
 					title = strings.ReplaceAll(title, "<font color=\"red\"></font>", "")
 					title = strings.ReplaceAll(title, "/", "-")
@@ -65,26 +62,23 @@ func main() {
 					title = strings.ReplaceAll(title, " ", "")
 					fmt.Println(title)
 
+					downloadFoodMatePdfSleep := rand.Intn(5)
+//                  downloadFoodMatePdfSleep := 6
+                    for i := 1; i <= downloadFoodMatePdfSleep; i++ {
+                        time.Sleep(time.Second)
+                        fmt.Println("page="+strconv.Itoa(category.page)+"=======", title, "暂停，category_name="+category.name+"====== 暂停", downloadFoodMatePdfSleep, "秒，倒计时", i, "秒===========")
+                    }
+
+					downNode := htmlquery.FindOne(detailDoc, `//div[@class="downk"]/a[@class="telecom"]`)
+					if downNode == nil {
+						fmt.Println("没有下载地址，跳过")
+						continue
+					}
+
 					if strings.Index(title, "Q-") != -1 {
 						fmt.Println("是企业标准，跳过")
 						continue
 					}
-
-					filePath := "../down.foodmate.net/" + title + ".pdf"
-					fmt.Println(filePath)
-
-					_, err = os.Stat(filePath)
-                    if err == nil {
-                        fmt.Println("文档已下载过，跳过")
-                        continue
-                    }
-
-					// downloadFoodMatePdfSleep := rand.Intn(5)
-                    downloadFoodMatePdfSleep := 6
-                    for i := 1; i <= downloadFoodMatePdfSleep; i++ {
-                        time.Sleep(time.Second)
-                        fmt.Println("page="+strconv.Itoa(category.page)+"=======", title, "成功，category_name="+category.name+"====== 暂停", downloadFoodMatePdfSleep, "秒，倒计时", i, "秒===========")
-                    }
 
 					authUrl := htmlquery.InnerText(htmlquery.FindOne(downNode, `./@href`))
 					fmt.Println(authUrl)
@@ -94,12 +88,23 @@ func main() {
 						fmt.Println(err)
 						continue
 					}
-					// 只下载pdf文件
-					if strings.Index(downloadUrl, ".pdf") == -1 {
-						fmt.Println("不是pdf文件")
+					fileExtIndex := strings.LastIndex(downloadUrl, ".")
+                    fileExt := downloadUrl[fileExtIndex:]
+                    fileExt = strings.ToLower(fileExt)
+                    if strings.Index(fileExt,"pdf") == -1 && strings.Index(fileExt,"doc") == -1{
+                        fmt.Println("不是pdf、doc文件，跳过")
 						continue
-					}
+                    }
 					fmt.Println(downloadUrl)
+
+					filePath := "../down.foodmate.net/" + title + fileExt
+					fmt.Println(filePath)
+
+					_, err = os.Stat(filePath)
+                    if err == nil {
+                        fmt.Println("文档已下载过，跳过")
+                        continue
+                    }
 
 					fmt.Println("=======开始下载========")
                     err = downloadFoodMatePdf(downloadUrl, filePath, detailUrl)
