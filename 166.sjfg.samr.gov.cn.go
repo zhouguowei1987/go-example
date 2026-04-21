@@ -33,55 +33,6 @@ func SjFgSetHttpProxy() (httpclient *http.Client) {
 	return httpclient
 }
 
-type SjFgCategory struct {
-	validLevel string
-	validLevelChild string
-	departDuty int
-}
-
-var sjFgCategory = []SjFgCategory{
-	{
-		validLevel: "法律",
-		validLevelChild: "以市场监管部门为主要执行部门",
-		departDuty: 4001,
-	},
-	{
-		validLevel: "法律",
-		validLevelChild: "其他涉及市场监管部门职能",
-		departDuty: 4002,
-	},
-	{
-		validLevel: "法律",
-		validLevelChild: "行政执法普遍适用",
-		departDuty: 4003,
-	},
-	{
-		validLevel: "行政法规",
-		validLevelChild: "以市场监管部门为主要执行部门",
-		departDuty: 4001,
-	},
-	{
-		validLevel: "行政法规",
-		validLevelChild: "其他涉及市场监管部门职能",
-		departDuty: 4002,
-	},
-	{
-		validLevel: "行政法规",
-		validLevelChild: "行政执法普遍适用",
-		departDuty: 4003,
-	},
-	{
-		validLevel: "规章",
-		validLevelChild: "总局公布的规章",
-		departDuty: 5001,
-	},
-	{
-		validLevel: "规章",
-		validLevelChild: "总局参与的联合规章",
-		departDuty: 5003,
-	},
-}
-
 type SjFgListFormData struct {
 	pageNo      int
 	pageSize    int
@@ -90,7 +41,7 @@ type SjFgListFormData struct {
 	timeValid   string
 	lawType     string
 	validLevel  string
-	departDuty  int
+	departDuty  string
 	valid       int
 	lawName     string
 	startTime   string
@@ -101,149 +52,147 @@ type QueryLawByLawIdRequestPayload struct {
 	Id interface{} `json:"id"`
 }
 
-var SjFgCookie = "__jsluid_s=6491b4ee52a20cd1c072c1b4d29f04a3; Hm_lvt_54db9897e5a65f7a7b00359d86015d8d=1771856442; Hm_lpvt_54db9897e5a65f7a7b00359d86015d8d=1771856442; HMACCOUNT=4E5B3419A3141A8E"
+var SjFgCookie = "__jsluid_s=6491b4ee52a20cd1c072c1b4d29f04a3; HMACCOUNT=4E5B3419A3141A8E; Hm_lvt_54db9897e5a65f7a7b00359d86015d8d=1775297987; Hm_lpvt_54db9897e5a65f7a7b00359d86015d8d=1775297987"
 
 // ychEduSpider 市场监管法律法规规章数据库文档
 // @Title 市场监管法律法规规章数据库文档
 // @Description https://sjfg.samr.gov.cn/，市场监管法律法规规章数据库文档
 func main() {
-	for _, sjfg := range sjFgCategory {
-		pageNo := 1
-		pageSize := 10
-		isPageListGo := true
-		requestUrl := "https://sjfg.samr.gov.cn/law/law_search/getLawStore.do"
-		for isPageListGo {
-			sjFgListFormData := SjFgListFormData{
-				pageNo:      pageNo,
-				pageSize:    pageSize,
-				searchScope: "标题",
-				searchType:  "模糊查询",
-				timeValid:   "",
-				lawType:     "",
-				validLevel:  sjfg.validLevel,
-				departDuty:  sjfg.departDuty,
-				valid:       1,
-				lawName:     "",
-				startTime:   "",
-				pubTime:     "",
-			}
-			fmt.Println(sjFgListFormData)
-			sjFgListResponsePage, err := SjFgList(requestUrl, sjFgListFormData)
-			if err != nil {
-				fmt.Println(err)
-				break
-			}
-			maxPageNo := (sjFgListResponsePage.Count / pageSize) + 1
-			if pageNo >= maxPageNo {
-				isPageListGo = false
-				break
-			}
-			for _, result := range sjFgListResponsePage.Result {
-				fmt.Println("============================================================================")
-				fmt.Println("=======当前页为：" + strconv.Itoa(pageNo) + "========类别=" + sjfg.validLevel + "-" + sjfg.validLevelChild)
+	pageNo := 1
+    pageSize := 50
+    isPageListGo := true
+    requestUrl := "https://sjfg.samr.gov.cn/law/law_search/getLawStore.do"
+    for isPageListGo {
+        sjFgListFormData := SjFgListFormData{
+            pageNo:      pageNo,
+            pageSize:    pageSize,
+            searchScope: "标题",
+            searchType:  "模糊查询",
+            timeValid:   "",
+            lawType:     "",
+            validLevel:  "",
+            departDuty:  "",
+            valid:       1,
+            lawName:     "",
+            startTime:   "",
+            pubTime:     "",
+        }
+        fmt.Println(sjFgListFormData)
+        sjFgListResponsePage, err := SjFgList(requestUrl, sjFgListFormData)
+        if err != nil {
+            fmt.Println(err)
+            break
+        }
+        maxPageNo := (sjFgListResponsePage.Count / pageSize) + 1
+        if pageNo >= maxPageNo {
+            isPageListGo = false
+            break
+        }
+        for _, result := range sjFgListResponsePage.Result {
+            fmt.Println("============================================================================")
+            fmt.Println("=======当前页为：" + strconv.Itoa(pageNo) + "========")
 
-				lawId := result[0]
-				fmt.Println(lawId)
-				queryLawByLawIdRequestPayload := QueryLawByLawIdRequestPayload{
-					Id: lawId,
-				}
+            lawId := result[0]
+            fmt.Println(lawId)
+            queryLawByLawIdRequestPayload := QueryLawByLawIdRequestPayload{
+                Id: lawId,
+            }
 
-				queryLawByLawIdUrl := "https://sjfg.samr.gov.cn/law/law_search/queryLawByLawId.do"
-				queryLawByLawIdReferer := fmt.Sprintf("https://sjfg.samr.gov.cn/law/pageInfo/law_search_new.law_details?lawId=%s&label=1", lawId)
-				queryLawByLawIdResponse, err := QueryLawByLawId(queryLawByLawIdUrl, queryLawByLawIdReferer, queryLawByLawIdRequestPayload)
-				if err != nil {
-					fmt.Println(err)
-					continue
-				}
-				title := strings.TrimSpace(queryLawByLawIdResponse.Page.LawName)
-				title = strings.ReplaceAll(title, "/", "-")
-				title = strings.ReplaceAll(title, " ", "")
-				fmt.Println(title)
+            queryLawByLawIdUrl := "https://sjfg.samr.gov.cn/law/law_search/queryLawByLawId.do"
+            queryLawByLawIdReferer := fmt.Sprintf("https://sjfg.samr.gov.cn/law/pageInfo/law_search_new.law_details?lawId=%s&label=1", lawId)
+            queryLawByLawIdResponse, err := QueryLawByLawId(queryLawByLawIdUrl, queryLawByLawIdReferer, queryLawByLawIdRequestPayload)
+            if err != nil {
+                fmt.Println(err)
+                continue
+            }
+            title := strings.TrimSpace(queryLawByLawIdResponse.Page.LawName)
+            title = strings.ReplaceAll(title, "/", "-")
+            title = strings.ReplaceAll(title, " ", "")
+            fmt.Println(title)
 
-				// 下载docx文档
-				docName := queryLawByLawIdResponse.Page.FileUrl
-				fmt.Println(docName)
-				if len(queryLawByLawIdResponse.Page.FileUrl) > 0 {
-					docFilePath := "../sjfg.samr.gov.cn/" + title + "." + strings.Split(docName, ".")[1]
-					fmt.Println(docFilePath)
-					_, err = os.Stat(docFilePath)
-					if err == nil {
-						fmt.Println("pdf文档已下载过，跳过")
-						continue
-					}
-					fmt.Println("=======开始下载doc文件========")
-					downLoadUrl := fmt.Sprintf("https://sjfg.samr.gov.cn/law/file%s", docName)
-					err = downloadSjFg(downLoadUrl, docFilePath)
-					if err != nil {
-						fmt.Println(err)
-						continue
-					}
+            // 下载docx文档
+            docName := queryLawByLawIdResponse.Page.FileUrl
+            fmt.Println(docName)
+            if len(queryLawByLawIdResponse.Page.FileUrl) > 0 {
+                docFilePath := "../sjfg.samr.gov.cn/" + title + "." + strings.Split(docName, ".")[1]
+                fmt.Println(docFilePath)
+                _, err = os.Stat(docFilePath)
+                if err == nil {
+                    fmt.Println("doc文档已下载过，跳过")
+                    continue
+                }
+                fmt.Println("=======开始下载doc文件========")
+                downLoadUrl := fmt.Sprintf("https://sjfg.samr.gov.cn/law/file%s", docName)
+                err = downloadSjFg(downLoadUrl, docFilePath)
+                if err != nil {
+                    fmt.Println(err)
+                    continue
+                }
 
-					//复制文件
-					tempFilePath := strings.ReplaceAll(docFilePath, "sjfg.samr.gov.cn", "temp-hbba.sacinfo.org.cn")
-					err = SjFgCopyFile(docFilePath, tempFilePath)
-					if err != nil {
-						fmt.Println(err)
-						continue
-					}
+                //复制文件
+                tempFilePath := strings.ReplaceAll(docFilePath, "sjfg.samr.gov.cn", "temp-hbba.sacinfo.org.cn")
+                err = SjFgCopyFile(docFilePath, tempFilePath)
+                if err != nil {
+                    fmt.Println(err)
+                    continue
+                }
 
-					fmt.Println("=======下载完成========")
+                fmt.Println("=======下载完成========")
 
-					downloadSjFgDocSleep := rand.Intn(5)
-					for i := 1; i <= downloadSjFgDocSleep; i++ {
-						time.Sleep(time.Second)
-						fmt.Println("page="+strconv.Itoa(pageNo)+"=======title=", title, "成功，====== 暂停", downloadSjFgDocSleep, "秒，倒计时", i, "秒===========")
-					}
-				}
+                downloadSjFgDocSleep := rand.Intn(5)
+                for i := 1; i <= downloadSjFgDocSleep; i++ {
+                    time.Sleep(time.Second)
+                    fmt.Println("page="+strconv.Itoa(pageNo)+"=======title=", title, "成功，====== 暂停", downloadSjFgDocSleep, "秒，倒计时", i, "秒===========")
+                }
+            }
 
-				// 下载pdf文档
-				pdfName := queryLawByLawIdResponse.Page.FilePath
-				fmt.Println(pdfName)
-				if len(queryLawByLawIdResponse.Page.FilePath) > 0 {
-					pdfFilePath := "../sjfg.samr.gov.cn/" + title + "." + strings.Split(pdfName, ".")[1]
-					fmt.Println(pdfFilePath)
-					_, err = os.Stat(pdfFilePath)
-					if err == nil {
-						fmt.Println("pdf文档已下载过，跳过")
-						continue
-					}
-					fmt.Println("=======开始下载pdf文件========")
-					downLoadUrl := fmt.Sprintf("https://sjfg.samr.gov.cn/law/file%s", pdfName)
-					err = downloadSjFg(downLoadUrl, pdfFilePath)
-					if err != nil {
-						fmt.Println(err)
-						continue
-					}
-					//复制文件
-					tempFilePath := strings.ReplaceAll(pdfFilePath, "../sjfg.samr.gov.cn", "../upload.doc88.com/sjfg.samr.gov.cn")
-					err = SjFgCopyFile(pdfFilePath, tempFilePath)
-					if err != nil {
-						fmt.Println(err)
-						continue
-					}
+            // 下载pdf文档
+            pdfName := queryLawByLawIdResponse.Page.FilePath
+            fmt.Println(pdfName)
+            if len(queryLawByLawIdResponse.Page.FilePath) > 0 {
+                pdfFilePath := "../sjfg.samr.gov.cn/" + title + "." + strings.Split(pdfName, ".")[1]
+                fmt.Println(pdfFilePath)
+                _, err = os.Stat(pdfFilePath)
+                if err == nil {
+                    fmt.Println("pdf文档已下载过，跳过")
+                    continue
+                }
+                fmt.Println("=======开始下载pdf文件========")
+                downLoadUrl := fmt.Sprintf("https://sjfg.samr.gov.cn/law/file%s", pdfName)
+                err = downloadSjFg(downLoadUrl, pdfFilePath)
+                if err != nil {
+                    fmt.Println(err)
+                    continue
+                }
+                //复制文件
+                tempFilePath := strings.ReplaceAll(pdfFilePath, "../sjfg.samr.gov.cn", "../upload.doc88.com/sjfg.samr.gov.cn")
+                err = SjFgCopyFile(pdfFilePath, tempFilePath)
+                if err != nil {
+                    fmt.Println(err)
+                    continue
+                }
 
-					fmt.Println("=======下载完成========")
+                fmt.Println("=======下载完成========")
 
-					downloadSjFgPdfSleep := rand.Intn(5)
-					for i := 1; i <= downloadSjFgPdfSleep; i++ {
-						time.Sleep(time.Second)
-						fmt.Println("page="+strconv.Itoa(pageNo)+"=======title=", title, "成功，====== 暂停", downloadSjFgPdfSleep, "秒，倒计时", i, "秒===========")
-					}
-				}
-			}
-			// DownLoadSjFgPageTimeSleep := 10
-			DownLoadSjFgPageTimeSleep := rand.Intn(5)
-			for i := 1; i <= DownLoadSjFgPageTimeSleep; i++ {
-				time.Sleep(time.Second)
-				fmt.Println("page="+strconv.Itoa(pageNo)+"======标准类别=" + sjfg.validLevel + "-" + sjfg.validLevelChild+"====== 暂停", DownLoadSjFgPageTimeSleep, "秒 倒计时", i, "秒===========")
-			}
-			pageNo++
-			if pageNo > maxPageNo {
-				isPageListGo = false
-				break
-			}
-		}
-	}
+                downloadSjFgPdfSleep := rand.Intn(5)
+                for i := 1; i <= downloadSjFgPdfSleep; i++ {
+                    time.Sleep(time.Second)
+                    fmt.Println("page="+strconv.Itoa(pageNo)+"=======title=", title, "成功，====== 暂停", downloadSjFgPdfSleep, "秒，倒计时", i, "秒===========")
+                }
+            }
+        }
+        // DownLoadSjFgPageTimeSleep := 10
+        DownLoadSjFgPageTimeSleep := rand.Intn(5)
+        for i := 1; i <= DownLoadSjFgPageTimeSleep; i++ {
+            time.Sleep(time.Second)
+            fmt.Println("page="+strconv.Itoa(pageNo)+"============ 暂停", DownLoadSjFgPageTimeSleep, "秒 倒计时", i, "秒===========")
+        }
+        pageNo++
+        if pageNo > maxPageNo {
+            isPageListGo = false
+            break
+        }
+    }
 }
 
 type SjFgListResponse struct {
@@ -286,7 +235,7 @@ func SjFgList(requestUrl string, sjFgListFormData SjFgListFormData) (sjFgListRes
 	postData.Add("timeValid", sjFgListFormData.timeValid)
 	postData.Add("lawType", sjFgListFormData.lawType)
 	postData.Add("validLevel", sjFgListFormData.validLevel)
-	postData.Add("departDuty", strconv.Itoa(sjFgListFormData.departDuty))
+	postData.Add("departDuty", sjFgListFormData.departDuty)
 	postData.Add("valid", strconv.Itoa(sjFgListFormData.valid))
 	postData.Add("lawName", sjFgListFormData.lawName)
 	postData.Add("startTime", sjFgListFormData.startTime)

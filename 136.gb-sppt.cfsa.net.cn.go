@@ -123,7 +123,7 @@ type DownloadGbSpPtFormData struct {
 	keyword    string
 }
 
-var GbSpPtCookie = "name=value; sessionId=358fcd20-06ab-4e2f-a1c3-9e6eb6001ebe; cookieName=cookieValue; JSESSIONID=103FA084FBF0C4869FDB72A52E05A829"
+var GbSpPtCookie = "JSESSIONID=3750DCF1579CE37FC37B6EC7F7326661; name=value"
 
 // 下载食品安全国家标准数据文档
 // @Title 下载食品安全国家标准数据文档
