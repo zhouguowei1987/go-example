@@ -114,15 +114,15 @@ type QueryGwSoSoListFormData struct {
 	PageCls int `json:"pagecls"`
 }
 
-var GwSoSoCookie = "Hm_lvt_b3ecdb0e91dc1c234e7f59ad61980ec7=1773908325,1773921817,1774447409,1775015186; HMACCOUNT=1CCD0111717619C6; gongwen=3efa6df1-55f7-4919-b2f2-b2cd9a95529f; Hm_lpvt_b3ecdb0e91dc1c234e7f59ad61980ec7=1775015219"
+var GwSoSoCookie = "Hm_lvt_b3ecdb0e91dc1c234e7f59ad61980ec7=1776131523,1776224563,1776471739,1776476759; HMACCOUNT=1CCD0111717619C6; gongwen=332d8af0-d7c7-4274-96ef-6d0dfea01c08; Hm_lpvt_b3ecdb0e91dc1c234e7f59ad61980ec7=1776476783"
 
 // 下载公文搜文档
 // @Title 下载公文搜文档
 // @Description https://www.gwsoso.com/，下载公文搜文档
 func main() {
 	pageListUrl := "https://www.gwsoso.com/docs/gettop?t=0.42132661413839645"
-	start := 50
-	limit := 500
+	start := 53000
+	limit := 2000
 	isPageListGo := true
 	for isPageListGo {
 		queryGwSoSoListFormData := QueryGwSoSoListFormData{
@@ -148,6 +148,10 @@ func main() {
 			fmt.Println(data.Title)
 			if strings.Index(data.Title, "doc") == -1 && strings.Index(data.Title, "pdf") == -1 {
 				fmt.Println("文档不是doc、pdf文档，跳过")
+				continue
+			}
+			if strings.Index(data.Title, "篇") != -1 {
+				fmt.Println("文档标题含有‘篇’字，跳过")
 				continue
 			}
 			title = strings.TrimSpace(title)
@@ -185,7 +189,7 @@ func main() {
 				fmt.Println("空文件删除")
 				err = os.Remove(filePath)
 				isPageListGo = false
-				break
+				continue
 			}
 			if err != nil {
 				continue

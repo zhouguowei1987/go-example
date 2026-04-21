@@ -132,7 +132,7 @@ var FlkCookie = "Hm_lvt_54434aa6770b6d9fef104d146430b53b=1754290987; wzws_sessio
 func main() {
 	pageListUrl := "https://flk.npc.gov.cn/law-search/search/list"
 	fmt.Println(pageListUrl)
-	page := 1
+	page := 143
 	maxPage := 281
 	rows := 100
 	isPageListGo := true
@@ -175,7 +175,7 @@ func main() {
 			title = strings.ReplaceAll(title, "--", "-")
 			fmt.Println(title)
 
-			filePath := "../flk.npc.gov.cn/flk.npc.gov.cn/" + title + "-" + flk.Flxz + "(" + gbrq + ")" + ".docx"
+			filePath := "D:\\workspace\\flk.npc.gov.cn\\flk.npc.gov.cn\\" + title + "-" + flk.Flxz + "(" + gbrq + ")" + ".docx"
 			fmt.Println(filePath)
 
 			_, err = os.Stat(filePath)
@@ -187,7 +187,7 @@ func main() {
 			fmt.Println("=======开始下载========")
 
 			requestFlkDownloadUrl := fmt.Sprintf("https://flk.npc.gov.cn/law-search/download/pc?format=docx&bbbs=%s", flk.Bbbs)
-			// fmt.Println(requestFlkDownloadUrl)
+			fmt.Println(requestFlkDownloadUrl)
 			requestFlkDownloadReferer := fmt.Sprintf("https://flk.npc.gov.cn/detail?id=%s&fileId=&type=&title=%s", flk.Bbbs, flk.Title)
 			queryFlkDownloadUrlResponseData, err := QueryFlkDownloadUrl(requestFlkDownloadUrl, requestFlkDownloadReferer)
 			if err != nil {
@@ -209,7 +209,7 @@ func main() {
 			}
 
 			//复制文件
-			tempFilePath := strings.ReplaceAll(filePath, "../flk.npc.gov.cn/flk.npc.gov.cn", "../flk.npc.gov.cn/temp-flk.npc.gov.cn")
+			tempFilePath := strings.ReplaceAll(filePath, "D:\\workspace\\flk.npc.gov.cn\\flk.npc.gov.cn", "D:\\workspace\\flk.npc.gov.cn\\temp-flk.npc.gov.cn")
 			err = copyFlkFile(filePath, tempFilePath)
 			if err != nil {
 				fmt.Println(err)
