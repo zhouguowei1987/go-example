@@ -1,8 +1,6 @@
 module gobyexample
 
-go 1.23.0
-
-toolchain go1.24.5
+go 1.23
 
 require (
 	github.com/antchfx/htmlquery v1.3.4
@@ -15,5 +13,8 @@ require (
 
 require (
 	github.com/antchfx/xpath v1.3.3 // indirect
+	github.com/disintegration/imaging v1.6.2 // indirect
 	github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da // indirect
+	gocv.io/x/gocv v0.43.0 // indirect
+	golang.org/x/image v0.0.0-20191009234506-e7c1f5e7dbb8 // indirect
 )

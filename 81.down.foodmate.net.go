@@ -54,7 +54,12 @@ func main() {
 						continue
 					}
 
-					title := htmlquery.InnerText(htmlquery.FindOne(detailDoc, `//div[@class="title2"]/span`))
+					detailDocTitleNode := htmlquery.FindOne(detailDoc, `//div[@class="title2"]/span`)
+                    if detailDocTitleNode == nil {
+						fmt.Println("没有文档标题，跳过")
+						continue
+					}
+					title := htmlquery.InnerText(detailDocTitleNode)
 					title = strings.ReplaceAll(title, "<font color=\"red\"></font>", "")
 					title = strings.ReplaceAll(title, "/", "-")
 					title = strings.ReplaceAll(title, "\n", "")
