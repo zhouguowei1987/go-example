@@ -6,7 +6,8 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
-	"math/rand"
+
+	// "math/rand"
 	"net"
 	"net/http"
 	"net/url"
@@ -107,138 +108,136 @@ func NewTtBzSetHttpProxy() (httpclient *http.Client) {
 	return httpclient
 }
 
-type QueryNewTtBzListFormData struct {
-	pageNo         int
-	pageSize int
-	standardStatus       int
+type QueryNewTtBzDetailFormData struct {
+	id int
 }
 
 type QueryNewTtBzPdfWaterMarkedFormData struct {
-	operateType         int
-	id string
-	fileLang       string
+	operateType int
+	id          string
+	fileLang    string
 }
 
-var NewTtBzCookie = "__jsluid_s=3a36791cf70fd9f13dbcb2343308cbdf; HMACCOUNT=4E5B3419A3141A8E; ASP.NET_SessionId=ocqozseqhqrtjo4rbdl3sdqe; Hm_lvt_8c446e9fafe752e4975210bc30d7ab9d=1775528389; Hm_lpvt_8c446e9fafe752e4975210bc30d7ab9d=1776385138; JSESSIONID=6B92A293174566A2707CD5415213ED59; GOV_SHIRO_SESSION_ID=298bcdc5-ccf2-40b7-a883-f540ef16413b; IS_LOGGED_IN=1; MANAGER_SESSION_ID=298bcdc5-ccf2-40b7-a883-f540ef16413b"
+var NewTtBzCookie = "__jsluid_s=e07d2bef452c475e086d267d5d1af922; JSESSIONID=C6BB3993FC73B5158F513B6A154B7B3F; GOV_SHIRO_SESSION_ID=95304da2-b0ee-4d6a-b273-4af9699f6067; IS_LOGGED_IN=1; MANAGER_SESSION_ID=95304da2-b0ee-4d6a-b273-4af9699f6067"
 
 // 下载新版团体标准文档
 // @Title 下载新版团体标准文档
 // @Description https://www.ttbz.org.cn/，下载新版团体标准文档
 func main() {
-	pageListUrl := "https://www.ttbz.org.cn/cms-proxy/ms/portal/standardInfo/getPortalStandardList"
-	fmt.Println(pageListUrl)
-	page := 1
-	maxPage := 10
-	isPageListGo := true
-	for isPageListGo {
-		if page > maxPage {
-			isPageListGo = false
-			break
+	var startId = 166237
+	var endId = 166510
+	var pageDetailUrl = "https://www.ttbz.org.cn/cms-proxy/ms/portal/standardInfo/getPortalStandardById"
+	for id := startId; id <= endId; id++ {
+		fmt.Println(id)
+		queryNewTtBzDetailFormData := QueryNewTtBzDetailFormData{
+			id: id,
 		}
-		queryNewTtBzListFormData := QueryNewTtBzListFormData{
-			pageNo:         page,
-			pageSize: 10,
-			standardStatus:       1,
-		}
-		queryNewTtBzListResponseDataRows, err := QueryNewTtBzList(pageListUrl, queryNewTtBzListFormData)
+		queryNewTtBzDetailResponseData, err := QueryNewTtBzDetail(pageDetailUrl, queryNewTtBzDetailFormData)
 		if err != nil {
 			NewTtBzHttpProxyUrl = ""
 			fmt.Println(err)
+			continue
 		}
-		for _, newTtBz := range queryNewTtBzListResponseDataRows {
-			fmt.Println("=====================开始处理数据 page = ", page, "=========================")
-			code := newTtBz.StandardNo
-			code = strings.ReplaceAll(code, "/", "-")
-			fmt.Println(code)
+		fmt.Println("=====================开始处理数据=========================")
 
-			title := newTtBz.StandardTitleCn
-			title = strings.TrimSpace(title)
-            title = strings.ReplaceAll(title, " ", "")
-            title = strings.ReplaceAll(title, "　", "")
-            title = strings.ReplaceAll(title, "/", "-")
-            title = strings.ReplaceAll(title, "--", "-")
-			fmt.Println(title)
+		// if queryNewTtBzDetailResponseData.IsOpen != 1 {
+		// 	fmt.Println("文档不可预览，跳过")
+		// 	continue
+		// }
 
-			filePath = "../www.ttbz.org.cn/" + newTtBz.Id + "-" + title + "(" + code + ").pdf"
-	        fmt.Println(filePath)
-
-			_, err = os.Stat(filePath)
-			if err == nil {
-				fmt.Println("文档已下载过，跳过")
-				continue
-			}
-
-			// 获取加水印的pdf文件
-			pdfWaterMarkedUrl := "https://www.ttbz.org.cn/cms-proxy/ms/bus/standardInfo/getStdPdfWatermarked"
-			queryNewTtBzPdfWaterMarkedFormData := QueryNewTtBzPdfWaterMarkedFormData{
-                operateType:         1,
-                id: newTtBz.Id,
-                fileLang:       "cn",
-            }
-            queryNewTtBzPdfWaterMarkedResponse, err := QueryNewTtBzPdfWaterMarked(pdfWaterMarkedUrl, queryNewTtBzPdfWaterMarkedFormData)
-            if err != nil {
-                NewTtBzHttpProxyUrl = ""
-                fmt.Println(err)
-            }
-
-			fmt.Println("=======开始下载========")
-
-			downloadUrl := "https://www.ttbz.org.cn" + queryNewTtBzPdfWaterMarkedResponse.Data
-			fmt.Println(downloadUrl)
-
-			fmt.Println("=======开始下载" + title + "========")
-			err = downloadNewTtBz(downloadUrl, filePath)
-			if err != nil {
-				fmt.Println(err)
-				continue
-			}
-			//复制文件
-			tempFilePath := strings.ReplaceAll(filePath, "www.ttbz.org.cn", "temp-hbba.sacinfo.org.cn")
-			err = copyNewTtBzFile(filePath, tempFilePath)
-			if err != nil {
-				fmt.Println(err)
-				continue
-			}
-			fmt.Println("=======下载完成========")
-			//DownLoadNewTtBzTimeSleep := 10
-			DownLoadNewTtBzTimeSleep := rand.Intn(5)
-			for i := 1; i <= DownLoadNewTtBzTimeSleep; i++ {
-				time.Sleep(time.Second)
-				fmt.Println("page="+strconv.Itoa(page)+",filePath="+filePath+"===========下载成功 暂停", DownLoadNewTtBzTimeSleep, "秒 倒计时", i, "秒===========")
-			}
+		if len(queryNewTtBzDetailResponseData.StandardNo) == 0 || len(queryNewTtBzDetailResponseData.StandardTitleCn) == 0 {
+			fmt.Println("文档标准号或标题为空，跳过")
+			continue
 		}
-		DownLoadNewTtBzPageTimeSleep := 10
-		// DownLoadNewTtBzPageTimeSleep := rand.Intn(5)
-		for i := 1; i <= DownLoadNewTtBzPageTimeSleep; i++ {
+
+		code := queryNewTtBzDetailResponseData.StandardNo
+		code = strings.ReplaceAll(code, "/", "-")
+		fmt.Println(code)
+
+		title := queryNewTtBzDetailResponseData.StandardTitleCn
+		title = strings.TrimSpace(title)
+		title = strings.ReplaceAll(title, " ", "")
+		title = strings.ReplaceAll(title, "　", "")
+		title = strings.ReplaceAll(title, "/", "-")
+		title = strings.ReplaceAll(title, "《", "")
+		title = strings.ReplaceAll(title, "》", "")
+		title = strings.ReplaceAll(title, "--", "-")
+		title = strings.ReplaceAll(title, "——", "-")
+		fmt.Println(title)
+
+		filePath = "../www.ttbz.org.cn/" + strconv.Itoa(id) + "-" + title + "(" + code + ").pdf"
+		fmt.Println(filePath)
+
+		_, err = os.Stat(filePath)
+		if err == nil {
+			fmt.Println("文档已下载过，跳过")
+			continue
+		}
+
+		// 获取加水印的pdf文件
+		fmt.Println("=======获取加水印的pdf文件========")
+		pdfWaterMarkedUrl := "https://www.ttbz.org.cn/cms-proxy/ms/bus/standardInfo/getStdPdfWatermarked"
+		queryNewTtBzPdfWaterMarkedFormData := QueryNewTtBzPdfWaterMarkedFormData{
+			operateType: 1,
+			id:          queryNewTtBzDetailResponseData.Id,
+			fileLang:    "cn",
+		}
+		queryNewTtBzPdfWaterMarkedResponse, err := QueryNewTtBzPdfWaterMarked(pdfWaterMarkedUrl, queryNewTtBzPdfWaterMarkedFormData)
+		if err != nil {
+			NewTtBzHttpProxyUrl = ""
+			fmt.Println(err)
+			continue
+		}
+		downloadUrl := "https://www.ttbz.org.cn" + queryNewTtBzPdfWaterMarkedResponse.Data
+		fmt.Println(downloadUrl)
+
+		fmt.Println("=======开始下载========")
+
+		err = downloadNewTtBz(downloadUrl, filePath)
+		if err != nil {
+			fmt.Println(err)
+			continue
+		}
+		// 查看文件大小，如果是空文件，则删除
+		fileInfo, err := os.Stat(filePath)
+		if err == nil && fileInfo.Size() == 0 || fileInfo.Size() == 228896 {
+			fmt.Println("空文件删除")
+			err = os.Remove(filePath)
+		}
+		if err != nil {
+			continue
+		}
+		//复制文件
+		tempFilePath := strings.ReplaceAll(filePath, "www.ttbz.org.cn", "temp-www.ttbz.org.cn")
+		err = copyNewTtBzFile(filePath, tempFilePath)
+		if err != nil {
+			fmt.Println(err)
+			continue
+		}
+		fmt.Println("=======下载完成========")
+		DownLoadNewTtBzTimeSleep := 10
+		// DownLoadNewTtBzTimeSleep := rand.Intn(5)
+		for i := 1; i <= DownLoadNewTtBzTimeSleep; i++ {
 			time.Sleep(time.Second)
-			fmt.Println("page="+strconv.Itoa(page)+"=========== 暂停", DownLoadNewTtBzPageTimeSleep, "秒 倒计时", i, "秒===========")
-		}
-		page++
-		if page > maxPage {
-			isPageListGo = false
-			break
+			fmt.Println("filePath="+filePath+"===========下载成功 暂停", DownLoadNewTtBzTimeSleep, "秒 倒计时", i, "秒===========")
 		}
 	}
 }
 
-type QueryNewTtBzListResponse struct {
-	Data          QueryNewTtBzListResponseData `json:"data"`
-	Code           int                             `json:"code"`
-	Result bool                             `json:"result"`
+type QueryNewTtBzDetailResponse struct {
+	Data   QueryNewTtBzDetailResponseData `json:"data"`
+	Code   int                            `json:"code"`
+	Result bool                           `json:"result"`
 }
 
-type QueryNewTtBzListResponseData struct {
-	Rows           []QueryNewTtBzListResponseDataRows    `json:"rows"`
-	Total       int `json:"total"`
+type QueryNewTtBzDetailResponseData struct {
+	IsOpen          int    `json:"isOpen"`
+	Id              string `json:"id"`
+	StandardNo      string `json:"standardNo"`
+	StandardTitleCn string `json:"standardTitleCn"`
 }
 
-type QueryNewTtBzListResponseDataRows struct {
-	Id           string    `json:"id"`
-	StandardNo       string `json:"standardNo"`
-	StandardTitleCn       string `json:"standardTitleCn"`
-}
-
-func QueryNewTtBzList(requestUrl string, queryNewTtBzListFormData QueryNewTtBzListFormData) (queryNewTtBzListResponseDataRows []QueryNewTtBzListResponseDataRows, err error) {
+func QueryNewTtBzDetail(requestUrl string, queryNewTtBzDetailFormData QueryNewTtBzDetailFormData) (queryNewTtBzDetailResponseData QueryNewTtBzDetailResponseData, err error) {
 	// 初始化客户端
 	var client *http.Client = &http.Client{
 		Transport: &http.Transport{
@@ -259,21 +258,18 @@ func QueryNewTtBzList(requestUrl string, queryNewTtBzListFormData QueryNewTtBzLi
 		client = NewTtBzSetHttpProxy()
 	}
 	postData := url.Values{}
-	postData.Add("pageNo", strconv.Itoa(queryNewTtBzListFormData.pageNo))
-	postData.Add("pageSize", strconv.Itoa(queryNewTtBzListFormData.pageSize))
-	postData.Add("standardStatus", strconv.Itoa(queryNewTtBzListFormData.standardStatus))
+	postData.Add("id", strconv.Itoa(queryNewTtBzDetailFormData.id))
 	req, err := http.NewRequest("POST", requestUrl, strings.NewReader(postData.Encode())) //建立连接
 
-	queryNewTtBzListResponse := QueryNewTtBzListResponse{}
+	queryNewTtBzDetailResponse := QueryNewTtBzDetailResponse{}
 	if err != nil {
-		return queryNewTtBzListResponseDataRows, err
+		return queryNewTtBzDetailResponseData, err
 	}
 
 	req.Header.Set("Accept", "*/*")
 	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
 	req.Header.Set("Connection", "keep-alive")
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")
-	req.Header.Set("Cookie", NewTtBzCookie)
 	req.Header.Set("Host", "www.ttbz.org.cn")
 	req.Header.Set("Origin", "https://www.ttbz.org.cn")
 	req.Header.Set("Referer", "https://www.ttbz.org.cn/standard.html")
@@ -282,29 +278,29 @@ func QueryNewTtBzList(requestUrl string, queryNewTtBzListFormData QueryNewTtBzLi
 	resp, err := client.Do(req) //拿到返回的内容
 	if err != nil {
 		fmt.Println(err)
-		return queryNewTtBzListResponseDataRows, err
+		return queryNewTtBzDetailResponseData, err
 	}
 	defer resp.Body.Close()
 	if resp.StatusCode != http.StatusOK {
-		return queryNewTtBzListResponseDataRows, errors.New("http status :" + strconv.Itoa(resp.StatusCode))
+		return queryNewTtBzDetailResponseData, errors.New("http status :" + strconv.Itoa(resp.StatusCode))
 	}
 	respBytes, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		fmt.Println(err)
-		return queryNewTtBzListResponseDataRows, err
+		return queryNewTtBzDetailResponseData, err
 	}
-	err = json.Unmarshal(respBytes, &queryNewTtBzListResponse)
+	err = json.Unmarshal(respBytes, &queryNewTtBzDetailResponse)
 	if err != nil {
-		return queryNewTtBzListResponseDataRows, err
+		return queryNewTtBzDetailResponseData, err
 	}
-	queryNewTtBzListResponseDataRows = queryNewTtBzListResponse.Data.Rows
-	return queryNewTtBzListResponseDataRows, nil
+	queryNewTtBzDetailResponseData = queryNewTtBzDetailResponse.Data
+	return queryNewTtBzDetailResponseData, nil
 }
 
 type QueryNewTtBzPdfWaterMarkedResponse struct {
-	Result           bool    `json:"result"`
-	Code       int `json:"code"`
-	Data       string `json:"data"`
+	Result bool   `json:"result"`
+	Code   int    `json:"code"`
+	Data   string `json:"data"`
 }
 
 func QueryNewTtBzPdfWaterMarked(requestUrl string, queryNewTtBzPdfWaterMarkedFormData QueryNewTtBzPdfWaterMarkedFormData) (queryNewTtBzPdfWaterMarkedResponse QueryNewTtBzPdfWaterMarkedResponse, err error) {
@@ -333,7 +329,7 @@ func QueryNewTtBzPdfWaterMarked(requestUrl string, queryNewTtBzPdfWaterMarkedFor
 	postData.Add("fileLang", queryNewTtBzPdfWaterMarkedFormData.fileLang)
 	req, err := http.NewRequest("POST", requestUrl, strings.NewReader(postData.Encode())) //建立连接
 
-	queryNewTtBzPdfWaterMarkedResponse := QueryNewTtBzPdfWaterMarkedResponse{}
+	queryNewTtBzPdfWaterMarkedResponse = QueryNewTtBzPdfWaterMarkedResponse{}
 	if err != nil {
 		return queryNewTtBzPdfWaterMarkedResponse, err
 	}
@@ -448,6 +444,13 @@ func copyNewTtBzFile(src, dst string) (err error) {
 		}
 	}(in)
 
+	// 创建一个文件用于保存
+	fileDiv := filepath.Dir(dst)
+	if _, err = os.Stat(fileDiv); err != nil {
+		if os.MkdirAll(fileDiv, 0o777) != nil {
+			return err
+		}
+	}
 	out, err := os.Create(dst)
 	if err != nil {
 		return err

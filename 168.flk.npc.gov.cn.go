@@ -124,7 +124,7 @@ type QueryFlkListRequestPayload struct {
 	ZdjgCodeId    []int             `json:"zdjgCodeId"`
 }
 
-var FlkCookie = "Hm_lvt_54434aa6770b6d9fef104d146430b53b=1754290987; wzws_sessionid=gmZhYjg1ZqBowjVugDEyMy45LjI1LjEwNYFhMTZkZGE="
+var FlkCookie = "Hm_lvt_54434aa6770b6d9fef104d146430b53b=1754290987; cna=jo18IaOL2lYCASruc3E/aBTz; _yfx_session_10008821=%7B%22_yfx_firsttime%22%3A%221760927630155%22%2C%22_yfx_lasttime%22%3A%221766628022938%22%2C%22_yfx_visittime%22%3A%221766628022938%22%2C%22_yfx_lastvisittime%22%3A%221766628025711%22%2C%22_yfx_domidgroup%22%3A%221766628022938%22%2C%22_yfx_domallsize%22%3A%22100%22%2C%22_yfx_cookie%22%3A%2220251020103350160483182242778496%22%2C%22_yfx_returncount%22%3A%221%22%7D; wzws_cid=f20753d3bf9516cf227480ec9c1bf86a2027448fbf42088149a6e2f307d1c5f0bcf9167233a2c3771ca6769da12f501ff785e4e9950c665328468337e69f130ab748b7cf1d2fb7f0bc2cd83b4201abba"
 
 // 下载国家法律法规数据库文档
 // @Title 下载国家法律法规数据库文档
@@ -132,8 +132,8 @@ var FlkCookie = "Hm_lvt_54434aa6770b6d9fef104d146430b53b=1754290987; wzws_sessio
 func main() {
 	pageListUrl := "https://flk.npc.gov.cn/law-search/search/list"
 	fmt.Println(pageListUrl)
-	page := 143
-	maxPage := 281
+	page := 260
+	maxPage := 294
 	rows := 100
 	isPageListGo := true
 	for isPageListGo {
@@ -176,6 +176,7 @@ func main() {
 			fmt.Println(title)
 
 			filePath := "D:\\workspace\\flk.npc.gov.cn\\flk.npc.gov.cn\\" + title + "-" + flk.Flxz + "(" + gbrq + ")" + ".docx"
+			filePath = strings.ReplaceAll(filePath, "()", "")
 			fmt.Println(filePath)
 
 			_, err = os.Stat(filePath)
