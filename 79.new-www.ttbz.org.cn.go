@@ -118,14 +118,14 @@ type QueryNewTtBzPdfWaterMarkedFormData struct {
 	fileLang    string
 }
 
-var NewTtBzCookie = "__jsluid_s=e07d2bef452c475e086d267d5d1af922; JSESSIONID=C6BB3993FC73B5158F513B6A154B7B3F; GOV_SHIRO_SESSION_ID=95304da2-b0ee-4d6a-b273-4af9699f6067; IS_LOGGED_IN=1; MANAGER_SESSION_ID=95304da2-b0ee-4d6a-b273-4af9699f6067"
+var NewTtBzCookie = "__jsluid_s=3a36791cf70fd9f13dbcb2343308cbdf; HMACCOUNT=4E5B3419A3141A8E; ASP.NET_SessionId=ocqozseqhqrtjo4rbdl3sdqe; Hm_lvt_8c446e9fafe752e4975210bc30d7ab9d=1775528389; Hm_lpvt_8c446e9fafe752e4975210bc30d7ab9d=1776385138; JSESSIONID=100C32917611B1F024DB42E6B42CEDE2; GOV_SHIRO_SESSION_ID=c5e94714-f5f1-4f09-baf5-6fc48f69ca0e; IS_LOGGED_IN=1; MANAGER_SESSION_ID=c5e94714-f5f1-4f09-baf5-6fc48f69ca0e"
 
 // 下载新版团体标准文档
 // @Title 下载新版团体标准文档
 // @Description https://www.ttbz.org.cn/，下载新版团体标准文档
 func main() {
 	var startId = 166237
-	var endId = 166510
+	var endId = 166518
 	var pageDetailUrl = "https://www.ttbz.org.cn/cms-proxy/ms/portal/standardInfo/getPortalStandardById"
 	for id := startId; id <= endId; id++ {
 		fmt.Println(id)
@@ -165,7 +165,7 @@ func main() {
 		title = strings.ReplaceAll(title, "——", "-")
 		fmt.Println(title)
 
-		filePath = "../www.ttbz.org.cn/" + strconv.Itoa(id) + "-" + title + "(" + code + ").pdf"
+		filePath := "../www.ttbz.org.cn/" + strconv.Itoa(id) + "-" + title + "(" + code + ").pdf"
 		fmt.Println(filePath)
 
 		_, err = os.Stat(filePath)
