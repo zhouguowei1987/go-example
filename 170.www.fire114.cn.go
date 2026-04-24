@@ -24,8 +24,8 @@ var Fire114Cookie = "PHPSESSID=sgeiq3i8ut557f35o4mnur1p83; UM_distinctid=199997a
 // @Description http://www.fire114.cn/，将消防百事通文档入库
 func main() {
 // 	var startId = 449
-    var startId = 142500
-	var endId = 142680
+    var startId = 142600
+	var endId = 142710
 	for id := startId; id <= endId; id++ {
 		detailUrl := fmt.Sprintf("https://www.fire114.cn/islibd/%d.html", id)
 		fmt.Println(detailUrl)
@@ -49,6 +49,7 @@ func main() {
 		title = strings.ReplaceAll(title, "()", "")
 		title = strings.ReplaceAll(title, "（)", "")
 		title = strings.ReplaceAll(title, "‘", "")
+		title = strings.ReplaceAll(title, "/", "-")
 		title = strings.TrimSpace(title)
 		fmt.Println(title)
 		if strings.Index(title, ".pdf") == -1 && strings.Index(title, ".doc") == -1  && strings.Index(title, ".ppt") == -1 && strings.Index(title, ".xls") == -1 {
