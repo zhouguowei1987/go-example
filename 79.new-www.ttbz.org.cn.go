@@ -165,7 +165,7 @@ func main() {
 		title = strings.ReplaceAll(title, "——", "-")
 		fmt.Println(title)
 
-		filePath := "../www.ttbz.org.cn/www.ttbz.org.cn/" + title + "(" + code + ").pdf"
+		filePath = "../www.ttbz.org.cn/" + strconv.Itoa(id) + "-" + title + "(" + code + ").pdf"
 		fmt.Println(filePath)
 
 		_, err = os.Stat(filePath)
@@ -208,7 +208,7 @@ func main() {
 			continue
 		}
 		//复制文件
-		tempFilePath := strings.ReplaceAll(filePath, "www.ttbz.org.cn/www.ttbz.org.cn", "www.ttbz.org.cn/temp-www.ttbz.org.cn")
+		tempFilePath := strings.ReplaceAll(filePath, "www.ttbz.org.cn", "temp-www.ttbz.org.cn")
 		err = copyNewTtBzFile(filePath, tempFilePath)
 		if err != nil {
 			fmt.Println(err)
