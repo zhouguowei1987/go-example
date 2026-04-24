@@ -114,14 +114,14 @@ type QueryGwSoSoListFormData struct {
 	PageCls int `json:"pagecls"`
 }
 
-var GwSoSoCookie = "Hm_lvt_b3ecdb0e91dc1c234e7f59ad61980ec7=1776131523,1776224563,1776471739,1776476759; HMACCOUNT=1CCD0111717619C6; gongwen=332d8af0-d7c7-4274-96ef-6d0dfea01c08; Hm_lpvt_b3ecdb0e91dc1c234e7f59ad61980ec7=1776476783"
+var GwSoSoCookie = "Hm_lvt_b3ecdb0e91dc1c234e7f59ad61980ec7=1776224563,1776471739,1776476759,1776754925; HMACCOUNT=1CCD0111717619C6; gongwen=b7361121-56fc-4ce9-a64b-8c4762422dbe; Hm_lpvt_b3ecdb0e91dc1c234e7f59ad61980ec7=1776754948"
 
 // 下载公文搜文档
 // @Title 下载公文搜文档
 // @Description https://www.gwsoso.com/，下载公文搜文档
 func main() {
 	pageListUrl := "https://www.gwsoso.com/docs/gettop?t=0.42132661413839645"
-	start := 53000
+	start := 50
 	limit := 2000
 	isPageListGo := true
 	for isPageListGo {
