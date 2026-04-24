@@ -186,6 +186,7 @@ func main() {
 		if err != nil {
 			NewTtBzHttpProxyUrl = ""
 			fmt.Println(err)
+			continue
 		}
 		downloadUrl := "https://www.ttbz.org.cn" + queryNewTtBzPdfWaterMarkedResponse.Data
 		fmt.Println(downloadUrl)
