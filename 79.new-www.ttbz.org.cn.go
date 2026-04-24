@@ -270,7 +270,6 @@ func QueryNewTtBzDetail(requestUrl string, queryNewTtBzDetailFormData QueryNewTt
 	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
 	req.Header.Set("Connection", "keep-alive")
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")
-	req.Header.Set("Cookie", NewTtBzCookie)
 	req.Header.Set("Host", "www.ttbz.org.cn")
 	req.Header.Set("Origin", "https://www.ttbz.org.cn")
 	req.Header.Set("Referer", "https://www.ttbz.org.cn/standard.html")
