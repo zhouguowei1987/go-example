@@ -118,14 +118,15 @@ type QueryNewTtBzPdfWaterMarkedFormData struct {
 	fileLang    string
 }
 
-var NewTtBzCookie = "__jsluid_s=3a36791cf70fd9f13dbcb2343308cbdf; HMACCOUNT=4E5B3419A3141A8E; ASP.NET_SessionId=ocqozseqhqrtjo4rbdl3sdqe; Hm_lvt_8c446e9fafe752e4975210bc30d7ab9d=1775528389; Hm_lpvt_8c446e9fafe752e4975210bc30d7ab9d=1776385138; JSESSIONID=100C32917611B1F024DB42E6B42CEDE2; GOV_SHIRO_SESSION_ID=c5e94714-f5f1-4f09-baf5-6fc48f69ca0e; IS_LOGGED_IN=1; MANAGER_SESSION_ID=c5e94714-f5f1-4f09-baf5-6fc48f69ca0e"
+var NewTtBzCookie = "__jsluid_s=3a36791cf70fd9f13dbcb2343308cbdf; HMACCOUNT=4E5B3419A3141A8E; ASP.NET_SessionId=ocqozseqhqrtjo4rbdl3sdqe; Hm_lvt_8c446e9fafe752e4975210bc30d7ab9d=1775528389; JSESSIONID=EA1736B73BAF41ACC37B4483B23D54DF; GOV_SHIRO_SESSION_ID=8e5907ed-0e36-45d5-91a3-8b500ad690e3; IS_LOGGED_IN=1; MANAGER_SESSION_ID=8e5907ed-0e36-45d5-91a3-8b500ad690e3; Hm_lpvt_8c446e9fafe752e4975210bc30d7ab9d=1777090730"
 
 // 下载新版团体标准文档
 // @Title 下载新版团体标准文档
 // @Description https://www.ttbz.org.cn/，下载新版团体标准文档
 func main() {
-	var startId = 166237
-	var endId = 166518
+    // 166623
+	var startId = 160000
+	var endId = 166000
 	var pageDetailUrl = "https://www.ttbz.org.cn/cms-proxy/ms/portal/standardInfo/getPortalStandardById"
 	for id := startId; id <= endId; id++ {
 		fmt.Println(id)
@@ -269,6 +270,7 @@ func QueryNewTtBzDetail(requestUrl string, queryNewTtBzDetailFormData QueryNewTt
 	req.Header.Set("Accept", "*/*")
 	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
 	req.Header.Set("Connection", "keep-alive")
+	req.Header.Set("Cookie", NewTtBzCookie)
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")
 	req.Header.Set("Host", "www.ttbz.org.cn")
 	req.Header.Set("Origin", "https://www.ttbz.org.cn")
