@@ -54,6 +54,7 @@ var DelNextPageSleep = 25
 func main() {
 	curPage := 1
 	for {
+	    hasDeleteFlag := false
 		pageListUrl := fmt.Sprintf("https://www.doc88.com/uc/doc_manager.php?act=ajax_doc_list&curpage=%d", curPage)
 		fmt.Println(pageListUrl)
 		queryDelDoc88ListFormData := QueryDelDoc88ListFormData{
@@ -106,12 +107,16 @@ func main() {
 				fmt.Println(err)
 				continue
 			}
+			hasDeleteFlag = true
 			for i := 1; i <= DelSaveTimeSleep; i++ {
 				time.Sleep(time.Second)
 				fmt.Println("page="+strconv.Itoa(curPage)+"===========删除", Title, "成功，暂停", DelSaveTimeSleep, "秒，倒计时", i, "秒===========")
 			}
 		}
-		curPage++
+		if hasDeleteFlag == false{
+		    // 没有删除，则进行下页文档处理
+		    curPage++
+		}
 		for i := 1; i <= DelNextPageSleep; i++ {
 			time.Sleep(time.Second)
 			fmt.Println("===========翻", curPage, "页，暂停", DelNextPageSleep, "秒，倒计时", i, "秒===========")
