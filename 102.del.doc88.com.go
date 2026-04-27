@@ -82,7 +82,7 @@ func main() {
             TitleNode := htmlquery.FindOne(liNode, `./div[@class="bookdoc"]/h3/a`)
 			Title := htmlquery.SelectAttr(TitleNode, "title")
 			fmt.Println(Title)
-			if strings.Index(Title, "T-") == -1 {
+			if strings.Index(Title, "(T-") == -1 {
 				continue
 			}
 
