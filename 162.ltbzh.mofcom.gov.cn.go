@@ -117,7 +117,7 @@ type QueryLtBzhListFormData struct {
 	sord     string
 }
 
-var LtBzhCookie = "JSESSIONID=B0A48CAA054563683978B5DFE826187A; ur_mofcom_=\"8n3ieq4YgFJbr52CHhdIjpVP0GkG03LJfEvgxC0KT9c=\"; insert_cookie=81869604; _pk_id.23.6b23=e1b1c7e065996d2d.1756110203.; _pk_ref.23.6b23=%5B%22%22%2C%22%22%2C1756181224%2C%22http%3A%2F%2Fwww.chinajl.com.cn%2F%22%5D"
+var LtBzhCookie = "JSESSIONID=9560A8BB2B84DC9942CD9ECE3C704111; ur_mofcom_=\"XioFPhQkyv2pUuPPwdKRbUnYpSYMckNAhPeEnu9g5jY=\"; _pk_id.23.6b23=8dac574e7eeaa779.1773120817.; insert_cookie=94960590"
 
 // 下载商务领域行业标准文档
 // @Title 下载商务领域行业标准文档
@@ -126,8 +126,8 @@ func main() {
 	pageListUrl := "https://ltbzh.mofcom.gov.cn/ltbz/bzgl/bzglController/listbzgl"
 	fmt.Println(pageListUrl)
 	page := 1
-	maxPage := 13
-	rows := 10
+	maxPage := 3
+	rows := 100
 	isPageListGo := true
 	for isPageListGo {
 		if page > maxPage {

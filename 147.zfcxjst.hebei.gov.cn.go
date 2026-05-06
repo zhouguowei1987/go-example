@@ -24,7 +24,7 @@ type zfCxJstCategory struct {
 	maxPage int
 }
 
-var ZfCxJstCookie = "qspJd7aG3Y1XO=60fUHO9ocKVEtR8xeDuxT.qFr5J7jn5RfHlXxJP7md0y65aCBzcwx2z5Qr7cdOFg2rDD4j8V4_9YIAsUyvxlCGlG; qspJd7aG3Y1XP=0t6p0Lr8WsB93iqyvUinCS7xG4UCdhc6ShIQkoGZtqgsqI0QB6UCopE8mPp.26pqbNh0DjD_RckuMFTcLE9YUhUUgglgYCP3U_mVqnSG2XDK19J.3Kgg07nPo30BcxPUdHrYneeCaRq6xO.L8EgJZGRjVr52MrLCjmf_S5.Wx3ItDxrQAN251OEtaElzWYFozipSvV331tqahjNeFwRrwcAaqgdCoQGdUawxSKKha1X.HnBqIsCWPsoX_iOnPpPbGab6zAA4oqS3v9s5gAJRCIetvZKGJHGkC6bpjjenBDDpurBsGmcCtpHVGoSJc6nHROnkQ_vrEz0VssDVH5myoLVhRkVjF5OSmS6Zwavm4CB1b9ejrwuH7cw0NaA4ICgfaiMqW_oFO.0vzZTkoTEWkbh1UVYL5lF.782VCZUtB5_G.2JPEjGy9NN2YCdX3aYu5"
+var ZfCxJstCookie = "qspJd7aG3Y1XO=60fUHO9ocKVEtR8xeDuxT.qFr5J7jn5RfHlXxJP7md0y65aCBzcwx2z5Qr7cdOFg2rDD4j8V4_9YIAsUyvxlCGlG; Hm_lvt_9570b2f6df21bcd51a4c34f2eab44fca=1777542610; Hm_lpvt_9570b2f6df21bcd51a4c34f2eab44fca=1777542610; HMACCOUNT=4E5B3419A3141A8E; qspJd7aG3Y1XP=07M9G1zObAk1OGCPLuVW5rosLEWdTZKYkf46ZJ8rrok4vshAXNFs2kBo9BqzMojZArIsylF5okiOsroNszc1FVkH0dwltjCvRMepaZEoedoGydIrsOf5OMg0EP6svcKomvxAnrw7_Rg6c73A0Ici0a_YyW.Prszcv1M5WyiWmCM3XObZ21sMybOnbq9PgwR.72Oxp0BQ6NV5UhtbQt6w77XEDK45FwkKeXYD4cpU8Pug.SQWsd5rUNZoZ8CLzJQOBLgIzYRmpf.L_rw5ET2dMlz_PVzRrGZS7ywNj3_9Sgrlo2IyiyUjTJpXUp8Pctx8MWQu.IcaFyM63PQSPz1kOtNaXQ2xa.BgJk7acn1_juRre.35rubC7486YK9CJEoVS6FynPVppMe8TmTxOqG6P.aBWQJ9woddUQmBowhwgSzHXZyGM.p6TvuB_LFgiDWBV"
 
 // zfCxJstSpider 获取河北省住房和城乡建设厅标准
 // @Title 获取河北省住房和城乡建设厅标准
@@ -32,11 +32,11 @@ var ZfCxJstCookie = "qspJd7aG3Y1XO=60fUHO9ocKVEtR8xeDuxT.qFr5J7jn5RfHlXxJP7md0y6
 func main() {
 	// 国内标准列表
 	var allCategory = []zfCxJstCategory{
-		{url: "https://zfcxjst.hebei.gov.cn/hbzjt/ztzl/jj/gcjsgf/fwjz", name: "房屋建筑", page: 1, maxPage: 2},  //14
-		{url: "https://zfcxjst.hebei.gov.cn/hbzjt/ztzl/jj/gcjsgf/szgc", name: "市政工程", page: 1, maxPage: 2},  //7
-		{url: "https://zfcxjst.hebei.gov.cn/hbzjt/ztzl/jj/gcjsgf/czjs", name: "村镇建设", page: 1, maxPage: 2},  //3
-		{url: "https://zfcxjst.hebei.gov.cn/hbzjt/ztzl/jj/gcjsgf/sxjs", name: "四新技术", page: 1, maxPage: 2},  //7
-		{url: "https://zfcxjst.hebei.gov.cn/hbzjt/ztzl/jj/gcjsgf/zjbz", name: "消耗量标准", page: 1, maxPage: 2}, //2
+		{url: "https://zfcxjst.hebei.gov.cn/hbzjt/ztzl/jj/gcjsgf/fwjz", name: "房屋建筑", page: 1, maxPage: 3},  //14
+		{url: "https://zfcxjst.hebei.gov.cn/hbzjt/ztzl/jj/gcjsgf/szgc", name: "市政工程", page: 1, maxPage: 3},  //7
+		{url: "https://zfcxjst.hebei.gov.cn/hbzjt/ztzl/jj/gcjsgf/czjs", name: "村镇建设", page: 1, maxPage: 3},  //3
+		{url: "https://zfcxjst.hebei.gov.cn/hbzjt/ztzl/jj/gcjsgf/sxjs", name: "四新技术", page: 1, maxPage: 3},  //7
+		{url: "https://zfcxjst.hebei.gov.cn/hbzjt/ztzl/jj/gcjsgf/zjbz", name: "消耗量标准", page: 1, maxPage: 3}, //2
 	}
 	for _, category := range allCategory {
 		isPageListGo := true

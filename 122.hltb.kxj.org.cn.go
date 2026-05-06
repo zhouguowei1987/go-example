@@ -64,14 +64,17 @@ func HlTbSpider(id int) error {
 	title = title + "(" + standardNo + ")"
 
 	filePath := "../hltb.kxj.org.cn/" + title + ".pdf"
-	if _, err := os.Stat(filePath); err != nil {
-		fmt.Println("=======开始下载========")
+	fmt.Println(filePath)
+    _, err = os.Stat(filePath)
+    if err == nil {
+        return errors.New("文档已下载过，跳过")
+    }
+	fmt.Println("=======开始下载========")
 		err = downHlTbPdf(downLoadUrl, filePath)
 		if err != nil {
 			return err
 		}
 		fmt.Println("=======完成下载========")
-	}
 	return nil
 }
 

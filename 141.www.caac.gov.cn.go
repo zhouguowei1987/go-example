@@ -87,45 +87,47 @@ func main() {
 				filePath = "../www.caac.gov.cn/" + title + ".pdf"
 			}
 			fmt.Println(filePath)
-			if _, err := os.Stat(filePath); err != nil {
-				detailDoc, err := htmlquery.LoadURL(detailUrl)
-				if err != nil {
-					fmt.Println(err)
-					continue
-				}
+            _, err = os.Stat(filePath)
+            if err == nil {
+                fmt.Println("文档已下载过，跳过")
+                continue
+            }
+			detailDoc, err := htmlquery.LoadURL(detailUrl)
+            if err != nil {
+                fmt.Println(err)
+                continue
+            }
 
-				downloadNode := htmlquery.FindOne(detailDoc, `//div[@class="wrap"]/div[@class="wrap_w p_t30"]/div[@class="clearfix"]/div[@class="a_left"]/div[@class="content"]/div[@id="id_tblAppendix"]/p/a/@href`)
-				if downloadNode == nil {
-					fmt.Println("未找到下载文件节点，跳过")
-					continue
-				}
+            downloadNode := htmlquery.FindOne(detailDoc, `//div[@class="wrap"]/div[@class="wrap_w p_t30"]/div[@class="clearfix"]/div[@class="a_left"]/div[@class="content"]/div[@id="id_tblAppendix"]/p/a/@href`)
+            if downloadNode == nil {
+                fmt.Println("未找到下载文件节点，跳过")
+                continue
+            }
 
-				detailUrlArray := strings.Split(detailUrl, "/")
-				downloadUrlArray := detailUrlArray[:len(detailUrlArray)-1]
-				downloadUrl := strings.Join(downloadUrlArray, "/") + strings.ReplaceAll(htmlquery.InnerText(downloadNode), "./", "/")
-				fmt.Println(downloadUrl)
-				fmt.Println("=======开始下载" + title + "========")
-				err = downloadCaAc(downloadUrl, detailUrl, filePath)
-				if err != nil {
-					fmt.Println(err)
-					continue
-				}
-				//复制文件
-				tempFilePath := strings.ReplaceAll(filePath, "www.caac.gov.cn", "temp-hbba.sacinfo.org.cn")
-				err = copyCaAcFile(filePath, tempFilePath)
-				if err != nil {
-					fmt.Println(err)
-					continue
-				}
-				fmt.Println("=======下载完成========")
-				//DownLoadCaAcTimeSleep := 10
-				DownLoadCaAcTimeSleep := rand.Intn(5)
-				for i := 1; i <= DownLoadCaAcTimeSleep; i++ {
-					time.Sleep(time.Second)
-					fmt.Println("page="+strconv.Itoa(page)+",filePath="+filePath+"===========下载成功 暂停", DownLoadCaAcTimeSleep, "秒 倒计时", i, "秒===========")
-				}
-
-			}
+            detailUrlArray := strings.Split(detailUrl, "/")
+            downloadUrlArray := detailUrlArray[:len(detailUrlArray)-1]
+            downloadUrl := strings.Join(downloadUrlArray, "/") + strings.ReplaceAll(htmlquery.InnerText(downloadNode), "./", "/")
+            fmt.Println(downloadUrl)
+            fmt.Println("=======开始下载" + title + "========")
+            err = downloadCaAc(downloadUrl, detailUrl, filePath)
+            if err != nil {
+                fmt.Println(err)
+                continue
+            }
+            //复制文件
+            tempFilePath := strings.ReplaceAll(filePath, "www.caac.gov.cn", "temp-hbba.sacinfo.org.cn")
+            err = copyCaAcFile(filePath, tempFilePath)
+            if err != nil {
+                fmt.Println(err)
+                continue
+            }
+            fmt.Println("=======下载完成========")
+            //DownLoadCaAcTimeSleep := 10
+            DownLoadCaAcTimeSleep := rand.Intn(5)
+            for i := 1; i <= DownLoadCaAcTimeSleep; i++ {
+                time.Sleep(time.Second)
+                fmt.Println("page="+strconv.Itoa(page)+",filePath="+filePath+"===========下载成功 暂停", DownLoadCaAcTimeSleep, "秒 倒计时", i, "秒===========")
+            }
 		}
 		DownLoadCaAcPageTimeSleep := 10
 		// DownLoadCaAcPageTimeSleep := rand.Intn(5)
