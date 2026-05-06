@@ -68,10 +68,22 @@ func main() {
                     // 查看downloadHref是否含有www.mem.gov.cn
                     if !strings.Contains(downLoadUrl, "www.mem.gov.cn") {
                         // 不含有www.mem.gov.cn，下载连接需要处理
-                        bzDetailRequestUrlBiasTIndex := strings.LastIndex(requestListUrl, "/")
-                        downLoadUrl = strings.Replace(downLoadUrl, ".", "", 1)
-                        downLoadUrl = requestListUrl[:bzDetailRequestUrlBiasTIndex] + downLoadUrl
+                        // 查看有几个“..”
+                        count := strings.Count(downLoadUrl, "..")
+                        if count > 0{
+                            requestListUrlArray := strings.Split(requestListUrl, "/")
+                            requestListUrlArray = requestListUrlArray[:len(requestListUrlArray) - (count + 1)]
+                            requestListUrlDownLoadUrl :=  strings.Join(requestListUrlArray, "/")
+                            fmt.Println(requestListUrlDownLoadUrl)
+                            downLoadUrl = strings.Replace(downLoadUrl, "../", "", count)
+                            downLoadUrl = requestListUrlDownLoadUrl + "/" + downLoadUrl
+                        }else{
+                            bzDetailRequestUrlBiasTIndex := strings.LastIndex(requestListUrl, "/")
+                            downLoadUrl = strings.Replace(downLoadUrl, ".", "", 1)
+                            downLoadUrl = requestListUrl[:bzDetailRequestUrlBiasTIndex] + downLoadUrl
+                        }
                     }
+                    fmt.Println(downLoadUrl)
                     // 中文标题
                     chineseTitle := htmlquery.InnerText(liNode)
                     chineseTitle = chineseTitle[:len(chineseTitle) - 16]
