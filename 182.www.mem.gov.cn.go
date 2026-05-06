@@ -74,7 +74,6 @@ func main() {
                             requestListUrlArray := strings.Split(requestListUrl, "/")
                             requestListUrlArray = requestListUrlArray[:len(requestListUrlArray) - (count + 1)]
                             requestListUrlDownLoadUrl :=  strings.Join(requestListUrlArray, "/")
-                            fmt.Println(requestListUrlDownLoadUrl)
                             downLoadUrl = strings.Replace(downLoadUrl, "../", "", count)
                             downLoadUrl = requestListUrlDownLoadUrl + "/" + downLoadUrl
                         }else{
