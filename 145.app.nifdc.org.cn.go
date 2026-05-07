@@ -120,7 +120,7 @@ type ViewQxTjBzFormData struct {
 	id    string
 }
 
-var QxTjBzCookie = "JSESSIONID=1C3CE9732E1AFA8E49A4C77E57E21E6B"
+var QxTjBzCookie = "JSESSIONID=856A3F6F236035F548D352A524612649"
 
 // 下载中国食品药品检定研究院-器械非采标推荐性行业标准文档
 // @Title 下载中国食品药品检定研究院-器械非采标推荐性行业标准文档
