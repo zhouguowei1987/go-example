@@ -3,7 +3,6 @@ package main
 import (
 	"errors"
 	"fmt"
-	"github.com/antchfx/htmlquery"
 	"io"
 	"net"
 	"net/http"
@@ -13,6 +12,8 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/antchfx/htmlquery"
 )
 
 var KaoJuanXiaZaiEnableHttpProxy = false
@@ -269,9 +270,6 @@ func main() {
 					fileName = strings.ReplaceAll(fileName, "（", "(")
 					fileName = strings.ReplaceAll(fileName, "）", ")")
 					fileName = strings.ReplaceAll(fileName, "~", "")
-					fileName = strings.ReplaceAll(fileName, ".", "")
-					fileName = strings.ReplaceAll(fileName, ". ", "")
-					fileName = strings.ReplaceAll(fileName, ".. ", "")
 					fmt.Println(fileName)
 
 					filePath := "../www.kaojuanxiazai.com/www.kaojuanxiazai.com/" + subjectsPapers.name + "/" + paper.name + "/" + fileName + ".doc"

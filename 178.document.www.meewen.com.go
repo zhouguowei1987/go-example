@@ -183,7 +183,7 @@ func main() {
 			title = strings.ReplaceAll(title, ".doc", "")
 			title = strings.ReplaceAll(title, ".pdf", "")
 
-			filePath := "../www.meewen.com/www.meewen.com/" + category.Name + "/" + title + ".pdf"
+			filePath := "D:\\workspace\\www.meewen.com\\www.meewen.com\\" + category.Name + "\\" + title + ".pdf"
 			fmt.Println(filePath)
 
 			_, err = os.Stat(filePath)
@@ -215,7 +215,7 @@ func main() {
 				continue
 			}
 			//复制文件
-			tempFilePath := strings.ReplaceAll(filePath, "www.meewen.com/www.meewen.com", "www.meewen.com/2026-03-16")
+			tempFilePath := strings.ReplaceAll(filePath, "www.meewen.com\\www.meewen.com", "www.meewen.com\\temp-www.meewen.com")
 			err = copyDocumentMeeWenFile(filePath, tempFilePath)
 			if err != nil {
 				fmt.Println(err)

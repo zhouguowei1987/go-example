@@ -120,11 +120,11 @@ var getTiKuSubjects = []GetTiKuSubjects{
 	},
 	{
 		name: "数学",
-		id:   1,
+		id:   2,
 	},
 	{
 		name: "英语",
-		id:   1,
+		id:   3,
 	},
 }
 var getTiKuSubjectGrades = []GetTiKuSubjectGrades{
@@ -196,7 +196,7 @@ type GetTiKuPaperDetailDownArr struct {
 	Url  string `json:"url"`
 }
 
-const GetTiKuNextDownloadSleep = 1
+const GetTiKuNextDownloadSleep = 5
 
 // ychEduSpider 获取考卷下载试卷
 // @Title 获取考卷下载试卷
@@ -228,6 +228,10 @@ func main() {
 				for _, paper := range getTiKuPapers {
 					fmt.Println("============================================================================")
 					fmt.Println("主题：", subject.name, grade.name, paper.Title)
+					if strings.Index(paper.Title, "试") == -1 {
+						fmt.Println("不含有'试'字，跳过")
+						continue
+					}
 					fmt.Println("=======当前页URL", subjectIndexUrl, "========")
 
 					viewUrl := fmt.Sprintf("https://gettiku.com/api/article/q?id=%d", paper.Id)
@@ -250,18 +254,20 @@ func main() {
 					}
 					fileName := getTiKuPaperDetail.DownArr[0].Name
 					fileName = strings.TrimSpace(fileName)
-					fileName = grade.name + "(" + subject.name + ")-" + fileName
+					if strings.Index(fileName, "含答案") == -1 {
+						fileNameArray := strings.Split(fileName, ".")
+						fileName = fileNameArray[0] + "(含答案)" + "." + fileNameArray[1]
+					}
+					fileName = grade.name + "(" + subject.name + ")" + fileName
 					fileName = strings.ReplaceAll(fileName, "<b>", "")
 					fileName = strings.ReplaceAll(fileName, "</b>", "")
 					fileName = strings.ReplaceAll(fileName, "/", "-")
 					fileName = strings.ReplaceAll(fileName, ":", "-")
+					fileName = strings.ReplaceAll(fileName, " ", "")
 					fileName = strings.ReplaceAll(fileName, "：", "-")
 					fileName = strings.ReplaceAll(fileName, "（", "(")
 					fileName = strings.ReplaceAll(fileName, "）", ")")
-					fileName = strings.ReplaceAll(fileName, "~", "")
-					fileName = strings.ReplaceAll(fileName, ".", "")
-					fileName = strings.ReplaceAll(fileName, ". ", "")
-					fileName = strings.ReplaceAll(fileName, ".. ", "")
+					fileName = strings.ReplaceAll(fileName, "(含答案)(含答案)", "(含答案)")
 					fmt.Println(fileName)
 
 					filePath := "../gettiku.com/gettiku.com/" + subject.name + "/" + fileName
