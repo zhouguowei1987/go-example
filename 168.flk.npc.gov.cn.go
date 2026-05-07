@@ -132,7 +132,7 @@ var FlkCookie = "Hm_lvt_54434aa6770b6d9fef104d146430b53b=1754290987; cna=jo18IaO
 func main() {
 	pageListUrl := "https://flk.npc.gov.cn/law-search/search/list"
 	fmt.Println(pageListUrl)
-	page := 276
+	page := 1
 	maxPage := 294
 	rows := 100
 	isPageListGo := true
@@ -217,14 +217,14 @@ func main() {
 				continue
 			}
 			fmt.Println("=======下载完成========")
-			DownLoadFlkTimeSleep := 5
+			DownLoadFlkTimeSleep := 10
 			// DownLoadFlkTimeSleep := rand.Intn(5)
 			for i := 1; i <= DownLoadFlkTimeSleep; i++ {
 				time.Sleep(time.Second)
 				fmt.Println("page="+strconv.Itoa(page)+",filePath="+filePath+"===========下载成功 暂停", DownLoadFlkTimeSleep, "秒 倒计时", i, "秒===========")
 			}
 		}
-		DownLoadFlkPageTimeSleep := 5
+		DownLoadFlkPageTimeSleep := 10
 		// DownLoadFlkPageTimeSleep := rand.Intn(5)
 		for i := 1; i <= DownLoadFlkPageTimeSleep; i++ {
 			time.Sleep(time.Second)
