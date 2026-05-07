@@ -108,7 +108,7 @@ func StdMiItSetHttpProxy() (httpclient *http.Client) {
 	return httpclient
 }
 
-var StdMiItCookie = "__jsluid_s=8355c056978084a6d5cc9c4ac8b7faf5; ariauseGraymode=false"
+var StdMiItCookie = "__jsluid_s=8355c056978084a6d5cc9c4ac8b7faf5"
 
 type QueryStdMiItListRequestPayload struct {
 	BpiBzno       string `json:"bpiBzno"`

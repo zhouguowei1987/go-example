@@ -107,7 +107,7 @@ func HtSfWbSetHttpProxy() (httpclient *http.Client) {
 	return httpclient
 }
 
-var HtSfWbCookie = "Hm_lvt_54db9897e5a65f7a7b00359d86015d8d=1752905161,1753168348; HMACCOUNT=1CCD0111717619C6; Hm_lpvt_54db9897e5a65f7a7b00359d86015d8d=1753254437; __jsluid_s=e2a3e160f8044ebe5131f1716a90b079; samr=isopen"
+var HtSfWbCookie = "__jsluid_s=e3e90859545b46cd14ae84fb7b9a61a4; Hm_lvt_54db9897e5a65f7a7b00359d86015d8d=1775297987; samr=isopen"
 
 // 下载地方合同示范文本
 // @Title 下载地方合同示范文本
@@ -116,7 +116,7 @@ func main() {
 	page := 1
 	maxPage := 50
 	// true:地方合同范本 false:部委合同范本
-	locHtSfWb := true
+	locHtSfWb := false
 	suffixHtSfWb := ".pdf"
 	// 1:docx 2:pdf
 	typeHtSfWb := 2

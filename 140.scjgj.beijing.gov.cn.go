@@ -112,8 +112,10 @@ type QueryScJgjListFormData struct {
 	standardCode string
 	namecn       string
 	status       int
-	size         int
+	gsjcxToken   string
 }
+
+var ScJgjToken = "0163b4f7113e125024dc0a214fbfbbca2ad8465ed9ca61ea"
 
 // 下载北京市市场监督局文档
 // @Title 下载北京市市场监督局文档
@@ -133,7 +135,8 @@ func main() {
 			page:         page,
 			standardCode: "",
 			namecn:       "",
-			status:       0,
+			status:        0,
+			gsjcxToken:   ScJgjToken,
 		}
 		queryScJgjListResponseContent, err := QueryScJgjList(pageListUrl, queryScJgjListFormData)
 		if err != nil {
@@ -248,6 +251,7 @@ func QueryScJgjList(requestUrl string, queryScJgjListFormData QueryScJgjListForm
 	postData.Add("standardCode", queryScJgjListFormData.standardCode)
 	postData.Add("namecn", queryScJgjListFormData.namecn)
 	postData.Add("status", strconv.Itoa(queryScJgjListFormData.status))
+	postData.Add("gsjcxToken", queryScJgjListFormData.gsjcxToken)
 	req, err := http.NewRequest("POST", requestUrl, strings.NewReader(postData.Encode())) //建立连接
 
 	queryScJgjListResponse := QueryScJgjListResponse{}
@@ -255,13 +259,13 @@ func QueryScJgjList(requestUrl string, queryScJgjListFormData QueryScJgjListForm
 		return queryScJgjListResponseContent, err
 	}
 
-	req.Header.Set("Accept", "*/*")
+	req.Header.Set("Accept", "application/json, text/javascript, */*; q=0.01")
 	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
 	req.Header.Set("Connection", "keep-alive")
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")
 	req.Header.Set("Host", "cx.scjgj.beijing.gov.cn")
 	req.Header.Set("Origin", "https://scjgj.beijing.gov.cn")
-	req.Header.Set("Referer", "https://scjgj.beijing.gov.cn/cxfw/?serviceName=bzh_api_standard")
+	req.Header.Set("Referer", "https://scjgj.beijing.gov.cn/")
 	req.Header.Set("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36")
 	req.Header.Set("X-Requested-With", "XMLHttpRequest")
 	resp, err := client.Do(req) //拿到返回的内容

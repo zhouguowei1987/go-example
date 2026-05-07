@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
-	"math/rand"
+// 	"math/rand"
 	"net"
 	"net/http"
 	"net/url"
@@ -116,13 +116,13 @@ type QueryHnDb41ListFormData struct {
 	pageSize  int
 }
 
-var HnDb41Cookie = "JSESSIONID=B79054B49960F3E0D5D297E1DEF49899"
+var HnDb41Cookie = "JSESSIONID=9C28F1F94EB16516B8011A6CD4D1989A"
 
 // 下载河南省地方标准文档
 // @Title 下载河南省地方标准文档
 // @Description http://www.hndb41.com/，下载河南省地方标准文档
 func main() {
-	pageListUrl := "http://www.hndb41.com/bzsp_getStandardPermitList.action?type=1&acc=1"
+	pageListUrl := "https://www.hndb41.com/bzsp_getStandardPermitList.action?type=1&acc=1"
 	fmt.Println(pageListUrl)
 	page := 0
 	maxPage := 300
@@ -189,8 +189,8 @@ func main() {
 				continue
 			}
 			fmt.Println("=======下载完成========")
-			//DownLoadHnDb41TimeSleep := 10
-			DownLoadHnDb41TimeSleep := rand.Intn(5)
+			DownLoadHnDb41TimeSleep := 10
+// 			DownLoadHnDb41TimeSleep := rand.Intn(5)
 			for i := 1; i <= DownLoadHnDb41TimeSleep; i++ {
 				time.Sleep(time.Second)
 				fmt.Println("page="+strconv.Itoa(page)+",filePath="+filePath+"===========下载成功 暂停", DownLoadHnDb41TimeSleep, "秒 倒计时", i, "秒===========")
