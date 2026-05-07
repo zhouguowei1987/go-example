@@ -122,27 +122,27 @@ var miNi19EducationCategory = []MiNi19EducationCategory{
 	// 	startPage:    1,
 	// 	wtspurl:      "/ziyuan/jiaoan/",
 	// },
+	{
+		categoryName: "试卷",
+		categoryUrl:  "http://www.19mini.cn/ziyuan/shijuan/",
+		classId:      30,
+		startPage:    1,
+		wtspurl:      "/ziyuan/shijuan/",
+	},
 	// {
-	// 	categoryName: "试卷",
-	// 	categoryUrl:  "http://www.19mini.cn/ziyuan/shijuan/",
-	// 	classId:      30,
+	// 	categoryName: "资料",
+	// 	categoryUrl:  "http://www.19mini.cn/ziyuan/ziliao/",
+	// 	classId:      33,
 	// 	startPage:    1,
-	// 	wtspurl:      "/ziyuan/shijuan/",
+	// 	wtspurl:      "/ziyuan/ziliao/",
 	// },
-	{
-		categoryName: "资料",
-		categoryUrl:  "http://www.19mini.cn/ziyuan/ziliao/",
-		classId:      33,
-		startPage:    1,
-		wtspurl:      "/ziyuan/ziliao/",
-	},
-	{
-		categoryName: "训练",
-		categoryUrl:  "http://www.19mini.cn/ziyuan/xunlian/",
-		classId:      34,
-		startPage:    1,
-		wtspurl:      "/ziyuan/xunlian/",
-	},
+	// {
+	// 	categoryName: "训练",
+	// 	categoryUrl:  "http://www.19mini.cn/ziyuan/xunlian/",
+	// 	classId:      34,
+	// 	startPage:    1,
+	// 	wtspurl:      "/ziyuan/xunlian/",
+	// },
 }
 
 var MiNi19Cookie = "Hm_lvt_e82ba7292d1c4fbfbf1933dc51f62e60=1747493636,1747717671,1749290636; HMACCOUNT=1CCD0111717619C6; XLA_CI=23bb8bc755f819c1fe15ab77e57ffc56; Hm_lpvt_e82ba7292d1c4fbfbf1933dc51f62e60=1749476471; _wtspurl=wtspurl; _wtsuid=ebaf0b44-8238-4ba6-bb84-5b964a783a70; _wtscpk=26716981c1; _wtsexp=1749477828; _wtsjsk=01cc0ef384da84859bdc1d97d17189f9"

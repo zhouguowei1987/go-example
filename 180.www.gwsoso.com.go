@@ -114,7 +114,7 @@ type QueryGwSoSoListFormData struct {
 	PageCls int `json:"pagecls"`
 }
 
-var GwSoSoCookie = "Hm_lvt_b3ecdb0e91dc1c234e7f59ad61980ec7=1776471739,1776476759,1776754925,1777256528; HMACCOUNT=1CCD0111717619C6; gongwen=934e86ae-2b18-41c8-a26e-131e4de9dff3; Hm_lpvt_b3ecdb0e91dc1c234e7f59ad61980ec7=1777256557"
+var GwSoSoCookie = "Hm_lvt_b3ecdb0e91dc1c234e7f59ad61980ec7=1776476759,1776754925,1777256528,1777767896; HMACCOUNT=1CCD0111717619C6; gongwen=d6fea339-25bf-43da-9713-9de108703ed9; Hm_lpvt_b3ecdb0e91dc1c234e7f59ad61980ec7=1777767955"
 
 // 下载公文搜文档
 // @Title 下载公文搜文档
