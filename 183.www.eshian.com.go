@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io"
 	"math/rand"
+	"net"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -73,6 +74,7 @@ func main() {
 		}
 		downloadUrl := "https://www.eshian.com" + string(regDownloadViewUrlMatch[0][1])
 		downloadUrl = strings.ReplaceAll(downloadUrl, "\\", "")
+		fmt.Println(downloadUrl)
 
 		fmt.Println("=======开始下载========")
 		err = downloadEShiAn(downloadUrl, detailUrl, filePath)
@@ -138,13 +140,22 @@ func EShiAnDetailDoc(url string) (doc *html.Node, err error) {
 }
 
 func downloadEShiAn(requestUrl string, referer string, filePath string) error {
-	// 创建一个自定义的http.Transport
-	tr := &http.Transport{
-		TLSClientConfig: &tls.Config{
-			InsecureSkipVerify: true, // 忽略证书验证
+	// 初始化客户端
+	var client *http.Client = &http.Client{
+		Transport: &http.Transport{
+			Dial: func(netw, addr string) (net.Conn, error) {
+				c, err := net.DialTimeout(netw, addr, time.Second*3)
+				if err != nil {
+					fmt.Println("dail timeout", err)
+					return nil, err
+				}
+				return c, nil
+
+			},
+			MaxIdleConnsPerHost:   10,
+			ResponseHeaderTimeout: time.Second * 30,
 		},
-	}
-	client := &http.Client{Transport: tr}               //初始化客户端
+	}             //初始化客户端
 	req, err := http.NewRequest("GET", requestUrl, nil) //建立连接
 	if err != nil {
 		return err
