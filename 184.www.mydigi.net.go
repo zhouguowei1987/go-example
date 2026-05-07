@@ -30,7 +30,7 @@ var MyDiGiCookie = "ASPSESSIONIDSQSRBSRQ=MHEDBGHBGANCNJKMHDNPAHDF; __utma=136034
 // @Description http://www.mydigi.net/，将说明书之家文档入库
 func main() {
 	// 8338
-	var startId = 40000
+	var startId = 40600
 	var endId = 40628
 	for id := startId; id <= endId; id++ {
 		showUrl := fmt.Sprintf("http://www.mydigi.net/soft/show.asp?id=%d", id)
