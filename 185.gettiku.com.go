@@ -114,14 +114,14 @@ type GetTiKuSubjectGrades struct {
 }
 
 var getTiKuSubjects = []GetTiKuSubjects{
-	{
-		name: "语文",
-		id:   1,
-	},
-	{
-		name: "数学",
-		id:   2,
-	},
+	// {
+	// 	name: "语文",
+	// 	id:   1,
+	// },
+	// {
+	// 	name: "数学",
+	// 	id:   2,
+	// },
 	{
 		name: "英语",
 		id:   3,
@@ -263,10 +263,12 @@ func main() {
 					fileName = strings.ReplaceAll(fileName, "</b>", "")
 					fileName = strings.ReplaceAll(fileName, "/", "-")
 					fileName = strings.ReplaceAll(fileName, ":", "-")
-					fileName = strings.ReplaceAll(fileName, " ", "")
+					fileName = strings.ReplaceAll(fileName, " ", "_")
 					fileName = strings.ReplaceAll(fileName, "：", "-")
 					fileName = strings.ReplaceAll(fileName, "（", "(")
 					fileName = strings.ReplaceAll(fileName, "）", ")")
+					fileName = strings.ReplaceAll(fileName, "word，", "")
+					fileName = strings.ReplaceAll(fileName, "word版，", "")
 					fileName = strings.ReplaceAll(fileName, "(含答案)(含答案)", "(含答案)")
 					fmt.Println(fileName)
 
@@ -282,6 +284,13 @@ func main() {
 
 					fmt.Println("=======开始下载" + strconv.Itoa(current) + "========")
 					err = downloadGetTiKu(downLoadUrl, viewUrl, filePath)
+					if err != nil {
+						fmt.Println(err)
+						continue
+					}
+					//复制文件
+					tempFilePath := strings.ReplaceAll(filePath, "gettiku.com/gettiku.com", "gettiku.com/temp-gettiku.com")
+					err = copyGetTiKuFile(filePath, tempFilePath)
 					if err != nil {
 						fmt.Println(err)
 						continue
@@ -366,5 +375,39 @@ func downloadGetTiKu(attachmentUrl string, referer string, filePath string) erro
 	if err != nil {
 		return err
 	}
+	return nil
+}
+
+func copyGetTiKuFile(src, dst string) (err error) {
+	in, err := os.Open(src)
+	if err != nil {
+		return err
+	}
+	defer func(in *os.File) {
+		err := in.Close()
+		if err != nil {
+			return
+		}
+	}(in)
+
+	// 创建一个文件用于保存
+	fileDiv := filepath.Dir(dst)
+	if _, err = os.Stat(fileDiv); err != nil {
+		if os.MkdirAll(fileDiv, 0o777) != nil {
+			return err
+		}
+	}
+	out, err := os.Create(dst)
+	if err != nil {
+		return err
+	}
+	defer func(out *os.File) {
+		err := out.Close()
+		if err != nil {
+			return
+		}
+	}(out)
+
+	_, err = io.Copy(out, in)
 	return nil
 }
