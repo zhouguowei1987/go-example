@@ -119,7 +119,10 @@ func main() {
 
 		// 设置倒计时
 		// DownLoadTMyDiGiTimeSleep := 10
-		DownLoadTMyDiGiTimeSleep := rand.Intn(5)
+		DownLoadTMyDiGiTimeSleep := rand.Intn(10)
+		if DownLoadTMyDiGiTimeSleep <=5 {
+		    DownLoadTMyDiGiTimeSleep = 5
+		}
 		for i := 1; i <= DownLoadTMyDiGiTimeSleep; i++ {
 			time.Sleep(time.Second)
 			fmt.Println("id="+strconv.Itoa(id)+"===========操作完成，", "暂停", DownLoadTMyDiGiTimeSleep, "秒，倒计时", i, "秒===========")
