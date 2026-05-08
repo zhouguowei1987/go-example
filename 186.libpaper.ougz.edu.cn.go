@@ -52,6 +52,7 @@ func main() {
 		LibPaperListDoc, err := LibPaperHtmlDoc(requestListUrl, referUrl)
 		if err != nil {
 			fmt.Println(err)
+			isPageListGo = false
 			break
 		}
 		trNodes := htmlquery.Find(LibPaperListDoc, `//div[@class="main"]/div[@class="right"]/table[@class="pn-ltable"]/tbody[@class="pn-ltbody"]/tr`)
