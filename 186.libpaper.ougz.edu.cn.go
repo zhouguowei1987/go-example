@@ -124,12 +124,12 @@ func main() {
 					continue
 				}
 				//复制文件
-				tempFilePath := strings.ReplaceAll(filePath, "libpaper.ougz.edu.cn\\libpaper.ougz.edu.cn", "libpaper.ougz.edu.cn\\temp-libpaper.ougz.edu.cn")
-				err = copyLibPaperFile(filePath, tempFilePath)
-				if err != nil {
-					fmt.Println(err)
-					continue
-				}
+				// tempFilePath := strings.ReplaceAll(filePath, "libpaper.ougz.edu.cn\\libpaper.ougz.edu.cn", "libpaper.ougz.edu.cn\\temp-libpaper.ougz.edu.cn")
+				// err = copyLibPaperFile(filePath, tempFilePath)
+				// if err != nil {
+				// 	fmt.Println(err)
+				// 	continue
+				// }
 				fmt.Println("=======完成下载========")
 				// 设置倒计时
 				// DownLoadTLibPaperTimeSleep := 10
