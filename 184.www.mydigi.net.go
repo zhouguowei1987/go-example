@@ -29,8 +29,8 @@ var MyDiGiCookie = "ASPSESSIONIDSQSRBSRQ=MHEDBGHBGANCNJKMHDNPAHDF; __utma=136034
 // @Title 获取说明书之家文档
 // @Description http://www.mydigi.net/，将说明书之家文档入库
 func main() {
-    // 8338
-	var startId = 40000
+	// 8338
+	var startId = 40600
 	var endId = 40628
 	for id := startId; id <= endId; id++ {
 		showUrl := fmt.Sprintf("http://www.mydigi.net/soft/show.asp?id=%d", id)
@@ -49,6 +49,7 @@ func main() {
 		title := strings.TrimSpace(htmlquery.InnerText(titleNode))
 		title = strings.TrimSpace(title)
 		title = strings.ReplaceAll(title, "您当前的位置：说明书之家 -> ", "")
+		title = strings.ReplaceAll(title, "说明书", "")
 		titleArray := strings.Split(title, " -> ")
 		title = titleArray[1] + "(" + titleArray[0] + ")" + "-" + titleArray[2]
 		title = strings.ReplaceAll(title, "/", "-")
@@ -121,8 +122,8 @@ func main() {
 		// 设置倒计时
 		// DownLoadTMyDiGiTimeSleep := 10
 		DownLoadTMyDiGiTimeSleep := rand.Intn(10)
-		if DownLoadTMyDiGiTimeSleep <=5 {
-		    DownLoadTMyDiGiTimeSleep = 5
+		if DownLoadTMyDiGiTimeSleep <= 5 {
+			DownLoadTMyDiGiTimeSleep = 5
 		}
 		for i := 1; i <= DownLoadTMyDiGiTimeSleep; i++ {
 			time.Sleep(time.Second)
