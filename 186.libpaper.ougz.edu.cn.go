@@ -105,7 +105,7 @@ func main() {
 					continue
 				}
 
-				filePath := "E:\\workspace\\libpaper.ougz.edu.cn\\libpaper.ougz.edu.cn\\" + examTime + "国家开放大学《" + title + "-" + code + "》试题(含答案)" + fileExt
+				filePath := "../libpaper.ougz.edu.cn/" + examTime + "国家开放大学《" + title + "-" + code + "》试题(含答案)" + fileExt
 				fmt.Println(filePath)
 				_, err = os.Stat(filePath)
 				if err == nil {
@@ -124,12 +124,12 @@ func main() {
 					continue
 				}
 				//复制文件
-				// tempFilePath := strings.ReplaceAll(filePath, "libpaper.ougz.edu.cn\\libpaper.ougz.edu.cn", "libpaper.ougz.edu.cn\\temp-libpaper.ougz.edu.cn")
-				// err = copyLibPaperFile(filePath, tempFilePath)
-				// if err != nil {
-				// 	fmt.Println(err)
-				// 	continue
-				// }
+				tempFilePath := strings.ReplaceAll(filePath, "libpaper.ougz.edu.cn", "upload.doc88.com/libpaper.ougz.edu.cn")
+				err = copyLibPaperFile(filePath, tempFilePath)
+				if err != nil {
+					fmt.Println(err)
+					continue
+				}
 				fmt.Println("=======完成下载========")
 				// 设置倒计时
 				// DownLoadTLibPaperTimeSleep := 10
