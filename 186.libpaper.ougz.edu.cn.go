@@ -104,7 +104,7 @@ func main() {
 					continue
 				}
 
-				filePath := "E:\\workspace\\libpaper.ougz.edu.cn\\libpaper.ougz.edu.cn\\" + examTime + "国家开放大学《" + title + code + "》试题(含答案)" + fileExt
+				filePath := "E:\\workspace\\libpaper.ougz.edu.cn\\libpaper.ougz.edu.cn\\" + examTime + "国家开放大学《" + title + "-" + code + "》试题(含答案)" + fileExt
 				fmt.Println(filePath)
 				_, err = os.Stat(filePath)
 				if err == nil {
