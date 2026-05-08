@@ -1,11 +1,9 @@
 package main
 
 import (
-	"encoding/json"
 	"errors"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"net"
 	"net/http"
 	"net/url"
@@ -106,7 +104,7 @@ func main() {
 					continue
 				}
 
-				filePath := "E:\\workspace\\libpaper.ougz.edu.cn\\libpaper.ougz.edu.cn\\" + examTime + "国家开放大学《" + title + code + "》试题(含答案及评分标准)" + fileExt
+				filePath := "E:\\workspace\\libpaper.ougz.edu.cn\\libpaper.ougz.edu.cn\\" + examTime + "国家开放大学《" + title + code + "》试题(含答案)" + fileExt
 				fmt.Println(filePath)
 				_, err = os.Stat(filePath)
 				if err == nil {
