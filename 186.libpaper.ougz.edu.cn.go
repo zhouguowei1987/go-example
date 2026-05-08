@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"math/rand"
 	"net"
 	"net/http"
 	"net/url"
@@ -131,14 +132,15 @@ func main() {
 				}
 				fmt.Println("=======完成下载========")
 				// 设置倒计时
-				DownLoadTLibPaperTimeSleep := 10
+				// DownLoadTLibPaperTimeSleep := 10
+				DownLoadTLibPaperTimeSleep := rand.Intn(5)
 				for i := 1; i <= DownLoadTLibPaperTimeSleep; i++ {
 					time.Sleep(time.Second)
 					fmt.Println("page = "+strconv.Itoa(page)+"===title="+title+"===========操作完成，", "暂停", DownLoadTLibPaperTimeSleep, "秒，倒计时", i, "秒===========")
 				}
 			}
-			DownLoadLibPaperPageTimeSleep := 10
-			// DownLoadLibPaperPageTimeSleep := rand.Intn(5)
+			// DownLoadLibPaperPageTimeSleep := 10
+			DownLoadLibPaperPageTimeSleep := rand.Intn(5)
 			for i := 1; i <= DownLoadLibPaperPageTimeSleep; i++ {
 				time.Sleep(time.Second)
 				fmt.Println("page = "+strconv.Itoa(page)+"========= 暂停", DownLoadLibPaperPageTimeSleep, "秒 倒计时", i, "秒===========")
