@@ -19,14 +19,14 @@ import (
 	"golang.org/x/net/html"
 )
 
-var EShiAnCookie = "JSESSIONID=BC37AB92C738899F99C7AD655BC51115"
+var EShiAnCookie = "JSESSIONID=C7EB616B1CC7EB42DD47E44018A3C7B9"
 
 // EShiAnSpider 获取食安通标准文档
 // @Title 获取食安通标准文档
 // @Description https://www.eshian.com/，将食安通标准文档入库
 func main() {
 	var startId = 66981
-	var endId = 68457
+	var endId = 68656
 	for id := startId; id <= endId; id++ {
 		fmt.Println(id)
 		detailUrl := fmt.Sprintf("https://www.eshian.com/sat/standard/info/LXMjAyNi0wNS0wNw==/%d", id)
