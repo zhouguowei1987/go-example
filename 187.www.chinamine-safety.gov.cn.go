@@ -38,7 +38,7 @@ var SafetyCookie = "https_waf_cookie=e3493724-b8cc-4a84ad9409711b3c779726dc0353a
 // @Title 获取国家矿山安全监察局标准文档
 // @Description https://www.chinamine-safety.gov.cn/，获取国家矿山安全监察局标准文档
 func main() {
-	page := 1
+	page := 0
 	isPageListGo := true
 	for isPageListGo {
 		requestListUrl := "https://www.chinamine-safety.gov.cn/zfxxgk/fdzdgknr/zcfg/hybz_01/mkanj/index.shtml"
