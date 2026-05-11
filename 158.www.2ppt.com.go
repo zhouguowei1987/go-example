@@ -38,7 +38,7 @@ type QueryPpt2DownloadUrlFormData struct {
 	resourceid string
 }
 
-var Ppt2Cookie = "Hm_lvt_cd668c52b64b6c51259bb01b5a1ca278=1765592997; HMACCOUNT=1CCD0111717619C6; Hm_lpvt_cd668c52b64b6c51259bb01b5a1ca278=1765593145"
+var Ppt2Cookie = "acw_tc=7ca3c2ad17783747408263375e30b0d8a86c7e217337c7b3025a7ab864; cdn_sec_tc=7ca3c2ad17783747408263375e30b0d8a86c7e217337c7b3025a7ab864; Hm_lvt_cd668c52b64b6c51259bb01b5a1ca278=1778374742; HMACCOUNT=9C0CD19686802BBF; Hm_lpvt_cd668c52b64b6c51259bb01b5a1ca278=1778374757"
 
 // ychEduSpider 获取爱ppt文档
 // @Title 获取爱ppt文档

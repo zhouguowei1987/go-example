@@ -24,8 +24,8 @@ import (
 // @Title 获取第一ppt文档
 // @Description https://1ppt.com/，将第一ppt文档入库
 func main() {
-	var startId = 142867
-	var endId = 143499
+	var startId = 143499
+	var endId = 144324
 	for id := startId; id <= endId; id++ {
 		err := pptSpider(id)
 		if err != nil {
@@ -35,7 +35,7 @@ func main() {
 	//pptSpider(130283)
 }
 
-var pptCookie = "mizToken=202602271902430.0347565983544073640.25198564375680754; Hm_lvt_087ceb5ea69d10fb5bbb6bc49c209fa2=1775622900,1776047991; HMACCOUNT=1CCD0111717619C6; acw_tc=276077cc17760513931748359e80a6aeca670941a3fb33b44d1247438edc9e; Hm_lpvt_087ceb5ea69d10fb5bbb6bc49c209fa2=1776051395; acw_sc__v2=1234cf0d46-e2e759b3625142699e66f3c3e49338ee4121e4ad5e584d3904"
+var pptCookie = "mizToken=202605091021400.88621061314439760.030886799051758174; acw_tc=2760775817782932630178731ea4c17c2605124e727012342acec674a4443f; Hm_lvt_087ceb5ea69d10fb5bbb6bc49c209fa2=1778293264; HMACCOUNT=9C0CD19686802BBF; Hm_lpvt_087ceb5ea69d10fb5bbb6bc49c209fa2=1778293277; acw_sc__v2=1234cf0d46-7fc351498a13ee6b7df2df9892e8211b1e33e56a38540b3d14"
 
 func pptSpider(id int) error {
 	detailUrl := fmt.Sprintf("https://www.1ppt.com/article/%d.html", id)
