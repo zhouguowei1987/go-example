@@ -46,8 +46,19 @@ func main() {
                     continue
                 }
 				title := htmlquery.InnerText(htmlquery.FindOne(detailDoc, `//div[@class="hd"]/h1`))
-				title = strings.ReplaceAll(title, "/", "-")
-				title = strings.ReplaceAll(title, " ", "")
+				title = strings.TrimSpace(title)
+                title = strings.ReplaceAll(title, "/", "-")
+                title = strings.ReplaceAll(title, "／", "-")
+                title = strings.ReplaceAll(title, "/", "-")
+                title = strings.ReplaceAll(title, "　", "-")
+                title = strings.ReplaceAll(title, " ", "-")
+                title = strings.ReplaceAll(title, "：", ":")
+                title = strings.ReplaceAll(title, "—", "-")
+                title = strings.ReplaceAll(title, "－", "-")
+                title = strings.ReplaceAll(title, "（", "(")
+                title = strings.ReplaceAll(title, "）", ")")
+                title = strings.ReplaceAll(title, "《", "")
+                title = strings.ReplaceAll(title, "》", "")
 				fmt.Println(title)
 
 				standardNo := htmlquery.InnerText(htmlquery.FindOne(detailDoc, `//div[@class="traits"]/table/tbody/tr[3]/td[2]`))
