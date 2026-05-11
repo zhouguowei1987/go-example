@@ -63,36 +63,36 @@ func main() {
 
 				fmt.Println("=======page = " + strconv.Itoa(page) + "=========")
 
+				// 中文标题
+                aHrefNode := htmlquery.FindOne(liNode, `./a`)
+                chineseTitle := htmlquery.InnerText(aHrefNode)
+                chineseTitle = strings.TrimSpace(chineseTitle)
+                chineseTitle = strings.ReplaceAll(chineseTitle, "/", "-")
+                chineseTitle = strings.ReplaceAll(chineseTitle, "／", "-")
+                chineseTitle = strings.ReplaceAll(chineseTitle, "/", "-")
+                chineseTitle = strings.ReplaceAll(chineseTitle, "　", "-")
+                chineseTitle = strings.ReplaceAll(chineseTitle, " ", "-")
+                chineseTitle = strings.ReplaceAll(chineseTitle, "：", ":")
+                chineseTitle = strings.ReplaceAll(chineseTitle, "—", "-")
+                chineseTitle = strings.ReplaceAll(chineseTitle, "－", "-")
+                chineseTitle = strings.ReplaceAll(chineseTitle, "（", "(")
+                chineseTitle = strings.ReplaceAll(chineseTitle, "）", ")")
+                chineseTitle = strings.ReplaceAll(chineseTitle, "《", "")
+                chineseTitle = strings.ReplaceAll(chineseTitle, "》", "")
+                fmt.Println(chineseTitle)
+
+                filePath := "../www.saac.gov.cn/" + chineseTitle + ".pdf"
+                _, err = os.Stat(filePath)
+                if err == nil {
+                    fmt.Println("文档已下载过，跳过")
+                    continue
+                }
+
 				downloadHrefNode := htmlquery.FindOne(liNode, `./a/@href`)
 				downLoadUrl := htmlquery.InnerText(downloadHrefNode)
 				if strings.Contains(downLoadUrl, ".pdf") {
 					downLoadUrl = "https://www.saac.gov.cn" + downLoadUrl
 					fmt.Println(downLoadUrl)
-					// 中文标题
-					aHrefNode := htmlquery.FindOne(liNode, `./a`)
-					chineseTitle := htmlquery.InnerText(aHrefNode)
-					chineseTitle = strings.TrimSpace(chineseTitle)
-					chineseTitle = strings.ReplaceAll(chineseTitle, "/", "-")
-					chineseTitle = strings.ReplaceAll(chineseTitle, "／", "-")
-					chineseTitle = strings.ReplaceAll(chineseTitle, "/", "-")
-					chineseTitle = strings.ReplaceAll(chineseTitle, "　", "-")
-					chineseTitle = strings.ReplaceAll(chineseTitle, " ", "-")
-					chineseTitle = strings.ReplaceAll(chineseTitle, "：", ":")
-					chineseTitle = strings.ReplaceAll(chineseTitle, "—", "-")
-					chineseTitle = strings.ReplaceAll(chineseTitle, "－", "-")
-					chineseTitle = strings.ReplaceAll(chineseTitle, "（", "(")
-					chineseTitle = strings.ReplaceAll(chineseTitle, "）", ")")
-					chineseTitle = strings.ReplaceAll(chineseTitle, "《", "")
-					chineseTitle = strings.ReplaceAll(chineseTitle, "》", "")
-					fmt.Println(chineseTitle)
-
-					filePath := "../www.saac.gov.cn/" + chineseTitle + ".pdf"
-					_, err = os.Stat(filePath)
-					if err == nil {
-						fmt.Println("文档已下载过，跳过")
-						continue
-					}
-
 					// 开始下载
 					fmt.Println("=======开始下载========")
 					err = downloadSaac(downLoadUrl, requestListUrl, filePath)
