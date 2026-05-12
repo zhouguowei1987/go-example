@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
-	"math/rand"
+	// "math/rand"
 	"net"
 	"net/http"
 	"os"
@@ -42,6 +42,7 @@ func main() {
 		title = strings.ReplaceAll(title, "：", ":")
 		title = strings.ReplaceAll(title, "—", "-")
 		title = strings.ReplaceAll(title, "－", "-")
+		title = strings.ReplaceAll(title, "--", "-")
 		title = strings.ReplaceAll(title, "（", "(")
 		title = strings.ReplaceAll(title, "）", ")")
 		title = strings.ReplaceAll(title, "《", "")
@@ -97,8 +98,8 @@ func main() {
 			fmt.Println(err)
 			continue
 		}
-		//DownLoadWeldnetTimeSleep := 10
-		DownLoadWeldnetTimeSleep := rand.Intn(5)
+		DownLoadWeldnetTimeSleep := 10
+		// DownLoadWeldnetTimeSleep := rand.Intn(5)
 		for i := 1; i <= DownLoadWeldnetTimeSleep; i++ {
 			time.Sleep(time.Second)
 			fmt.Println("filePath="+filePath+"===========下载成功 暂停", DownLoadWeldnetTimeSleep, "秒 倒计时", i, "秒===========")
