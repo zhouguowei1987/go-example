@@ -33,6 +33,10 @@ func main() {
 			fmt.Println(err)
 			break
 		}
+		if len(tweldnetDetailResponse.Data) <= 0{
+		    fmt.Println("数据不完整，跳过")
+			continue
+		}
 		title := tweldnetDetailResponse.Data[0].ChineseTitle
 		title = strings.TrimSpace(title)
 		title = strings.ReplaceAll(title, "/", "-")
