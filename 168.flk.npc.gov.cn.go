@@ -174,6 +174,22 @@ func main() {
 			title = strings.ReplaceAll(title, "/", "-")
 			title = strings.ReplaceAll(title, "--", "-")
 			fmt.Println(title)
+			if strings.Index(title, "修改、废止的决定") != -1 {
+				fmt.Println("包含‘修改、废止的决定’文档，跳过")
+				continue
+			}
+			if strings.Index(title, "最高人民法院") != -1 {
+				fmt.Println("包含‘最高人民法院’文档，跳过")
+				continue
+			}
+			if strings.Index(title, "最高人民检察院") != -1 {
+				fmt.Println("包含‘最高人民检察院’文档，跳过")
+				continue
+			}
+			if strings.Index(title, "人民代表大会") != -1 {
+				fmt.Println("包含‘人民代表大会’文档，跳过")
+				continue
+			}
 
 			filePath := "D:\\workspace\\flk.npc.gov.cn\\flk.npc.gov.cn\\" + title + "-" + flk.Flxz + "(" + gbrq + ")" + ".docx"
 			filePath = strings.ReplaceAll(filePath, "()", "")
