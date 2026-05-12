@@ -15,21 +15,21 @@ import (
 	"strings"
 )
 
-var H2oChinaCookie = "server_name_session=0710dba57d88ab91589b685360201510; backurl=%2Fstandard%2Flist%3FcolumnId%3D18%26ordby%3Ddateline%26sort%3DDESC%26page%3D%7Bpage%7D%3D"
+var ChnDaQiCookie = "PHPSESSID=a49trntp0506rhcs7pvg71sma6; server_name_session=acda38eadaab56e67cdda0ffbc2359cc; backurl=%2Fstandard%2Flist%3FcolumnId%3D104%26ordby%3Ddateline%26sort%3DDESC%26page%3D%7Bpage%7D%3D"
 
-// h2oChinaSpider 获取中国水网Pdf文档
-// @Title 获取中国水网Pdf文档
-// @Description https://www.h2o-china.com/，获取中国水网Pdf文档
+// solidWasteSpider 获取中国大气网Pdf文档
+// @Title 获取中国大气网Pdf文档
+// @Description https://www.chndaqi.com/，获取中国大气网Pdf文档
 func main() {
 	page := 1
 	isPageGo := true
 	for isPageGo {
-		listUrl := fmt.Sprintf("https://www.h2o-china.com/standard/list?columnId=18&ordby=dateline&sort=DESC&page=%d", page)
-		referUrl := "https://www.h2o-china.com/standard/list"
+		listUrl := fmt.Sprintf("https://www.chndaqi.com/standard/list?columnId=104&ordby=dateline&sort=DESC&page=%d", page)
+		referUrl := "https://www.chndaqi.com/standard/list"
 		if page >= 2 {
-			referUrl = fmt.Sprintf("https://www.h2o-china.com/standard/list?columnId=18&ordby=dateline&sort=DESC&page=%d", page-1)
+			referUrl = fmt.Sprintf("https://www.chndaqi.com/standard/list?columnId=104&ordby=dateline&sort=DESC&page=%d", page-1)
 		}
-		listDoc, err := H2oChinaBzHtmlDoc(listUrl, referUrl)
+		listDoc, err := ChnDaQiBzHtmlDoc(listUrl, referUrl)
 		if err != nil {
 			fmt.Println(err)
 			break
@@ -38,9 +38,9 @@ func main() {
 		if len(liNodes) >= 1 {
 			for _, liNode := range liNodes {
 				detailUrl := htmlquery.InnerText(htmlquery.FindOne(liNode, `./@href`))
-				detailUrl = "https://www.h2o-china.com" + detailUrl
+				detailUrl = "https://www.chndaqi.com" + detailUrl
 				fmt.Println(detailUrl)
-				detailDoc, err := H2oChinaBzHtmlDoc(detailUrl, listUrl)
+				detailDoc, err := ChnDaQiBzHtmlDoc(detailUrl, listUrl)
                 if err != nil {
                     fmt.Println(err)
                     continue
@@ -68,12 +68,12 @@ func main() {
 				//fmt.Println(standardNo)
 
 				downloadUrl := htmlquery.InnerText(htmlquery.FindOne(detailDoc, `//div[@class="dowloads fr"]/a/@href`))
-				downloadUrl = "https://www.h2o-china.com" + downloadUrl
+				downloadUrl = "https://www.chndaqi.com" + downloadUrl
 				fmt.Println(downloadUrl)
 
-				filePath := "../www.h2o-china.com/" + title + ".pdf"
+				filePath := "../www.chndaqi.com/" + title + ".pdf"
 				if len(standardNo) > 1 {
-					filePath = "../www.h2o-china.com/" + title + "(" + standardNo + ")" + ".pdf"
+					filePath = "../www.chndaqi.com/" + title + "(" + standardNo + ")" + ".pdf"
 				}
 				fmt.Println(filePath)
 				_, err = os.Stat(filePath)
@@ -83,13 +83,13 @@ func main() {
                 }
                 // 开始下载
                 fmt.Println("=======开始下载========")
-				err = downloadH2oChinaPdf(downloadUrl, filePath)
+				err = downloadChnDaQiPdf(downloadUrl, filePath)
 				if err != nil {
 					fmt.Println(err)
 				}
 				//复制文件
-                tempFilePath := strings.ReplaceAll(filePath, "www.h2o-china.com", "temp-hbba.sacinfo.org.cn")
-                err = copyH2oChinaFile(filePath, tempFilePath)
+                tempFilePath := strings.ReplaceAll(filePath, "www.chndaqi.com", "temp-hbba.sacinfo.org.cn")
+                err = copyChnDaQiFile(filePath, tempFilePath)
                 if err != nil {
                     fmt.Println(err)
                     continue
@@ -97,17 +97,17 @@ func main() {
                 fmt.Println("=======完成下载========")
 
                 // 设置倒计时
-                DownLoadTH2oChinaTimeSleep := 10
-                for i := 1; i <= DownLoadTH2oChinaTimeSleep; i++ {
+                DownLoadTChnDaQiTimeSleep := 10
+                for i := 1; i <= DownLoadTChnDaQiTimeSleep; i++ {
                     time.Sleep(time.Second)
-                    fmt.Println("===page = "+strconv.Itoa(page)+"===title="+title+"===========操作完成，", "暂停", DownLoadTH2oChinaTimeSleep, "秒，倒计时", i, "秒===========")
+                    fmt.Println("===page = "+strconv.Itoa(page)+"===title="+title+"===========操作完成，", "暂停", DownLoadTChnDaQiTimeSleep, "秒，倒计时", i, "秒===========")
                 }
 			}
-			DownLoadH2oChinaPageTimeSleep := 10
-			// DownLoadH2oChinaPageTimeSleep := rand.Intn(5)
-			for i := 1; i <= DownLoadH2oChinaPageTimeSleep; i++ {
+			DownLoadChnDaQiPageTimeSleep := 10
+			// DownLoadChnDaQiPageTimeSleep := rand.Intn(5)
+			for i := 1; i <= DownLoadChnDaQiPageTimeSleep; i++ {
 				time.Sleep(time.Second)
-				fmt.Println("===page = "+strconv.Itoa(page)+"========= 暂停", DownLoadH2oChinaPageTimeSleep, "秒 倒计时", i, "秒===========")
+				fmt.Println("===page = "+strconv.Itoa(page)+"========= 暂停", DownLoadChnDaQiPageTimeSleep, "秒 倒计时", i, "秒===========")
 			}
 			page++
 		} else {
@@ -118,7 +118,7 @@ func main() {
 	}
 }
 
-func H2oChinaBzHtmlDoc(requestUrl string, referer string) (doc *html.Node, err error) {
+func ChnDaQiBzHtmlDoc(requestUrl string, referer string) (doc *html.Node, err error) {
 	// 初始化客户端
 	var client *http.Client = &http.Client{
 		Transport: &http.Transport{
@@ -145,10 +145,10 @@ func H2oChinaBzHtmlDoc(requestUrl string, referer string) (doc *html.Node, err e
 	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
 	req.Header.Set("Cache-Control", "max-age=0")
 	req.Header.Set("Connection", "keep-alive")
-	req.Header.Set("Cookie", H2oChinaCookie)
+	req.Header.Set("Cookie", ChnDaQiCookie)
 	req.Header.Set("Content-Type", "text/html; charset=utf-8")
-	req.Header.Set("Host", "www.h2o-china.com")
-	req.Header.Set("Origin", "https://www.h2o-china.com/")
+	req.Header.Set("Host", "www.chndaqi.com")
+	req.Header.Set("Origin", "https://www.chndaqi.com/")
 	req.Header.Set("Referer", referer)
 	req.Header.Set("sec-ch-ua", "\"Chromium\";v=\"118\", \"Google Chrome\";v=\"118\", \"Not=A?Brand\";v=\"99\"")
 	req.Header.Set("sec-ch-ua-mobile", "?0")
@@ -180,7 +180,7 @@ func H2oChinaBzHtmlDoc(requestUrl string, referer string) (doc *html.Node, err e
 	return doc, nil
 }
 
-func downloadH2oChinaPdf(pdfUrl string, filePath string) error {
+func downloadChnDaQiPdf(pdfUrl string, filePath string) error {
 	// 初始化客户端
 	var client *http.Client = &http.Client{
 		Transport: &http.Transport{
@@ -205,8 +205,8 @@ func downloadH2oChinaPdf(pdfUrl string, filePath string) error {
 // 	req.Header.Set("Accept-Encoding", "gzip, deflate, br")
 	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
 	req.Header.Set("Connection", "keep-alive")
-	req.Header.Set("Cookie", H2oChinaCookie)
-	req.Header.Set("Host", "www.h2o-china.com")
+	req.Header.Set("Cookie", ChnDaQiCookie)
+	req.Header.Set("Host", "www.chndaqi.com")
 	req.Header.Set("sec-ch-ua", "\"Chromium\";v=\"110\", \"Not A(Brand\";v=\"24\", \"Google Chrome\";v=\"110\"")
 	req.Header.Set("sec-ch-ua-mobile", "?0")
 	req.Header.Set("sec-ch-ua-platform", "\"macOS\"")
@@ -246,7 +246,7 @@ func downloadH2oChinaPdf(pdfUrl string, filePath string) error {
 	}
 	return nil
 }
-func copyH2oChinaFile(src, dst string) (err error) {
+func copyChnDaQiFile(src, dst string) (err error) {
 	in, err := os.Open(src)
 	if err != nil {
 		return err
