@@ -120,7 +120,7 @@ func main() {
 						continue
 					}
 					//复制文件
-					tempFilePath := strings.ReplaceAll(filePath, "scjgj.shanxi.gov.cn", "temp-hbba.sacinfo.org.cn")
+					tempFilePath := strings.ReplaceAll(filePath, "scjgj.shanxi.gov.cn", "temp-dbba.sacinfo.org.cn")
 					err = copyShanXiFile(filePath, tempFilePath)
 					if err != nil {
 						fmt.Println(err)
