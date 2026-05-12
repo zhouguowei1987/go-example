@@ -26,6 +26,7 @@ func main() {
 	var endId = 294
 	for id := startId; id <= endId; id++ {
 		detailUrl := fmt.Sprintf("http://admin.china-weldnet.com/api/SpecialDocument.asmx/WeldingStandardDetail?id=%d", id)
+		fmt.Println(detailUrl)
 		detailReferer := "http://www.weldnet.com.cn/specialist-standard"
 		tweldnetDetailResponse, err := GetWeldnetDetail(detailUrl, detailReferer)
 		if err != nil {
