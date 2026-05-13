@@ -20,12 +20,12 @@ import (
 )
 
 const (
-	CsiscTbEnableHttpProxy = false
-	CsiscTbHttpProxyUrl    = "111.225.152.186:8089"
+	CsiscQyEnableHttpProxy = false
+	CsiscQyHttpProxyUrl    = "111.225.152.186:8089"
 )
 
-func CsiscTbSetHttpProxy() (httpclient *http.Client) {
-	ProxyURL, _ := url.Parse(CsiscTbHttpProxyUrl)
+func CsiscQySetHttpProxy() (httpclient *http.Client) {
+	ProxyURL, _ := url.Parse(CsiscQyHttpProxyUrl)
 	httpclient = &http.Client{
 		Transport: &http.Transport{
 			Proxy: http.ProxyURL(ProxyURL),
@@ -34,26 +34,26 @@ func CsiscTbSetHttpProxy() (httpclient *http.Client) {
 	return httpclient
 }
 
-var CsiscTbCookie = "acw_tc=2760774217786375310827330ebed6ebff555898c30504aa788bd2254d5237"
+var CsiscQyCookie = "acw_tc=2760774217786375310827330ebed6ebff555898c30504aa788bd2254d5237"
 
-// 获取资本市场标准网-团体标准
-// @Title 获取资本市场标准网-团体标准
-// @Description https://www.csisc.cn/ 获取资本市场标准网-团体标准
+// 获取资本市场标准网-企业标准
+// @Title 获取资本市场标准网-企业标准
+// @Description https://www.csisc.cn/ 获取资本市场标准网-企业标准
 func main() {
-	maxPage := 1
+	maxPage := 4
 	page := 1
 	isPageListGo := true
 	for isPageListGo {
-		requestUrl := "https://www.csisc.cn/zbscbzw/c100463/yfb_tt_list/code_0.shtml"
-		refererUrl := "https://www.csisc.cn/zbscbzw/c100463/yfb_tt_list/code_0.shtml"
+		requestUrl := "https://www.csisc.cn/zbscbzw/c100472/yfb_qy_list/code_0.shtml"
+		refererUrl := "https://www.csisc.cn/zbscbzw/c100472/yfb_qy_list/code_0.shtml"
 		if page >= 2 {
-			requestUrl = fmt.Sprintf("https://www.csisc.cn/zbscbzw/c100463/yfb_tt_list/code_0_%d.shtml", page)
+			requestUrl = fmt.Sprintf("https://www.csisc.cn/zbscbzw/c100472/yfb_qy_list/code_0_%d.shtml", page)
 		}
 		if page >= 3 {
-			refererUrl = fmt.Sprintf("https://www.csisc.cn/zbscbzw/c100463/yfb_tt_list/code_0_%d.shtml", page-1)
+			refererUrl = fmt.Sprintf("https://www.csisc.cn/zbscbzw/c100472/yfb_qy_list/code_0_%d.shtml", page-1)
 		}
 		fmt.Println(requestUrl)
-		pageDoc, err := QueryCsiscTbHtml(requestUrl, refererUrl)
+		pageDoc, err := QueryCsiscQyHtml(requestUrl, refererUrl)
 		if err != nil {
 			fmt.Println(err)
 			isPageListGo = false
@@ -78,7 +78,7 @@ func main() {
 			detailUrl = "https://www.csisc.cn" + detailUrl
 			fmt.Println(detailUrl)
 
-			detailDoc, err := QueryCsiscTbHtml(detailUrl, requestUrl)
+			detailDoc, err := QueryCsiscQyHtml(detailUrl, requestUrl)
 			if err != nil {
 				fmt.Println(err)
 				continue
@@ -144,31 +144,31 @@ func main() {
 			fmt.Println(downloadUrl)
 
 			fmt.Println("=======开始下载" + title + "========")
-			err = downloadCsiscTb(downloadUrl, detailUrl, filePath)
+			err = downloadCsiscQy(downloadUrl, detailUrl, filePath)
 			if err != nil {
 				fmt.Println(err)
 				continue
 			}
 			//复制文件
 			tempFilePath := strings.ReplaceAll(filePath, "www.csisc.cn", "temp-hbba.sacinfo.org.cn")
-			err = copyCsiscTbFile(filePath, tempFilePath)
+			err = copyCsiscQyFile(filePath, tempFilePath)
 			if err != nil {
 				fmt.Println(err)
 				continue
 			}
 			fmt.Println("=======下载完成========")
-			DownLoadCsiscTbTimeSleep := 10
-			// DownLoadCsiscTbTimeSleep := rand.Intn(5)
-			for i := 1; i <= DownLoadCsiscTbTimeSleep; i++ {
+			DownLoadCsiscQyTimeSleep := 10
+			// DownLoadCsiscQyTimeSleep := rand.Intn(5)
+			for i := 1; i <= DownLoadCsiscQyTimeSleep; i++ {
 				time.Sleep(time.Second)
-				fmt.Println("page="+strconv.Itoa(page)+",filePath="+filePath+"===========下载成功 暂停", DownLoadCsiscTbTimeSleep, "秒 倒计时", i, "秒===========")
+				fmt.Println("page="+strconv.Itoa(page)+",filePath="+filePath+"===========下载成功 暂停", DownLoadCsiscQyTimeSleep, "秒 倒计时", i, "秒===========")
 			}
 		}
-		DownLoadCsiscTbPageTimeSleep := 10
-		// DownLoadCsiscTbPageTimeSleep := rand.Intn(5)
-		for i := 1; i <= DownLoadCsiscTbPageTimeSleep; i++ {
+		DownLoadCsiscQyPageTimeSleep := 10
+		// DownLoadCsiscQyPageTimeSleep := rand.Intn(5)
+		for i := 1; i <= DownLoadCsiscQyPageTimeSleep; i++ {
 			time.Sleep(time.Second)
-			fmt.Println("page="+strconv.Itoa(page)+"=========== 暂停", DownLoadCsiscTbPageTimeSleep, "秒 倒计时", i, "秒===========")
+			fmt.Println("page="+strconv.Itoa(page)+"=========== 暂停", DownLoadCsiscQyPageTimeSleep, "秒 倒计时", i, "秒===========")
 		}
 		page++
 		if page > maxPage {
@@ -178,7 +178,7 @@ func main() {
 	}
 }
 
-func QueryCsiscTbHtml(requestUrl string, referer string) (doc *html.Node, err error) {
+func QueryCsiscQyHtml(requestUrl string, referer string) (doc *html.Node, err error) {
 	// 初始化客户端
 	var client *http.Client = &http.Client{
 		Transport: &http.Transport{
@@ -205,7 +205,7 @@ func QueryCsiscTbHtml(requestUrl string, referer string) (doc *html.Node, err er
 	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
 	req.Header.Set("Connection", "keep-alive")
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
-	req.Header.Set("Cookie", CsiscTbCookie)
+	req.Header.Set("Cookie", CsiscQyCookie)
 	req.Header.Set("Host", "www.csisc.cn")
 	req.Header.Set("Origin", "https://www.csisc.cn")
 	req.Header.Set("Referer", referer)
@@ -232,7 +232,7 @@ func QueryCsiscTbHtml(requestUrl string, referer string) (doc *html.Node, err er
 	return doc, nil
 }
 
-func downloadCsiscTb(attachmentUrl string, referer string, filePath string) error {
+func downloadCsiscQy(attachmentUrl string, referer string, filePath string) error {
 	// 初始化客户端
 	var client *http.Client = &http.Client{
 		Transport: &http.Transport{
@@ -249,8 +249,8 @@ func downloadCsiscTb(attachmentUrl string, referer string, filePath string) erro
 			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
-	if CsiscTbEnableHttpProxy {
-		client = CsiscTbSetHttpProxy()
+	if CsiscQyEnableHttpProxy {
+		client = CsiscQySetHttpProxy()
 	}
 	req, err := http.NewRequest("GET", attachmentUrl, nil) //建立连接
 	if err != nil {
@@ -300,7 +300,7 @@ func downloadCsiscTb(attachmentUrl string, referer string, filePath string) erro
 	return nil
 }
 
-func copyCsiscTbFile(src, dst string) (err error) {
+func copyCsiscQyFile(src, dst string) (err error) {
 	in, err := os.Open(src)
 	if err != nil {
 		return err
