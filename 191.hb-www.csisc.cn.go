@@ -140,8 +140,8 @@ func main() {
 				continue
 			}
 			fmt.Println("=======下载完成========")
-			//DownLoadCsiscHbTimeSleep := 10
-			DownLoadCsiscHbTimeSleep := rand.Intn(5)
+			DownLoadCsiscHbTimeSleep := 10
+			// DownLoadCsiscHbTimeSleep := rand.Intn(5)
 			for i := 1; i <= DownLoadCsiscHbTimeSleep; i++ {
 				time.Sleep(time.Second)
 				fmt.Println("page="+strconv.Itoa(page)+",filePath="+filePath+"===========下载成功 暂停", DownLoadCsiscHbTimeSleep, "秒 倒计时", i, "秒===========")
