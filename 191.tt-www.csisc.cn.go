@@ -108,11 +108,10 @@ func main() {
 
 			codeNode := htmlquery.FindOne(detailDoc, `//div[@class="w980 mb"]/div[@class="mainbox clearfix"]/div[@class="innerbox clearfix"]/div[@class="maincontent singlecontent article"]/div[@class="inbox"]/div[@class="page_content"]/div[@class="article-content"]/p[1]/font`)
 			// 判断article-content中是否含有WordSection1
-			wordSectionNode := htmlquery.FindOne(detailDoc, `//div[@class="w980 mb"]/div[@class="mainbox clearfix"]/div[@class="innerbox clearfix"]/div[@class="maincontent singlecontent article"]/div[@class="inbox"]/div[@class="page_content"]/div[@class="article-content"]/div[@class="WordSection1"]/p[1]`)
-
-			if wordSectionNode != nil {
+			wordSectionFlagNode := htmlquery.FindOne(detailDoc, `//div[@class="w980 mb"]/div[@class="mainbox clearfix"]/div[@class="innerbox clearfix"]/div[@class="maincontent singlecontent article"]/div[@class="inbox"]/div[@class="page_content"]/div[@class="article-content"]/div[@class="WordSection1"]`)
+			if wordSectionFlagNode != nil {
 				// 含有WordSection1
-				codeNode = wordSectionNode
+				codeNode = htmlquery.FindOne(detailDoc, `//div[@class="w980 mb"]/div[@class="mainbox clearfix"]/div[@class="innerbox clearfix"]/div[@class="maincontent singlecontent article"]/div[@class="inbox"]/div[@class="page_content"]/div[@class="article-content"]/div[@class="WordSection1"]/p[1]`)
 			}
 			if codeNode == nil {
 				fmt.Println("未找到标准号节点，跳过")
@@ -134,6 +133,10 @@ func main() {
 			}
 
 			detailDownloadHrefNode := htmlquery.FindOne(detailDoc, `//font/a/@href`)
+			if wordSectionFlagNode != nil {
+				// 含有WordSection1
+				detailDownloadHrefNode = htmlquery.FindOne(detailDoc, `//strong/a/@href`)
+			}
 			if detailDownloadHrefNode == nil {
 				fmt.Println("未找到下载文件节点，跳过")
 				continue
