@@ -307,6 +307,13 @@ func copyCsiscHbFile(src, dst string) (err error) {
 		}
 	}(in)
 
+	// 创建一个文件用于保存
+	fileDiv := filepath.Dir(dst)
+	if _, err = os.Stat(fileDiv); err != nil {
+		if os.MkdirAll(fileDiv, 0o777) != nil {
+			return err
+		}
+	}
 	out, err := os.Create(dst)
 	if err != nil {
 		return err
