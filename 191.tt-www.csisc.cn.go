@@ -128,8 +128,6 @@ func main() {
 			}
 
 			detailDownloadHrefNode := htmlquery.FindOne(detailDoc, `//font/a/@href`)
-			fmt.Println(htmlquery.InnerText(detailDownloadHrefNode))
-			os.Exit(1)
 			if detailDownloadHrefNode == nil {
 				fmt.Println("未找到下载文件节点，跳过")
 				continue
