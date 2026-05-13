@@ -4,7 +4,8 @@ import (
 	"errors"
 	"fmt"
 	"io"
-// 	"math/rand"
+
+	// 	"math/rand"
 	"net"
 	"net/http"
 	"net/url"
@@ -126,9 +127,9 @@ func main() {
 				continue
 			}
 
-			detailDownloadHrefNode := htmlquery.FindOne(detailDoc, `//div[@class="w980 mb"]/div[@class="mainbox clearfix"]/div[@class="innerbox clearfix"]/div[@class="maincontent singlecontent article"]/div[@class="inbox"]/div[@class="page_content"]/div[@class="article-content"]/font/p[2]/font/a/@href`)
+			detailDownloadHrefNode := htmlquery.FindOne(detailDoc, `//font/a/@href`)
 			if detailDownloadHrefNode == nil {
-				fmt.Println("未找到标准号节点，跳过")
+				fmt.Println("未找到下载文件节点，跳过")
 				continue
 			}
 			downloadUrl := htmlquery.InnerText(detailDownloadHrefNode)
