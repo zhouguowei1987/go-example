@@ -41,7 +41,7 @@ var CsiscHbCookie = "acw_tc=2760774217786375310827330ebed6ebff555898c30504aa788b
 // @Description https://www.csisc.cn/ 获取资本市场标准网-行业标准
 func main() {
 	maxPage := 4
-	page := 1
+	page := 3
 	isPageListGo := true
 	for isPageListGo {
 		requestUrl := "https://www.csisc.cn/zbscbzw/c100176/yfb_hb_list/code_0.shtml"
@@ -84,13 +84,12 @@ func main() {
 				continue
 			}
 
-			titleNode := htmlquery.FindOne(detailDoc, `//div[@class="w980 mb"]/div[@class="mainbox clearfix"]/div[@class="innerbox clearfix"]/div[@class="maincontent singlecontent article"]/div[@class="inbox"]/div[@class="page_content"]/div[@class="article-content"]/p[2]/font`)
+			titleNode := htmlquery.FindOne(detailDoc, `//div[@class="w980 mb"]/div[@class="mainbox clearfix"]/div[@class="innerbox clearfix"]/div[@class="maincontent singlecontent article"]/div[@class="inbox"]/div[@class="page_content"]/div[@class="article-tit"]`)
 			if titleNode == nil {
 				fmt.Println("未找到标题节点，跳过")
 				continue
 			}
 			title := strings.TrimSpace(htmlquery.InnerText(titleNode))
-			title = strings.ReplaceAll(title, "标准中文名称：", "")
 			title = strings.TrimSpace(title)
 			title = strings.ReplaceAll(title, "/", "-")
 			title = strings.ReplaceAll(title, "／", "-")
@@ -108,6 +107,13 @@ func main() {
 			fmt.Println(title)
 
 			codeNode := htmlquery.FindOne(detailDoc, `//div[@class="w980 mb"]/div[@class="mainbox clearfix"]/div[@class="innerbox clearfix"]/div[@class="maincontent singlecontent article"]/div[@class="inbox"]/div[@class="page_content"]/div[@class="article-content"]/p[1]/font`)
+			// 判断article-content中是否含有WordSection1
+			wordSectionNode := htmlquery.FindOne(detailDoc, `//div[@class="w980 mb"]/div[@class="mainbox clearfix"]/div[@class="innerbox clearfix"]/div[@class="maincontent singlecontent article"]/div[@class="inbox"]/div[@class="page_content"]/div[@class="article-content"]/div[@class="WordSection1"]/p[1]`)
+
+			if wordSectionNode != nil {
+				// 含有WordSection1
+				codeNode = wordSectionNode
+			}
 			if codeNode == nil {
 				fmt.Println("未找到标准号节点，跳过")
 				continue
