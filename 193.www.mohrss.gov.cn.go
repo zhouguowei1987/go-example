@@ -121,7 +121,13 @@ func main() {
 				continue
 			}
 
-			detailDownloadHrefNode := htmlquery.FindOne(detailDoc, `//div[@class="TRS_Editor"]/a/@href`)
+			detailEditorNode := htmlquery.FindOne(detailDoc, `//div[@class="TRS_Editor"]`)
+			if detailEditorNode == nil {
+				fmt.Println("未找到‘TRS_Editor’文件节点，跳过")
+				continue
+			}
+
+			detailDownloadHrefNode := htmlquery.FindOne(detailEditorNode, `//a/@href`)
 			if detailDownloadHrefNode == nil {
 				fmt.Println("未找到下载文件节点，跳过")
 				continue
