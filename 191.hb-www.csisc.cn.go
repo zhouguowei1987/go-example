@@ -99,8 +99,6 @@ func main() {
 			title = strings.ReplaceAll(title, "：", "-")
 			title = strings.ReplaceAll(title, "—", "-")
 			title = strings.ReplaceAll(title, "--", "-")
-			title = strings.ReplaceAll(title, "• ", "")
-			title = strings.ReplaceAll(title, " ", "")
 			title = strings.ReplaceAll(title, ".pdf", "")
 			title = strings.ReplaceAll(title, "（", "(")
 			title = strings.ReplaceAll(title, "）", ")")
