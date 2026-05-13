@@ -64,57 +64,78 @@ func main() {
 				fmt.Println("=======page = " + strconv.Itoa(page) + "=========")
 
 				// 中文标题
-                aHrefNode := htmlquery.FindOne(liNode, `./a`)
-                chineseTitle := htmlquery.InnerText(aHrefNode)
-                chineseTitle = strings.TrimSpace(chineseTitle)
-                chineseTitle = strings.ReplaceAll(chineseTitle, "/", "-")
-                chineseTitle = strings.ReplaceAll(chineseTitle, "／", "-")
-                chineseTitle = strings.ReplaceAll(chineseTitle, "/", "-")
-                chineseTitle = strings.ReplaceAll(chineseTitle, "　", "-")
-                chineseTitle = strings.ReplaceAll(chineseTitle, " ", "-")
-                chineseTitle = strings.ReplaceAll(chineseTitle, "：", ":")
-                chineseTitle = strings.ReplaceAll(chineseTitle, "—", "-")
-                chineseTitle = strings.ReplaceAll(chineseTitle, "－", "-")
-                chineseTitle = strings.ReplaceAll(chineseTitle, "（", "(")
-                chineseTitle = strings.ReplaceAll(chineseTitle, "）", ")")
-                chineseTitle = strings.ReplaceAll(chineseTitle, "《", "")
-                chineseTitle = strings.ReplaceAll(chineseTitle, "》", "")
-                fmt.Println(chineseTitle)
+				aHrefNode := htmlquery.FindOne(liNode, `./a`)
+				title := htmlquery.InnerText(aHrefNode)
+				title = strings.TrimSpace(title)
+				title = strings.ReplaceAll(title, "/", "-")
+				title = strings.ReplaceAll(title, "／", "-")
+				title = strings.ReplaceAll(title, "/", "-")
+				title = strings.ReplaceAll(title, "　", "-")
+				title = strings.ReplaceAll(title, " ", "-")
+				title = strings.ReplaceAll(title, "：", ":")
+				title = strings.ReplaceAll(title, "—", "-")
+				title = strings.ReplaceAll(title, "－", "-")
+				title = strings.ReplaceAll(title, "（", "(")
+				title = strings.ReplaceAll(title, "）", ")")
+				title = strings.ReplaceAll(title, "《", "")
+				title = strings.ReplaceAll(title, "》", "")
+				fmt.Println(title)
 
-                filePath := "../www.saac.gov.cn/" + chineseTitle + ".pdf"
-                _, err = os.Stat(filePath)
-                if err == nil {
-                    fmt.Println("文档已下载过，跳过")
-                    continue
-                }
+				filePath := "../www.saac.gov.cn/" + title + ".pdf"
+				_, err = os.Stat(filePath)
+				if err == nil {
+					fmt.Println("文档已下载过，跳过")
+					continue
+				}
 
-				downloadHrefNode := htmlquery.FindOne(liNode, `./a/@href`)
-				downLoadUrl := htmlquery.InnerText(downloadHrefNode)
-				if strings.Contains(downLoadUrl, ".pdf") {
-					downLoadUrl = "https://www.saac.gov.cn" + downLoadUrl
-					fmt.Println(downLoadUrl)
-					// 开始下载
-					fmt.Println("=======开始下载========")
-					err = downloadSaac(downLoadUrl, requestListUrl, filePath)
+				viewHrefNode := htmlquery.FindOne(liNode, `./a/@href`)
+				viewUrl := "https://www.saac.gov.cn" + htmlquery.InnerText(viewHrefNode)
+				var downLoadUrl = ""
+				if strings.Contains(viewUrl, ".pdf") {
+					// 详情就是pdf文件地址
+					downLoadUrl = viewUrl
+				} else if strings.Contains(viewUrl, ".shtml") {
+					viewDoc, err := SaacBzHtmlDoc(viewUrl, requestListUrl)
 					if err != nil {
 						fmt.Println(err)
 						continue
 					}
-					//复制文件
-					tempFilePath := strings.ReplaceAll(filePath, "www.saac.gov.cn", "temp-hbba.sacinfo.org.cn")
-					err = copySaacFile(filePath, tempFilePath)
-					if err != nil {
-						fmt.Println(err)
+					viewContentNode := htmlquery.FindOne(viewDoc, `//div[@class="pages_content"]`)
+					if viewContentNode == nil {
+						fmt.Println("未找到‘pages_content’文件节点，跳过")
 						continue
 					}
-					fmt.Println("=======完成下载========")
-
-					// 设置倒计时
-					DownLoadTSaacTimeSleep := 10
-					for i := 1; i <= DownLoadTSaacTimeSleep; i++ {
-						time.Sleep(time.Second)
-						fmt.Println("===page = "+strconv.Itoa(page)+"===title="+chineseTitle+"===========操作完成，", "暂停", DownLoadTSaacTimeSleep, "秒，倒计时", i, "秒===========")
+					viewDownloadHrefNode := htmlquery.FindOne(viewContentNode, `//a/@href`)
+					if viewDownloadHrefNode == nil {
+						fmt.Println("未找到下载文件节点，跳过")
+						continue
 					}
+					downLoadUrl = htmlquery.InnerText(viewDownloadHrefNode)
+					viewUrlArray := strings.Split(viewUrl, "/")
+					downLoadUrl = strings.Join(viewUrlArray[:len(viewUrlArray)-1], "/") + "/" + downLoadUrl
+				}
+				fmt.Println(downLoadUrl)
+				// 开始下载
+				fmt.Println("=======开始下载========")
+				err = downloadSaac(downLoadUrl, requestListUrl, filePath)
+				if err != nil {
+					fmt.Println(err)
+					continue
+				}
+				//复制文件
+				tempFilePath := strings.ReplaceAll(filePath, "www.saac.gov.cn", "temp-hbba.sacinfo.org.cn")
+				err = copySaacFile(filePath, tempFilePath)
+				if err != nil {
+					fmt.Println(err)
+					continue
+				}
+				fmt.Println("=======完成下载========")
+
+				// 设置倒计时
+				DownLoadTSaacTimeSleep := 10
+				for i := 1; i <= DownLoadTSaacTimeSleep; i++ {
+					time.Sleep(time.Second)
+					fmt.Println("===page = "+strconv.Itoa(page)+"===title="+title+"===========操作完成，", "暂停", DownLoadTSaacTimeSleep, "秒，倒计时", i, "秒===========")
 				}
 			}
 			DownLoadSaacPageTimeSleep := 10
