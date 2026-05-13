@@ -4,7 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"math/rand"
+// 	"math/rand"
 	"net"
 	"net/http"
 	"net/url"
