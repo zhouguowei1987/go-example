@@ -106,7 +106,7 @@ func main() {
 			title = strings.ReplaceAll(title, "》", "")
 			fmt.Println(title)
 
-			codeNode := htmlquery.FindOne(detailDoc, `//div[@class="w980 mb"]/div[@class="mainbox clearfix"]/div[@class="innerbox clearfix"]/div[@class="maincontent singlecontent article"]/div[@class="inbox"]/div[@class="page_content"]/div[@class="article-content"]/p[1]/font`)
+			codeNode := htmlquery.FindOne(detailDoc, `//div[@class="w980 mb"]/div[@class="mainbox clearfix"]/div[@class="innerbox clearfix"]/div[@class="maincontent singlecontent article"]/div[@class="inbox"]/div[@class="page_content"]/div[@class="article-content"]/p[1]`)
 			// 判断article-content中是否含有WordSection1
 			wordSectionFlagNode := htmlquery.FindOne(detailDoc, `//div[@class="w980 mb"]/div[@class="mainbox clearfix"]/div[@class="innerbox clearfix"]/div[@class="maincontent singlecontent article"]/div[@class="inbox"]/div[@class="page_content"]/div[@class="article-content"]/div[@class="WordSection1"]`)
 			if wordSectionFlagNode != nil {
