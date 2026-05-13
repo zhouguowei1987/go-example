@@ -132,11 +132,8 @@ func main() {
 				continue
 			}
 
-			detailDownloadHrefNode := htmlquery.FindOne(detailDoc, `//font/a/@href`)
-			if wordSectionFlagNode != nil {
-				// 含有WordSection1
-				detailDownloadHrefNode = htmlquery.FindOne(detailDoc, `//strong/a/@href`)
-			}
+			articleContentNode := htmlquery.FindOne(detailDoc, `//div[@class="w980 mb"]/div[@class="mainbox clearfix"]/div[@class="innerbox clearfix"]/div[@class="maincontent singlecontent article"]/div[@class="inbox"]/div[@class="page_content"]/div[@class="article-content"]`)
+			detailDownloadHrefNode := htmlquery.FindOne(articleContentNode, `//a/@href`)
 			if detailDownloadHrefNode == nil {
 				fmt.Println("未找到下载文件节点，跳过")
 				continue
