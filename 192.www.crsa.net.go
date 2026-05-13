@@ -83,7 +83,6 @@ func main() {
 		}
 		downloadUrl := strings.TrimSpace(htmlquery.InnerText(downloadNode))
 		fmt.Println(downloadUrl)
-		os.Exit(1)
 
 		fmt.Println("=======开始下载========")
 		err = downloadCrsa(downloadUrl, detailUrl, filePath)
