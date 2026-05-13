@@ -39,7 +39,7 @@ var CsiscHbCookie = "acw_tc=2760774217786375310827330ebed6ebff555898c30504aa788b
 // @Title 获取资本市场标准网-行业标准
 // @Description https://www.csisc.cn/ 获取资本市场标准网-行业标准
 func main() {
-	maxPage := 79
+	maxPage := 4
 	page := 1
 	isPageListGo := true
 	for isPageListGo {
