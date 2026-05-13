@@ -111,7 +111,8 @@ func main() {
 				continue
 			}
 			detailUrl := htmlquery.InnerText(aHrefNode)
-			detailUrl = "https://www.mohrss.gov.cn/" + strings.ReplaceAll(detailUrl, "../../../../", "")
+			requestUrlArray := strings.Split(requestUrl, "/")
+			detailUrl = strings.Join(requestUrlArray[:len(requestUrlArray)-1], "/") + "/" + detailUrl
 			fmt.Println(detailUrl)
 
 			detailDoc, err := QueryMoHrSsHtml(detailUrl, requestUrl)
@@ -127,7 +128,6 @@ func main() {
 			}
 			downloadUrl := htmlquery.InnerText(detailDownloadHrefNode)
 			downloadUrl = strings.ReplaceAll(downloadUrl, "./", "")
-			fmt.Println(downloadUrl)
 			detailUrlArray := strings.Split(detailUrl, "/")
 			downloadUrl = strings.Join(detailUrlArray[:len(detailUrlArray)-1], "/") + "/" + downloadUrl
 			fmt.Println(downloadUrl)
