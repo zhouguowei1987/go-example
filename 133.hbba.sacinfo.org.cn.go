@@ -62,7 +62,7 @@ type HdBaResponseValidateCaptcha struct {
 	Msg  string `json:"msg"`
 }
 
-const HbBaCookie = "HMACCOUNT=487EF362690A1D5D; Hm_lvt_bc6f61eace617162b31b982f796830e6=1778553617; Hm_lpvt_bc6f61eace617162b31b982f796830e6=1778994940; JSESSIONID=8E9FC1A80796D609F11325506D6774E2"
+const HbBaCookie = "HMACCOUNT=487EF362690A1D5D; Hm_lvt_bc6f61eace617162b31b982f796830e6=1778553617; Hm_lpvt_bc6f61eace617162b31b982f796830e6=1779241245; JSESSIONID=6FBA50F62418C364F381FA70E3670DFE"
 
 // ychEduSpider 获取行业标准文档
 // @Title 获取行业标准文档
@@ -151,7 +151,7 @@ func main() {
 						captcha = strings.TrimSpace(captcha)
 						fmt.Println("识别的验证码：", captcha)
 						if len(captcha) != 4 {
-						    tesseractValidateHbBaPdfSleep := 8
+						    tesseractValidateHbBaPdfSleep := 3
                             for i := 1; i <= tesseractValidateHbBaPdfSleep; i++ {
                                 time.Sleep(time.Second)
                                 fmt.Println("page="+strconv.Itoa(current)+"=======chName=", chName, "识别验证码长度错误，====== 暂停", tesseractValidateHbBaPdfSleep, "秒，倒计时", i, "秒===========")
@@ -169,7 +169,7 @@ func main() {
 						}
 						if responseValidateCaptcha.Code != 0 {
 							fmt.Println(responseValidateCaptcha.Msg)
-							validateCaptchaHbBaPdfSleep := 8
+							validateCaptchaHbBaPdfSleep := 5
                             for i := 1; i <= validateCaptchaHbBaPdfSleep; i++ {
                                 time.Sleep(time.Second)
                                 fmt.Println("page="+strconv.Itoa(current)+"=======chName=", chName, "验证码错误，====== 暂停", validateCaptchaHbBaPdfSleep, "秒，倒计时", i, "秒===========")
