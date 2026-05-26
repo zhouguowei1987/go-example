@@ -34,7 +34,7 @@ func MoHrSsSetHttpProxy() (httpclient *http.Client) {
 	return httpclient
 }
 
-var MoHrSsCookie = "path=/; __tst_status=878897575#; EO_Bot_Ssid=2891841536; Hm_lvt_64e46e3f389bd47c0981fa5e4b9f2405=1778485750,1778570141,1778652195; HMACCOUNT=9C0CD19686802BBF; arialoadData=false; ariauseGraymode=false; Hm_lpvt_64e46e3f389bd47c0981fa5e4b9f2405=1778652312"
+var MoHrSsCookie = "path=/; __tst_status=878897575#; EO_Bot_Ssid=4001103872; HttpOnly=true; Secure; Hm_lvt_64e46e3f389bd47c0981fa5e4b9f2405=1778652089; HMACCOUNT=4E5B3419A3141A8E; path=/; __tst_status=1435902665#; EO_Bot_Ssid=1766522880; arialoadData=false; ariauseGraymode=false; Hm_lpvt_64e46e3f389bd47c0981fa5e4b9f2405=1779244562"
 
 // 获取中华人民共和国人力资源和社会保障部标准
 // @Title 获取中华人民共和国人力资源和社会保障部标准

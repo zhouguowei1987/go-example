@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
-	"math/rand"
+// 	"math/rand"
 	"net"
 	"net/http"
 	"net/url"
@@ -62,7 +62,7 @@ type HdBaResponseValidateCaptcha struct {
 	Msg  string `json:"msg"`
 }
 
-const HbBaCookie = "HMACCOUNT=487EF362690A1D5D; Hm_lvt_bc6f61eace617162b31b982f796830e6=1778553617; Hm_lpvt_bc6f61eace617162b31b982f796830e6=1778646260; JSESSIONID=C337C5C1C2446FAF322BF009E8A49F27"
+const HbBaCookie = "HMACCOUNT=487EF362690A1D5D; Hm_lvt_bc6f61eace617162b31b982f796830e6=1778553617; Hm_lpvt_bc6f61eace617162b31b982f796830e6=1779757321; JSESSIONID=BAF75C3A82D171D741C3970B54BF5870"
 
 // ychEduSpider 获取行业标准文档
 // @Title 获取行业标准文档
@@ -151,6 +151,11 @@ func main() {
 						captcha = strings.TrimSpace(captcha)
 						fmt.Println("识别的验证码：", captcha)
 						if len(captcha) != 4 {
+						    tesseractValidateHbBaPdfSleep := 3
+                            for i := 1; i <= tesseractValidateHbBaPdfSleep; i++ {
+                                time.Sleep(time.Second)
+                                fmt.Println("page="+strconv.Itoa(current)+"=======chName=", chName, "识别验证码长度错误，====== 暂停", tesseractValidateHbBaPdfSleep, "秒，倒计时", i, "秒===========")
+                            }
 							goto ValidateCaptchaGoTo
 						}
 
@@ -164,6 +169,11 @@ func main() {
 						}
 						if responseValidateCaptcha.Code != 0 {
 							fmt.Println(responseValidateCaptcha.Msg)
+							validateCaptchaHbBaPdfSleep := 5
+                            for i := 1; i <= validateCaptchaHbBaPdfSleep; i++ {
+                                time.Sleep(time.Second)
+                                fmt.Println("page="+strconv.Itoa(current)+"=======chName=", chName, "验证码错误，====== 暂停", validateCaptchaHbBaPdfSleep, "秒，倒计时", i, "秒===========")
+                            }
 							goto ValidateCaptchaGoTo
 						}
 						downLoadUrl := fmt.Sprintf("https://hbba.sacinfo.org.cn/portal/download/%s", responseValidateCaptcha.Msg)
@@ -198,7 +208,8 @@ func main() {
 						}
 						fmt.Println("=======下载完成========")
 
-						downloadHbBaPdfSleep := rand.Intn(5)
+						// downloadHbBaPdfSleep := rand.Intn(5)
+						downloadHbBaPdfSleep := 10
 						for i := 1; i <= downloadHbBaPdfSleep; i++ {
 							time.Sleep(time.Second)
 							fmt.Println("page="+strconv.Itoa(current)+"=======chName=", chName, "成功，====== 暂停", downloadHbBaPdfSleep, "秒，倒计时", i, "秒===========")

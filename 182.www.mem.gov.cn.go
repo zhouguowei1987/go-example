@@ -38,7 +38,7 @@ var MemCookie = "Hm_lvt_7c3492d683dc7a90fd44bf8bfd57e50c=1778038119; HMACCOUNT=4
 // @Title 获取应急管理部标准文档
 // @Description https://www.mem.gov.cn/，获取应急管理部标准文档
 func main() {
-    page := 1
+    page := 0
     isPageListGo := true
     for isPageListGo {
         requestListUrl := "https://www.mem.gov.cn/fw/flfgbz/bz/bzwb/index.shtml"
@@ -62,74 +62,79 @@ func main() {
                 fmt.Println("=====================开始处理列表-分割线==========================")
 
                 fmt.Println("=======page = " + strconv.Itoa(page) + "=========")
-                downloadHrefNode := htmlquery.FindOne(liNode, `./@href`)
-                downLoadUrl := htmlquery.InnerText(downloadHrefNode)
-                if strings.Contains(downLoadUrl, ".pdf") {
-                    // 查看downloadHref是否含有www.mem.gov.cn
-                    if !strings.Contains(downLoadUrl, "www.mem.gov.cn") {
-                        // 不含有www.mem.gov.cn，下载连接需要处理
-                        // 查看有几个“..”
-                        count := strings.Count(downLoadUrl, "..")
-                        if count > 0{
-                            requestListUrlArray := strings.Split(requestListUrl, "/")
-                            requestListUrlArray = requestListUrlArray[:len(requestListUrlArray) - (count + 1)]
-                            requestListUrlDownLoadUrl :=  strings.Join(requestListUrlArray, "/")
-                            downLoadUrl = strings.Replace(downLoadUrl, "../", "", count)
-                            downLoadUrl = requestListUrlDownLoadUrl + "/" + downLoadUrl
-                        }else{
-                            bzDetailRequestUrlBiasTIndex := strings.LastIndex(requestListUrl, "/")
-                            downLoadUrl = strings.Replace(downLoadUrl, ".", "", 1)
-                            downLoadUrl = requestListUrl[:bzDetailRequestUrlBiasTIndex] + downLoadUrl
-                        }
-                    }
-                    fmt.Println(downLoadUrl)
-                    // 中文标题
-                    chineseTitle := htmlquery.InnerText(liNode)
-                    chineseTitle = chineseTitle[:len(chineseTitle) - 16]
-                    chineseTitle = strings.TrimSpace(chineseTitle)
-                    chineseTitle = strings.ReplaceAll(chineseTitle, "/", "-")
-                    chineseTitle = strings.ReplaceAll(chineseTitle, "／", "-")
-                    chineseTitle = strings.ReplaceAll(chineseTitle, "/", "-")
-                    chineseTitle = strings.ReplaceAll(chineseTitle, "　", "-")
-                    chineseTitle = strings.ReplaceAll(chineseTitle, " ", "-")
-                    chineseTitle = strings.ReplaceAll(chineseTitle, "：", ":")
-                    chineseTitle = strings.ReplaceAll(chineseTitle, "—", "-")
-                    chineseTitle = strings.ReplaceAll(chineseTitle, "－", "-")
-                    chineseTitle = strings.ReplaceAll(chineseTitle, "（", "(")
-                    chineseTitle = strings.ReplaceAll(chineseTitle, "）", ")")
-                    chineseTitle = strings.ReplaceAll(chineseTitle, "《", "")
-                    chineseTitle = strings.ReplaceAll(chineseTitle, "》", "")
-                    fmt.Println(chineseTitle)
 
-                    filePath := "../www.mem.gov.cn/" + chineseTitle + ".pdf"
-                    _, err = os.Stat(filePath)
-                    if err == nil {
-                        fmt.Println("文档已下载过，跳过")
+                viewHrefNode := htmlquery.FindOne(liNode, `./@href`)
+				viewUrl := "https://www.mem.gov.cn/fw/flfgbz/bz/bzwb/" + strings.ReplaceAll(htmlquery.InnerText(viewHrefNode), "./", "")
+				var downLoadUrl = ""
+				if strings.Contains(viewUrl, ".pdf") {
+					// 详情就是pdf文件地址
+					downLoadUrl = viewUrl
+				} else if strings.Contains(viewUrl, ".shtml") {
+					viewDoc, err := MemBzHtmlDoc(viewUrl, requestListUrl)
+					if err != nil {
+						fmt.Println(err)
+						continue
+					}
+					viewEditorNode := htmlquery.FindOne(viewDoc, `//div[@class="TRS_Editor"]`)
+                    if viewEditorNode == nil {
+                        fmt.Println("未找到‘TRS_Editor’文件节点，跳过")
                         continue
                     }
-
-                    // 开始下载
-                    fmt.Println("=======开始下载========")
-                    err = downloadMem(downLoadUrl, requestListUrl, filePath)
-                    if err != nil {
-                        fmt.Println(err)
+                    viewDownloadHrefNode := htmlquery.FindOne(viewEditorNode, `//a/@href`)
+                    if viewDownloadHrefNode == nil {
+                        fmt.Println("未找到下载文件节点，跳过")
                         continue
                     }
-                    //复制文件
-                    tempFilePath := strings.ReplaceAll(filePath, "www.mem.gov.cn", "temp-hbba.sacinfo.org.cn")
-                    err = copyMemFile(filePath, tempFilePath)
-                    if err != nil {
-                        fmt.Println(err)
-                        continue
-                    }
-                    fmt.Println("=======完成下载========")
+					downLoadUrl = htmlquery.InnerText(viewDownloadHrefNode)
+					viewUrlArray := strings.Split(viewUrl, "/")
+					downLoadUrl = strings.Join(viewUrlArray[:len(viewUrlArray)-1], "/") + "/" + strings.ReplaceAll(downLoadUrl, "./", "")
+				}
+                // 中文标题
+                chineseTitle := htmlquery.InnerText(liNode)
+                chineseTitle = chineseTitle[:len(chineseTitle) - 16]
+                chineseTitle = strings.TrimSpace(chineseTitle)
+                chineseTitle = strings.ReplaceAll(chineseTitle, "/", "-")
+                chineseTitle = strings.ReplaceAll(chineseTitle, "／", "-")
+                chineseTitle = strings.ReplaceAll(chineseTitle, "/", "-")
+                chineseTitle = strings.ReplaceAll(chineseTitle, "　", "-")
+                chineseTitle = strings.ReplaceAll(chineseTitle, " ", "-")
+                chineseTitle = strings.ReplaceAll(chineseTitle, "：", ":")
+                chineseTitle = strings.ReplaceAll(chineseTitle, "—", "-")
+                chineseTitle = strings.ReplaceAll(chineseTitle, "－", "-")
+                chineseTitle = strings.ReplaceAll(chineseTitle, "（", "(")
+                chineseTitle = strings.ReplaceAll(chineseTitle, "）", ")")
+                chineseTitle = strings.ReplaceAll(chineseTitle, "《", "")
+                chineseTitle = strings.ReplaceAll(chineseTitle, "》", "")
+                fmt.Println(chineseTitle)
 
-                    // 设置倒计时
-                    DownLoadTMemTimeSleep := 10
-                    for i := 1; i <= DownLoadTMemTimeSleep; i++ {
-                        time.Sleep(time.Second)
-                        fmt.Println("===page = "+strconv.Itoa(page)+"===title="+chineseTitle+"===========操作完成，", "暂停", DownLoadTMemTimeSleep, "秒，倒计时", i, "秒===========")
-                    }
+                filePath := "../www.mem.gov.cn/" + chineseTitle + ".pdf"
+                _, err = os.Stat(filePath)
+                if err == nil {
+                    fmt.Println("文档已下载过，跳过")
+                    continue
+                }
+
+                // 开始下载
+                fmt.Println("=======开始下载========")
+                err = downloadMem(downLoadUrl, requestListUrl, filePath)
+                if err != nil {
+                    fmt.Println(err)
+                    continue
+                }
+                //复制文件
+                tempFilePath := strings.ReplaceAll(filePath, "www.mem.gov.cn", "temp-hbba.sacinfo.org.cn")
+                err = copyMemFile(filePath, tempFilePath)
+                if err != nil {
+                    fmt.Println(err)
+                    continue
+                }
+                fmt.Println("=======完成下载========")
+
+                // 设置倒计时
+                DownLoadTMemTimeSleep := 10
+                for i := 1; i <= DownLoadTMemTimeSleep; i++ {
+                    time.Sleep(time.Second)
+                    fmt.Println("===page = "+strconv.Itoa(page)+"===title="+chineseTitle+"===========操作完成，", "暂停", DownLoadTMemTimeSleep, "秒，倒计时", i, "秒===========")
                 }
             }
             DownLoadMemPageTimeSleep := 10
