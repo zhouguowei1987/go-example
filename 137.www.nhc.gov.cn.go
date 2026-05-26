@@ -109,62 +109,21 @@ func NhcGovSetHttpProxy() (httpclient *http.Client) {
 	return httpclient
 }
 
-// _yfxkpy_firsttime 1737352968986 2025-01-20 14:02:48
-// _yfxkpy_lasttime 1752595494940 2025-07-16 00:04:54
-// _yfxkpy_visittime 1752675674051 2025-07-16 22:21:14
-var NhcGovCookie = "5uRo8RWcod0KO=603Se6al8mCmIyKI6qz89CLPxYBjv3jLkOmQKaig.o_VoxTKUs7u5.GLBoQZqQI8wKJkls3kv0n2fjI_ZRWBNuJa; arialoadData=true; _yfxkpy_ssid_10006654=%7B%22_yfxkpy_firsttime%22%3A%221753431366046%22%2C%22_yfxkpy_lasttime%22%3A%221777604153784%22%2C%22_yfxkpy_visittime%22%3A%221777637323339%22%2C%22_yfxkpy_cookie%22%3A%2220250725161606048834284966558828%22%2C%22_yfxkpy_returncount%22%3A%2212%22%7D; JSESSIONID=3EC3C9E2405CB4271DCD755FF4699BBF; ariauseGraymode=false"
-
-type yfxkpySsid10006654 struct {
-	Yfxkpy_firsttime string `json:"_yfxkpy_firsttime"`
-	Yfxkpy_lasttime  string `json:"_yfxkpy_lasttime"`
-	Yfxkpy_visittime string `json:"_yfxkpy_visittime"`
-	Yfxkpy_cookie    string `json:"_yfxkpy_cookie"`
-	//Yfxkpy_returncount string `json:"_yfxkpy_returncount"`
-}
-
-func create_yfxkpy_ssid() {
-	now_milliseconds := time.Now().UnixMilli()
-	// 将毫秒转换为纳秒
-	now_nanoseconds := now_milliseconds / 1000
-	t := time.Unix(now_nanoseconds, 0)
-	// 格式化日期和时间
-	now_day := t.Format("20060102150405")
-	yfxkpy_ssid_10006654 := yfxkpySsid10006654{
-		Yfxkpy_firsttime: strconv.Itoa(int(now_milliseconds)),
-		Yfxkpy_lasttime:  strconv.Itoa(int(now_milliseconds)),
-		Yfxkpy_visittime: strconv.Itoa(int(now_milliseconds)),
-		Yfxkpy_cookie:    now_day + "34962272829032799947",
-		// 		Yfxkpy_returncount: "1",
-	}
-	// 将结构体转换为JSON字节数组
-	yfxkpy_ssid_10006654_json_data, err := json.Marshal(yfxkpy_ssid_10006654)
-	if err != nil {
-		fmt.Println(err)
-	}
-
-	yfxkpy_ssid_10006654_json_data_string := string(yfxkpy_ssid_10006654_json_data)
-	yfxkpy_ssid_10006654_json_data_string = url.QueryEscape(yfxkpy_ssid_10006654_json_data_string)
-	// 	fmt.Println(yfxkpy_ssid_10006654_json_data_string)
-
-	NhcGovCookie = fmt.Sprintf("5uRo8RWcod0KO=603Se6al8mCmIyKI6qz89CLPxYBjv3jLkOmQKaig.o_VoxTKUs7u5.GLBoQZqQI8wKJkls3kv0n2fjI_ZRWBNuJa; enable_5uRo8RWcod0K=true; JSESSIONID=CBA7B8FD1987C1453700A9033328A500; _yfxkpy_ssid_10006654=%s; ariauseGraymode=false; 5uRo8RWcod0KP=0FS_Xfz3LGsatSUmBL.xqdoJL5riicoW05pFHVnMdsi6LiPHaYCMpeIoOaUW3r9kaqVDOYq0LG7i.q7GMe4midrhUnb3MnLyvaHIAoreFn8SehZB5O_SaAduEny51EEc90FVBjIy.BJe0fOyz51Kvg3aZK0ixVhpE9AErZtCkbYxsJ9aB6eLtQd3AyroZA.wdyiglR6Wx4Ok6QHP5LETqQeISuIw0_F_ZWI2kI9CEB64U3tqHkvkXlv3E4Ajx9mZO; arialoadData=true", yfxkpy_ssid_10006654_json_data_string)
-	// 	fmt.Println(NhcGovCookie)
-}
+var NhcGovCookie = "5uRo8RWcod0KO=603Se6al8mCmIyKI6qz89CLPxYBjv3jLkOmQKaig.o_VoxTKUs7u5.GLBoQZqQI8wKJkls3kv0n2fjI_ZRWBNuJa; enable_5uRo8RWcod0K=true; JSESSIONID=FFF9A67726FCD3F4F2179E402788AF31; _yfxkpy_ssid_10006654=%7B%22_yfxkpy_firsttime%22%3A%221753431366046%22%2C%22_yfxkpy_lasttime%22%3A%221779542930258%22%2C%22_yfxkpy_visittime%22%3A%221779542930258%22%2C%22_yfxkpy_cookie%22%3A%2220250725161606048834284966558828%22%2C%22_yfxkpy_returncount%22%3A%2214%22%7D; arialoadData=true; ariauseGraymode=false; 5uRo8RWcod0KP=0g8KLgwTPbWDZhFpdDke9vc50drONMuxwL.vBRJw2Omyfk02y6xi7RCNGft5lo7Qzn6R1B4HlNuv7ebcX3bobgqGijpZSkuIHYILoxLEjAwS1QnSl0zdxR2IZBKMH9QS4URt8Y91Hy7VMh5qEmnIKsyuH4tFdEuYPyDQexakcxy_n6lx9SIH879DCZVNHvWrPbppa3UlVjwHZuHtyRuaRpQF_k5yYBkNEgo9YC82gWGe4wGEu9LI.gPGJkSIs8VADp7bYNSFQ24n8_HSU.sGZRYoUC3XfE6GAKeUxc81WV64zCqBXKbcZNR6nCI2KMynXkNv6iTlQkLtg7eTnh6fR_s.yBNhaY_0CuRRMMY34U3BDpCk9JaFOeqb3FCdYMd0k.AEC2oxKJPcbE_5d0n6iAgtTkxSXrlyHjZDIEtwL0We92GQ1H8UZNGIFH1o2572n"
 
 // 下载国家卫生标准文档
 // @Title 下载国家卫生标准文档
 // @Description https://www.nhc.gov.cn/，下载国家卫生标准文档
 func main() {
-	pageListUrl := "https://www.nhc.gov.cn/search/74ef62665780458e8e43027d6b5d98aa?_isAgg=true&_isJson=true&_pageSize=9999&_template=index&_rangeTimeGte=&_channelName=&page=1"
+	pageListUrl := "https://www.nhc.gov.cn/search/74ef62665780458e8e43027d6b5d98aa?_isAgg=true&_isJson=true&_pageSize=999&_template=index&_rangeTimeGte=&_channelName=&page=1"
 	fmt.Println(pageListUrl)
-	//queryNhcGovListResponseDataResults, err := QueryNhcGovList(pageListUrl)
-	queryNhcGovListResponseDataResults, err := QueryNhcGovListJson()
+	queryNhcGovListResponseDataResults, err := QueryNhcGovList(pageListUrl)
 	if err != nil {
 		NhcGovHttpProxyUrl = ""
 		fmt.Println(err)
 	}
 	for id_index, nhcGovResult := range queryNhcGovListResponseDataResults {
 		fmt.Println("=====================开始处理数据 id_index = ", id_index, "=========================")
-
 		title := nhcGovResult.Title
 		title = strings.TrimSpace(title)
 		title = strings.ReplaceAll(title, "-", "")
@@ -185,19 +144,16 @@ func main() {
 
 		nhcGovDetailUrl := nhcGovResult.Url
 		fmt.Println(nhcGovDetailUrl)
-		// 		os.Exit(1)
 
 		nhcGovDetailDoc, err := NhcGovDetailDoc(nhcGovDetailUrl, "https://www.nhc.gov.cn/wjw/wsbzxx/wsbz.shtml")
+// 		fmt.Println(htmlquery.InnerText(nhcGovDetailDoc))
+// 		os.Exit(1)
 		if err != nil {
 			fmt.Println(err)
 			continue
 		}
-		// 		fmt.Println(htmlquery.InnerText(nhcGovDetailDoc))
-		// 		os.Exit(1)
 
 		codeNode := htmlquery.FindOne(nhcGovDetailDoc, `//div[@class="w1140 bgfff p20"]/div[@class="list"]/table[@class="mt20 mb20"]/tbody/tr[1]/td[@class="zhupei"]`)
-		// 		fmt.Println(htmlquery.InnerText(codeNode))
-		// 		os.Exit(1)
 		if codeNode == nil {
 			fmt.Println("没有code节点，跳过")
 			continue
@@ -284,21 +240,6 @@ type QueryNhcGovListResponseData struct {
 type QueryNhcGovListResponseDataResults struct {
 	Title string `json:"title"`
 	Url   string `json:"url"`
-}
-
-func QueryNhcGovListJson() (queryNhcGovListResponseDataResults []QueryNhcGovListResponseDataResults, err error) {
-	nhcGovListJsonData, err := os.ReadFile("./www.nhc.gov.cn.json")
-	if err != nil {
-		return queryNhcGovListResponseDataResults, err
-	}
-
-	queryNhcGovListResponse := QueryNhcGovListResponse{}
-	err = json.Unmarshal(nhcGovListJsonData, &queryNhcGovListResponse)
-	if err != nil {
-		return queryNhcGovListResponseDataResults, err
-	}
-	queryNhcGovListResponseDataResults = queryNhcGovListResponse.Data.Results
-	return queryNhcGovListResponseDataResults, nil
 }
 
 func QueryNhcGovList(requestUrl string) (queryNhcGovListResponseDataResults []QueryNhcGovListResponseDataResults, err error) {
@@ -389,8 +330,6 @@ func NhcGovDetailDoc(requestUrl string, referer string) (doc *html.Node, err err
 	if err != nil {
 		return doc, err
 	}
-	// 初始化cookie
-	create_yfxkpy_ssid()
 	req.Header.Set("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7")
 	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
 	req.Header.Set("Connection", "keep-alive")
@@ -438,8 +377,6 @@ func downloadNhcGov(attachmentUrl string, referer string, filePath string) error
 	if err != nil {
 		return err
 	}
-	// 初始化cookie
-	create_yfxkpy_ssid()
 
 	req.Header.Set("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7")
 	req.Header.Set("Connection", "keep-alive")
