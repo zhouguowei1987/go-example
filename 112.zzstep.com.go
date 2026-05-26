@@ -480,7 +480,7 @@ var studySectionSubjectsPapers = []ZZStepStudySectionSubjectsPapers{
 	},
 }
 
-var NextDownloadSleep = 2
+var NextDownloadSleep = 10
 
 var randStringLength = 8
 
@@ -501,6 +501,7 @@ var ZZStepCookie = ""
 func main() {
 	for _, studySection := range studySectionSubjectsPapers {
 		for _, subject := range studySection.subjects {
+		outer:
 			for _, paper := range subject.papers {
 				current := 1
 				maxCurrent := 50
@@ -537,13 +538,13 @@ func main() {
 
 						datePaper, _ := time.Parse("2006-01-02", dateText)
 						fmt.Println(datePaper)
-						dateStart, _ := time.Parse("2006-01-02", "2026-01-15")
+						dateStart, _ := time.Parse("2006-01-02", "2026-03-26")
 						fmt.Println(dateStart)
 
 						// 比较日期
 						if datePaper.After(dateStart) == false {
-							fmt.Println("日期在2026-01-15后，跳过")
-							break
+							fmt.Println("日期在2026-03-26后，跳过")
+							break outer
 						}
 
 						// 所需智币
@@ -597,7 +598,7 @@ func main() {
 							continue
 						}
 
-						filePath := "../www2.zzstep.com/2026-01-15/www2.zzstep.com/" + studySection.name + "/" + subject.name + "/" + fileName
+						filePath := "D:\\workspace\\www2.zzstep.com\\2026-03-26\\www2.zzstep.com\\" + studySection.name + "\\" + subject.name + "\\" + fileName
 						_, errDoc := os.Stat(filePath + ".doc")
 						_, errDocx := os.Stat(filePath + ".docx")
 						if errDoc != nil && errDocx != nil {
