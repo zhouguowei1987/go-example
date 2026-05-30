@@ -107,7 +107,7 @@ func LnSiSetHttpProxy() (httpclient *http.Client) {
 	return httpclient
 }
 
-var LnSiCookie = "JSESSIONID=03E9B46EEF3791F25FEFA4D80935DDD5"
+var LnSiCookie = "JSESSIONID=905FCC9080D5E56F14EC5CFC746F2B2C"
 
 // 下载辽宁省地方标准文档
 // @Title 下载辽宁省地方标准文档

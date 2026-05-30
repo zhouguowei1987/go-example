@@ -5,7 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"math/rand"
+	// "math/rand"
 	"net"
 	"net/http"
 	"os"
@@ -19,17 +19,19 @@ import (
 	"golang.org/x/net/html"
 )
 
-var EShiAnCookie = "JSESSIONID=C7EB616B1CC7EB42DD47E44018A3C7B9"
+var EShiAnCookie = "JSESSIONID=A819FEB804EF061038E1CB0BA9EB89E0"
 
 // EShiAnSpider 获取食安通标准文档
 // @Title 获取食安通标准文档
 // @Description https://www.eshian.com/，将食安通标准文档入库
 func main() {
-	var startId = 66981
-	var endId = 68656
+    // 63981
+	var startId = 66017
+	var endId = 66981
+	// 68656
 	for id := startId; id <= endId; id++ {
 		fmt.Println(id)
-		detailUrl := fmt.Sprintf("https://www.eshian.com/sat/standard/info/LXMjAyNi0wNS0wNw==/%d", id)
+		detailUrl := fmt.Sprintf("https://www.eshian.com/sat/standard/info/LXMjAyNi0wNS0zMA==/%d", id)
 		detailDoc, err := EShiAnDetailDoc(detailUrl)
 		if err != nil {
 			fmt.Println(err)
@@ -46,16 +48,33 @@ func main() {
 		title = strings.ReplaceAll(title, "/", "-")
 		title = strings.ReplaceAll(title, "／", "-")
 		title = strings.ReplaceAll(title, "/", "-")
+		title = strings.ReplaceAll(title, "\n", "")
+        title = strings.ReplaceAll(title, "\r", "")
+        title = strings.ReplaceAll(title, "\t", "")
 		title = strings.ReplaceAll(title, "　", "-")
 		title = strings.ReplaceAll(title, " ", "-")
+		title = strings.ReplaceAll(title, "&nbsp;", "-")
 		title = strings.ReplaceAll(title, "：", ":")
 		title = strings.ReplaceAll(title, "—", "-")
 		title = strings.ReplaceAll(title, "－", "-")
+		title = strings.ReplaceAll(title, "--", "-")
 		title = strings.ReplaceAll(title, "（", "(")
 		title = strings.ReplaceAll(title, "）", ")")
 		title = strings.ReplaceAll(title, "《", "")
 		title = strings.ReplaceAll(title, "》", "")
 		fmt.Println(title)
+		if strings.Index(title,"暂无文本") != -1 {
+			fmt.Println("文档暂无文本，跳过")
+			continue
+		}
+		if strings.Index(title,"即将实施") != -1 {
+			fmt.Println("文档即将实施，跳过")
+			continue
+		}
+		if strings.Index(title,"作废") != -1 {
+			fmt.Println("文档作废，跳过")
+			continue
+		}
 
 		filePath := "../www.eshian.com/" + title + ".pdf"
 		fmt.Println(filePath)
@@ -75,6 +94,10 @@ func main() {
 		downloadUrl := "https://www.eshian.com" + string(regDownloadViewUrlMatch[0][1])
 		downloadUrl = strings.ReplaceAll(downloadUrl, "\\", "")
 		fmt.Println(downloadUrl)
+		if strings.Index(downloadUrl,"null") != -1{
+		    fmt.Println("下载连接无效，跳过")
+			continue
+		}
 
 		fmt.Println("=======开始下载========")
 		err = downloadEShiAn(downloadUrl, detailUrl, filePath)
@@ -83,7 +106,7 @@ func main() {
 			continue
 		}
 		//复制文件
-		tempFilePath := strings.ReplaceAll(filePath, "www.eshian.com", "temp-dbba.sacinfo.org.cn")
+		tempFilePath := strings.ReplaceAll(filePath, "www.eshian.com", "temp-hbba.sacinfo.org.cn")
 		err = copyEShiAnFile(filePath, tempFilePath)
 		if err != nil {
 			fmt.Println(err)
@@ -92,8 +115,8 @@ func main() {
 		fmt.Println("=======完成下载========")
 
 		// 设置倒计时
-		// DownLoadTEShiAnTimeSleep := 10
-		DownLoadTEShiAnTimeSleep := rand.Intn(5)
+		DownLoadTEShiAnTimeSleep := 10
+		// DownLoadTEShiAnTimeSleep := rand.Intn(5)
 		for i := 1; i <= DownLoadTEShiAnTimeSleep; i++ {
 			time.Sleep(time.Second)
 			fmt.Println("id="+strconv.Itoa(id)+"===========操作完成，", "暂停", DownLoadTEShiAnTimeSleep, "秒，倒计时", i, "秒===========")
@@ -160,7 +183,7 @@ func downloadEShiAn(requestUrl string, referer string, filePath string) error {
 
 			},
 			MaxIdleConnsPerHost:   10,
-			ResponseHeaderTimeout: time.Second * 30,
+			ResponseHeaderTimeout: time.Second * 60,
 		},
 	}             //初始化客户端
 	req, err := http.NewRequest("GET", requestUrl, nil) //建立连接

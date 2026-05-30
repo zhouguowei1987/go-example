@@ -77,7 +77,7 @@ type DownLoadWebFreeResponse struct {
 func main() {
 	for _, webfree := range webfrees {
 		current := 1
-		maxCurrent := 5
+		maxCurrent := 2
 		isPageListGo := true
 		for isPageListGo {
 			if current >= maxCurrent {
