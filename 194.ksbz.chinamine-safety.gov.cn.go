@@ -108,7 +108,7 @@ func KsBzSetHttpProxy() (httpclient *http.Client) {
 	return httpclient
 }
 
-var KsBzListCookie = "ariauseGraymode=false; arialoadData=false; JSESSIONID=6UAzGAJk86JrvI6uGiGrjium3idNStpY00QEt3i3"
+var KsBzListCookie = "JSESSIONID=KlmXV3CuDTNAvxWO-pzNe1fDvMqTAxFpbNKE0M-0"
 
 // 下载矿山安全标准文档
 // @Title 下载矿山安全标准文档

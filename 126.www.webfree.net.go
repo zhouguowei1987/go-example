@@ -77,7 +77,7 @@ type DownLoadWebFreeResponse struct {
 func main() {
 	for _, webfree := range webfrees {
 		current := 1
-		maxCurrent := 2
+		maxCurrent := 3
 		isPageListGo := true
 		for isPageListGo {
 			if current >= maxCurrent {
@@ -114,7 +114,7 @@ func main() {
 				_, err = os.Stat(filePath)
 				if err == nil {
 					fmt.Println("文档已下载过，跳过")
-					continue
+					break
 				}
 
 				// 标准文件id
