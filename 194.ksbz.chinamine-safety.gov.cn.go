@@ -108,7 +108,7 @@ func KsBzSetHttpProxy() (httpclient *http.Client) {
 	return httpclient
 }
 
-var KsBzListCookie = "ariauseGraymode=false; arialoadData=false; JSESSIONID=6UAzGAJk86JrvI6uGiGrjium3idNStpY00QEt3i3"
+var KsBzListCookie = "JSESSIONID=KlmXV3CuDTNAvxWO-pzNe1fDvMqTAxFpbNKE0M-0"
 
 // 下载矿山安全标准文档
 // @Title 下载矿山安全标准文档
@@ -160,8 +160,9 @@ func main() {
 				fmt.Println(err)
 				break
 			}
-
-			downloadUrl := fmt.Sprintf("https://ksbz.chinamine-safety.gov.cn/revisionSystem/legalFileUpload/downloadFile?src=%s&chineseTitle=%s&download=0", queryKsBzDetailResponseResultStandardAnnexList[0].Src, queryKsBzDetailResponseResultStandardAnnexList[0].FileName)
+            // 使用QueryEscape进行URL编码
+            chineseTitle := url.QueryEscape(queryKsBzDetailResponseResultStandardAnnexList[0].FileName)
+			downloadUrl := fmt.Sprintf("https://ksbz.chinamine-safety.gov.cn/revisionSystem/legalFileUpload/downloadFile?src=%s&chineseTitle=%s", queryKsBzDetailResponseResultStandardAnnexList[0].Src, chineseTitle)
 			fmt.Println(downloadUrl)
 
 			fmt.Println("=======开始下载" + title + "========")
@@ -172,7 +173,7 @@ func main() {
 				continue
 			}
 			//复制文件
-			tempFilePath := strings.ReplaceAll(filePath, "ksbz.chinamine-safety.gov.cn", "temp-hbba.sacinfo.org.cn")
+			tempFilePath := strings.ReplaceAll(filePath, "ksbz.chinamine-safety.gov.cn", "temp-ksbz.chinamine-safety.gov.cn")
 			err = copyKsBzFile(filePath, tempFilePath)
 			if err != nil {
 				fmt.Println(err)
@@ -393,9 +394,13 @@ func downloadKsBz(attachmentUrl string, referer string, filePath string) error {
 	req.Header.Set("Connection", "keep-alive")
 	req.Header.Set("Cookie", KsBzListCookie)
 	req.Header.Set("Host", "ksbz.chinamine-safety.gov.cn")
-	//req.Header.Set("Referer", referer)
-	req.Header.Set("Upgrade-Insecure-Requests", "1")
-	req.Header.Set("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36")
+	req.Header.Set("Sec-Ch-Ua", "\"Not.A/Brand\";v=\"8\", \"Chromium\";v=\"114\", \"Google Chrome\";v=\"114\"")
+	req.Header.Set("Sec-Ch-Ua-Mobile", "?0")
+	req.Header.Set("Sec-Ch-Ua-Platform", "\"macOS\"")
+	req.Header.Set("Sec-Fetch-Dest", "empty")
+	req.Header.Set("Sec-Fetch-Mode", "cors")
+	req.Header.Set("Sec-Fetch-Site", "same-origin")
+	req.Header.Set("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36")
 	resp, err := client.Do(req) //拿到返回的内容
 	if err != nil {
 		return err

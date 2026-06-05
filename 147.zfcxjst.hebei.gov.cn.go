@@ -24,7 +24,7 @@ type zfCxJstCategory struct {
 	maxPage int
 }
 
-var ZfCxJstCookie = "qspJd7aG3Y1XO=60fUHO9ocKVEtR8xeDuxT.qFr5J7jn5RfHlXxJP7md0y65aCBzcwx2z5Qr7cdOFg2rDD4j8V4_9YIAsUyvxlCGlG; Hm_lvt_9570b2f6df21bcd51a4c34f2eab44fca=1777542610; Hm_lpvt_9570b2f6df21bcd51a4c34f2eab44fca=1777542610; HMACCOUNT=4E5B3419A3141A8E; qspJd7aG3Y1XP=07M9G1zObAk1OGCPLuVW5rosLEWdTZKYkf46ZJ8rrok4vshAXNFs2kBo9BqzMojZArIsylF5okiOsroNszc1FVkH0dwltjCvRMepaZEoedoGydIrsOf5OMg0EP6svcKomvxAnrw7_Rg6c73A0Ici0a_YyW.Prszcv1M5WyiWmCM3XObZ21sMybOnbq9PgwR.72Oxp0BQ6NV5UhtbQt6w77XEDK45FwkKeXYD4cpU8Pug.SQWsd5rUNZoZ8CLzJQOBLgIzYRmpf.L_rw5ET2dMlz_PVzRrGZS7ywNj3_9Sgrlo2IyiyUjTJpXUp8Pctx8MWQu.IcaFyM63PQSPz1kOtNaXQ2xa.BgJk7acn1_juRre.35rubC7486YK9CJEoVS6FynPVppMe8TmTxOqG6P.aBWQJ9woddUQmBowhwgSzHXZyGM.p6TvuB_LFgiDWBV"
+var ZfCxJstCookie = "qspJd7aG3Y1XO=60fUHO9ocKVEtR8xeDuxT.qFr5J7jn5RfHlXxJP7md0y65aCBzcwx2z5Qr7cdOFg2rDD4j8V4_9YIAsUyvxlCGlG; Hm_lvt_9570b2f6df21bcd51a4c34f2eab44fca=1777542610; qspJd7aG3Y1XP=0QGmF3.Qewgm_WffRbFyz7mmQ69U6jCBOnu31zNSSj1WoZQyKgRK4mxr2plLyRtRqEgg4fZ_r.y32UOAAwyOaEfut.43PP4vYgKU3.1bO2BGmPGBQPP2rWln77NilhLcCkm9nvGBHaqPxNjZD9OqxS9qFFmD5kdQv7p6HfrAchoFh9G1EFDJozPBip9Szv_Jkikl5roaZZs.Wkg1uuyWyBkmFEcTr8ypQY85LaZ6YIJ9wsRSrZ_Fg1gxArubmLpCAPIueqqZE37_i.7Hx.ujW6E3cuhWeiatsst8INe5t3bMTKoTKL0CXw6ccFYYFYPpO7f3QgJ143zEu5_QAxUuSx7_osW5FrSBCX5JimCBHlhNLe2FMjLsGs1oEB2iUKAkZ8wg2delHXBNDiEYsy6Qstoe3A99u9hWv.oKzEAl243YF5NQnIvQ8aEhTmUOWxprC"
 
 // zfCxJstSpider 获取河北省住房和城乡建设厅标准
 // @Title 获取河北省住房和城乡建设厅标准
@@ -32,11 +32,11 @@ var ZfCxJstCookie = "qspJd7aG3Y1XO=60fUHO9ocKVEtR8xeDuxT.qFr5J7jn5RfHlXxJP7md0y6
 func main() {
 	// 国内标准列表
 	var allCategory = []zfCxJstCategory{
-		{url: "https://zfcxjst.hebei.gov.cn/hbzjt/ztzl/jj/gcjsgf/fwjz", name: "房屋建筑", page: 1, maxPage: 3},  //14
-		{url: "https://zfcxjst.hebei.gov.cn/hbzjt/ztzl/jj/gcjsgf/szgc", name: "市政工程", page: 1, maxPage: 3},  //7
-		{url: "https://zfcxjst.hebei.gov.cn/hbzjt/ztzl/jj/gcjsgf/czjs", name: "村镇建设", page: 1, maxPage: 3},  //3
-		{url: "https://zfcxjst.hebei.gov.cn/hbzjt/ztzl/jj/gcjsgf/sxjs", name: "四新技术", page: 1, maxPage: 3},  //7
-		{url: "https://zfcxjst.hebei.gov.cn/hbzjt/ztzl/jj/gcjsgf/zjbz", name: "消耗量标准", page: 1, maxPage: 3}, //2
+		{url: "https://zfcxjst.hebei.gov.cn/hbzjt/ztzl/jj/gcjsgf/fwjz", name: "房屋建筑", page: 1, maxPage: 5},  //14
+		{url: "https://zfcxjst.hebei.gov.cn/hbzjt/ztzl/jj/gcjsgf/szgc", name: "市政工程", page: 1, maxPage: 5},  //7
+		{url: "https://zfcxjst.hebei.gov.cn/hbzjt/ztzl/jj/gcjsgf/czjs", name: "村镇建设", page: 1, maxPage: 5},  //3
+		{url: "https://zfcxjst.hebei.gov.cn/hbzjt/ztzl/jj/gcjsgf/sxjs", name: "四新技术", page: 1, maxPage: 5},  //7
+		{url: "https://zfcxjst.hebei.gov.cn/hbzjt/ztzl/jj/gcjsgf/zjbz", name: "消耗量标准", page: 1, maxPage: 5}, //2
 	}
 	for _, category := range allCategory {
 		isPageListGo := true
@@ -98,14 +98,15 @@ func main() {
 
 					downloadUrl := htmlquery.InnerText(downNode)
 					if strings.Index(downloadUrl, "zfcxjst.hebei.gov.cn") == -1 {
-						downloadUrl = "https://zfcxjst.hebei.gov.cn" + detailUrl
+						downloadUrl = "https://zfcxjst.hebei.gov.cn" + downloadUrl
 					}
+					fmt.Println(downloadUrl)
 					// 只下载pdf文件
 					if strings.Index(downloadUrl, ".pdf") == -1 {
 						fmt.Println("不是pdf文件")
 						continue
 					}
-					fmt.Println(downloadUrl)
+
 
 					fmt.Println("=======开始下载========")
 					err = downloadZfCxJstPdf(downloadUrl, filePath, detailUrl)
