@@ -4,11 +4,13 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"io/ioutil"
 	"net"
 	"net/http"
 	"net/url"
 	"os"
 	"path/filepath"
+	"regexp"
 	"strconv"
 	"strings"
 	"time"
@@ -105,22 +107,22 @@ func CzWlZxSetHttpProxy() (httpclient *http.Client) {
 	return httpclient
 }
 
-var CzWlZxCookie = "Hm_lvt_43bc53ae85afc8f10b75f500b7f506b6=1751030895; ASP.NET_SessionId=qukkqa55xvbqhy45qt5w4gaw; Hm_lvt_43bc53ae85afc8f10b75f500b7f506b6=1750862924,1750943997,1751263265; Hm_lpvt_43bc53ae85afc8f10b75f500b7f506b6=1751263265; HMACCOUNT=1CCD0111717619C6"
+var CzWlZxCookie = "ASP.NET_SessionId=jqr4imn2weoi4w45cy0aulbo; Hm_lvt_43bc53ae85afc8f10b75f500b7f506b6=1780534614; HMACCOUNT=9C0CD19686802BBF; Hm_lpvt_43bc53ae85afc8f10b75f500b7f506b6=1780543954"
 
 // CzWlZxSpider 获取初中物理在线文档
 // @Title 获取初中物理在线文档
 // @Description http://www.czwlzx.cn/，获取初中物理在线文档
 func main() {
 	// 154786
-	var startId = 154786
-	var endId = 151978
+	var startId = 155514
+	var endId = 154786
 	for id := startId; id >= endId; id-- {
 		err := CzWlZxSpider(id)
 		if err != nil {
 			fmt.Println(err)
 		}
 	}
-	// err := CzWlZxSpider(154187)
+	// err := CzWlZxSpider(155485)
 	// if err != nil {
 	// 	fmt.Println(err)
 	// }
@@ -131,8 +133,6 @@ func CzWlZxSpider(id int) error {
 	fmt.Println(detailDocUrl)
 	var detailRefererUrl = "http://www.czwlzx.cn/sj/List_1219.html"
 	detailDoc, err := CzWlZxDetailDoc(detailDocUrl, detailRefererUrl)
-	// fmt.Println(htmlquery.InnerText(detailDoc))
-	// os.Exit(1)
 
 	if err != nil {
 		return err
@@ -160,10 +160,6 @@ func CzWlZxSpider(id int) error {
 	if strings.Index(title, "图片") != -1 {
 		return errors.New("过滤文件名中含有“图片”字样文件")
 	}
-	// 过滤文件名中含有“pdf”字样文件
-	if strings.Index(title, "pdf") != -1 {
-		return errors.New("过滤文件名中含有“pdf”字样文件")
-	}
 
 	// 文档类型
 	var fileType = ""
@@ -175,16 +171,37 @@ func CzWlZxSpider(id int) error {
 	if fileTypeDocNode != nil {
 		fileType = ".doc"
 	}
+	fileTypePptxNode := htmlquery.FindOne(detailDoc, `//div[@class="content"]/div[@class="ppttit"]/h2/i[@class="icon pptx"]`)
+	if fileTypePptxNode != nil {
+		fileType = ".pptx"
+	}
+	fileTypePdfNode := htmlquery.FindOne(detailDoc, `//div[@class="content"]/div[@class="ppttit"]/h2/i[@class="icon pdf"]`)
+	if fileTypePdfNode != nil {
+		fileType = ".pdf"
+	}
+
+	// 查看是否是压缩包
+	doclistNodes := htmlquery.Find(detailDoc, `//div[@class="content"]/div[@class="maindiv"]/div[@id="MyDoc"]/div[@class="list-cont"]/div[@class="doclist"]`)
+	if len(doclistNodes) > 1 {
+		fileType = ".rar"
+	}
 
 	fmt.Println(fileType)
 	if len(fileType) == 0 {
-		return errors.New("文档类型不是doc，跳过")
+		return errors.New("不是想要下载文档类型，跳过")
+	}
+
+	filePath := "F:\\workspace\\www.czwlzx.cn\\www.czwlzx.cn\\" + title + fileType
+	fmt.Println(filePath)
+	_, err = os.Stat(filePath)
+	if err == nil {
+		return errors.New("文档已下载过，跳过")
 	}
 
 	// 所需点券
 	pointsNode := htmlquery.FindOne(detailDoc, `//div[@class="content"]/div[@class="maindiv"]/div[@id="shoufeitishi"]/div[@class="btn-1"]/em[@class="point1"]`)
 	if pointsNode == nil {
-		return errors.New("没有点券div")
+		return errors.New("没有点券div，跳过")
 	}
 	pointsText := htmlquery.InnerText(pointsNode)
 	// 去除空格
@@ -201,14 +218,9 @@ func CzWlZxSpider(id int) error {
 	fmt.Println(points)
 	// os.Exit(1)
 	if points > 0 {
-		return errors.New("需要点券下载")
+		return errors.New("需要点券下载，跳过")
 	}
 
-	filePath := "F:\\workspace\\www.czwlzx.cn\\www.czwlzx.cn\\" + title + fileType
-	_, err = os.Stat(filePath)
-	if err == nil {
-		return errors.New("文档已下载过，跳过")
-	}
 	CzWlZxDownloadUrl := fmt.Sprintf("http://www.czwlzx.cn/Common/ShowDownloadUrl.aspx?urlid=0&id=%d", id)
 	fmt.Println(CzWlZxDownloadUrl)
 
@@ -268,11 +280,19 @@ func CzWlZxDetailDoc(requestUrl string, referer string) (doc *html.Node, err err
 		return doc, err
 	}
 	defer resp.Body.Close()
+
 	// 如果访问失败，就打印当前状态码
 	if resp.StatusCode != http.StatusOK {
 		return doc, errors.New("http status :" + strconv.Itoa(resp.StatusCode))
 	}
 	doc, err = htmlquery.Parse(resp.Body)
+	// 查看是否有跳转meta
+	respBytes, err := ioutil.ReadAll(resp.Body)
+	regMetaRefresh := regexp.MustCompile(`<meta http-equiv="refresh" (.*?) />`)
+	regMetaRefreshMatch := regMetaRefresh.FindAllSubmatch(respBytes, -1)
+	if len(regMetaRefreshMatch) > 0 {
+		return doc, errors.New("带有refresh标签，跳过" + string(regMetaRefreshMatch[0][0]))
+	}
 	if err != nil {
 		return doc, err
 	}

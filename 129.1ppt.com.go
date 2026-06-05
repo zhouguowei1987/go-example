@@ -24,8 +24,8 @@ import (
 // @Title 获取第一ppt文档
 // @Description https://1ppt.com/，将第一ppt文档入库
 func main() {
-	var startId = 143499
-	var endId = 144324
+	var startId = 144324
+	var endId = 145128
 	for id := startId; id <= endId; id++ {
 		err := pptSpider(id)
 		if err != nil {
@@ -35,7 +35,7 @@ func main() {
 	//pptSpider(130283)
 }
 
-var pptCookie = "mizToken=202605091021400.88621061314439760.030886799051758174; acw_tc=2760775817782932630178731ea4c17c2605124e727012342acec674a4443f; Hm_lvt_087ceb5ea69d10fb5bbb6bc49c209fa2=1778293264; HMACCOUNT=9C0CD19686802BBF; Hm_lpvt_087ceb5ea69d10fb5bbb6bc49c209fa2=1778293277; acw_sc__v2=1234cf0d46-7fc351498a13ee6b7df2df9892e8211b1e33e56a38540b3d14"
+var pptCookie = "mizToken=202605091021400.88621061314439760.030886799051758174; acw_tc=2760776a17803667933702001efaa811a66f6b5c631d8523723f31a8fc8913; Hm_lvt_087ceb5ea69d10fb5bbb6bc49c209fa2=1778293264,1780366793; HMACCOUNT=9C0CD19686802BBF; Hm_lpvt_087ceb5ea69d10fb5bbb6bc49c209fa2=1780366843; acw_sc__v2=1234cf0d46-747356e21a336ec83cbf3fbcb27ac8416c1bd299642c314334"
 
 func pptSpider(id int) error {
 	detailUrl := fmt.Sprintf("https://www.1ppt.com/article/%d.html", id)
@@ -109,18 +109,20 @@ func pptSpider(id int) error {
 		return errors.New("既不是zip文件，跳过")
 	}
 	filePath := "F:\\workspace\\www.1ppt.com\\www." + fileSuffix + "_1ppt.com\\" + title + "." + fileSuffix
-	if _, err := os.Stat(filePath); err != nil {
-		fmt.Println("=======开始下载========")
-		err = downloadPpt(attachUrl, downloadDetailUrl, filePath)
-		if err != nil {
-			return err
-		}
-		fmt.Println("=======完成下载========")
-		DownLoad1PptTimeSleep := rand.Intn(5)
-		for i := 1; i <= DownLoad1PptTimeSleep; i++ {
-			time.Sleep(time.Second)
-			fmt.Println("id="+strconv.Itoa(id)+"===========下载", title, "成功，暂停", DownLoad1PptTimeSleep, "秒，倒计时", i, "秒===========")
-		}
+	_, err = os.Stat(filePath)
+	if err == nil {
+		return errors.New("文档已下载过，跳过")
+	}
+	fmt.Println("=======开始下载========")
+	err = downloadPpt(attachUrl, downloadDetailUrl, filePath)
+	if err != nil {
+		return err
+	}
+	fmt.Println("=======完成下载========")
+	DownLoad1PptTimeSleep := rand.Intn(5)
+	for i := 1; i <= DownLoad1PptTimeSleep; i++ {
+		time.Sleep(time.Second)
+		fmt.Println("id="+strconv.Itoa(id)+"===========下载", title, "成功，暂停", DownLoad1PptTimeSleep, "秒，倒计时", i, "秒===========")
 	}
 	return nil
 }

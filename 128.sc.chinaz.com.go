@@ -103,7 +103,7 @@ func ChinaZPptSetHttpProxy() (httpclient *http.Client) {
 	return httpclient
 }
 
-var ChinaZPpCookie = "cz_statistics_visitor=2f5205d9-824d-c383-f14e-9068a140f3f0; Hm_lvt_aecc9715b0f5d5f7f34fba48a3c511d6=1778293180; qHistory=aHR0cDovL3Nlby5jaGluYXouY29tX1NFT+e7vOWQiOafpeivog==; Hm_lvt_ca96c3507ee04e182fb6d097cb2a1a4c=1778293200; Hm_lvt_398913ed58c9e7dfe9695953fb7b6799=1778374544; HMACCOUNT=9C0CD19686802BBF; Hm_lvt_7d86eb847ecfd3c972fa457a6abaa0da=1778374544; _clck=liw7zd%5E2%5Eg5x%5E0%5E2320; Hm_lpvt_7d86eb847ecfd3c972fa457a6abaa0da=1778374569; Hm_lpvt_398913ed58c9e7dfe9695953fb7b6799=1778374569; _clsk=11t6iz5%5E1778374569842%5E4%5E1%5Ee.clarity.ms%2Fcollect"
+var ChinaZPpCookie = "cz_statistics_visitor=2f5205d9-824d-c383-f14e-9068a140f3f0; Hm_lvt_aecc9715b0f5d5f7f34fba48a3c511d6=1778293180; qHistory=aHR0cDovL3Nlby5jaGluYXouY29tX1NFT+e7vOWQiOafpeivog==; Hm_lvt_ca96c3507ee04e182fb6d097cb2a1a4c=1778293200; Hm_lvt_398913ed58c9e7dfe9695953fb7b6799=1778374544,1780366579; HMACCOUNT=9C0CD19686802BBF; Hm_lvt_7d86eb847ecfd3c972fa457a6abaa0da=1778374544,1780366580; Hm_lpvt_7d86eb847ecfd3c972fa457a6abaa0da=1780366580; _clck=liw7zd%5E2%5Eg6k%5E0%5E2320; Hm_lpvt_398913ed58c9e7dfe9695953fb7b6799=1780366583; _clsk=1h0rcai%5E1780366583881%5E2%5E1%5El.clarity.ms%2Fcollect"
 
 var DownChinaZPptNextPageSleep = 10
 
@@ -164,20 +164,22 @@ func main() {
 			}
 			filePath := "../sc.chinaz.com/ppt/" + Title + "." + fileSuffix
 			fmt.Println(filePath)
-			if _, err := os.Stat(filePath); err != nil {
-
-				fmt.Println("=======开始下载" + Title + "========")
-				err = DownLoadChinaZPpt(downloadUrl, ViewChinaZPptDetailUrl, filePath)
-				if err != nil {
-					fmt.Println(err)
-					continue
-				}
-				fmt.Println("=======下载完成========")
-				DownLoadChinaZPptTimeSleep := rand.Intn(20)
-				for i := 1; i <= DownLoadChinaZPptTimeSleep; i++ {
-					time.Sleep(time.Second)
-					fmt.Println("page="+strconv.Itoa(curPage)+"===========下载", Title, "成功，暂停", DownLoadChinaZPptTimeSleep, "秒，倒计时", i, "秒===========")
-				}
+			_, err = os.Stat(filePath)
+			if err == nil {
+				fmt.Println("文档已下载过，跳过")
+				continue
+			}
+			fmt.Println("=======开始下载" + Title + "========")
+			err = DownLoadChinaZPpt(downloadUrl, ViewChinaZPptDetailUrl, filePath)
+			if err != nil {
+				fmt.Println(err)
+				continue
+			}
+			fmt.Println("=======下载完成========")
+			DownLoadChinaZPptTimeSleep := rand.Intn(20)
+			for i := 1; i <= DownLoadChinaZPptTimeSleep; i++ {
+				time.Sleep(time.Second)
+				fmt.Println("page="+strconv.Itoa(curPage)+"===========下载", Title, "成功，暂停", DownLoadChinaZPptTimeSleep, "秒，倒计时", i, "秒===========")
 			}
 		}
 		curPage++

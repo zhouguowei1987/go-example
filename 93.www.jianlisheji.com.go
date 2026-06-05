@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/antchfx/htmlquery"
 	"io"
 	"io/ioutil"
 	"net"
@@ -15,6 +14,8 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/antchfx/htmlquery"
 )
 
 const (
@@ -38,10 +39,10 @@ type JianLiSheJiSubject struct {
 }
 
 var AllJianLiSheJiSubject = []JianLiSheJiSubject{
-	{
-		name: "中文简历",
-		url:  "https://www.jianlisheji.com/jianli/jianlimuban/",
-	},
+	// {
+	// 	name: "中文简历",
+	// 	url:  "https://www.jianlisheji.com/jianli/jianlimuban/",
+	// },
 	//{
 	//	name: "英文简历",
 	//	url:  "https://www.jianlisheji.com/jianli/yingwenjianli/",
@@ -111,29 +112,32 @@ func main() {
 					// 下载文档URL
 					downLoadUrl := fmt.Sprintf("https://www.jianlisheji.com/download/vip_download_word/?code=%s&keyid=%s&time=%s&encrypt=%s", vipCheckReturn.code, vipCheckReturn.keyid, vipCheckReturn.time, vipCheckReturn.encrypt)
 
-					filePath := "E:\\workspace\\www.jianlisheji.com\\www.jianlisheji.com\\"
+					filePath := "D:\\workspace\\www.jianlisheji.com\\www.jianlisheji.com\\"
 					fileName = fileName + "." + fileFormat
-					if _, err := os.Stat(filePath + fileName); err != nil {
-						fmt.Println("=======开始下载========")
-						err = downloadJianLiSheJi(downLoadUrl, detailUrl, filePath, fileName)
-						if err != nil {
-							fmt.Println(err)
-							// 当前账号id加一
-							JianLiSheJiCurrentAccountId++
-							JianLiSheJiCurrentAccountDownloadCount = 0
-							continue
-						}
-						fmt.Println("=======下载完成========")
-						for i := 1; i <= JianLiSheJiNextDownloadSleep; i++ {
-							time.Sleep(time.Second)
-							fmt.Println("===========操作结束，暂停", JianLiSheJiNextDownloadSleep, "秒，倒计时", i, "秒===========")
-						}
-						if JianLiSheJiCurrentAccountDownloadCount++; JianLiSheJiCurrentAccountDownloadCount >= JianLiSheJiCurrentAccountDownloadCountMAx {
-							// 当前账号id加一
-							JianLiSheJiCurrentAccountId++
-							JianLiSheJiCurrentAccountDownloadCount = 0
-							continue
-						}
+					_, err = os.Stat(filePath)
+					if err == nil {
+						fmt.Println("文档已下载过，跳过")
+						continue
+					}
+					fmt.Println("=======开始下载========")
+					err = downloadJianLiSheJi(downLoadUrl, detailUrl, filePath, fileName)
+					if err != nil {
+						fmt.Println(err)
+						// 当前账号id加一
+						JianLiSheJiCurrentAccountId++
+						JianLiSheJiCurrentAccountDownloadCount = 0
+						continue
+					}
+					fmt.Println("=======下载完成========")
+					for i := 1; i <= JianLiSheJiNextDownloadSleep; i++ {
+						time.Sleep(time.Second)
+						fmt.Println("===========操作结束，暂停", JianLiSheJiNextDownloadSleep, "秒，倒计时", i, "秒===========")
+					}
+					if JianLiSheJiCurrentAccountDownloadCount++; JianLiSheJiCurrentAccountDownloadCount >= JianLiSheJiCurrentAccountDownloadCountMAx {
+						// 当前账号id加一
+						JianLiSheJiCurrentAccountId++
+						JianLiSheJiCurrentAccountDownloadCount = 0
+						continue
 					}
 					fmt.Println("========当前账户ID,", JianLiSheJiCurrentAccountId, "============")
 					fmt.Println("========当前账户已下载,", JianLiSheJiCurrentAccountDownloadCount, "个文档============")

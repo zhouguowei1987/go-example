@@ -415,7 +415,7 @@ func HandleFolderMeeWenListData(data QueryFolderMeeWenListResponseDataData, cate
 	title = strings.ReplaceAll(title, ".doc", "")
 	title = strings.ReplaceAll(title, ".pdf", "")
 
-	filePath := "../www.meewen.com/www.meewen.com/" + categoryName + "/" + title + ".pdf"
+	filePath := "D:\\workspace\\www.meewen.com\\www.meewen.com\\" + categoryName + "\\" + title + ".pdf"
 	fmt.Println(filePath)
 
 	_, err := os.Stat(filePath)
@@ -444,7 +444,7 @@ func HandleFolderMeeWenListData(data QueryFolderMeeWenListResponseDataData, cate
 	}
 	fmt.Println("=======下载完成========")
 	//复制文件
-	tempFilePath := strings.ReplaceAll(filePath, "www.meewen.com/www.meewen.com", "www.meewen.com/2026-03-16")
+	tempFilePath := strings.ReplaceAll(filePath, "www.meewen.com\\www.meewen.com", "www.meewen.com\\temp-www.meewen.com")
 	err = copyFolderMeeWenFile(filePath, tempFilePath)
 	if err != nil {
 		return err
