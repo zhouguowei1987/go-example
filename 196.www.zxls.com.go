@@ -113,7 +113,7 @@ func main() {
 			}
 			title := strings.TrimSpace(htmlquery.InnerText(titleNode))
 			title = strings.TrimSpace(title)
-			title = strings.ReplaceAll(title, "当前资料-", "")
+			title = strings.ReplaceAll(title, "当前资料：", "")
 			title = strings.ReplaceAll(title, "/", "-")
 			title = strings.ReplaceAll(title, "／", "-")
 			title = strings.ReplaceAll(title, "/", "-")
