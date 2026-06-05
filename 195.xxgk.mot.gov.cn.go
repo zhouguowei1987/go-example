@@ -90,7 +90,7 @@ func main() {
 			title = strings.ReplaceAll(title, "》", "")
 			fmt.Println(title)
 
-			filePath := "../xxgk.mot.gov.cn/" + title + ".docx"
+			filePath := "../xxgk.mot.gov.cn/xxgk.mot.gov.cn/" + title + ".docx"
 			fmt.Println(filePath)
 
 			_, err = os.Stat(filePath)
@@ -107,7 +107,6 @@ func main() {
 			downloadUrl := htmlquery.InnerText(docxDownloadHrefNode)
 			downloadUrl = strings.ReplaceAll(downloadUrl, "./", "")
 			requestUrlArray := strings.Split(requestUrl, "/")
-			fmt.Println(requestUrlArray)
 			downloadUrl = strings.Join(requestUrlArray[:len(requestUrlArray)-1], "/") + "/" + downloadUrl
 			fmt.Println(downloadUrl)
 
@@ -118,7 +117,7 @@ func main() {
 				continue
 			}
 			//复制文件
-			tempFilePath := strings.ReplaceAll(filePath, "xxgk.mot.gov.cn", "temp-xxgk.mot.gov.cn")
+			tempFilePath := strings.ReplaceAll(filePath, "xxgk.mot.gov.cn/xxgk.mot.gov.cn", "xxgk.mot.gov.cn/temp-xxgk.mot.gov.cn")
 			err = copyXxGkFile(filePath, tempFilePath)
 			if err != nil {
 				fmt.Println(err)
