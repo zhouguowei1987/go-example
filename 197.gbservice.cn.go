@@ -122,7 +122,6 @@ func main() {
 		var pageDetailPathUrl = fmt.Sprintf("/api/standard/openinfo?id=%d", id)
 		fmt.Println(pageDetailUrl)
 		queryGbServiceDetailResponseData, err := QueryGbServiceDetail(pageDetailUrl, pageDetailPathUrl)
-		fmt.Println(queryGbServiceDetailResponseData)
 		if len(queryGbServiceDetailResponseData.Files) <= 0 {
 			fmt.Println("没有数据，跳过")
 			continue
