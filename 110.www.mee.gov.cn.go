@@ -71,7 +71,7 @@ var meecategory = []MeeCategory{
 	{name: "环境监测方法标准及监测规范", url: "https://www.mee.gov.cn/ywgz/fgbz/bz/bzwb/jcffbz/"},
 }
 
-var MeeCookie = "wdcid=3fa507778241451a; viewsid=3484113bb5b0423ca247eef0f4d6a1d4; Hm_lvt_0f50400dd25408cef4f1afb556ccb34f=1778258227,1780020888; HMACCOUNT=4E5B3419A3141A8E; arialoadData=true; wdses=1be77bd72d482838; ariauseGraymode=false; wdlast=1780020946; Hm_lpvt_0f50400dd25408cef4f1afb556ccb34f=1780020946"
+var MeeCookie = "wdcid=6b634fedcced3d0f; Hm_lvt_0f50400dd25408cef4f1afb556ccb34f=1778483577,1780970562; HMACCOUNT=9C0CD19686802BBF; wdses=7a36c0d94aa0f6f1; arialoadData=true; viewsid=d6104c6fc5974fe8b53d635af00e0bd0; ariauseGraymode=false; wdlast=1780970578; Hm_lpvt_0f50400dd25408cef4f1afb556ccb34f=1780970578"
 
 // ychEduSpider 获取生态环境标准文档
 // @Title 获取生态环境标准文档

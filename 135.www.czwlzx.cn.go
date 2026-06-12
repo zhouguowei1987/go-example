@@ -107,15 +107,15 @@ func CzWlZxSetHttpProxy() (httpclient *http.Client) {
 	return httpclient
 }
 
-var CzWlZxCookie = "ASP.NET_SessionId=jqr4imn2weoi4w45cy0aulbo; Hm_lvt_43bc53ae85afc8f10b75f500b7f506b6=1780534614; HMACCOUNT=9C0CD19686802BBF; Hm_lpvt_43bc53ae85afc8f10b75f500b7f506b6=1780543954"
+var CzWlZxCookie = "ASP.NET_SessionId=xkpfjbyk4qcfxlnocmuchunr; Hm_lvt_43bc53ae85afc8f10b75f500b7f506b6=1780534614,1780972709; HMACCOUNT=9C0CD19686802BBF; Hm_lpvt_43bc53ae85afc8f10b75f500b7f506b6=1780972752"
 
 // CzWlZxSpider 获取初中物理在线文档
 // @Title 获取初中物理在线文档
 // @Description http://www.czwlzx.cn/，获取初中物理在线文档
 func main() {
 	// 154786
-	var startId = 155514
-	var endId = 154786
+	var startId = 155678
+	var endId = 155514
 	for id := startId; id >= endId; id-- {
 		err := CzWlZxSpider(id)
 		if err != nil {
@@ -187,7 +187,7 @@ func CzWlZxSpider(id int) error {
 	}
 
 	fmt.Println(fileType)
-	if len(fileType) == 0 {
+	if !StrInArrayCzWlZx(fileType, []string{".docx", ".doc"}) {
 		return errors.New("不是想要下载文档类型，跳过")
 	}
 
@@ -362,4 +362,15 @@ func downloadCzWlZx(attachmentUrl string, filePath string, referer string) error
 		return err
 	}
 	return nil
+}
+
+func StrInArrayCzWlZx(str string, data []string) bool {
+	if len(data) > 0 {
+		for _, row := range data {
+			if str == row {
+				return true
+			}
+		}
+	}
+	return false
 }
