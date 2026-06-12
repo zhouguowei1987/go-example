@@ -19,19 +19,19 @@ import (
 	"golang.org/x/net/html"
 )
 
-var EShiAnCookie = "JSESSIONID=9D3E5E7557E699BAFCDA92F3DE6250A7"
+var EShiAnCookie = "JSESSIONID=A4936C14434C3BD35517603ACEB2D022"
 
 // EShiAnSpider 获取食安通标准文档
 // @Title 获取食安通标准文档
 // @Description https://www.eshian.com/，将食安通标准文档入库
 func main() {
-    // 63981
-	var startId = 66222
-	var endId = 66981
+    // 20000
+	var startId = 23423
+	var endId = 63000
 	// 68656
 	for id := startId; id <= endId; id++ {
 		fmt.Println(id)
-		detailUrl := fmt.Sprintf("https://www.eshian.com/sat/standard/info/LXMjAyNi0wNi0wMg==/%d", id)
+		detailUrl := fmt.Sprintf("https://www.eshian.com/sat/standard/info/LXMjAyNi0wNi0xMg==/%d", id)
 		detailDoc, err := EShiAnDetailDoc(detailUrl)
 		if err != nil {
 			fmt.Println(err)
@@ -75,6 +75,10 @@ func main() {
 			fmt.Println("文档作废，跳过")
 			continue
 		}
+		if strings.Index(title,"被代替") != -1 {
+			fmt.Println("文档被代替，跳过")
+			continue
+		}
 
 		filePath := "../www.eshian.com/" + title + ".pdf"
 		fmt.Println(filePath)
@@ -92,7 +96,7 @@ func main() {
 			continue
 		}
 		downloadUrl := "https://www.eshian.com" + string(regDownloadViewUrlMatch[0][1])
-		downloadUrl = strings.ReplaceAll(downloadUrl, "\\", "")
+		downloadUrl = strings.ReplaceAll(downloadUrl, "\\", "/")
 		fmt.Println(downloadUrl)
 		if strings.Index(downloadUrl,"null") != -1{
 		    fmt.Println("下载连接无效，跳过")

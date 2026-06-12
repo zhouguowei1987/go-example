@@ -71,7 +71,7 @@ var meecategory = []MeeCategory{
 	{name: "环境监测方法标准及监测规范", url: "https://www.mee.gov.cn/ywgz/fgbz/bz/bzwb/jcffbz/"},
 }
 
-var MeeCookie = "wdcid=3fa507778241451a; viewsid=3484113bb5b0423ca247eef0f4d6a1d4; Hm_lvt_0f50400dd25408cef4f1afb556ccb34f=1778258227,1780020888; HMACCOUNT=4E5B3419A3141A8E; arialoadData=true; wdses=1be77bd72d482838; ariauseGraymode=false; wdlast=1780020946; Hm_lpvt_0f50400dd25408cef4f1afb556ccb34f=1780020946"
+var MeeCookie = "wdcid=3fa507778241451a; viewsid=3484113bb5b0423ca247eef0f4d6a1d4; Hm_lvt_0f50400dd25408cef4f1afb556ccb34f=1780020888,1780970614; HMACCOUNT=4E5B3419A3141A8E; arialoadData=true; wdses=163649e4de0d0715; ariauseGraymode=false; wdlast=1780970690; Hm_lpvt_0f50400dd25408cef4f1afb556ccb34f=1780970690"
 
 // ychEduSpider 获取生态环境标准文档
 // @Title 获取生态环境标准文档
@@ -164,7 +164,8 @@ func main() {
 								_, err = os.Stat(filePath)
 								if err == nil {
 									fmt.Println("文档已下载过，跳过")
-									continue
+									isPageListGo = false
+									break
 								}
 
 								// 开始下载

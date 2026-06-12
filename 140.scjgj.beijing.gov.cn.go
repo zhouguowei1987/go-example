@@ -115,7 +115,7 @@ type QueryScJgjListFormData struct {
 	gsjcxToken   string
 }
 
-var ScJgjToken = "0163b4f7113e125024dc0a214fbfbbca2ad8465ed9ca61ea"
+var ScJgjToken = "SESSION=639e61f1-bd1d-4ef8-a80f-ccfebf3bf338; __jsluid_s=66c0bacda154874ac37ec0d1665def9d; _yfx_session_sdzc=%7B%22_yfx_firsttime%22%3A%221756481645094%22%2C%22_yfx_lasttime%22%3A%221780971575222%22%2C%22_yfx_visittime%22%3A%221780971575222%22%2C%22_yfx_lastvisittime%22%3A%221780971575222%22%2C%22_yfx_domidgroup%22%3A%221780971575222%22%2C%22_yfx_domallsize%22%3A%22100%22%2C%22_yfx_cookie%22%3A%2220250829233405099440004034825372%22%2C%22_yfx_returncount%22%3A%229%22%7D"
 
 // 下载北京市市场监督局文档
 // @Title 下载北京市市场监督局文档

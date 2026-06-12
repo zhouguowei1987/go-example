@@ -114,7 +114,7 @@ func main() {
 				_, err = os.Stat(filePath)
 				if err == nil {
 					fmt.Println("文档已下载过，跳过")
-					break
+					continue
 				}
 
 				// 标准文件id
