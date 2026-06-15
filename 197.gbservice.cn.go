@@ -114,7 +114,7 @@ var GbServiceCookie = "Hm_lvt_25c82fafe27bde86759c4030e5427888=1781236836; HMACC
 // @Title 下载江苏建设科技服务网标准文档
 // @Description https://gbservice.cn/，下载江苏建设科技服务网标准文档
 func main() {
-	// 166707
+	// 1332
 	var startId = 1332
 	var endId = 2094
 	for id := startId; id <= endId; id++ {
@@ -122,6 +122,10 @@ func main() {
 		var pageDetailPathUrl = fmt.Sprintf("/api/standard/openinfo?id=%d", id)
 		fmt.Println(pageDetailUrl)
 		queryGbServiceDetailResponseData, err := QueryGbServiceDetail(pageDetailUrl, pageDetailPathUrl)
+		if len(queryGbServiceDetailResponseData.Files) <= 0 {
+			fmt.Println("没有数据，跳过")
+			continue
+		}
 		if err != nil {
 			GbServiceHttpProxyUrl = ""
 			fmt.Println(err)

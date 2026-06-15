@@ -19,19 +19,19 @@ import (
 	"golang.org/x/net/html"
 )
 
-var EShiAnCookie = "JSESSIONID=A4936C14434C3BD35517603ACEB2D022"
+var EShiAnCookie = "JSESSIONID=81DF9A89851F83046EDAC389006232ED"
 
 // EShiAnSpider 获取食安通标准文档
 // @Title 获取食安通标准文档
 // @Description https://www.eshian.com/，将食安通标准文档入库
 func main() {
     // 20000
-	var startId = 23423
+	var startId = 28132
 	var endId = 63000
 	// 68656
 	for id := startId; id <= endId; id++ {
 		fmt.Println(id)
-		detailUrl := fmt.Sprintf("https://www.eshian.com/sat/standard/info/LXMjAyNi0wNi0xMg==/%d", id)
+		detailUrl := fmt.Sprintf("https://www.eshian.com/sat/standard/info/LXMjAyNi0wNi0xNQ==/%d", id)
 		detailDoc, err := EShiAnDetailDoc(detailUrl)
 		if err != nil {
 			fmt.Println(err)
