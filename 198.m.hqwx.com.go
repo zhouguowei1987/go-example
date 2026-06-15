@@ -10,6 +10,7 @@ import (
 	"net/http"
 	"net/url"
 	"os"
+	"path"
 	"path/filepath"
 	"strconv"
 	"strings"
@@ -84,6 +85,19 @@ func main() {
 			}
 
 			for _, liNode := range liNodes {
+				downloadHrefNode := htmlquery.FindOne(liNode, `./button[@class="download-btn dbutton"]/@data-url`)
+				if downloadHrefNode == nil {
+					fmt.Println("未找到下载文件节点，跳过")
+					continue
+				}
+				downloadUrl := htmlquery.InnerText(downloadHrefNode)
+				fileExt := path.Ext(downloadUrl)
+				if !HqWxStrInArray(fileExt, []string{".doc", ".docx", ".pdf"}) {
+					fmt.Println("文件后缀：" + fileExt + "不在下载后缀列表")
+					continue
+				}
+				fmt.Println(downloadUrl)
+
 				titleNode := htmlquery.FindOne(liNode, `./div[@class="info"]/div[@class="name"]/a`)
 				if titleNode == nil {
 					fmt.Println("未找到标题节点，跳过")
@@ -92,14 +106,6 @@ func main() {
 				title := htmlquery.InnerText(titleNode)
 				title = strings.TrimSpace(title)
 				fmt.Println(title)
-
-				downloadHrefNode := htmlquery.FindOne(liNode, `./button[@class="download-btn dbutton"]/@data-url`)
-				if downloadHrefNode == nil {
-					fmt.Println("未找到下载文件节点，跳过")
-					continue
-				}
-				downloadUrl := htmlquery.InnerText(downloadHrefNode)
-				fmt.Println(downloadUrl)
 
 				filePath := "../m.hqwx.com/m.hqwx.com/" + title
 				fmt.Println(filePath)
@@ -304,4 +310,14 @@ func copyHqWxFile(src, dst string) (err error) {
 
 	_, err = io.Copy(out, in)
 	return nil
+}
+func HqWxStrInArray(str string, data []string) bool {
+	if len(data) > 0 {
+		for _, row := range data {
+			if str == row {
+				return true
+			}
+		}
+	}
+	return false
 }
