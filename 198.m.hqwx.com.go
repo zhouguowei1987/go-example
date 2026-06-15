@@ -85,6 +85,8 @@ func main() {
 			}
 
 			for _, liNode := range liNodes {
+				fmt.Println("============================================================")
+				fmt.Println("================当前页列表URL", requestUrl, "=================")
 				downloadHrefNode := htmlquery.FindOne(liNode, `./button[@class="download-btn dbutton"]/@data-url`)
 				if downloadHrefNode == nil {
 					fmt.Println("未找到下载文件节点，跳过")
