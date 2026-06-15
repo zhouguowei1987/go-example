@@ -109,7 +109,7 @@ func main() {
 				title = strings.TrimSpace(title)
 				fmt.Println(title)
 
-				filePath := "../m.hqwx.com/m.hqwx.com/" + title
+				filePath := "../m.hqwx.com/m.hqwx.com/" + categoryName + "/" + title
 				fmt.Println(filePath)
 
 				_, err = os.Stat(filePath)
@@ -125,7 +125,7 @@ func main() {
 					continue
 				}
 				//复制文件
-				tempFilePath := strings.ReplaceAll(filePath, "m.hqwx.com/m.hqwx.com", "m.hqwx.com/temp-m.hqwx.com")
+				tempFilePath := strings.ReplaceAll(filePath, "m.hqwx.com/m.hqwx.com/"+categoryName, "m.hqwx.com/temp-m.hqwx.com/"+categoryName)
 				err = copyHqWxFile(filePath, tempFilePath)
 				if err != nil {
 					fmt.Println(err)
