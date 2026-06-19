@@ -491,7 +491,7 @@ var eachUsernameDownloadCurrentCount = 0
 
 // 每个账号最大下载数量
 var eachUsernameDownloadMaxCount = 80
-var password = "123456"
+var password = "654321"
 var refer = "http://www.zzstep.com/"
 var ZZStepCookie = ""
 
@@ -598,7 +598,7 @@ func main() {
 							continue
 						}
 
-						filePath := "D:\\workspace\\www2.zzstep.com\\2026-03-26\\www2.zzstep.com\\" + studySection.name + "\\" + subject.name + "\\" + fileName
+						filePath := "D:\\workspace\\www2.zzstep.com\\temp-www2.zzstep.com\\" + studySection.name + "\\" + subject.name + "\\" + fileName
 						_, errDoc := os.Stat(filePath + ".doc")
 						_, errDocx := os.Stat(filePath + ".docx")
 						if errDoc != nil && errDocx != nil {
