@@ -83,25 +83,35 @@ func main() {
 				fmt.Println(HCno)
 
 				// 详情URL
-				detailUrl := fmt.Sprintf("http://c.gb688.cn/bzgk/gb/showGb?type=download&hcno=%s", HCno)
+				detailUrl := fmt.Sprintf("https://openstd.samr.gov.cn/bzgk/std/newGbInfo?hcno=%s", HCno)
 				fmt.Println(detailUrl)
 
 				// 下载文档URL
-				downLoadUrl := fmt.Sprintf("http://c.gb688.cn/bzgk/gb/viewGb?hcno=%s", HCno)
+				downLoadUrl := fmt.Sprintf("https://openstd.samr.gov.cn/bzgk/std/viewGb?hcno=%s", HCno)
 				fmt.Println(downLoadUrl)
 
+				refererUrl := fmt.Sprintf("https://openstd.samr.gov.cn/bzgk/std/showGb?type=download&hcno=%s&request_locale=zh", HCno)
+				fmt.Println(refererUrl)
+
 				filePath := "../openstd.samr.gov.cn/" + StdName + "(" + StdNo + ")" + ".pdf"
-				if _, err := os.Stat(filePath); err != nil {
-					fmt.Println("=======开始下载========")
-					err = downloadOPenStd(downLoadUrl, detailUrl, filePath)
-					if err != nil {
-						fmt.Println(err)
-						continue
-					}
-					fmt.Println("=======开始完成========")
+				_, err = os.Stat(filePath)
+				if err == nil {
+					fmt.Println("文档已下载过，跳过")
+					continue
 				}
-				time.Sleep(time.Millisecond * 100)
-				os.Exit(1)
+				fmt.Println("=======开始下载========")
+                err = downloadOPenStd(downLoadUrl, refererUrl, filePath)
+                if err != nil {
+                    fmt.Println(err)
+                    continue
+                }
+                fmt.Println("=======开始完成========")
+				// 设置倒计时
+				DownLoadOPenStdTimeSleep := 10
+				for i := 1; i <= DownLoadOPenStdTimeSleep; i++ {
+					time.Sleep(time.Second)
+					fmt.Println("page = "+strconv.Itoa(page)+"===StdName="+StdName+"===========操作完成，", "暂停", DownLoadOPenStdTimeSleep, "秒，倒计时", i, "秒===========")
+				}
 			}
 			page++
 		}
@@ -132,23 +142,35 @@ func downloadOPenStd(attachmentUrl string, referer string, filePath string) erro
 	if err != nil {
 		return err
 	}
-
-	req.Header.Set("Accept", "text/plain, */*; q=0.01")
-	req.Header.Set("Accept-Encoding", "gzip, deflate, br")
-	req.Header.Set("Accept-Language", "zh-CN,zh-TW;q=0.9,zh;q=0.8,en-US;q=0.7,en;q=0.6")
-	req.Header.Set("Cookie", "JSESSIONID=9E471D8867368091138C5AD541926F0D; _yfx_firsttime_10000005=1682490279215; _yfx_cookie_10000005=20230426142439218633328741727619; Hm_lvt_50758913e6f0dfc9deacbfebce3637e4=1686634030; _yfx_visitcount_10000005=1687937505384; _yfx_returncount_10000005=4; _yfx_lasttime_10000005=1687937505384; Hm_lpvt_50758913e6f0dfc9deacbfebce3637e4=1687943495")
+	req.Header.Set("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7")
+// 	req.Header.Set("Accept-Encoding", "gzip, deflate, br")
+// 	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
+	// 获取当前时间的纳秒级时间戳
+    nowTimestamp := time.Now().Unix()
+	OPenStdCookie := fmt.Sprintf("JSESSIONID=9C35F92116F63703FEF2CC9F0C54D32D; Hm_lvt_54db9897e5a65f7a7b00359d86015d8d=1777604946; HMACCOUNT=4E5B3419A3141A8E; Hm_lvt_50758913e6f0dfc9deacbfebce3637e4=1781876650; Hm_lpvt_50758913e6f0dfc9deacbfebce3637e4=%d", nowTimestamp)
+	fmt.Println(OPenStdCookie)
+	req.Header.Set("Cookie", OPenStdCookie)
 	req.Header.Set("Connection", "keep-alive")
-	req.Header.Set("DNT", "1")
-	req.Header.Set("Host", "c.gb688.cn")
-	req.Header.Set("Origin", "http://c.gb688.cn")
+	req.Header.Set("Host", "openstd.samr.gov.cn")
+// 	req.Header.Set("Origin", "https://openstd.samr.gov.cn/")
 	req.Header.Set("Referer", referer)
-	req.Header.Set("X-Requested-With", "XMLHttpRequest")
-	req.Header.Set("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36")
+	req.Header.Set("Sec-Ch-Ua", "\"Chromium\";v=\"148\", \"Google Chrome\";v=\"148\", \"Not/A)Brand\";v=\"99\"")
+	req.Header.Set("Sec-Ch-Ua-Mobile", "?0")
+	req.Header.Set("Sec-Ch-Ua-Platform", "\"macOS\"")
+	req.Header.Set("Sec-Fetch-Dest", "document")
+	req.Header.Set("Sec-Fetch-Mode", "navigate")
+	req.Header.Set("Sec-Fetch-Site", "same-origin")
+	req.Header.Set("Upgrade-Insecure-Requests", "1")
+	req.Header.Set("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36")
 	resp, err := client.Do(req) //拿到返回的内容
 	if err != nil {
 		return err
 	}
 	defer resp.Body.Close()
+	fmt.Println(resp.Header.Get("Content-Disposition"))
+	fmt.Println(resp.Header.Get("Content-Length"))
+	fmt.Println(resp.Header.Get("Content-Type"))
+// 	os.Exit(1)
 	// 如果访问失败，就打印当前状态码
 	if resp.StatusCode != http.StatusOK {
 		return errors.New("http status :" + strconv.Itoa(resp.StatusCode))
