@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"strings"
+	"math/rand"
 	"github.com/antchfx/htmlquery"
 	"golang.org/x/net/html"
 	"io"
@@ -84,6 +85,14 @@ func main() {
 
 				StdNameA := htmlquery.FindOne(trNode, `./td[4]/a`)
 				StdName := htmlquery.InnerText(StdNameA)
+				StdName = strings.TrimSpace(StdName)
+                StdName = strings.ReplaceAll(StdName, " ", "")
+                StdName = strings.ReplaceAll(StdName, "　", "")
+                StdName = strings.ReplaceAll(StdName, "/", "-")
+                StdName = strings.ReplaceAll(StdName, "《", "")
+                StdName = strings.ReplaceAll(StdName, "》", "")
+                StdName = strings.ReplaceAll(StdName, "--", "-")
+                StdName = strings.ReplaceAll(StdName, "——", "-")
 				fmt.Println(StdName)
 
 				HCno := htmlquery.SelectAttr(StdNameA, "onclick")
@@ -115,6 +124,15 @@ func main() {
                     fmt.Println(err)
                     continue
                 }
+                // 查看文件大小，如果是空文件，则删除
+                fileInfo, err := os.Stat(filePath)
+                if err == nil && fileInfo.Size() == 0{
+                    fmt.Println("空文件删除")
+                    err = os.Remove(filePath)
+                }
+                if err != nil {
+                    continue
+                }
                 //复制文件
                 tempFilePath := strings.ReplaceAll(filePath, "openstd.samr.gov.cn", "temp-hbba.sacinfo.org.cn")
                 err = copyOPenStdFile(filePath, tempFilePath)
@@ -124,7 +142,10 @@ func main() {
                 }
                 fmt.Println("=======开始完成========")
 				// 设置倒计时
-				DownLoadOPenStdTimeSleep := 10
+				DownLoadOPenStdTimeSleep := rand.Intn(15)
+				if DownLoadOPenStdTimeSleep <= 10{
+				    DownLoadOPenStdTimeSleep = DownLoadOPenStdTimeSleep + 5
+				}
 				for i := 1; i <= DownLoadOPenStdTimeSleep; i++ {
 					time.Sleep(time.Second)
 					fmt.Println("page = "+strconv.Itoa(page)+"===StdName="+StdName+"===========操作完成，", "暂停", DownLoadOPenStdTimeSleep, "秒，倒计时", i, "秒===========")
