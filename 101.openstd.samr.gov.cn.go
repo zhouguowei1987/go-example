@@ -91,6 +91,7 @@ func main() {
                 StdName = strings.ReplaceAll(StdName, " ", "")
                 StdName = strings.ReplaceAll(StdName, "　", "")
                 StdName = strings.ReplaceAll(StdName, "/", "-")
+                StdName = strings.ReplaceAll(StdName, "：", "-")
                 StdName = strings.ReplaceAll(StdName, "《", "")
                 StdName = strings.ReplaceAll(StdName, "》", "")
                 StdName = strings.ReplaceAll(StdName, "--", "-")
