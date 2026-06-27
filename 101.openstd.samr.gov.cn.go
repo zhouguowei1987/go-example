@@ -144,9 +144,9 @@ func main() {
                 }
                 fmt.Println("=======开始完成========")
 				// 设置倒计时
-				DownLoadOPenStdTimeSleep := rand.Intn(60)
-				if DownLoadOPenStdTimeSleep <= 30{
-				    DownLoadOPenStdTimeSleep = 30
+				DownLoadOPenStdTimeSleep := rand.Intn(80)
+				if DownLoadOPenStdTimeSleep <= 60{
+				    DownLoadOPenStdTimeSleep = 60
 				}
 				for i := 1; i <= DownLoadOPenStdTimeSleep; i++ {
 					time.Sleep(time.Second)
@@ -217,7 +217,6 @@ func oPenStdHtml(requestUrl string, referer string) (doc *html.Node, err error) 
 	if len(OPenStdCookie) <= 0{
 	    OPenStdCookie = resp.Header.Get("Set-Cookie")
 	}
-	fmt.Println(OPenStdCookie)
 	return doc, nil
 }
 
