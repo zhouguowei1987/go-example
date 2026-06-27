@@ -32,7 +32,7 @@ func MemSetHttpProxy() (httpclient *http.Client) {
 	return httpclient
 }
 
-var MemCookie = "Hm_lvt_7c3492d683dc7a90fd44bf8bfd57e50c=1778038119"
+var MemCookie = "Hm_lvt_7c3492d683dc7a90fd44bf8bfd57e50c=1782550747; HMACCOUNT=C25424B7F392BE06; Hm_lpvt_7c3492d683dc7a90fd44bf8bfd57e50c=1782551166"
 
 // ychEduSpider 获取应急管理部标准文档
 // @Title 获取应急管理部标准文档
