@@ -105,6 +105,17 @@ func main() {
 				// 详情URL
 				detailUrl := fmt.Sprintf("https://openstd.samr.gov.cn/bzgk/std/newGbInfo?hcno=%s", HCno)
 				fmt.Println(detailUrl)
+				detailDoc, err := oPenStdHtml(detailUrl, pageListUrl)
+                if err != nil {
+                    fmt.Println(err)
+                    continue
+                }
+                // 查看是否有下载按钮
+                xzBtnNode := htmlquery.FindOne(detailDoc, `//html/body/div[3]/div/div/div/div/table[2]/tbody/tr[4]/td/button[@class="btn xz_btn btn-sm btn-warning app-hide"]`)
+                if xzBtnNode == nil{
+                    fmt.Println("没有下载按钮，跳过")
+                    continue
+                }
 
 				// 下载文档URL
 				downLoadUrl := fmt.Sprintf("https://openstd.samr.gov.cn/bzgk/std/viewGb?hcno=%s", HCno)
@@ -121,7 +132,7 @@ func main() {
 				}
 				fmt.Println("=======开始下载========")
 				// 下载详情页面和文件页面要同时请求，才可以下载温年
-				_, err := oPenStdHtml(refererUrl, detailUrl)
+				_, err = oPenStdHtml(refererUrl, detailUrl)
                 err = downloadOPenStd(downLoadUrl, refererUrl, filePath)
                 if err != nil {
                     fmt.Println(err)
