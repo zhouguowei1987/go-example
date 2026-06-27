@@ -67,6 +67,8 @@ func main() {
 			    pageListRefererUrl = fmt.Sprintf(std.StdUrl+"&r=0.20175458803007884&page=%d&pageSize=%d", page-1, pageSize)
 			}
 			fmt.Println(pageListUrl)
+			// 每个分页清空cookie
+			OPenStdCookie = ""
 			pageListDoc, err := oPenStdHtml(pageListUrl, pageListRefererUrl)
 			if err != nil {
 				page = 1
@@ -142,9 +144,9 @@ func main() {
                 }
                 fmt.Println("=======开始完成========")
 				// 设置倒计时
-				DownLoadOPenStdTimeSleep := rand.Intn(15)
-				if DownLoadOPenStdTimeSleep <= 10{
-				    DownLoadOPenStdTimeSleep = DownLoadOPenStdTimeSleep + 5
+				DownLoadOPenStdTimeSleep := rand.Intn(60)
+				if DownLoadOPenStdTimeSleep <= 30{
+				    DownLoadOPenStdTimeSleep = 30
 				}
 				for i := 1; i <= DownLoadOPenStdTimeSleep; i++ {
 					time.Sleep(time.Second)
