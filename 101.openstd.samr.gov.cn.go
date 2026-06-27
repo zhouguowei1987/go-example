@@ -147,7 +147,7 @@ func main() {
 				// 设置倒计时
 				DownLoadOPenStdTimeSleep := rand.Intn(80)
 				if DownLoadOPenStdTimeSleep <= 60{
-				    DownLoadOPenStdTimeSleep = 60
+				    DownLoadOPenStdTimeSleep = 60 + rand.Intn(30)
 				}
 				for i := 1; i <= DownLoadOPenStdTimeSleep; i++ {
 					time.Sleep(time.Second)
