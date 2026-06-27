@@ -3,6 +3,7 @@ package main
 import (
 	"errors"
 	"fmt"
+	"strings"
 	"github.com/antchfx/htmlquery"
 	"golang.org/x/net/html"
 	"io"
@@ -116,7 +117,7 @@ func main() {
                 }
                 //复制文件
                 tempFilePath := strings.ReplaceAll(filePath, "openstd.samr.gov.cn", "temp-hbba.sacinfo.org.cn")
-                err = copyGbServiceFile(filePath, tempFilePath)
+                err = copyOPenStdFile(filePath, tempFilePath)
                 if err != nil {
                     fmt.Println(err)
                     continue
