@@ -52,18 +52,18 @@ func main() {
 // 			Page: 12,
 // 			MaxPage: 612,
 // 		},
-// 		{
-// 			StdName: "推荐性国家标准",
-// 			StdUrl:  "https://openstd.samr.gov.cn/bzgk/std/std_list_type?p.p1=2&p.p90=circulation_date&p.p91=desc",
-// 			Page: 1,
-// 			MaxPage: 6037,
-// 		},
 		{
-			StdName: "指导性技术文件",
-			StdUrl:  "https://openstd.samr.gov.cn/bzgk/std/std_list_type?p.p1=3&p.p90=circulation_date&p.p91=desc",
-			Page: 1,
-			MaxPage: 83,
+			StdName: "推荐性国家标准",
+			StdUrl:  "https://openstd.samr.gov.cn/bzgk/std/std_list_type?p.p1=2&p.p90=circulation_date&p.p91=desc",
+			Page: 9,
+			MaxPage: 6037,
 		},
+// 		{
+// 			StdName: "指导性技术文件",
+// 			StdUrl:  "https://openstd.samr.gov.cn/bzgk/std/std_list_type?p.p1=3&p.p90=circulation_date&p.p91=desc",
+// 			Page: 55,
+// 			MaxPage: 83,
+// 		},
 	}
 	for _, std := range StdCategories {
 		page := std.Page
@@ -158,13 +158,13 @@ func main() {
                     if err != nil {
                         continue
                     }
-    //                 //复制文件
-    //                 tempFilePath := strings.ReplaceAll(filePath, "openstd.samr.gov.cn", "temp-hbba.sacinfo.org.cn")
-    //                 err = copyOPenStdFile(filePath, tempFilePath)
-    //                 if err != nil {
-    //                     fmt.Println(err)
-    //                     continue
-    //                 }
+                    //复制文件
+                    tempFilePath := strings.ReplaceAll(filePath, "openstd.samr.gov.cn", "temp-hbba.sacinfo.org.cn")
+                    err = copyOPenStdFile(filePath, tempFilePath)
+                    if err != nil {
+                        fmt.Println(err)
+                        continue
+                    }
                     fmt.Println("=======开始完成========")
                     // 设置倒计时
                     DownLoadOPenStdTimeSleep := rand.Intn(80)
