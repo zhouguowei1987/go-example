@@ -46,18 +46,18 @@ var OPenStdCookie = ""
 // @Description https://openstd.samr.gov.cn/，获取国家标准文档
 func main() {
 	var StdCategories = []StdCategory{
-// 		{
-// 			StdName: "强制性国家标准",
-// 			StdUrl:  "https://openstd.samr.gov.cn/bzgk/std/std_list_type?p.p1=1&p.p90=circulation_date&p.p91=desc",
-// 			Page: 12,
-// 			MaxPage: 612,
-// 		},
 		{
-			StdName: "推荐性国家标准",
-			StdUrl:  "https://openstd.samr.gov.cn/bzgk/std/std_list_type?p.p1=2&p.p90=circulation_date&p.p91=desc",
-			Page: 9,
-			MaxPage: 6037,
+			StdName: "强制性国家标准",
+			StdUrl:  "https://openstd.samr.gov.cn/bzgk/std/std_list_type?p.p1=1&p.p90=circulation_date&p.p91=desc",
+			Page: 29,
+			MaxPage: 612,
 		},
+// 		{
+// 			StdName: "推荐性国家标准",
+// 			StdUrl:  "https://openstd.samr.gov.cn/bzgk/std/std_list_type?p.p1=2&p.p90=circulation_date&p.p91=desc",
+// 			Page: 73,
+// 			MaxPage: 6037,
+// 		},
 // 		{
 // 			StdName: "指导性技术文件",
 // 			StdUrl:  "https://openstd.samr.gov.cn/bzgk/std/std_list_type?p.p1=3&p.p90=circulation_date&p.p91=desc",
