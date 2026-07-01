@@ -49,13 +49,13 @@ func main() {
 // 		{
 // 			StdName: "强制性国家标准",
 // 			StdUrl:  "https://openstd.samr.gov.cn/bzgk/std/std_list_type?p.p1=1&p.p90=circulation_date&p.p91=desc",
-// 			Page: 37,
+// 			Page: 133,
 // 			MaxPage: 612,
 // 		},
 		{
 			StdName: "推荐性国家标准",
 			StdUrl:  "https://openstd.samr.gov.cn/bzgk/std/std_list_type?p.p1=2&p.p90=circulation_date&p.p91=desc",
-			Page: 81,
+			Page: 173,
 			MaxPage: 6037,
 		},
 // 		{
