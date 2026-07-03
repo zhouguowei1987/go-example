@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
+	"math/rand"
 	"mime/multipart"
 	"net"
 	"net/http"
@@ -40,35 +41,21 @@ var tiKuVipCookie = "__yjs_duid=1_9906f2c8d7c017db33d48b6a18ccd56b1675842585518;
 // @Description https://tikuview.51test.net/，获取无忧考试网真题
 func main() {
 	saveCategory := map[string]bool{
-		"自考":        true,
-		"专升本考试":     true,
-		"初中一年级":     true,
-		"初中二年级":     true,
-		"初中三年级":     true,
-		"小升初":       true,
-		"小学一年级":     true,
-		"小学二年级":     true,
-		"小学三年级":     true,
-		"小学四年级":     true,
-		"小学五年级":     true,
-		"小学六年级":     true,
-		"考研":        true,
-		"高中会考":      true,
-		"高一":        true,
-		"高二":        true,
-		"高考":        true,
-		"成人高考":      true,
-		"中考":        true,
-		"一级建造师考试":   true,
-		"二级建造师考试":   true,
-		"公务员考试":     true,
-		"教师招聘":      true,
-		"教师资格考试":    true,
-		"事业单位招聘":    true,
-		"消防工程师":     true,
-		"造价工程师考试":   true,
-		"证券从业资格考试":  true,
-		"注册安全工程师考试": true,
+		"小升初":   true,
+		"小学一年级": true,
+		"小学二年级": true,
+		"小学三年级": true,
+		"小学四年级": true,
+		"小学五年级": true,
+		"小学六年级": true,
+		"高一":    true,
+		"高二":    true,
+		"高三":    true,
+		"高考":    true,
+		"初中一年级": true,
+		"初中二年级": true,
+		"初中三年级": true,
+		"中考":    true,
 	}
 	tiKuVip51TestTreeListInitData, err := treeListInit()
 	if err != nil {
@@ -387,10 +374,6 @@ func PathList(path string) (tiKuVip51TestPathListDataFileList []TiKuVip51TestPat
 	return tiKuVip51TestPathListDataFileList, nil
 }
 
-var maxDownloadNumber = 20
-var downloadNumber = 0
-var sleepSecond = 30
-
 func tiKuVip51TestDownloadUrl(tiKuVip51TestPathListDataFileList []TiKuVip51TestPathListDataFileList) {
 	for _, pathListDataFile := range tiKuVip51TestPathListDataFileList {
 		pathArray := strings.Split(pathListDataFile.Path, "/")
@@ -404,43 +387,63 @@ func tiKuVip51TestDownloadUrl(tiKuVip51TestPathListDataFileList []TiKuVip51TestP
 		filePath := ""
 		fileName := pathListDataFile.Name
 		fileName = strings.Trim(fileName, " ")
-		if strings.Contains(fileName, "2023") || strings.Contains(fileName, "2024") {
-			filePath = "../tikuvip.51test.net/" + handlePath[0] + "/"
-		}
-		if filePath == "" {
+		// 格式化时间
+		mTimeDate := time.Unix(pathListDataFile.MTime, 0).Format("2006-01-02")
+		mTimeStr, _ := time.Parse("2006-01-02", mTimeDate)
+		fmt.Println(mTimeStr)
+		dateStart, _ := time.Parse("2006-01-02", "2024-01-01")
+		fmt.Println(dateStart)
+
+		// 比较日期
+		if mTimeStr.After(dateStart) == false {
+			fmt.Println("日期在2024-01-01后，跳过")
 			continue
 		}
+		filePath = "../tikuvip.51test.net/tikuvip.51test.net/" + handlePath[0] + "/" + fileName
 		fmt.Println(filePath)
-		fmt.Println(fileName)
-		if _, err := os.Stat(filePath + fileName); err != nil {
-			fmt.Println("=======开始下载========")
+		_, err := os.Stat(filePath)
+		if err == nil {
+			fmt.Println("文档已下载过，跳过")
+			continue
+		}
+		fmt.Println("=======开始下载========")
 
-			// 开始下载
-			attachmentUrl := fmt.Sprintf("https://tikuview.51test.net/index.php?pluginApp/to/officeLive/&path={userShare}:100/真题题库%s", pathListDataFile.Path)
+		// 开始下载
+		attachmentUrl := fmt.Sprintf("https://tikuview.51test.net/index.php?pluginApp/to/officeLive/&path={userShare}:100/真题题库%s", pathListDataFile.Path)
+		downloadDocUrl, err := downloadTiKuVip51TestUrl(attachmentUrl)
+		if err != nil {
+			fmt.Println(err)
+			continue
+		}
+		downloadDocUrlUnescape, err := url.QueryUnescape(downloadDocUrl)
+		if err != nil {
+			fmt.Println(err)
+			continue
+		}
+		downloadDocUrlUnescape = strings.ReplaceAll(downloadDocUrlUnescape, "https://www.51test.net/vip/index_view.html?", "")
+		fmt.Println(downloadDocUrlUnescape)
+		err = downloadTiKuVip51Test(downloadDocUrlUnescape, filePath)
+		if err != nil {
+			fmt.Println(err)
+			continue
+		}
 
-			fmt.Println("=======================")
-			fmt.Println(attachmentUrl)
-
-			downloadDocUrl, err := downloadTiKuVip51TestUrl(attachmentUrl)
-			if err != nil {
-				fmt.Println(err)
-				continue
-			}
-			fmt.Println(downloadDocUrl)
-			err = downloadTiKuVip51Test(downloadDocUrl, filePath, fileName)
-			downloadNumber++
-			if err != nil {
-				fmt.Println(err)
-				continue
-			}
-			fmt.Println("=======开始完成========")
-			if downloadNumber >= maxDownloadNumber {
-				fmt.Printf("=======下载%d个文件，暂停%d秒=======\n", maxDownloadNumber, sleepSecond)
-				time.Sleep(time.Second * time.Duration(sleepSecond))
-				downloadNumber = 0
-			} else {
-				time.Sleep(time.Second * 1)
-			}
+		//复制文件
+		tempFilePath := strings.ReplaceAll(filePath, "tikuvip.51test.net/tikuvip.51test.net", "tikuvip.51test.net/temp-tikuvip.51test.net")
+		err = copyTiKuVip51TestFile(filePath, tempFilePath)
+		if err != nil {
+			fmt.Println(err)
+			continue
+		}
+		fmt.Println("=======下载完成========")
+		// 设置倒计时
+		DownLoadTiKuVip51TestTimeSleep := rand.Intn(25)
+		if DownLoadTiKuVip51TestTimeSleep <= 15 {
+			DownLoadTiKuVip51TestTimeSleep = 15 + rand.Intn(10)
+		}
+		for i := 1; i <= DownLoadTiKuVip51TestTimeSleep; i++ {
+			time.Sleep(time.Second)
+			fmt.Println("filePath="+filePath+"==========下载成功 暂停", DownLoadTiKuVip51TestTimeSleep, "秒 倒计时", i, "秒===========")
 		}
 	}
 }
@@ -489,7 +492,7 @@ func downloadTiKuVip51TestUrl(attachmentUrl string) (downloadUrl string, err err
 	return downloadUrl, nil
 }
 
-func downloadTiKuVip51Test(attachmentUrl string, filePath string, fileName string) error {
+func downloadTiKuVip51Test(attachmentUrl string, filePath string) error {
 	// 初始化客户端
 	var client *http.Client = &http.Client{
 		Transport: &http.Transport{
@@ -537,7 +540,7 @@ func downloadTiKuVip51Test(attachmentUrl string, filePath string, fileName strin
 		return err
 	}
 	defer resp.Body.Close()
-	// 如果访问失败，就打印当前状态码
+	// 如果访问失败 就打印当前状态码
 	if resp.StatusCode != http.StatusOK {
 		return errors.New("http status :" + strconv.Itoa(resp.StatusCode))
 	}
@@ -545,11 +548,11 @@ func downloadTiKuVip51Test(attachmentUrl string, filePath string, fileName strin
 	// 创建一个文件用于保存
 	fileDiv := filepath.Dir(filePath)
 	if _, err = os.Stat(fileDiv); err != nil {
-		if os.MkdirAll(fileDiv, 0777) != nil {
+		if os.MkdirAll(fileDiv, 0o777) != nil {
 			return err
 		}
 	}
-	out, err := os.Create(filePath + fileName)
+	out, err := os.Create(filePath)
 	if err != nil {
 		return err
 	}
@@ -560,5 +563,39 @@ func downloadTiKuVip51Test(attachmentUrl string, filePath string, fileName strin
 	if err != nil {
 		return err
 	}
+	return nil
+}
+
+func copyTiKuVip51TestFile(src, dst string) (err error) {
+	in, err := os.Open(src)
+	if err != nil {
+		return err
+	}
+	defer func(in *os.File) {
+		err := in.Close()
+		if err != nil {
+			return
+		}
+	}(in)
+
+	// 创建一个文件用于保存
+	fileDiv := filepath.Dir(dst)
+	if _, err = os.Stat(fileDiv); err != nil {
+		if os.MkdirAll(fileDiv, 0o777) != nil {
+			return err
+		}
+	}
+	out, err := os.Create(dst)
+	if err != nil {
+		return err
+	}
+	defer func(out *os.File) {
+		err := out.Close()
+		if err != nil {
+			return
+		}
+	}(out)
+
+	_, err = io.Copy(out, in)
 	return nil
 }
