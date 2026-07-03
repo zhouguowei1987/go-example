@@ -107,15 +107,15 @@ func CzWlZxSetHttpProxy() (httpclient *http.Client) {
 	return httpclient
 }
 
-var CzWlZxCookie = "ASP.NET_SessionId=xkpfjbyk4qcfxlnocmuchunr; Hm_lvt_43bc53ae85afc8f10b75f500b7f506b6=1780534614,1780972709; HMACCOUNT=9C0CD19686802BBF; Hm_lpvt_43bc53ae85afc8f10b75f500b7f506b6=1780972752"
+var CzWlZxCookie = "ASP.NET_SessionId=n1m5veevreudzqzcifvs4x55; Hm_lvt_43bc53ae85afc8f10b75f500b7f506b6=1780534614,1780972709,1782866818; HMACCOUNT=9C0CD19686802BBF; Hm_lpvt_43bc53ae85afc8f10b75f500b7f506b6=1782866895"
 
 // CzWlZxSpider 获取初中物理在线文档
 // @Title 获取初中物理在线文档
 // @Description http://www.czwlzx.cn/，获取初中物理在线文档
 func main() {
 	// 154786
-	var startId = 155678
-	var endId = 155514
+	var startId = 155853
+	var endId = 155678
 	for id := startId; id >= endId; id-- {
 		err := CzWlZxSpider(id)
 		if err != nil {

@@ -538,12 +538,12 @@ func main() {
 
 						datePaper, _ := time.Parse("2006-01-02", dateText)
 						fmt.Println(datePaper)
-						dateStart, _ := time.Parse("2006-01-02", "2026-03-26")
+						dateStart, _ := time.Parse("2006-01-02", "2026-06-15")
 						fmt.Println(dateStart)
 
 						// 比较日期
 						if datePaper.After(dateStart) == false {
-							fmt.Println("日期在2026-03-26后，跳过")
+							fmt.Println("日期在2026-06-15后，跳过")
 							break outer
 						}
 
@@ -575,6 +575,7 @@ func main() {
 						}
 						fileExtText := htmlquery.InnerText(fileExtTextNode)
 						fileExtText = strings.ReplaceAll(fileExtText, "/public/front/images/", "")
+						fmt.Println(fileExtText)
 						if !strings.Contains(fileExtText, "typeicon-word.png") {
 							fmt.Println(fileExtText, "不在下载后缀列表")
 							continue
@@ -731,7 +732,8 @@ func ZZStepRegisterRandUsername(username string, password string, password2 stri
 	}
 
 	respBytes, err := ioutil.ReadAll(resp.Body)
-	//fmt.Println(string(respBytes))
+	// fmt.Println(string(respBytes))
+	// os.Exit(1)
 	if err != nil {
 		return err
 	}

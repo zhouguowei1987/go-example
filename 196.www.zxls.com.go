@@ -41,8 +41,8 @@ var ZxLsCookie = "Hm_lvt_c546156b33a73aaa69021f8a527d9e26=1780378702,1780551837,
 // @Title 获取中学历史教学园地试卷
 // @Description https://www.zxls.com/ 获取中学历史教学园地试卷
 func main() {
-	maxPage := 601
-	page := 1
+	maxPage := 606
+	page := 600
 	isPageListGo := true
 	for isPageListGo {
 		requestUrl := fmt.Sprintf("https://www.zxls.com/generation/gzst/List_5884_%d.html", page)
@@ -131,14 +131,19 @@ func main() {
 			downloadHrefNode := htmlquery.FindOne(showDownloadDoc, `//html/body/div[3]/div[2]/div[1]/div[2]/div[6]/form/div[3]/dl/dd[1]/div[1]/div[2]/div[1]/span[1]/a/@href`)
 			if downloadHrefNode == nil {
 				fmt.Println("未找到下载文件节点，跳过")
-				// continue
+				continue
 			}
 			downloadUrl := htmlquery.InnerText(downloadHrefNode)
 			fileExt := path.Ext(downloadUrl)
+			fmt.Println(fileExt)
+			if !StrInArrayZxLs(fileExt, []string{".docx", ".doc"}) {
+				fmt.Println("不是docx和doc文件，跳过")
+				continue
+			}
 			downloadUrl = "https://www.zxls.com" + downloadUrl
 			fmt.Println(downloadUrl)
 
-			filePath := "../www.zxls.com/www.zxls.com/" + title + fileExt
+			filePath := "D:\\workspace\\www.zxls.com\\www.zxls.com\\" + title + fileExt
 			fmt.Println(filePath)
 
 			_, err = os.Stat(filePath)
@@ -154,7 +159,7 @@ func main() {
 				continue
 			}
 			//复制文件
-			tempFilePath := strings.ReplaceAll(filePath, "www.zxls.com/www.zxls.com", "www.zxls.com/temp-www.zxls.com")
+			tempFilePath := strings.ReplaceAll(filePath, "www.zxls.com\\www.zxls.com", "www.zxls.com\\temp-www.zxls.com")
 			err = copyZxLsFile(filePath, tempFilePath)
 			if err != nil {
 				fmt.Println(err)
@@ -344,4 +349,14 @@ func copyZxLsFile(src, dst string) (err error) {
 
 	_, err = io.Copy(out, in)
 	return nil
+}
+func StrInArrayZxLs(str string, data []string) bool {
+	if len(data) > 0 {
+		for _, row := range data {
+			if str == row {
+				return true
+			}
+		}
+	}
+	return false
 }
