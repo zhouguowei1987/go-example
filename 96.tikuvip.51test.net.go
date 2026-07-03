@@ -387,6 +387,10 @@ func tiKuVip51TestDownloadUrl(tiKuVip51TestPathListDataFileList []TiKuVip51TestP
 		filePath := ""
 		fileName := pathListDataFile.Name
 		fileName = strings.Trim(fileName, " ")
+		if fileName.Index("试题及答案") == -1 && fileName.Index("真题及答案") == -1 {
+			fmt.Println("不含有‘试题及答案’和‘真题及答案’，跳过")
+			continue
+		}
 		// 格式化时间
 		mTimeDate := time.Unix(pathListDataFile.MTime, 0).Format("2006-01-02")
 		mTimeStr, _ := time.Parse("2006-01-02", mTimeDate)
@@ -429,17 +433,17 @@ func tiKuVip51TestDownloadUrl(tiKuVip51TestPathListDataFileList []TiKuVip51TestP
 		}
 
 		//复制文件
-		tempFilePath := strings.ReplaceAll(filePath, "tikuvip.51test.net/tikuvip.51test.net", "tikuvip.51test.net/temp-tikuvip.51test.net")
-		err = copyTiKuVip51TestFile(filePath, tempFilePath)
-		if err != nil {
-			fmt.Println(err)
-			continue
-		}
+		// tempFilePath := strings.ReplaceAll(filePath, "tikuvip.51test.net/tikuvip.51test.net", "tikuvip.51test.net/temp-tikuvip.51test.net")
+		// err = copyTiKuVip51TestFile(filePath, tempFilePath)
+		// if err != nil {
+		// 	fmt.Println(err)
+		// 	continue
+		// }
 		fmt.Println("=======下载完成========")
 		// 设置倒计时
-		DownLoadTiKuVip51TestTimeSleep := rand.Intn(25)
-		if DownLoadTiKuVip51TestTimeSleep <= 15 {
-			DownLoadTiKuVip51TestTimeSleep = 15 + rand.Intn(10)
+		DownLoadTiKuVip51TestTimeSleep := rand.Intn(15)
+		if DownLoadTiKuVip51TestTimeSleep <= 8 {
+			DownLoadTiKuVip51TestTimeSleep = 8 + rand.Intn(7)
 		}
 		for i := 1; i <= DownLoadTiKuVip51TestTimeSleep; i++ {
 			time.Sleep(time.Second)
