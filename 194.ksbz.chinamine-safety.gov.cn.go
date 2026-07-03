@@ -108,7 +108,7 @@ func KsBzSetHttpProxy() (httpclient *http.Client) {
 	return httpclient
 }
 
-var KsBzListCookie = "JSESSIONID=KlmXV3CuDTNAvxWO-pzNe1fDvMqTAxFpbNKE0M-0"
+var KsBzListCookie = "CT_1f7ba0eb8=72913f8d50f2943ddd6a4090d7afe5e1ba49; CT_1g9aa1ec2=4b5f6e8f-113dikCL-2cc3-4062-8445-feaf0209c303; CT_1e6tzab00=sFWPeaUM05UtfHgrCUuL63wrUjrAWkpBRF0VJC6KTqNgQrYuMgzh/zYpMw57IamgcfdmDGCWPzcrjOnBNGUq7qcDh6Wpn7e0uZAlUyL8PBk=; JSESSIONID=7D8sx59BPWyWklic7wrRho8YyYjUGyuhrxrMFmDJ; CT_1rqu7ab01=p2Y3zIw8+912h0VaOt6zrCUbNreolhuJm+0SdRSCQUlarg4e/dFTuKEy12OP8EuVLBm5+aIyU2HklrOo/A9e2A==; CT_16eadf26c=0BY4+5sZVTWaN4qjzD7Xa6TqyCcJBQyPft/HxIhPk1dtAdQu1h6p0WFWjwfPZu4G"
 
 // 下载矿山安全标准文档
 // @Title 下载矿山安全标准文档

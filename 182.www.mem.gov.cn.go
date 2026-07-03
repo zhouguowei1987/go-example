@@ -32,7 +32,7 @@ func MemSetHttpProxy() (httpclient *http.Client) {
 	return httpclient
 }
 
-var MemCookie = "Hm_lvt_7c3492d683dc7a90fd44bf8bfd57e50c=1778038119; HMACCOUNT=4E5B3419A3141A8E; Hm_lpvt_7c3492d683dc7a90fd44bf8bfd57e50c=1778038265"
+var MemCookie = "Hm_lvt_7c3492d683dc7a90fd44bf8bfd57e50c=1782550747; HMACCOUNT=C25424B7F392BE06; Hm_lpvt_7c3492d683dc7a90fd44bf8bfd57e50c=1782551166"
 
 // ychEduSpider 获取应急管理部标准文档
 // @Title 获取应急管理部标准文档
@@ -64,7 +64,10 @@ func main() {
                 fmt.Println("=======page = " + strconv.Itoa(page) + "=========")
 
                 viewHrefNode := htmlquery.FindOne(liNode, `./@href`)
-				viewUrl := "https://www.mem.gov.cn/fw/flfgbz/bz/bzwb/" + strings.ReplaceAll(htmlquery.InnerText(viewHrefNode), "./", "")
+                viewUrl := strings.ReplaceAll(htmlquery.InnerText(viewHrefNode), "./", "")
+                if strings.Index(viewUrl,"www.mem.gov.cn") == -1{
+                    viewUrl = "https://www.mem.gov.cn/fw/flfgbz/bz/bzwb/" + viewUrl
+                }
 				var downLoadUrl = ""
 				if strings.Contains(viewUrl, ".pdf") {
 					// 详情就是pdf文件地址
@@ -89,6 +92,7 @@ func main() {
 					viewUrlArray := strings.Split(viewUrl, "/")
 					downLoadUrl = strings.Join(viewUrlArray[:len(viewUrlArray)-1], "/") + "/" + strings.ReplaceAll(downLoadUrl, "./", "")
 				}
+				fmt.Println(downLoadUrl)
                 // 中文标题
                 chineseTitle := htmlquery.InnerText(liNode)
                 chineseTitle = chineseTitle[:len(chineseTitle) - 16]
