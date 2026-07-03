@@ -387,7 +387,7 @@ func tiKuVip51TestDownloadUrl(tiKuVip51TestPathListDataFileList []TiKuVip51TestP
 		filePath := ""
 		fileName := pathListDataFile.Name
 		fileName = strings.Trim(fileName, " ")
-		if fileName.Index("试题及答案") == -1 && fileName.Index("真题及答案") == -1 {
+		if strings.Index(fileName,"试题及答案") == -1 && strings.Index(fileName"真题及答案") == -1 {
 			fmt.Println("不含有‘试题及答案’和‘真题及答案’，跳过")
 			continue
 		}
