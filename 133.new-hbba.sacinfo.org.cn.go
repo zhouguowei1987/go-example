@@ -22,12 +22,12 @@ import (
 )
 
 const (
-	DbBaEnableHttpProxy = false
-	DbBaHttpProxyUrl    = "111.225.152.186:8089"
+	HbBaEnableHttpProxy = false
+	HbBaHttpProxyUrl    = "111.225.152.186:8089"
 )
 
-func DbBaSetHttpProxy() (httpclient *http.Client) {
-	ProxyURL, _ := url.Parse(DbBaHttpProxyUrl)
+func HbBaSetHttpProxy() (httpclient *http.Client) {
+	ProxyURL, _ := url.Parse(HbBaHttpProxyUrl)
 	httpclient = &http.Client{
 		Transport: &http.Transport{
 			Proxy: http.ProxyURL(ProxyURL),
@@ -63,13 +63,13 @@ type HdBaResponseValidateCaptcha struct {
 	Msg  string `json:"msg"`
 }
 
-const DbBaCookie = "HMACCOUNT=487EF362690A1D5D; Hm_lvt_36f2f0446e1c2cda8410befc24743a9b=1780896225; Hm_lpvt_36f2f0446e1c2cda8410befc24743a9b=1782603684; JSESSIONID=AC388871DFDCAE74D574B58558A8889E"
+const HbBaCookie = "HMACCOUNT=487EF362690A1D5D; Hm_lvt_36f2f0446e1c2cda8410befc24743a9b=1780896225; Hm_lpvt_36f2f0446e1c2cda8410befc24743a9b=1782603684; JSESSIONID=AC388871DFDCAE74D574B58558A8889E"
 
-// ychEduSpider 获取改版-改版-地方标准文档
-// @Title 获取改版-地方标准文档
-// @Description https://dbba.sacinfo.org.cn/，获取改版-地方标准文档
+// ychEduSpider 获取改版-改版-行业标准文档
+// @Title 获取改版-行业标准文档
+// @Description https://hbba.sacinfo.org.cn/，获取改版-行业标准文档
 func main() {
-	requestUrl := "https://dbba.sacinfo.org.cn/stdQueryList"
+	requestUrl := "https://hbba.sacinfo.org.cn/stdQueryList"
 	// 	5699
 	current := 1
 	maxCurrent := 867
@@ -81,7 +81,7 @@ func main() {
 			isPageListGo = false
 			break
 		}
-		responseData, err := DbBaGetStdQueryList(requestUrl, current, size, status)
+		responseData, err := HbBaGetStdQueryList(requestUrl, current, size, status)
 		if err != nil {
 			fmt.Println(err)
 			break
@@ -104,13 +104,13 @@ func main() {
 					fileName := chName + "(" + code + ")"
 					fmt.Println(fileName)
 
-					filePath := "../dbba.sacinfo.org.cn/" + fileName + ".pdf"
+					filePath := "../hbba.sacinfo.org.cn/" + fileName + ".pdf"
 					if _, err := os.Stat(filePath); err != nil {
 
-						stdDetailUrl := fmt.Sprintf("https://dbba.sacinfo.org.cn/stdDetail/%s", records.Pk)
-						stdOnlineUrl := fmt.Sprintf("https://dbba.sacinfo.org.cn/portal/online/%s", records.Pk)
+						stdDetailUrl := fmt.Sprintf("https://hbba.sacinfo.org.cn/stdDetail/%s", records.Pk)
+						stdOnlineUrl := fmt.Sprintf("https://hbba.sacinfo.org.cn/portal/online/%s", records.Pk)
 						stdOnlinePathUrl := fmt.Sprintf("/portal/online/%s", records.Pk)
-						stdOnlineDoc, err := DbBaGetStdQueryHtml(stdOnlineUrl, stdDetailUrl, stdOnlinePathUrl)
+						stdOnlineDoc, err := HbBaGetStdQueryHtml(stdOnlineUrl, stdDetailUrl, stdOnlinePathUrl)
 						if err != nil {
 							fmt.Println(err)
 							continue
@@ -121,11 +121,11 @@ func main() {
 							fmt.Println("没有下载按钮跳过")
 							continue
 						}
-						downLoadUrl := fmt.Sprintf("https://dbba.sacinfo.org.cn/portal/download/%s", records.Pk)
+						downLoadUrl := fmt.Sprintf("https://hbba.sacinfo.org.cn/portal/download/%s", records.Pk)
 						fmt.Println(downLoadUrl)
 
 						fmt.Println("=======开始下载" + strconv.Itoa(current) + "========")
-						err = downloadDbBa(downLoadUrl, stdOnlineUrl, filePath)
+						err = downloadHbBa(downLoadUrl, stdOnlineUrl, filePath)
 						if err != nil {
 							fmt.Println(err)
 							continue
@@ -142,29 +142,29 @@ func main() {
 						}
 
 						//复制文件
-						tempFilePath := strings.ReplaceAll(filePath, "dbba.sacinfo.org.cn", "temp-dbba.sacinfo.org.cn")
-						err = DbBaCopyFile(filePath, tempFilePath)
+						tempFilePath := strings.ReplaceAll(filePath, "hbba.sacinfo.org.cn", "temp-hbba.sacinfo.org.cn")
+						err = HbBaCopyFile(filePath, tempFilePath)
 						if err != nil {
 							fmt.Println(err)
 							continue
 						}
 						fmt.Println("=======下载完成========")
 
-						// downloadDbBaPdfSleep := rand.Intn(5)
-						downloadDbBaPdfSleep := 10
-						for i := 1; i <= downloadDbBaPdfSleep; i++ {
+						// downloadHbBaPdfSleep := rand.Intn(5)
+						downloadHbBaPdfSleep := 10
+						for i := 1; i <= downloadHbBaPdfSleep; i++ {
 							time.Sleep(time.Second)
-							fmt.Println("page="+strconv.Itoa(current)+"=======chName=", chName, "成功，====== 暂停", downloadDbBaPdfSleep, "秒，倒计时", i, "秒===========")
+							fmt.Println("page="+strconv.Itoa(current)+"=======chName=", chName, "成功，====== 暂停", downloadHbBaPdfSleep, "秒，倒计时", i, "秒===========")
 						}
 					}
 				}
 			}
 
-			DownLoadDbBaPageTimeSleep := 10
-			// DownLoadDbBaPageTimeSleep := rand.Intn(5)
-			for i := 1; i <= DownLoadDbBaPageTimeSleep; i++ {
+			DownLoadHbBaPageTimeSleep := 10
+			// DownLoadHbBaPageTimeSleep := rand.Intn(5)
+			for i := 1; i <= DownLoadHbBaPageTimeSleep; i++ {
 				time.Sleep(time.Second)
-				fmt.Println("page="+strconv.Itoa(current)+"====== 暂停", DownLoadDbBaPageTimeSleep, "秒 倒计时", i, "秒===========")
+				fmt.Println("page="+strconv.Itoa(current)+"====== 暂停", DownLoadHbBaPageTimeSleep, "秒 倒计时", i, "秒===========")
 			}
 			current++
 			if current > maxCurrent {
@@ -175,7 +175,7 @@ func main() {
 	}
 }
 
-func DbBaGetStdQueryList(requestUrl string, current int, size int, status string) (responseData HdBaResponseData, err error) {
+func HbBaGetStdQueryList(requestUrl string, current int, size int, status string) (responseData HdBaResponseData, err error) {
 	// 初始化客户端
 	var client *http.Client = &http.Client{
 		Transport: &http.Transport{
@@ -192,8 +192,8 @@ func DbBaGetStdQueryList(requestUrl string, current int, size int, status string
 			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
-	if DbBaEnableHttpProxy {
-		client = DbBaSetHttpProxy()
+	if HbBaEnableHttpProxy {
+		client = HbBaSetHttpProxy()
 	}
 	responseData = HdBaResponseData{}
 	postData := url.Values{}
@@ -209,9 +209,9 @@ func DbBaGetStdQueryList(requestUrl string, current int, size int, status string
 	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
 	req.Header.Set("Connection", "keep-alive")
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
-	req.Header.Set("Host", "dbba.sacinfo.org.cn")
-	req.Header.Set("Origin", "https://dbba.sacinfo.org.cn")
-	req.Header.Set("Referer", "https://dbba.sacinfo.org.cn/stdList")
+	req.Header.Set("Host", "hbba.sacinfo.org.cn")
+	req.Header.Set("Origin", "https://hbba.sacinfo.org.cn")
+	req.Header.Set("Referer", "https://hbba.sacinfo.org.cn/stdList")
 	req.Header.Set("sec-ch-ua", "\"Chromium\";v=\"110\", \"Not A(Brand\";v=\"24\", \"Google Chrome\";v=\"110\"")
 	req.Header.Set("sec-ch-ua-mobile", "?0")
 	req.Header.Set("sec-ch-ua-platform", "\"macOS\"")
@@ -239,7 +239,7 @@ func DbBaGetStdQueryList(requestUrl string, current int, size int, status string
 	return responseData, nil
 }
 
-func DbBaGetStdQueryHtml(requestUrl string, referer string, path string) (doc *html.Node, err error) {
+func HbBaGetStdQueryHtml(requestUrl string, referer string, path string) (doc *html.Node, err error) {
 	// 初始化客户端
 	var client *http.Client = &http.Client{
 		Transport: &http.Transport{
@@ -261,16 +261,16 @@ func DbBaGetStdQueryHtml(requestUrl string, referer string, path string) (doc *h
 	if err != nil {
 		return doc, err
 	}
-	req.Header.Set("authority", "dbba.sacinfo.org.cn")
+	req.Header.Set("authority", "hbba.sacinfo.org.cn")
 	req.Header.Set("method", "GET")
 	req.Header.Set("path", path)
 	req.Header.Set("scheme", "https")
 	req.Header.Set("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7")
 	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
 	req.Header.Set("Connection", "keep-alive")
-	req.Header.Set("Cookie", DbBaCookie)
-	req.Header.Set("Host", "dbba.sacinfo.org.cn")
-	req.Header.Set("Origin", "https://dbba.sacinfo.org.cn")
+	req.Header.Set("Cookie", HbBaCookie)
+	req.Header.Set("Host", "hbba.sacinfo.org.cn")
+	req.Header.Set("Origin", "https://hbba.sacinfo.org.cn")
 	req.Header.Set("Referer", referer)
 	req.Header.Set("Sec-Ch-Ua", "\"Not.A/Brand\";v=\"8\", \"Chromium\";v=\"114\", \"Google Chrome\";v=\"114\"")
 	req.Header.Set("Sec-Ch-Ua-Mobile", "?0")
@@ -301,7 +301,7 @@ func DbBaGetStdQueryHtml(requestUrl string, referer string, path string) (doc *h
 	return doc, nil
 }
 
-func downloadDbBa(attachmentUrl string, referer string, filePath string) error {
+func downloadHbBa(attachmentUrl string, referer string, filePath string) error {
 	// 初始化客户端
 	var client *http.Client = &http.Client{
 		Transport: &http.Transport{
@@ -318,26 +318,26 @@ func downloadDbBa(attachmentUrl string, referer string, filePath string) error {
 			ResponseHeaderTimeout: time.Second * 30,
 		},
 	}
-	if DbBaEnableHttpProxy {
-		client = DbBaSetHttpProxy()
+	if HbBaEnableHttpProxy {
+		client = HbBaSetHttpProxy()
 	}
 	req, err := http.NewRequest("GET", attachmentUrl, nil) //建立连接
 	if err != nil {
 		return err
 	}
 
-	req.Header.Set("authority", "dbba.sacinfo.org.cn")
+	req.Header.Set("authority", "hbba.sacinfo.org.cn")
 	req.Header.Set("method", "GET")
-	path := strings.Replace(attachmentUrl, "https://dbba.sacinfo.org.cn", "", 1)
+	path := strings.Replace(attachmentUrl, "https://hbba.sacinfo.org.cn", "", 1)
 	fmt.Println(path)
 	req.Header.Set("path", path)
 	req.Header.Set("scheme", "https")
 	req.Header.Set("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7")
 	req.Header.Set("Accept-Encoding", "gzip, deflate, br")
 	req.Header.Set("Accept-Language", "zh-CN,zh;q=0.9")
-	req.Header.Set("Cookie", DbBaCookie)
+	req.Header.Set("Cookie", HbBaCookie)
 	req.Header.Set("Connection", "keep-alive")
-	req.Header.Set("Host", "dbba.sacinfo.org.cn")
+	req.Header.Set("Host", "hbba.sacinfo.org.cn")
 	req.Header.Set("Referer", referer)
 	req.Header.Set("sec-ch-ua", "\"Chromium\";v=\"110\", \"Not A(Brand\";v=\"24\", \"Google Chrome\";v=\"110\"")
 	req.Header.Set("sec-ch-ua-mobile", "?0")
@@ -379,7 +379,7 @@ func downloadDbBa(attachmentUrl string, referer string, filePath string) error {
 	return nil
 }
 
-func DbBaCopyFile(src, dst string) (err error) {
+func HbBaCopyFile(src, dst string) (err error) {
 	in, err := os.Open(src)
 	if err != nil {
 		return
