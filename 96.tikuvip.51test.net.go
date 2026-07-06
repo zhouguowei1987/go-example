@@ -41,21 +41,21 @@ var tiKuVipCookie = "__yjs_duid=1_9906f2c8d7c017db33d48b6a18ccd56b1675842585518;
 // @Description https://tikuview.51test.net/，获取无忧考试网真题
 func main() {
 	saveCategory := map[string]bool{
-		"小升初":   true,
-		"小学一年级": true,
-		"小学二年级": true,
-		"小学三年级": true,
-		"小学四年级": true,
-		"小学五年级": true,
-		"小学六年级": true,
-		"高一":    true,
-		"高二":    true,
-		"高三":    true,
-		"高考":    true,
-		"初中一年级": true,
-		"初中二年级": true,
-		"初中三年级": true,
-		"中考":    true,
+		// "小升初":   true,
+		// "小学一年级": true,
+		// "小学二年级": true,
+		// "小学三年级": true,
+		// "小学四年级": true,
+		// "小学五年级": true,
+		// "小学六年级": true,
+		// "高一":    true,
+		// "高二":    true,
+		// "高三":    true,
+		// "高考":    true,
+		// "初中一年级": true,
+		// "初中二年级": true,
+		// "初中三年级": true,
+		"中考": true,
 	}
 	tiKuVip51TestTreeListInitData, err := treeListInit()
 	if err != nil {
@@ -434,12 +434,12 @@ func tiKuVip51TestDownloadUrl(tiKuVip51TestPathListDataFileList []TiKuVip51TestP
 		}
 
 		//复制文件
-		// tempFilePath := strings.ReplaceAll(filePath, "tikuvip.51test.net/tikuvip.51test.net", "tikuvip.51test.net/temp-tikuvip.51test.net")
-		// err = copyTiKuVip51TestFile(filePath, tempFilePath)
-		// if err != nil {
-		// 	fmt.Println(err)
-		// 	continue
-		// }
+		tempFilePath := strings.ReplaceAll(filePath, "tikuvip.51test.net/tikuvip.51test.net", "tikuvip.51test.net/temp-tikuvip.51test.net")
+		err = copyTiKuVip51TestFile(filePath, tempFilePath)
+		if err != nil {
+			fmt.Println(err)
+			continue
+		}
 		fmt.Println("=======下载完成========")
 		// 设置倒计时
 		DownLoadTiKuVip51TestTimeSleep := rand.Intn(15)
