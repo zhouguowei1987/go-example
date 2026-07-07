@@ -17,14 +17,14 @@ import (
 	"golang.org/x/net/html"
 )
 
-var GsDfBzCookie = "CookieNid=http%3A%2F%2Fwww.gsdfbz.cn%2Ftheme%2Fdefault%2FstandardPublishDetail4830; Hm_lvt_9e72e5e781fbc2091396de8967bf1ce1=1765093641; HMACCOUNT=4E5B3419A3141A8E; JSESSIONID=8EF941D4B67C18F5025B6B83C7046E0A; Hm_lpvt_9e72e5e781fbc2091396de8967bf1ce1=1765176390"
+var GsDfBzCookie = "CookieNid=http%3A%2F%2Fwww.gsdfbz.cn%2Ftheme%2Fdefault%2FstandardPublishDetail4960; JSESSIONID=D3E66FC0927CB34CD50D95C45B801CBC; Hm_lvt_9e72e5e781fbc2091396de8967bf1ce1=1781572847,1783344792; HMACCOUNT=A07E1FB4B9BF787C; Hm_lpvt_9e72e5e781fbc2091396de8967bf1ce1=1783344843"
 
 // GsDfBzSpider 获取甘肃省地方标准文档
 // @Title 获取甘肃省地方标准文档
 // @Description http://www.gsdfbz.cn/，将甘肃省地方标准文档入库
 func main() {
-	var startId = 4800
-	var endId = 4898
+	var startId = 4898
+	var endId = 4960
 	for id := startId; id <= endId; id++ {
 		fmt.Println(id)
 		detailUrl := fmt.Sprintf("http://www.gsdfbz.cn/theme/default/standardPublishDetail%d", id)
