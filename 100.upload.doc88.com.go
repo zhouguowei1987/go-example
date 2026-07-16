@@ -756,9 +756,9 @@ func main() {
 				break
 			}
 			// 设置倒计时
-			UploadDoc88TimeSleep := rand.Intn(30)
-			if UploadDoc88TimeSleep <= 20 {
-				UploadDoc88TimeSleep = 20 + rand.Intn(10)
+			UploadDoc88TimeSleep := rand.Intn(10)
+			if UploadDoc88TimeSleep <= 8 {
+				UploadDoc88TimeSleep = 8 + rand.Intn(5)
 			}
 			for i := 1; i <= UploadDoc88TimeSleep; i++ {
 				time.Sleep(time.Second)

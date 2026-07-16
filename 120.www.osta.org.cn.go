@@ -104,7 +104,7 @@ func OsTaSetHttpProxy() (httpclient *http.Client) {
 	return httpclient
 }
 
-var OsTaCookie = "Hm_lvt_e85984af56dd04582a569a53719e397f=1757738790,1758696058; HMACCOUNT=1CCD0111717619C6; Hm_lpvt_e85984af56dd04582a569a53719e397f=1758696361"
+var OsTaCookie = "_gscu_486005091=761326775z3vhv14; _gscbrs_486005091=1; _gscs_486005091=84091702ugqz4734|pv:1"
 
 //var OsTaNextDownloadSleep = 2
 
@@ -132,7 +132,7 @@ func main() {
 		for _, row := range osTaListResponseBodyList {
 			fmt.Println("=====================开始处理数据 page = ", page, "=========================")
 
-			filePath := "../www.osta.org.cn/" + row.Name + "-"+row.IssueNumber+"（" + row.Code + "）.pdf"
+			filePath := "../www.osta.org.cn/" + strings.ReplaceAll(row.Name, "/", "-") + "-"+row.IssueNumber+"（" + row.Code + "）.pdf"
 			fmt.Println(filePath)
             _, err = os.Stat(filePath)
             if err == nil {
@@ -151,7 +151,7 @@ func main() {
             fmt.Println("=======完成下载========")
 
             //复制文件
-            tempFilePath := strings.ReplaceAll(filePath, "../www.osta.org.cn", "../upload.doc88.com/www.osta.org.cn")
+            tempFilePath := strings.ReplaceAll(filePath, "../www.osta.org.cn", "../upload.doc88.com/hbba.sacinfo.org.cn")
             err = copyOsTaFile(filePath, tempFilePath)
             if err != nil {
                 fmt.Println(err)
