@@ -106,14 +106,14 @@ func ZlZxSetHttpProxy() (httpclient *http.Client) {
 	return httpclient
 }
 
-var ZlZxCookie = "node_id=nginx_1; cna=MYMPIfeeTQACAf////+VQMz4; arialoadData=false; zh_choose_undefined=s; cssstyle=1; zwlogBaseinfo=eyJsbF91c2VyaWQiOiIiLCJsb2dfc3RhdHVzIjoi5pyq55m75b2VIiwidXNlclR5cGUiOiJndWVzdCIsImJpel9zZXNzaW9uX2lkIjoiMjFjODlmY2ZiNDQ4NDJjMTgxMDhiODAwMmQ5MDdjMjEiLCJzaXRlX2lkIjoxLCJwYWdlX21vZGUiOiLluLjop4TmqKHlvI8ifQ==; _d_id=6cbe0b89f633a6ccfdaae4c793e662"
+var ZlZxCookie = "node_id=nginx_1; httponly; cookie_name=value; sensorsdata2015jssdkcross=%7B%22distinct_id%22%3A%2219822f38b04133-0e14282c632b558-17525636-1024000-19822f38b0567c%22%2C%22first_id%22%3A%22%22%2C%22props%22%3A%7B%22%24latest_traffic_source_type%22%3A%22%E8%87%AA%E7%84%B6%E6%90%9C%E7%B4%A2%E6%B5%81%E9%87%8F%22%2C%22%24latest_search_keyword%22%3A%22%E6%9C%AA%E5%8F%96%E5%88%B0%E5%80%BC%22%2C%22%24latest_referrer%22%3A%22https%3A%2F%2Fwww.baidu.com%2Flink%22%7D%2C%22identities%22%3A%22eyIkaWRlbnRpdHlfY29va2llX2lkIjoiMTk4MjJmMzhiMDQxMzMtMGUxNDI4MmM2MzJiNTU4LTE3NTI1NjM2LTEwMjQwMDAtMTk4MjJmMzhiMDU2N2MifQ%3D%3D%22%2C%22history_login_id%22%3A%7B%22name%22%3A%22%22%2C%22value%22%3A%22%22%7D%2C%22%24device_id%22%3A%2219822f38b04133-0e14282c632b558-17525636-1024000-19822f38b0567c%22%7D; sensorsdata2015jssdksession=%7B%22session_id%22%3A%2219df0c7e99d7f40f583afef24df5819525631102400019df0c7e99e5dc%22%2C%22first_session_time%22%3A1777861126555%2C%22latest_session_time%22%3A1777861155238%7D; mycookie=xxxx"
 
 // 下载浙江标准在线文档
 // @Title 下载浙江标准在线文档
 // @Description https://zlzx.zjamr.zj.gov.cn/LocalStandard/Index/，下载浙江标准在线文档
 func main() {
 	page := 1
-	maxPage := 3206
+	maxPage := 1151
 	isPageListGo := true
 	for isPageListGo {
 		if page > maxPage {
