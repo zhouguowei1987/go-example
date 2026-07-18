@@ -41,7 +41,10 @@ var tiKuVipCookie = "__yjs_duid=1_9906f2c8d7c017db33d48b6a18ccd56b1675842585518;
 // @Description https://tikuview.51test.net/，获取无忧考试网真题
 func main() {
 	saveCategory := map[string]bool{
-		// "小升初":   true,
+		// "公务员考试": true,
+		// "一级建造师考试": true,
+		// "二级建造师考试": true,
+		// "小升初":     true,
 		// "小学一年级": true,
 		// "小学二年级": true,
 		// "小学三年级": true,
@@ -51,11 +54,12 @@ func main() {
 		// "高一":    true,
 		// "高二":    true,
 		// "高三":    true,
-		// "高考":    true,
+		// "高中会考": true,
+		// "高考": true,
 		// "初中一年级": true,
 		// "初中二年级": true,
 		// "初中三年级": true,
-		"中考": true,
+		// "中考": true,
 	}
 	tiKuVip51TestTreeListInitData, err := treeListInit()
 	if err != nil {
@@ -376,6 +380,8 @@ func PathList(path string) (tiKuVip51TestPathListDataFileList []TiKuVip51TestPat
 
 func tiKuVip51TestDownloadUrl(tiKuVip51TestPathListDataFileList []TiKuVip51TestPathListDataFileList) {
 	for _, pathListDataFile := range tiKuVip51TestPathListDataFileList {
+		time.Sleep(500 * time.Millisecond)
+		fmt.Println("==============处理一条信息，先暂停500纳秒=======================")
 		pathArray := strings.Split(pathListDataFile.Path, "/")
 		handlePath := make([]string, 0, len(pathArray)-2)
 		for i, v := range pathArray {
@@ -388,8 +394,8 @@ func tiKuVip51TestDownloadUrl(tiKuVip51TestPathListDataFileList []TiKuVip51TestP
 		fileName := pathListDataFile.Name
 		fileName = strings.Trim(fileName, " ")
 		fmt.Println(fileName)
-		if strings.Index(fileName, "试题及答案") == -1 && strings.Index(fileName, "真题及答案") == -1 {
-			fmt.Println("不含有‘试题及答案’和‘真题及答案’，跳过")
+		if strings.Index(fileName, "试题及答案") == -1 && strings.Index(fileName, "试卷及答案") == -1 && strings.Index(fileName, "真题及答案") == -1 {
+			fmt.Println("不含有‘试题及答案’、‘试卷及答案’和‘真题及答案’，跳过")
 			continue
 		}
 		// 格式化时间
