@@ -493,7 +493,7 @@ var eachUsernameDownloadCurrentCount = 0
 var eachUsernameDownloadMaxCount = 80
 var password = "654321"
 var refer = "http://www.zzstep.com/"
-var ZZStepCookie = ""
+var ZZStepCookie = "Hm_lvt_9ae1d642b9883edd826f2ab064acca42=1778819163; cdb_cookietime=2592000; PHPSESSID=85jpbf99slpm0sdafhku8bj94b; Hm_lvt_5d656a0b54535a39b1d88c84eff1725b=1782432653,1783043555,1784191336; HMACCOUNT=9C0CD19686802BBF; Hm_lvt_e22ffa3ceb40ebd886ecaaa1c24eb75d=1782432653,1783043555,1784191336; Hm_lpvt_5d656a0b54535a39b1d88c84eff1725b=1784191695; Hm_lpvt_e22ffa3ceb40ebd886ecaaa1c24eb75d=1784191695"
 
 // ychEduSpider 获取中国教育出版网文档
 // @Title 获取中国教育出版网文档

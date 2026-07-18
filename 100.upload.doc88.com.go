@@ -710,6 +710,16 @@ func main() {
 			pCid:    8137,
 			Price:   200,
 		},
+		{
+			dirName: "tikuvip.51test.net/中考",
+			pCid:    8243,
+			Price:   200,
+		},
+		{
+			dirName: "tikuvip.51test.net/高考",
+			pCid:    8244,
+			Price:   200,
+		},
 	}
 	rootPath := "../upload.doc88.com/"
 	for _, childDir := range uploadChildDirArr {
