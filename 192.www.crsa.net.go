@@ -25,8 +25,8 @@ var CrsaCookie = "acw_tc=276077d817786491955958780ed676d5e46c7a6bbadc484ade3233d
 // @Title 获取中国道路交通安全协会标准文档
 // @Description https://www.crsa.net/，将中国道路交通安全协会标准文档入库
 func main() {
-	var startId = 12
-	var endId = 49
+	var startId = 40
+	var endId = 50
 	for id := startId; id <= endId; id++ {
 		fmt.Println(id)
 		detailUrl := fmt.Sprintf("https://www.crsa.net/bz/article/news/%d", id)

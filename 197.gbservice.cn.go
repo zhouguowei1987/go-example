@@ -115,8 +115,8 @@ var GbServiceCookie = "Hm_lvt_25c82fafe27bde86759c4030e5427888=1781236836; HMACC
 // @Description https://gbservice.cn/，下载江苏建设科技服务网标准文档
 func main() {
 	// 1332
-	var startId = 1332
-	var endId = 2094
+	var startId = 2094
+	var endId = 2097
 	for id := startId; id <= endId; id++ {
 		var pageDetailUrl = fmt.Sprintf("https://gbservice.cn/api/standard/openinfo?id=%d", id)
 		var pageDetailPathUrl = fmt.Sprintf("/api/standard/openinfo?id=%d", id)
