@@ -44,7 +44,7 @@ func main() {
 	page := 1
 	isPageListGo := true
 	for isPageListGo {
-		requestListUrl := fmt.Sprintf("https://www.cvma.org.cn/api/search-biaozhunku.php?siteid=10000&type=1&page=2&pagesize=10&period=&bznum=&name=&unit=&schedule=已发布&page=%d&pagesize=10", page)
+		requestListUrl := fmt.Sprintf("https://www.cvma.org.cn/api/search-biaozhunku.php?siteid=10000&type=1&page=2&pagesize=10&period=&bznum=&name=&unit=&schedule=已发布&page=%d&pagesize=100", page)
 		// fmt.Println(requestListUrl)
 		cvmaBzListResponse, err := GetCvmaBzList(requestListUrl)
 		if err != nil {
@@ -114,7 +114,7 @@ func main() {
 					continue
 				}
 				//复制文件
-				tempFilePath := strings.ReplaceAll(filePath, "www.cvma.org.cn", "temp-hbba.sacinfo.org.cn")
+				tempFilePath := strings.ReplaceAll(filePath, "www.cvma.org.cn", "temp-www.cvma.org.cn")
 				err = copyCvmaFile(filePath, tempFilePath)
 				if err != nil {
 					fmt.Println(err)
