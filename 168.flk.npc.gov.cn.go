@@ -490,7 +490,7 @@ func downloadFlk(attachmentUrl string, referer string, filePath string) error {
 func copyFlkFile(src, dst string) (err error) {
 	in, err := os.Open(src)
 	if err != nil {
-		return
+		return err
 	}
 	defer func(in *os.File) {
 		err := in.Close()
@@ -499,9 +499,16 @@ func copyFlkFile(src, dst string) (err error) {
 		}
 	}(in)
 
+	// 创建一个文件用于保存
+	fileDiv := filepath.Dir(dst)
+	if _, err = os.Stat(fileDiv); err != nil {
+		if os.MkdirAll(fileDiv, 0o777) != nil {
+			return err
+		}
+	}
 	out, err := os.Create(dst)
 	if err != nil {
-		return
+		return err
 	}
 	defer func(out *os.File) {
 		err := out.Close()
@@ -511,5 +518,5 @@ func copyFlkFile(src, dst string) (err error) {
 	}(out)
 
 	_, err = io.Copy(out, in)
-	return
+	return nil
 }

@@ -139,10 +139,10 @@ func main() {
 			Name: "领导讲话",
 			Id:   "4383e2d7-1c25-11f0-96b3-6c1ff709ec87",
 		},
-		{
-			Name: "专题讲稿",
-			Id:   "4383d175-1c25-11f0-96b3-6c1ff709ec87",
-		},
+		// {
+		// 	Name: "专题讲稿",
+		// 	Id:   "4383d175-1c25-11f0-96b3-6c1ff709ec87",
+		// },
 		{
 			Name: "遴选题库",
 			Id:   "4383e29f-1c25-11f0-96b3-6c1ff709ec87",
@@ -151,10 +151,10 @@ func main() {
 			Name: "表格合同",
 			Id:   "4383e241-1c25-11f0-96b3-6c1ff709ec87",
 		},
-		{
-			Name: "公考素材",
-			Id:   "4383e1f8-1c25-11f0-96b3-6c1ff709ec87",
-		},
+		// {
+		// 	Name: "公考素材",
+		// 	Id:   "4383e1f8-1c25-11f0-96b3-6c1ff709ec87",
+		// },
 	}
 	for _, category := range folderMeeWenCategory {
 		fmt.Println("Name = ", category.Name, " Id = ", category.Id)

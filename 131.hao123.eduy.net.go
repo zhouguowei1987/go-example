@@ -3,7 +3,6 @@ package main
 import (
 	"errors"
 	"fmt"
-	"github.com/antchfx/htmlquery"
 	"io"
 	"math/rand"
 	"net"
@@ -14,6 +13,8 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/antchfx/htmlquery"
 )
 
 const (
@@ -38,16 +39,16 @@ type EduYEducationCategory struct {
 }
 
 var eduYEducationCategory = []EduYEducationCategory{
-	//{
-	//	categoryName: "小学",
-	//	categoryUrl:  "http://hao123.eduy.net/jiaoxueziyuan/shiti/xiaoxue/index.html",
-	//	classId:      29,
-	//},
-	//{
-	//	categoryName: "初中",
-	//	categoryUrl:  "http://hao123.eduy.net/jiaoxueziyuan/shiti/chuzhong/index.html",
-	//	classId:      30,
-	//},
+	{
+		categoryName: "小学",
+		categoryUrl:  "http://hao123.eduy.net/jiaoxueziyuan/shiti/xiaoxue/index.html",
+		classId:      29,
+	},
+	{
+		categoryName: "初中",
+		categoryUrl:  "http://hao123.eduy.net/jiaoxueziyuan/shiti/chuzhong/index.html",
+		classId:      30,
+	},
 	{
 		categoryName: "高中",
 		categoryUrl:  "http://hao123.eduy.net/jiaoxueziyuan/shiti/gaozhong/index.html",
@@ -73,20 +74,13 @@ func main() {
 				fmt.Println(err)
 				break
 			}
-			// /html/body/table[4]/tbody/tr/td[1]/table[2]/tbody/tr/td/table[1]/tbody/tr/td/table/tbody/tr[1]
+			// /html/body/table[4]/tbody/tr/td[1]/table[2]/tbody/tr/td/table[1]/tbody/tr/td/table/tbody/tr[2]
 			divNodes := htmlquery.Find(listDoc, `//html/body/table[4]/tbody/tr/td[1]/table[2]/tbody/tr/td/table[1]/tbody/tr/td/table/tbody/tr`)
 			if len(divNodes) >= 1 {
 				for _, divNode := range divNodes {
-					// 第一个td中含有img标签的才是要提取的内容
-					imgNode := htmlquery.FindOne(divNode, `./td[1]/img`)
-					if imgNode == nil {
-						fmt.Println("不是要提取的内容，跳过")
-						continue
-					}
-
 					titleNode := htmlquery.FindOne(divNode, `./td[1]/b/a`)
 					if titleNode == nil {
-						fmt.Println("标题不存在")
+						fmt.Println("不是要提取的内容，跳过")
 						continue
 					}
 					title := htmlquery.InnerText(titleNode)
@@ -119,19 +113,29 @@ func main() {
 					fmt.Println(attachmentUrl)
 					filePath := "F:\\workspace\\hao123.eduy.net\\hao123.eduy.net\\" + category.categoryName + "\\" + title + ".rar"
 					_, err = os.Stat(filePath)
+					if err == nil {
+						fmt.Println("文档已下载过，跳过")
+						break
+					}
+					fmt.Println("=======开始下载========")
+					err = downloadEduY(attachmentUrl, filePath, eduYDownloadUrl)
 					if err != nil {
-						fmt.Println("=======开始下载========")
-						err := downloadEduY(attachmentUrl, filePath, eduYDownloadUrl)
-						if err != nil {
-							fmt.Println(err)
-							continue
-						}
-						fmt.Println("=======完成下载========")
-						DownLoadEduYTimeSleep := rand.Intn(10)
-						for i := 1; i <= DownLoadEduYTimeSleep; i++ {
-							time.Sleep(time.Second)
-							fmt.Println("page="+strconv.Itoa(page)+"===========下载", title, "成功，暂停", DownLoadEduYTimeSleep, "秒，倒计时", i, "秒===========")
-						}
+						fmt.Println(err)
+						continue
+					}
+
+					//复制文件
+					tempFilePath := "F:\\workspace\\hao123.eduy.net\\temp-hao123.eduy.net\\" + category.categoryName + "\\" + title + ".rar"
+					err = copyEduY(filePath, tempFilePath)
+					if err != nil {
+						fmt.Println(err)
+						continue
+					}
+					fmt.Println("=======完成下载========")
+					DownLoadEduYTimeSleep := rand.Intn(10)
+					for i := 1; i <= DownLoadEduYTimeSleep; i++ {
+						time.Sleep(time.Second)
+						fmt.Println("page="+strconv.Itoa(page)+"===========下载", title, "成功，暂停", DownLoadEduYTimeSleep, "秒，倒计时", i, "秒===========")
 					}
 				}
 				page++
@@ -206,5 +210,39 @@ func downloadEduY(attachmentUrl string, filePath string, referer string) error {
 	if err != nil {
 		return err
 	}
+	return nil
+}
+
+func copyEduY(src, dst string) (err error) {
+	in, err := os.Open(src)
+	if err != nil {
+		return err
+	}
+	defer func(in *os.File) {
+		err := in.Close()
+		if err != nil {
+			return
+		}
+	}(in)
+
+	// 创建一个文件用于保存
+	fileDiv := filepath.Dir(dst)
+	if _, err = os.Stat(fileDiv); err != nil {
+		if os.MkdirAll(fileDiv, 0o777) != nil {
+			return err
+		}
+	}
+	out, err := os.Create(dst)
+	if err != nil {
+		return err
+	}
+	defer func(out *os.File) {
+		err := out.Close()
+		if err != nil {
+			return
+		}
+	}(out)
+
+	_, err = io.Copy(out, in)
 	return nil
 }

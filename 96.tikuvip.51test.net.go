@@ -54,7 +54,7 @@ func main() {
 		// "高一":    true,
 		// "高二":    true,
 		// "高三":    true,
-		// "高中会考": true,
+		"高中会考": true,
 		// "高考": true,
 		// "初中一年级": true,
 		// "初中二年级": true,
@@ -394,20 +394,20 @@ func tiKuVip51TestDownloadUrl(tiKuVip51TestPathListDataFileList []TiKuVip51TestP
 		fileName := pathListDataFile.Name
 		fileName = strings.Trim(fileName, " ")
 		fmt.Println(fileName)
-		if strings.Index(fileName, "试题及答案") == -1 && strings.Index(fileName, "试卷及答案") == -1 && strings.Index(fileName, "真题及答案") == -1 {
-			fmt.Println("不含有‘试题及答案’、‘试卷及答案’和‘真题及答案’，跳过")
+		if strings.Index(fileName, "试题") == -1 && strings.Index(fileName, "试卷") == -1 && strings.Index(fileName, "真题") == -1 {
+			fmt.Println("不含有‘试题’、‘试卷’和‘真题’，跳过")
 			continue
 		}
 		// 格式化时间
 		mTimeDate := time.Unix(pathListDataFile.MTime, 0).Format("2006-01-02")
 		mTimeStr, _ := time.Parse("2006-01-02", mTimeDate)
 		fmt.Println(mTimeStr)
-		dateStart, _ := time.Parse("2006-01-02", "2024-01-01")
+		dateStart, _ := time.Parse("2006-01-02", "2023-01-01")
 		fmt.Println(dateStart)
 
 		// 比较日期
 		if mTimeStr.After(dateStart) == false {
-			fmt.Println("日期在2024-01-01后，跳过")
+			fmt.Println("日期在2023-01-01后，跳过")
 			continue
 		}
 		filePath = "../tikuvip.51test.net/tikuvip.51test.net/" + handlePath[0] + "/" + fileName
