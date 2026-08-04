@@ -38,7 +38,7 @@ type QueryPpt2DownloadUrlFormData struct {
 	resourceid string
 }
 
-var Ppt2Cookie = "acw_tc=275bb93217828724821624896e5ae90a2064e70eab87117f9dd6ce692e; cdn_sec_tc=275bb93217828724821624896e5ae90a2064e70eab87117f9dd6ce692e; Hm_lvt_cd668c52b64b6c51259bb01b5a1ca278=1780968091,1781851727,1782872485; HMACCOUNT=9C0CD19686802BBF; Hm_lpvt_cd668c52b64b6c51259bb01b5a1ca278=1782872490"
+var Ppt2Cookie = "acw_tc=7b065b1817854198899361221eb9ec9a49f4b255357e6d774e7a16bcc9; cdn_sec_tc=7b065b1817854198899361221eb9ec9a49f4b255357e6d774e7a16bcc9; Hm_lvt_cd668c52b64b6c51259bb01b5a1ca278=1782872485,1785419891,1785420960; HMACCOUNT=9C0CD19686802BBF; Hm_lpvt_cd668c52b64b6c51259bb01b5a1ca278=1785420966"
 
 // ychEduSpider 获取爱ppt文档
 // @Title 获取爱ppt文档
@@ -71,6 +71,18 @@ func main() {
 				title = strings.ReplaceAll(title, "/", "-")
 				title = strings.ReplaceAll(title, " ", "")
 				fmt.Println(title)
+
+				// 过滤文件名中含有“年级”字样文件
+				if strings.Index(title, "年级") != -1 {
+					fmt.Println("过滤文件名中含有“年级”字样文件")
+					continue
+				}
+
+				// 过滤文件名中含有“课件”字样文件
+				if strings.Index(title, "课件") != -1 {
+					fmt.Println("过滤文件名中含有“课件”字样文件")
+					continue
+				}
 
 				filePath := "F:\\workspace\\www.2ppt.com\\www.2ppt.com\\" + title + ".pptx"
 				_, err = os.Stat(filePath)
@@ -111,6 +123,14 @@ func main() {
 				// 开始下载
 				fmt.Println("=======开始下载========")
 				err = downloadPpt2(downLoadUrl, requestListUrl, filePath)
+				if err != nil {
+					fmt.Println(err)
+					continue
+				}
+
+				//复制文件
+				tempFilePath := "F:\\workspace\\www.2ppt.com\\temp-www.2ppt.com\\" + title + ".pptx"
+				err = copyPpt(filePath, tempFilePath)
 				if err != nil {
 					fmt.Println(err)
 					continue
@@ -353,5 +373,39 @@ func downloadPpt2(downloadUrl string, referer string, filePath string) error {
 	if err != nil {
 		return err
 	}
+	return nil
+}
+
+func copyPpt(src, dst string) (err error) {
+	in, err := os.Open(src)
+	if err != nil {
+		return err
+	}
+	defer func(in *os.File) {
+		err := in.Close()
+		if err != nil {
+			return
+		}
+	}(in)
+
+	// 创建一个文件用于保存
+	fileDiv := filepath.Dir(dst)
+	if _, err = os.Stat(fileDiv); err != nil {
+		if os.MkdirAll(fileDiv, 0o777) != nil {
+			return err
+		}
+	}
+	out, err := os.Create(dst)
+	if err != nil {
+		return err
+	}
+	defer func(out *os.File) {
+		err := out.Close()
+		if err != nil {
+			return
+		}
+	}(out)
+
+	_, err = io.Copy(out, in)
 	return nil
 }

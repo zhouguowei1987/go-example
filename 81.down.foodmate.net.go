@@ -3,7 +3,6 @@ package main
 import (
 	"errors"
 	"fmt"
-	"github.com/antchfx/htmlquery"
 	"io"
 	"math/rand"
 	"net/http"
@@ -12,6 +11,8 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/antchfx/htmlquery"
 )
 
 type foodMateCategory struct {
@@ -55,7 +56,7 @@ func main() {
 					}
 
 					detailDocTitleNode := htmlquery.FindOne(detailDoc, `//div[@class="title2"]/span`)
-                    if detailDocTitleNode == nil {
+					if detailDocTitleNode == nil {
 						fmt.Println("没有文档标题，跳过")
 						continue
 					}
@@ -68,11 +69,11 @@ func main() {
 					fmt.Println(title)
 
 					downloadFoodMatePdfSleep := rand.Intn(5)
-//                  downloadFoodMatePdfSleep := 6
-                    for i := 1; i <= downloadFoodMatePdfSleep; i++ {
-                        time.Sleep(time.Second)
-                        fmt.Println("page="+strconv.Itoa(category.page)+"=======", title, "暂停，category_name="+category.name+"====== 暂停", downloadFoodMatePdfSleep, "秒，倒计时", i, "秒===========")
-                    }
+					//                  downloadFoodMatePdfSleep := 6
+					for i := 1; i <= downloadFoodMatePdfSleep; i++ {
+						time.Sleep(time.Second)
+						fmt.Println("page="+strconv.Itoa(category.page)+"=======", title, "暂停，category_name="+category.name+"====== 暂停", downloadFoodMatePdfSleep, "秒，倒计时", i, "秒===========")
+					}
 
 					downNode := htmlquery.FindOne(detailDoc, `//div[@class="downk"]/a[@class="telecom"]`)
 					if downNode == nil {
@@ -94,39 +95,39 @@ func main() {
 						continue
 					}
 					fileExtIndex := strings.LastIndex(downloadUrl, ".")
-                    fileExt := downloadUrl[fileExtIndex:]
-                    fileExt = strings.ToLower(fileExt)
-                    if strings.Index(fileExt,"pdf") == -1 && strings.Index(fileExt,"doc") == -1{
-                        fmt.Println("不是pdf、doc文件，跳过")
+					fileExt := downloadUrl[fileExtIndex:]
+					fileExt = strings.ToLower(fileExt)
+					if strings.Index(fileExt, "pdf") == -1 && strings.Index(fileExt, "doc") == -1 {
+						fmt.Println("不是pdf、doc文件，跳过")
 						continue
-                    }
+					}
 					fmt.Println(downloadUrl)
 
 					filePath := "../down.foodmate.net/" + title + fileExt
 					fmt.Println(filePath)
 
 					_, err = os.Stat(filePath)
-                    if err == nil {
-                        fmt.Println("文档已下载过，跳过")
-                        continue
-                    }
+					if err == nil {
+						fmt.Println("文档已下载过，跳过")
+						continue
+					}
 
 					fmt.Println("=======开始下载========")
-                    err = downloadFoodMatePdf(downloadUrl, filePath, detailUrl)
-                    if err != nil {
-                        fmt.Println(err)
-                    }
-                    //复制文件
-                    tempFilePath := strings.ReplaceAll(filePath, "../down.foodmate.net", "../temp-down.foodmate.net")
-                    err = FoodMateCopyFile(filePath, tempFilePath)
-                    if err != nil {
-                        fmt.Println(err)
-                        continue
-                    }
+					err = downloadFoodMatePdf(downloadUrl, filePath, detailUrl)
+					if err != nil {
+						fmt.Println(err)
+					}
+					//复制文件
+					tempFilePath := strings.ReplaceAll(filePath, "../down.foodmate.net", "../temp-down.foodmate.net")
+					err = FoodMateCopyFile(filePath, tempFilePath)
+					if err != nil {
+						fmt.Println(err)
+						continue
+					}
 
-                    fmt.Println("=======下载完成========")
+					fmt.Println("=======下载完成========")
 				}
-// 				DownLoadFoodMatePageTimeSleep := 10
+				// 				DownLoadFoodMatePageTimeSleep := 10
 				DownLoadFoodMatePageTimeSleep := rand.Intn(5)
 				for i := 1; i <= DownLoadFoodMatePageTimeSleep; i++ {
 					time.Sleep(time.Second)

@@ -24,7 +24,7 @@ import (
 // @Title 获取第一ppt文档
 // @Description https://1ppt.com/，将第一ppt文档入库
 func main() {
-	var startId = 145927
+	var startId = 146702
 	var endId = 146980
 	for id := startId; id <= endId; id++ {
 		err := pptSpider(id)
@@ -64,33 +64,33 @@ func pptSpider(id int) error {
 	title := htmlquery.InnerText(titleNode)
 	fmt.Println(title)
 	// 过滤文件名中含有“图”字样文件
-	// if strings.Index(title, "图") != -1 {
-	// 	return errors.New("过滤文件名中含有“图”字样文件")
-	// }
-	// // 过滤文件名中含有“张”字样文件
-	// if strings.Index(title, "张") != -1 {
-	// 	return errors.New("过滤文件名中含有“张”字样文件")
-	// }
-	// // 过滤文件名中含有“套”字样文件
-	// if strings.Index(title, "套") != -1 {
-	// 	return errors.New("过滤文件名中含有“套”字样文件")
-	// }
-	// // 过滤文件名中含有“个”字样文件
+	if strings.Index(title, "图") != -1 {
+		return errors.New("过滤文件名中含有“图”字样文件")
+	}
+	// 过滤文件名中含有“张”字样文件
+	if strings.Index(title, "张") != -1 {
+		return errors.New("过滤文件名中含有“张”字样文件")
+	}
+	// 过滤文件名中含有“套”字样文件
+	if strings.Index(title, "套") != -1 {
+		return errors.New("过滤文件名中含有“套”字样文件")
+	}
+	// 过滤文件名中含有“个”字样文件
 	// if strings.Index(title, "个") != -1 {
 	// 	return errors.New("过滤文件名中含有“个”字样文件")
 	// }
-	// // 过滤文件名中含有“页”字样文件
+	// 过滤文件名中含有“页”字样文件
 	// if strings.Index(title, "页") != -1 {
 	// 	return errors.New("过滤文件名中含有“页”字样文件")
 	// }
-	// // 过滤文件名中含有“年”字样文件
+	// 过滤文件名中含有“年”字样文件
 	// if strings.Index(title, "年") != -1 {
 	// 	return errors.New("过滤文件名中含有“年”字样文件")
 	// }
-	// // 过滤文件名中含有“素材”字样文件
-	// if strings.Index(title, "素材") != -1 {
-	// 	return errors.New("过滤文件名中含有“素材”字样文件")
-	// }
+	// 过滤文件名中含有“素材”字样文件
+	if strings.Index(title, "素材") != -1 {
+		return errors.New("过滤文件名中含有“素材”字样文件")
+	}
 
 	// 查看是否有下载按钮
 	downloadButtonNode := htmlquery.FindOne(downloadDetailDoc, `//ul[@class="downloadlist"]/li[@class="c1"]/a`)

@@ -148,6 +148,10 @@ func main() {
 		// 	Name: "公考素材",
 		// 	Id:   "4383e1f8-1c25-11f0-96b3-6c1ff709ec87",
 		// },
+		{
+			Name: "教辅资料",
+			Id:   "48259e83-e587-4acf-9bdd-911a3fb404ca",
+		},
 	}
 	for _, category := range documentMeeWenCategory {
 		fmt.Println("Name = ", category.Name, " Id = ", category.Id)
