@@ -122,42 +122,42 @@ var jiangYuanWangCategory = []JiangYuanWangCategory{
 		Name:             "PPT",
 		CateId:           5,
 		Page:             1,
-		MaxPage:          538,
+		MaxPage:          65,
 		ParentClassifyId: "1,3,5,6",
 	},
 	// {
 	// 	Name:             "Word",
 	// 	CateId:           6,
 	// 	Page:             1,
-	// 	MaxPage:          493,
+	// 	MaxPage:          60,
 	// 	ParentClassifyId: "1,3,94",
 	// },
 	// {
 	// 	Name:             "Execl",
 	// 	CateId:           7,
 	// 	Page:             1,
-	// 	MaxPage:          286,
+	// 	MaxPage:          35,
 	// 	ParentClassifyId: "1,3",
 	// },
 	// {
 	// 	Name:             "视频",
 	// 	CateId:           8,
 	// 	Page:             1,
-	// 	MaxPage:          82,
+	// 	MaxPage:          10,
 	// 	ParentClassifyId: "1,3,232",
 	// },
 	// {
 	// 	Name:             "配乐",
 	// 	CateId:           9,
 	// 	Page:             1,
-	// 	MaxPage:          303,
+	// 	MaxPage:          37,
 	// 	ParentClassifyId: "1,5,232,237,247",
 	// },
 	// {
 	// 	Name:             "音频",
 	// 	CateId:           10,
 	// 	Page:             1,
-	// 	MaxPage:          729,
+	// 	MaxPage:          88,
 	// 	ParentClassifyId: "1,5,232",
 	// },
 }
@@ -186,7 +186,7 @@ func main() {
 		fmt.Println(pageListUrl)
 		page := category.Page
 		maxPage := category.MaxPage
-		rows := 12
+		rows := 100
 		// 处理CategoryValue字段
 		var categoryValue []QueryJiangYuanWangListRequestPayloadCategoryValue
 		parentClassifyIdStr := category.ParentClassifyId
