@@ -46,28 +46,28 @@ var OPenStdCookie = ""
 // @Description https://openstd.samr.gov.cn/，获取国家标准文档
 func main() {
 	var StdCategories = []StdCategory{
-// 		{
-// 			StdName: "强制性国家标准",
-// 			StdUrl:  "https://openstd.samr.gov.cn/bzgk/std/std_list_type?p.p1=1&p.p5=PUBLISHED|TOBEIMP&p.p90=circulation_date&p.p91=desc",
-// 			Page: 1,
-// 			MaxPage: 24,
-// 		},
+		{
+			StdName: "强制性国家标准",
+			StdUrl:  "https://openstd.samr.gov.cn/bzgk/std/std_list_type?p.p1=1&p.p5=PUBLISHED|TOBEIMP&p.p90=circulation_date&p.p91=desc",
+			Page: 1,
+			MaxPage: 1,
+		},
 		{
 			StdName: "推荐性国家标准",
 			StdUrl:  "https://openstd.samr.gov.cn/bzgk/std/std_list_type?p.p1=2&p.p5=PUBLISHED|TOBEIMP&p.p90=circulation_date&p.p91=desc",
-			Page: 103,
-			MaxPage: 471,
+			Page: 1,
+			MaxPage: 1,
 		},
-// 		{
-// 			StdName: "指导性技术文件",
-// 			StdUrl:  "https://openstd.samr.gov.cn/bzgk/std/std_list_type?p.p1=3&p.p5=PUBLISHED|TOBEIMP&p.p90=circulation_date&p.p91=desc",
-// 			Page: 1,
-// 			MaxPage: 8,
-// 		},
+		{
+			StdName: "指导性技术文件",
+			StdUrl:  "https://openstd.samr.gov.cn/bzgk/std/std_list_type?p.p1=3&p.p5=PUBLISHED|TOBEIMP&p.p90=circulation_date&p.p91=desc",
+			Page: 1,
+			MaxPage: 1,
+		},
 	}
 	for _, std := range StdCategories {
 		page := std.Page
-		pageSize := 100
+		pageSize := 20
 		isPageListGo := true
 		for isPageListGo {
             if page > std.MaxPage {

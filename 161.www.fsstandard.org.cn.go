@@ -157,7 +157,7 @@ func main() {
 			continue
 		}
 		//复制文件
-		tempFilePath := strings.ReplaceAll(filePath, "../www.fsstandard.org.cn", "../upload.doc88.com/dbba.sacinfo.org.cn")
+		tempFilePath := strings.ReplaceAll(filePath, "www.fsstandard.org.cn", "temp-www.fsstandard.org.cn")
 		err = FsStandardCopyFile(filePath, tempFilePath)
 		if err != nil {
 			fmt.Println(err)
