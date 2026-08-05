@@ -24,8 +24,8 @@ import (
 // @Title 获取第一ppt文档
 // @Description https://1ppt.com/，将第一ppt文档入库
 func main() {
-	var startId = 145550
-	var endId = 145927
+	var startId = 146702
+	var endId = 146980
 	for id := startId; id <= endId; id++ {
 		err := pptSpider(id)
 		if err != nil {
@@ -35,7 +35,7 @@ func main() {
 	//pptSpider(130283)
 }
 
-var pptCookie = "mizToken=202605091021400.88621061314439760.030886799051758174; acw_tc=276aedf617828708505394151ecebe01af6c030d5559b460be37032543d6db; Hm_lvt_087ceb5ea69d10fb5bbb6bc49c209fa2=1780366793,1780968926,1781852943,1782870853; HMACCOUNT=9C0CD19686802BBF; Hm_lpvt_087ceb5ea69d10fb5bbb6bc49c209fa2=1782870864; acw_sc__v2=1234cf0d46-ee2458a463f9f842efcb62f791885370da2dd574204245312e"
+var pptCookie = "mizToken=202605091021400.88621061314439760.030886799051758174; acw_tc=2760775b17854168351603565eb022108f42529f28df2b3279a91d8f87ccff; Hm_lvt_087ceb5ea69d10fb5bbb6bc49c209fa2=1782870853,1785081155,1785416836; HMACCOUNT=9C0CD19686802BBF; Hm_lpvt_087ceb5ea69d10fb5bbb6bc49c209fa2=1785416898"
 
 func pptSpider(id int) error {
 	detailUrl := fmt.Sprintf("https://www.1ppt.com/article/%d.html", id)
@@ -64,33 +64,33 @@ func pptSpider(id int) error {
 	title := htmlquery.InnerText(titleNode)
 	fmt.Println(title)
 	// 过滤文件名中含有“图”字样文件
-	// if strings.Index(title, "图") != -1 {
-	// 	return errors.New("过滤文件名中含有“图”字样文件")
-	// }
-	// // 过滤文件名中含有“张”字样文件
-	// if strings.Index(title, "张") != -1 {
-	// 	return errors.New("过滤文件名中含有“张”字样文件")
-	// }
-	// // 过滤文件名中含有“套”字样文件
-	// if strings.Index(title, "套") != -1 {
-	// 	return errors.New("过滤文件名中含有“套”字样文件")
-	// }
-	// // 过滤文件名中含有“个”字样文件
+	if strings.Index(title, "图") != -1 {
+		return errors.New("过滤文件名中含有“图”字样文件")
+	}
+	// 过滤文件名中含有“张”字样文件
+	if strings.Index(title, "张") != -1 {
+		return errors.New("过滤文件名中含有“张”字样文件")
+	}
+	// 过滤文件名中含有“套”字样文件
+	if strings.Index(title, "套") != -1 {
+		return errors.New("过滤文件名中含有“套”字样文件")
+	}
+	// 过滤文件名中含有“个”字样文件
 	// if strings.Index(title, "个") != -1 {
 	// 	return errors.New("过滤文件名中含有“个”字样文件")
 	// }
-	// // 过滤文件名中含有“页”字样文件
+	// 过滤文件名中含有“页”字样文件
 	// if strings.Index(title, "页") != -1 {
 	// 	return errors.New("过滤文件名中含有“页”字样文件")
 	// }
-	// // 过滤文件名中含有“年”字样文件
+	// 过滤文件名中含有“年”字样文件
 	// if strings.Index(title, "年") != -1 {
 	// 	return errors.New("过滤文件名中含有“年”字样文件")
 	// }
-	// // 过滤文件名中含有“素材”字样文件
-	// if strings.Index(title, "素材") != -1 {
-	// 	return errors.New("过滤文件名中含有“素材”字样文件")
-	// }
+	// 过滤文件名中含有“素材”字样文件
+	if strings.Index(title, "素材") != -1 {
+		return errors.New("过滤文件名中含有“素材”字样文件")
+	}
 
 	// 查看是否有下载按钮
 	downloadButtonNode := htmlquery.FindOne(downloadDetailDoc, `//ul[@class="downloadlist"]/li[@class="c1"]/a`)
@@ -115,6 +115,13 @@ func pptSpider(id int) error {
 	}
 	fmt.Println("=======开始下载========")
 	err = downloadPpt(attachUrl, downloadDetailUrl, filePath)
+	if err != nil {
+		return err
+	}
+
+	//复制文件
+	tempFilePath := "F:\\workspace\\www.1ppt.com\\temp-www." + fileSuffix + "_1ppt.com\\" + title + "." + fileSuffix
+	err = copyPpt(filePath, tempFilePath)
 	if err != nil {
 		return err
 	}
@@ -247,5 +254,39 @@ func downloadPpt(pdfUrl string, referer string, filePath string) error {
 	if err != nil {
 		return err
 	}
+	return nil
+}
+
+func copyPpt(src, dst string) (err error) {
+	in, err := os.Open(src)
+	if err != nil {
+		return err
+	}
+	defer func(in *os.File) {
+		err := in.Close()
+		if err != nil {
+			return
+		}
+	}(in)
+
+	// 创建一个文件用于保存
+	fileDiv := filepath.Dir(dst)
+	if _, err = os.Stat(fileDiv); err != nil {
+		if os.MkdirAll(fileDiv, 0o777) != nil {
+			return err
+		}
+	}
+	out, err := os.Create(dst)
+	if err != nil {
+		return err
+	}
+	defer func(out *os.File) {
+		err := out.Close()
+		if err != nil {
+			return
+		}
+	}(out)
+
+	_, err = io.Copy(out, in)
 	return nil
 }
