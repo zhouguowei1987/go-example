@@ -237,10 +237,11 @@ func main() {
 
 				cate_name := jiangYuanWang.CateName
 				cate_name = strings.TrimSpace(cate_name)
-				title := name + "(" + cate_name + ")"
+				cate_name = strings.ToLower(cate_name)
+				title := name
 				// 查看name字段是否含有cate_name
-				if strings.Index(title, cate_name) != -1 {
-					title = name
+				if strings.Index(title, cate_name) == -1 {
+					title = name + "(" + cate_name + ")"
 				}
 
 				downloadUrl := jiangYuanWang.Address
@@ -265,12 +266,12 @@ func main() {
 					continue
 				}
 				//复制文件
-				tempFilePath := "../www.jiangyuanwang.com/temp-www.jiangyuanwang.com/" + cate_name + "/" + title + fileExt
-				err = copyJiangYuanWangFile(filePath, tempFilePath)
-				if err != nil {
-					fmt.Println(err)
-					continue
-				}
+				// tempFilePath := "../www.jiangyuanwang.com/temp-www.jiangyuanwang.com/" + cate_name + "/" + title + fileExt
+				// err = copyJiangYuanWangFile(filePath, tempFilePath)
+				// if err != nil {
+				// 	fmt.Println(err)
+				// 	continue
+				// }
 				fmt.Println("=======下载完成========")
 				//DownLoadJiangYuanWangTimeSleep := 10
 				DownLoadJiangYuanWangTimeSleep := rand.Intn(10)
