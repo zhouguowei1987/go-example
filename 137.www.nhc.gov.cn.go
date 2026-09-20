@@ -109,7 +109,7 @@ func NhcGovSetHttpProxy() (httpclient *http.Client) {
 	return httpclient
 }
 
-var NhcGovCookie = "5uRo8RWcod0KO=603Se6al8mCmIyKI6qz89CLPxYBjv3jLkOmQKaig.o_VoxTKUs7u5.GLBoQZqQI8wKJkls3kv0n2fjI_ZRWBNuJa; _yfxkpy_ssid_10006654=%7B%22_yfxkpy_firsttime%22%3A%221753431366046%22%2C%22_yfxkpy_lasttime%22%3A%221782100043487%22%2C%22_yfxkpy_visittime%22%3A%221782100043487%22%2C%22_yfxkpy_cookie%22%3A%2220250725161606048834284966558828%22%2C%22_yfxkpy_returncount%22%3A%2216%22%7D; 5uRo8RWcod0KP=05HloU_YpKAIlhOXXn0auFWVSMHQiC5BScSKO1RhK_XlPVumzNJQR.muWVRhiE4sF9GtlRu2b9nc3pWdhYpnqgtcX9sbQ03nt0zqCMGDbULQsuL76jmLmT0pnx4hOg64SgqsthDZlasvowGhOG5aZ0gtvZxC0TzyB6DNnYVJZbOEQ5IvPvNoYX_q_cnVKVJxcWmwjpOc1uTs0D1GTnh9Z_I072AMY357RIvOklZMDmb8rP34R1gnXSuU9PQnrJdRn"
+var NhcGovCookie = "5uRo8RWcod0KO=60vqg.VUCXsqGuoAx6vE3vKUV_T3z5r5Q01xRLNPBRVxOhA.VeW7EnFZ.1PT.VGyB9s548foZKBN81dLbf8rT0nA; enable_5uRo8RWcod0K=true; JSESSIONID=6B4396ADCDEDC86FF39B16F6BE7C1FAA; _yfxkpy_ssid_10006654=%7B%22_yfxkpy_firsttime%22%3A%221753431366046%22%2C%22_yfxkpy_lasttime%22%3A%221789025606729%22%2C%22_yfxkpy_visittime%22%3A%221789025606729%22%2C%22_yfxkpy_cookie%22%3A%2220250725161606048834284966558828%22%2C%22_yfxkpy_returncount%22%3A%2218%22%7D; ariauseGraymode=false; 5uRo8RWcod0KP=0osFaL0dItq.qDxOhFjyVr4D1v69lGbmC6dX0vouvoW_sQacorN9VxZZ5rmpeOuLIjPOE.STfLRPPGy2HkKpHuoODFSU2O0iA1Is.3chLgWSOHfGj49C.m2bFN_L1Nxj5mcfsYsyErxFwH7vL2HPpDVeRUfZxQ8Mmr2nR.gi5bCd5rvjIGVbhhDDJK6i68ySXHempgUWkLYTYf2SwhDmEwfdnjyUZZe7JJj2_OwIAZTWn1vYCT4fCiijPoB.Kn6R_; arialoadData=true"
 
 // 下载国家卫生标准文档
 // @Title 下载国家卫生标准文档

@@ -67,7 +67,7 @@ func main() {
 	}
 	for _, std := range StdCategories {
 		page := std.Page
-		pageSize := 20
+		pageSize := 100
 		isPageListGo := true
 		for isPageListGo {
             if page > std.MaxPage {
@@ -167,9 +167,9 @@ func main() {
                     }
                     fmt.Println("=======开始完成========")
                     // 设置倒计时
-                    DownLoadOPenStdTimeSleep := rand.Intn(80)
-                    if DownLoadOPenStdTimeSleep <= 60{
-                        DownLoadOPenStdTimeSleep = 60 + rand.Intn(30)
+                    DownLoadOPenStdTimeSleep := rand.Intn(25)
+                    if DownLoadOPenStdTimeSleep <= 20{
+                        DownLoadOPenStdTimeSleep = 20 + rand.Intn(5)
                     }
                     for i := 1; i <= DownLoadOPenStdTimeSleep; i++ {
                         time.Sleep(time.Second)

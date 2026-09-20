@@ -34,7 +34,7 @@ func CmaSetHttpProxy() (httpclient *http.Client) {
 	return httpclient
 }
 
-var CmaCookie = "rialoadData=true; ariafontScale=-1; ariauseGraymode=false; ariaappid=36c3046abdea26b42920efa4387c3d53"
+var CmaCookie = "ariauseGraymode=false; arialoadData=true; ariawapChangeViewPort=false"
 
 // 获取中国气象局标准
 // @Title 获取中国气象局标准
