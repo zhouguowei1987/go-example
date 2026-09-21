@@ -51,14 +51,14 @@ func main() {
 		// "小学四年级": true,
 		// "小学五年级": true,
 		// "小学六年级": true,
-		// "高一":    true,
-		// "高二":    true,
-		// "高三":    true,
-		"高中会考": true,
+		// "高一": true,
+		// "高二": true,
+		// "高三": true,
+		// "高中会考": true,
 		// "高考": true,
-		// "初中一年级": true,
-		// "初中二年级": true,
-		// "初中三年级": true,
+		"初中一年级": true,
+		"初中二年级": true,
+		"初中三年级": true,
 		// "中考": true,
 	}
 	tiKuVip51TestTreeListInitData, err := treeListInit()
@@ -410,7 +410,7 @@ func tiKuVip51TestDownloadUrl(tiKuVip51TestPathListDataFileList []TiKuVip51TestP
 			fmt.Println("日期在2023-01-01后，跳过")
 			continue
 		}
-		filePath = "../tikuvip.51test.net/tikuvip.51test.net/" + handlePath[0] + "/" + fileName
+		filePath = "F:\\workspace\\tikuvip.51test.net\\tikuvip.51test.net\\" + handlePath[0] + "\\" + fileName
 		fmt.Println(filePath)
 		_, err := os.Stat(filePath)
 		if err == nil {
@@ -440,7 +440,7 @@ func tiKuVip51TestDownloadUrl(tiKuVip51TestPathListDataFileList []TiKuVip51TestP
 		}
 
 		//复制文件
-		tempFilePath := strings.ReplaceAll(filePath, "tikuvip.51test.net/tikuvip.51test.net", "tikuvip.51test.net/temp-tikuvip.51test.net")
+		tempFilePath := strings.ReplaceAll(filePath, "tikuvip.51test.net\\tikuvip.51test.net", "tikuvip.51test.net\\temp-tikuvip.51test.net")
 		err = copyTiKuVip51TestFile(filePath, tempFilePath)
 		if err != nil {
 			fmt.Println(err)

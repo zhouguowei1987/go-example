@@ -118,13 +118,13 @@ type JiangYuanWangCategory struct {
 }
 
 var jiangYuanWangCategory = []JiangYuanWangCategory{
-	{
-		Name:             "PPT",
-		CateId:           5,
-		Page:             1,
-		MaxPage:          65,
-		ParentClassifyId: "1,3,5,6",
-	},
+	// {
+	// 	Name:             "PPT",
+	// 	CateId:           5,
+	// 	Page:             1,
+	// 	MaxPage:          65,
+	// 	ParentClassifyId: "1,3,5,6",
+	// },
 	// {
 	// 	Name:             "Word",
 	// 	CateId:           6,
@@ -132,13 +132,13 @@ var jiangYuanWangCategory = []JiangYuanWangCategory{
 	// 	MaxPage:          60,
 	// 	ParentClassifyId: "1,3,94",
 	// },
-	// {
-	// 	Name:             "Execl",
-	// 	CateId:           7,
-	// 	Page:             1,
-	// 	MaxPage:          35,
-	// 	ParentClassifyId: "1,3",
-	// },
+	{
+		Name:             "Execl",
+		CateId:           7,
+		Page:             1,
+		MaxPage:          35,
+		ParentClassifyId: "1,3",
+	},
 	// {
 	// 	Name:             "视频",
 	// 	CateId:           8,

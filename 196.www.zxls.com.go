@@ -35,14 +35,14 @@ func ZxLsSetHttpProxy() (httpclient *http.Client) {
 	return httpclient
 }
 
-var ZxLsCookie = "Hm_lvt_c546156b33a73aaa69021f8a527d9e26=1780378702,1780551837,1780623585; HMACCOUNT=9C0CD19686802BBF; ASP.NET_SessionId=e5n1ox454px4b1fmlc0ae545; last_heartbeat_time=1780626778891; Hm_lpvt_c546156b33a73aaa69021f8a527d9e26=1780626816"
+var ZxLsCookie = "ASP.NET_SessionId=tafiph55pffsrtb4n2zkns55; Hm_lvt_c546156b33a73aaa69021f8a527d9e26=1788313794,1789293650; HMACCOUNT=9C0CD19686802BBF; last_heartbeat_time=1789294210497; Hm_lpvt_c546156b33a73aaa69021f8a527d9e26=1789294215"
 
 // 获取中学历史教学园地试卷
 // @Title 获取中学历史教学园地试卷
 // @Description https://www.zxls.com/ 获取中学历史教学园地试卷
 func main() {
-	maxPage := 606
-	page := 600
+	maxPage := 625
+	page := 616
 	isPageListGo := true
 	for isPageListGo {
 		requestUrl := fmt.Sprintf("https://www.zxls.com/generation/gzst/List_5884_%d.html", page)
