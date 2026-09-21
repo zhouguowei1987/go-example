@@ -97,8 +97,8 @@ func main() {
 					fileExtIndex := strings.LastIndex(downloadUrl, ".")
 					fileExt := downloadUrl[fileExtIndex:]
 					fileExt = strings.ToLower(fileExt)
-					if strings.Index(fileExt, "pdf") == -1 && strings.Index(fileExt, "doc") == -1 {
-						fmt.Println("不是pdf、doc文件，跳过")
+					if strings.Index(fileExt, "pdf") == -1 && strings.Index(fileExt, "doc") == -1 && strings.Index(fileExt, "rar") == -1 && strings.Index(fileExt, "zip") == -1 {
+						fmt.Println("不是pdf、doc、rar、zip文件，跳过")
 						continue
 					}
 					fmt.Println(downloadUrl)

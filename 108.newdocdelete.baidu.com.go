@@ -10,7 +10,7 @@ import (
 	"net/http"
 	"net/url"
 	"strconv"
-	"strings"
+// 	"strings"
 	"time"
 )
 
@@ -88,12 +88,13 @@ func main() {
 				title := doc.Title
 				fmt.Println(title)
 
-				currentTime := time.Now()
-				oldTime := currentTime.AddDate(0, 0, -60)
-				oldTimeStr := oldTime.Format("2006-01-02")
+// 				currentTime := time.Now()
+// 				oldTime := currentTime.AddDate(0, 0, -60)
+// 				oldTimeStr := oldTime.Format("2006-01-02")
 
 				// 文档状态为4：未通过审核 2:已通过审核 1:审核中
-				if doc.DocStatus == 4 || (doc.DocStatus == 1 && doc.CreateTime <= oldTimeStr) || (doc.DocStatus == 2 && strings.Index(title, "(T-") != -1) {
+// 				if doc.DocStatus == 4 || (doc.DocStatus == 1 && doc.CreateTime <= oldTimeStr) || (doc.DocStatus == 2 && strings.Index(title, "(T-") != -1) {
+				if doc.DocStatus == 4 {
 					docIdStr := doc.DocId
 					fmt.Println("=======开始删除" + strconv.Itoa(pn) + "========")
 					docDeleteUrl := fmt.Sprintf("https://cuttlefish.baidu.com/user/submit/newdocdelete?token=%s&new_token=%s&fold_id_str=0&doc_id_str=%s&skip_fold_validate=1", token, token, docIdStr)
