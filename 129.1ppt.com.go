@@ -24,8 +24,8 @@ import (
 // @Title 获取第一ppt文档
 // @Description https://1ppt.com/，将第一ppt文档入库
 func main() {
-	var startId = 146702
-	var endId = 146980
+	var startId = 146980
+	var endId = 149272
 	for id := startId; id <= endId; id++ {
 		err := pptSpider(id)
 		if err != nil {
@@ -35,7 +35,7 @@ func main() {
 	//pptSpider(130283)
 }
 
-var pptCookie = "mizToken=202605091021400.88621061314439760.030886799051758174; acw_tc=2760775b17854168351603565eb022108f42529f28df2b3279a91d8f87ccff; Hm_lvt_087ceb5ea69d10fb5bbb6bc49c209fa2=1782870853,1785081155,1785416836; HMACCOUNT=9C0CD19686802BBF; Hm_lpvt_087ceb5ea69d10fb5bbb6bc49c209fa2=1785416898"
+var pptCookie = "mizToken=202605091021400.88621061314439760.030886799051758174; acw_tc=276aedf617921133946326306e1642c2f86d32e0fb81fbd1a880e6586f3ad8; Hm_lvt_087ceb5ea69d10fb5bbb6bc49c209fa2=1792113395; HMACCOUNT=9C0CD19686802BBF; Hm_lpvt_087ceb5ea69d10fb5bbb6bc49c209fa2=1792113400; acw_sc__v2=1234cf0d46-6f465ca7009c517165dffcbcf8031b837ec4def0245c377342"
 
 func pptSpider(id int) error {
 	detailUrl := fmt.Sprintf("https://www.1ppt.com/article/%d.html", id)
