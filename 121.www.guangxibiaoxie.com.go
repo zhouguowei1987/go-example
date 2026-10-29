@@ -20,8 +20,8 @@ import (
 // @Title 获取广西标准化协会Pdf文档
 // @Description http://www.guangxibiaoxie.com/，将广西标准化协会Pdf文档入库
 func main() {
-	var startId = 6100
-	var endId = 6201
+	var startId = 6200
+	var endId = 6265
 	for id := startId; id <= endId; id++ {
 		detailUrl := fmt.Sprintf("http://www.guangxibiaoxie.com/a/%d.html", id)
 		fmt.Println(detailUrl)
