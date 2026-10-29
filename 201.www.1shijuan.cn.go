@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
+	"math/rand"
 	"net"
 	"net/http"
 	"net/url"
@@ -112,7 +113,8 @@ func ShiJuanSetHttpProxy() (httpclient *http.Client) {
 // @Title 获取第一试卷网文档
 // @Description https://www.1shijuan.cn/，获取第一试卷网文档
 func main() {
-	var startId = 2252
+	// 2252
+	var startId = 37131
 	var endId = 75638
 	for id := startId; id <= endId; id++ {
 		err := ShiJuanSpider(id)
@@ -174,8 +176,7 @@ func ShiJuanSpider(id int) error {
 		return err
 	}
 	fileType := path.Ext(u.Path)
-
-	filePath := "E:\\workspace\\www.1shijuan.cn\\www.1shijuan.cn\\" + stage + "\\" + subj + "\\" + title + fileType
+	filePath := "E:\\workspace\\www.1shijuan.cn\\www.1shijuan.cn\\" + stage + "\\" + strconv.Itoa(id) + "-" + title + fileType
 	fmt.Println(filePath)
 	_, err = os.Stat(filePath)
 	if err == nil {
@@ -194,8 +195,8 @@ func ShiJuanSpider(id int) error {
 		return err
 	}
 	fmt.Println("=======完成下载========")
-	// DownLoadShiJuanTimeSleep := rand.Intn(10)
-	DownLoadShiJuanTimeSleep := 10
+	DownLoadShiJuanTimeSleep := rand.Intn(5)
+	// DownLoadShiJuanTimeSleep := 10
 	for i := 1; i <= DownLoadShiJuanTimeSleep; i++ {
 		time.Sleep(time.Second)
 		fmt.Println("id="+strconv.Itoa(id)+"===========下载", title, "成功，暂停", DownLoadShiJuanTimeSleep, "秒，倒计时", i, "秒===========")

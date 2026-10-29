@@ -760,6 +760,76 @@ func main() {
 			pCid:    8120,
 			Price:   188,
 		},
+		{
+			dirName: "www.docx_1shijuan.cn/一年级",
+			pCid:    8251,
+			Price:   188,
+		},
+		{
+			dirName: "www.docx_1shijuan.cn/二年级",
+			pCid:    8251,
+			Price:   188,
+		},
+		{
+			dirName: "www.docx_1shijuan.cn/三年级",
+			pCid:    8251,
+			Price:   188,
+		},
+		{
+			dirName: "www.docx_1shijuan.cn/四年级",
+			pCid:    8251,
+			Price:   188,
+		},
+		{
+			dirName: "www.docx_1shijuan.cn/五年级",
+			pCid:    8251,
+			Price:   188,
+		},
+		{
+			dirName: "www.docx_1shijuan.cn/六年级",
+			pCid:    8251,
+			Price:   188,
+		},
+		{
+			dirName: "www.docx_1shijuan.cn/七年级",
+			pCid:    55918,
+			Price:   188,
+		},
+		{
+			dirName: "www.docx_1shijuan.cn/八年级",
+			pCid:    55918,
+			Price:   188,
+		},
+		{
+			dirName: "www.docx_1shijuan.cn/九年级",
+			pCid:    55918,
+			Price:   188,
+		},
+		{
+			dirName: "www.docx_1shijuan.cn/高一",
+			pCid:    55919,
+			Price:   188,
+		},
+		{
+			dirName: "www.docx_1shijuan.cn/高二",
+			pCid:    55919,
+			Price:   188,
+		},
+		{
+			dirName: "www.docx_1shijuan.cn/高三",
+			pCid:    55919,
+			Price:   188,
+		},
+		{
+			dirName: "www.docx_1shijuan.cn/中考",
+			pCid:    8243,
+			Price:   188,
+		},
+		{
+			dirName: "www.docx_1shijuan.cn/高考",
+			pCid:    8244,
+			Price:   188,
+		},
 	}
 	rootPath := "../upload.doc88.com/"
 	for _, childDir := range uploadChildDirArr {
