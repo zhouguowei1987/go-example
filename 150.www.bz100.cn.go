@@ -120,7 +120,7 @@ type Bz100DownloadFormData struct {
 	dbuuid string
 }
 
-var Bz100Cookie = "JSESSIONID=3EFFB9F101A90F382EF5F44CCC66E676.z"
+var Bz100Cookie = "JSESSIONID=C12B04BE630157C52D4944F01ACA2DD6.z"
 
 // 下载山东省地方标准
 // @Title 下载山东省地方标准

@@ -122,7 +122,7 @@ type QueryCqIsJson struct {
 	OtherCategory          string `json:"OtherCategory"`
 }
 
-var CqIsCookie = "__RequestVerificationToken=dLCzo9mRtXtj_0OqsBm6h18Gjans-FKA8q3gbBNIAJV_oiXyiSQP6td5EcbPTutgrH6wy-r3qe1MwV_4cpev7bARXioS6itbq1Uu-MwYnV81; userbrowse=bf415640-fe66-b0de-5d79-91436cce806f"
+var CqIsCookie = "__RequestVerificationToken=fP87NiQ03wZp69pMn__3onIxkDehbF5Jg5YU4N24AtuhCaByRz8MQ8NjqmFFWD1MMqNfwY502VjcBsXywQfWIF9ZVYBHNbRNBkUW3v9oSHI1; userbrowse=f4344444-a297-4e50-b396-17e1c8fb096d"
 
 // 下载重庆市地方标准文档
 // @Title 下载重庆市地方标准文档
