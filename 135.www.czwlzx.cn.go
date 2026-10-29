@@ -107,7 +107,7 @@ func CzWlZxSetHttpProxy() (httpclient *http.Client) {
 	return httpclient
 }
 
-var CzWlZxCookie = "ASP.NET_SessionId=n1m5veevreudzqzcifvs4x55; Hm_lvt_43bc53ae85afc8f10b75f500b7f506b6=1780534614,1780972709,1782866818; HMACCOUNT=9C0CD19686802BBF; Hm_lpvt_43bc53ae85afc8f10b75f500b7f506b6=1782866895"
+var CzWlZxCookie = "ASP.NET_SessionId=fkg5bfz2lspb1045eftswf45; Hm_lvt_43bc53ae85afc8f10b75f500b7f506b6=1789394954; HMACCOUNT=9C0CD19686802BBF; Hm_lpvt_43bc53ae85afc8f10b75f500b7f506b6=1789395062"
 
 // CzWlZxSpider 获取初中物理在线文档
 // @Title 获取初中物理在线文档
@@ -115,8 +115,8 @@ var CzWlZxCookie = "ASP.NET_SessionId=n1m5veevreudzqzcifvs4x55; Hm_lvt_43bc53ae8
 func main() {
 	// 154786
 	var startId = 155853
-	var endId = 155678
-	for id := startId; id >= endId; id-- {
+	var endId = 156646
+	for id := startId; id <= endId; id++ {
 		err := CzWlZxSpider(id)
 		if err != nil {
 			fmt.Println(err)
@@ -191,7 +191,7 @@ func CzWlZxSpider(id int) error {
 		return errors.New("不是想要下载文档类型，跳过")
 	}
 
-	filePath := "F:\\workspace\\www.czwlzx.cn\\www.czwlzx.cn\\" + title + fileType
+	filePath := "D:\\workspace\\www.czwlzx.cn\\www.czwlzx.cn\\" + title + fileType
 	fmt.Println(filePath)
 	_, err = os.Stat(filePath)
 	if err == nil {

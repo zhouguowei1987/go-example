@@ -18,7 +18,7 @@ import (
 	"strconv"
 	"strings"
 	"time"
-	"rsc.io/pdf"
+	// "rsc.io/pdf"
 )
 
 // Doc88Cookie 15238369929
@@ -258,462 +258,507 @@ func main() {
 		{
 			dirName: "docx.topedu.ybep.com.cn/小学试卷",
 			pCid:    8243,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "docx.topedu.ybep.com.cn/中考试卷",
 			pCid:    8243,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "docx.topedu.ybep.com.cn/高考试卷",
 			pCid:    8244,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "www.docx_shijuan1.com/中考试卷",
 			pCid:    8243,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "www.docx_shijuan1.com/高考试卷",
 			pCid:    8244,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "www.docx_shijuan1.com/小学试卷",
 			pCid:    8242,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "docx.zzstep.com/小学/道德与法治",
 			pCid:    8307,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "docx.zzstep.com/小学/美术",
 			pCid:    8309,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "docx.zzstep.com/小学/数学",
 			pCid:    8247,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "docx.zzstep.com/小学/信息技术",
 			pCid:    8308,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "docx.zzstep.com/小学/音乐",
 			pCid:    8309,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "docx.zzstep.com/小学/英语",
 			pCid:    8248,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "docx.zzstep.com/小学/语文",
 			pCid:    8246,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "docx.zzstep.com/初中/数学",
 			pCid:    8156,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "docx.zzstep.com/初中/英语",
 			pCid:    8157,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "docx.zzstep.com/初中/语文",
 			pCid:    8155,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "docx.zzstep.com/初中/物理",
 			pCid:    8158,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "docx.zzstep.com/初中/化学",
 			pCid:    8160,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "docx.zzstep.com/初中/音乐",
 			pCid:    55918,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "docx.zzstep.com/初中/道德与法治",
 			pCid:    8163,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "docx.zzstep.com/初中/美术",
 			pCid:    55918,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "docx.zzstep.com/初中/生物",
 			pCid:    8162,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "docx.zzstep.com/初中/地理",
 			pCid:    8159,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "docx.zzstep.com/初中/历史",
 			pCid:    8161,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "docx.zzstep.com/高中/地理",
 			pCid:    8256,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "docx.zzstep.com/高中/化学",
 			pCid:    8183,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "docx.zzstep.com/高中/历史",
 			pCid:    8257,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "docx.zzstep.com/高中/生物",
 			pCid:    8186,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "docx.zzstep.com/高中/数学",
 			pCid:    8180,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "docx.zzstep.com/高中/物理",
 			pCid:    8182,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "docx.zzstep.com/高中/英语",
 			pCid:    8181,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "docx.zzstep.com/高中/语文",
 			pCid:    8179,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "docx.zzstep.com/高中/政治",
 			pCid:    8258,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "docx.gzenxx.com",
 			pCid:    55919,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "docx.trjlseng.com",
 			pCid:    8157,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "sc.chinaz.com/ppt",
 			pCid:    8120,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "docx.www.czsx.com.cn",
 			pCid:    8156,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "www.finish_zip_1ppt.com",
 			pCid:    8120,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "www.docx_ychedu.com/中考试题",
 			pCid:    8243,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "www.docx_ychedu.com/高考试题",
 			pCid:    8244,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "www.docx_ychedu.com/中考试题",
 			pCid:    8243,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "www.docx_ychedu.com/高考试题",
 			pCid:    8244,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "hao123.docx_eduy.net/小学",
 			pCid:    8242,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "hao123.docx_eduy.net/初中",
 			pCid:    8243,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "hao123.docx_eduy.net/高中",
 			pCid:    8244,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "www.mee.gov.cn",
 			pCid:    8368,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "www.docx_czwlzx.cn",
 			pCid:    8158,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "htsfwb.samr.gov.cn",
 			pCid:    8131,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "flk.npc.gov.cn",
 			pCid:    8095,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "docx.zhuangyuan123.com/小学/语文",
 			pCid:    8246,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "docx.zhuangyuan123.com/小学/科学",
 			pCid:    8253,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "docx.zhuangyuan123.com/小学/道德与法治",
 			pCid:    8307,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "docx.zhuangyuan123.com/小学/数学",
 			pCid:    8247,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "docx.zhuangyuan123.com/小学/英语",
 			pCid:    8248,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "docx.zhuangyuan123.com/初中/数学",
 			pCid:    8156,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "docx.zhuangyuan123.com/初中/英语",
 			pCid:    8157,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "docx.zhuangyuan123.com/初中/语文",
 			pCid:    8155,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "docx.zhuangyuan123.com/初中/化学",
 			pCid:    8160,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "docx.zhuangyuan123.com/初中/体育与健康",
 			pCid:    55918,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "docx.zhuangyuan123.com/初中/信息技术",
 			pCid:    55918,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "docx.zhuangyuan123.com/初中/历史",
 			pCid:    8161,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "docx.zhuangyuan123.com/初中/历史与社会",
 			pCid:    8161,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "docx.zhuangyuan123.com/初中/地理",
 			pCid:    8159,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "docx.zhuangyuan123.com/初中/物理",
 			pCid:    8158,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "docx.zhuangyuan123.com/初中/生物",
 			pCid:    8162,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "docx.zhuangyuan123.com/初中/科学",
 			pCid:    55918,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "docx.zhuangyuan123.com/初中/综合",
 			pCid:    55918,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "docx.zhuangyuan123.com/初中/道德与法治",
 			pCid:    8163,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "docx.zhuangyuan123.com/初中/美术",
 			pCid:    55918,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "docx.zhuangyuan123.com/初中/音乐",
 			pCid:    55918,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "docx.zhuangyuan123.com/高中/地理",
 			pCid:    8256,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "docx.zhuangyuan123.com/高中/化学",
 			pCid:    8183,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "docx.zhuangyuan123.com/高中/历史",
 			pCid:    8257,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "docx.zhuangyuan123.com/高中/生物",
 			pCid:    8186,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "docx.zhuangyuan123.com/高中/数学",
 			pCid:    8180,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "docx.zhuangyuan123.com/高中/通用技术",
 			pCid:    55919,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "docx.zhuangyuan123.com/高中/物理",
 			pCid:    8182,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "docx.zhuangyuan123.com/高中/信息技术",
 			pCid:    55919,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "docx.zhuangyuan123.com/高中/英语",
 			pCid:    8181,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "docx.zhuangyuan123.com/高中/语文",
 			pCid:    8179,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "docx.zhuangyuan123.com/高中/政治",
 			pCid:    8258,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "docx.zhuangyuan123.com/高中/综合",
 			pCid:    55919,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "docx.guojiajiaoyu.com/学前",
 			pCid:    8304,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "docx.guojiajiaoyu.com/小学",
 			pCid:    8309,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "docx.guojiajiaoyu.com/初中",
 			pCid:    55918,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "docx.guojiajiaoyu.com/高中",
 			pCid:    55919,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "www.meewen.com/表格合同",
 			pCid:    8131,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "www.meewen.com/遴选题库",
 			pCid:    8224,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "www.meewen.com/领导讲话",
 			pCid:    8138,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "www.meewen.com/教辅资料",
 			pCid:    55918,
-			Price:   200,
+			Price:   188,
 		},
 		{
 			dirName: "tikuvip.51test.net/中考",
 			pCid:    8243,
-			Price:   200,
+			Price:   188,
+		},
+		{
+			dirName: "tikuvip.51test.net/初中一年级",
+			pCid:    8243,
+			Price:   188,
+		},
+		{
+			dirName: "tikuvip.51test.net/初中二年级",
+			pCid:    8243,
+			Price:   188,
+		},
+		{
+			dirName: "tikuvip.51test.net/初中三年级",
+			pCid:    8243,
+			Price:   188,
 		},
 		{
 			dirName: "tikuvip.51test.net/高考",
 			pCid:    8244,
-			Price:   200,
+			Price:   188,
+		},
+		{
+			dirName: "tikuvip.51test.net/高一",
+			pCid:    8244,
+			Price:   188,
+		},
+		{
+			dirName: "tikuvip.51test.net/高二",
+			pCid:    8244,
+			Price:   188,
+		},
+		{
+			dirName: "tikuvip.51test.net/高三",
+			pCid:    8244,
+			Price:   188,
+		},
+		{
+			dirName: "www.jiangyuanwang.com/word",
+			pCid:    8131,
+			Price:   188,
+		},
+		{
+			dirName: "www.jiangyuanwang.com/excel",
+			pCid:    8119,
+			Price:   188,
+		},
+		{
+			dirName: "www.jiangyuanwang.com/ppt",
+			pCid:    8120,
+			Price:   188,
 		},
 	}
 	rootPath := "../upload.doc88.com/"
@@ -796,25 +841,25 @@ func main() {
 				pDocFormat = "XLSX"
 			}
 
-			filePageNum := 0
-			if fileExt == ".pdf" {
-				// 获取PDF文件，获取总页数
-				if pdfFile, err := pdf.Open(filePath); err == nil {
-					filePageNum = pdfFile.NumPage()
-				}
-			}
-			//根据页数设置价格
-			if filePageNum > 0 {
-				if filePageNum <= 25 {
-					price = 688
-				} else if filePageNum > 25 && filePageNum <= 30 {
-					price = 788
-				} else if filePageNum > 30 && filePageNum <= 35 {
-					price = 888
-				} else {
-					price = 988
-				}
-			}
+			// filePageNum := 0
+			// if fileExt == ".pdf" {
+			// 	// 获取PDF文件，获取总页数
+			// 	if pdfFile, err := pdf.Open(filePath); err == nil {
+			// 		filePageNum = pdfFile.NumPage()
+			// 	}
+			// }
+			// //根据页数设置价格
+			// if filePageNum > 0 {
+			// 	if filePageNum <= 25 {
+			// 		price = 688
+			// 	} else if filePageNum > 25 && filePageNum <= 30 {
+			// 		price = 788
+			// 	} else if filePageNum > 30 && filePageNum <= 35 {
+			// 		price = 888
+			// 	} else {
+			// 		price = 988
+			// 	}
+			// }
 
 			// 将已上传的文件转移到指定文件夹
 			// 将上传过文件移动到"../final-upload.doc88.com/"
